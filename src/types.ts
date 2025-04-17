@@ -115,3 +115,8 @@ export type TNip66RelayInfo = TRelayInfo & {
   relayType?: string
   countryCode?: string
 }
+
+export type TEmoji = {
+  shortcode: string
+  url: string
+}
