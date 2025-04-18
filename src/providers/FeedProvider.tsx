@@ -169,6 +169,20 @@ export function FeedProvider({ children }: { children: React.ReactNode }) {
       })
       return setIsReady(true)
     }
+    if (feedType === 'bookmarks') {
+      if (!options.pubkey) {
+        return setIsReady(true)
+      }
+
+      const newFeedInfo = { feedType }
+      setFeedInfo(newFeedInfo)
+      feedInfoRef.current = newFeedInfo
+      storage.setFeedInfo(newFeedInfo, pubkey)
+
+      setRelayUrls([])
+      setFilter({})
+      return setIsReady(true)
+    }
     if (feedType === 'temporary') {
       const urls = options.temporaryRelayUrls ?? temporaryRelayUrls
       if (!urls.length) {
