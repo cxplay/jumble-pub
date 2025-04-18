@@ -1,4 +1,4 @@
-import BookmarksList from '@/components/BookmarksList'
+import BookmarkList from '@/components/BookmarkList'
 import NoteList from '@/components/NoteList'
 import PostEditor from '@/components/PostEditor'
 import SaveRelayDropdownMenu from '@/components/SaveRelayDropdownMenu'
@@ -46,7 +46,7 @@ const NoteListPage = forwardRef((_, ref) => {
         </div>
       )
     } else {
-      content = <BookmarksList />
+      content = <BookmarkList />
     }
   } else if (isReady) {
     content = (

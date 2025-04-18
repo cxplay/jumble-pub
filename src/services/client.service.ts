@@ -746,6 +746,21 @@ class ClientService extends EventTarget {
     return event
   }
 
+  async fetchBookmarkListEvent(pubkey: string): Promise<NEvent | undefined> {
+    const storedBookmarkListEvent = await indexedDb.getReplaceableEvent(pubkey, kinds.BookmarkList)
+    if (storedBookmarkListEvent) {
+      return storedBookmarkListEvent
+    }
+
+    const relayList = await this.fetchRelayList(pubkey)
+    const events = await this.query(relayList.write.concat(BIG_RELAY_URLS), {
+      authors: [pubkey],
+      kinds: [kinds.BookmarkList]
+    })
+
+    return events.sort((a, b) => b.created_at - a.created_at)[0]
+  }
+
   async fetchFollowings(pubkey: string, storeToIndexedDb = false) {
     const followListEvent = await this.fetchFollowListEvent(pubkey, storeToIndexedDb)
     return followListEvent ? extractPubkeysFromEventTags(followListEvent.tags) : []

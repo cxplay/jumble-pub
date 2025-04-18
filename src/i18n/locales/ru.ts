@@ -222,6 +222,11 @@ export default {
     'no relays found': 'ретрансляторы не найдены',
     video: 'видео',
     'Show n new notes': 'Показать {{n}} новых заметок',
-    YouTabName: 'Вы'
+    YouTabName: 'Вы',
+    Bookmark: 'Закладка',
+    'Remove bookmark': 'Удалить закладку',
+    'no bookmarks found': 'Закладки не найдены',
+    'no more bookmarks': 'Больше нет закладок',
+    Bookmarks: 'Закладки'
   }
 }

@@ -218,6 +218,11 @@ export default {
     'no relays found': 'no relays found',
     video: 'video',
     'Show n new notes': 'Show {{n}} new notes',
-    YouTabName: 'You'
+    YouTabName: 'You',
+    Bookmark: 'Bookmark',
+    'Remove bookmark': 'Remove bookmark',
+    'no bookmarks found': 'no bookmarks found',
+    'no more bookmarks': 'no more bookmarks',
+    Bookmarks: 'Bookmarks'
   }
 }

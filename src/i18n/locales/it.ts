@@ -221,6 +221,11 @@ export default {
     'no relays found': 'Nessun relay trovato',
     video: 'video',
     'Show n new notes': 'Mostra {{n}} nuove note',
-    YouTabName: 'Tu'
+    YouTabName: 'Tu',
+    Bookmark: 'Segnalibro',
+    'Remove bookmark': 'Rimuovi segnalibro',
+    'no bookmarks found': 'Nessun segnalibro trovato',
+    'no more bookmarks': 'Nessun altro segnalibro',
+    Bookmarks: 'Segnalibri'
   }
 }

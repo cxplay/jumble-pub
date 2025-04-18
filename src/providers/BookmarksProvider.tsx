@@ -1,12 +1,12 @@
 import { createBookmarkDraftEvent } from '@/lib/draft-event'
-import { createContext, useContext, useMemo } from 'react'
-import { useNostr } from './NostrProvider'
 import client from '@/services/client.service'
+import { createContext, useContext } from 'react'
+import { useNostr } from './NostrProvider'
+import { Event } from 'nostr-tools'
 
 type TBookmarksContext = {
-  bookmarks: string[][]
-  addBookmark: (eventId: string, eventPubkey: string, relayHint?: string) => Promise<void>
-  removeBookmark: (eventId: string) => Promise<void>
+  addBookmark: (event: Event) => Promise<void>
+  removeBookmark: (event: Event) => Promise<void>
 }
 
 const BookmarksContext = createContext<TBookmarksContext | undefined>(undefined)
@@ -20,40 +20,34 @@ export const useBookmarks = () => {
 }
 
 export function BookmarksProvider({ children }: { children: React.ReactNode }) {
-  const { pubkey: accountPubkey, bookmarkListEvent, publish, updateBookmarkListEvent } = useNostr()
-  const bookmarks = useMemo(
-    () => (bookmarkListEvent ? bookmarkListEvent.tags : []),
-    [bookmarkListEvent]
-  )
+  const { pubkey: accountPubkey, publish, updateBookmarkListEvent } = useNostr()
 
-  const addBookmark = async (eventId: string, eventPubkey: string, relayHint?: string) => {
+  const addBookmark = async (event: Event) => {
     if (!accountPubkey) return
 
-    const relayHintToUse = relayHint || client.getEventHint(eventId)
-
-    const newTag = ['e', eventId, relayHintToUse, eventPubkey]
-
+    const bookmarkListEvent = await client.fetchBookmarkListEvent(accountPubkey)
     const currentTags = bookmarkListEvent?.tags || []
 
-    const isDuplicate = currentTags.some((tag) => tag[0] === 'e' && tag[1] === eventId)
+    if (currentTags.some((tag) => tag[0] === 'e' && tag[1] === event.id)) return
 
-    if (isDuplicate) return
-
-    const newTags = [...currentTags, newTag]
-
-    const newBookmarkDraftEvent = createBookmarkDraftEvent(newTags)
+    const newBookmarkDraftEvent = createBookmarkDraftEvent(
+      [...currentTags, ['e', event.id, client.getEventHint(event.id), event.pubkey]],
+      bookmarkListEvent?.content
+    )
     const newBookmarkEvent = await publish(newBookmarkDraftEvent)
     await updateBookmarkListEvent(newBookmarkEvent)
   }
 
-  const removeBookmark = async (eventId: string) => {
-    if (!accountPubkey || !bookmarkListEvent) return
+  const removeBookmark = async (event: Event) => {
+    if (!accountPubkey) return
 
-    const newTags = bookmarkListEvent.tags.filter((tag) => !(tag[0] === 'e' && tag[1] === eventId))
+    const bookmarkListEvent = await client.fetchBookmarkListEvent(accountPubkey)
+    if (!bookmarkListEvent) return
 
+    const newTags = bookmarkListEvent.tags.filter((tag) => !(tag[0] === 'e' && tag[1] === event.id))
     if (newTags.length === bookmarkListEvent.tags.length) return
 
-    const newBookmarkDraftEvent = createBookmarkDraftEvent(newTags)
+    const newBookmarkDraftEvent = createBookmarkDraftEvent(newTags, bookmarkListEvent.content)
     const newBookmarkEvent = await publish(newBookmarkDraftEvent)
     await updateBookmarkListEvent(newBookmarkEvent)
   }
@@ -61,7 +55,6 @@ export function BookmarksProvider({ children }: { children: React.ReactNode }) {
   return (
     <BookmarksContext.Provider
       value={{
-        bookmarks,
         addBookmark,
         removeBookmark
       }}

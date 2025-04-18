@@ -9,16 +9,12 @@ import { Event } from 'nostr-tools'
 export default function BookmarkButton({ event }: { event: Event }) {
   const { t } = useTranslation()
   const { toast } = useToast()
-  const { pubkey: accountPubkey, checkLogin } = useNostr()
-  const { bookmarks, addBookmark, removeBookmark } = useBookmarks()
+  const { pubkey: accountPubkey, bookmarkListEvent, checkLogin } = useNostr()
+  const { addBookmark, removeBookmark } = useBookmarks()
   const [updating, setUpdating] = useState(false)
-
-  const eventId = event.id
-  const eventPubkey = event.pubkey
-
   const isBookmarked = useMemo(
-    () => bookmarks.some((tag) => tag[0] === 'e' && tag[1] === eventId),
-    [bookmarks, eventId]
+    () => bookmarkListEvent?.tags.some((tag) => tag[0] === 'e' && tag[1] === event.id),
+    [bookmarkListEvent, event]
   )
 
   if (!accountPubkey) return null
@@ -30,11 +26,7 @@ export default function BookmarkButton({ event }: { event: Event }) {
 
       setUpdating(true)
       try {
-        await addBookmark(eventId, eventPubkey)
-        toast({
-          title: t('Note bookmarked'),
-          description: t('This note has been added to your bookmarks')
-        })
+        await addBookmark(event)
       } catch (error) {
         toast({
           title: t('Bookmark failed'),
@@ -54,11 +46,7 @@ export default function BookmarkButton({ event }: { event: Event }) {
 
       setUpdating(true)
       try {
-        await removeBookmark(eventId)
-        toast({
-          title: t('Bookmark removed'),
-          description: t('This note has been removed from your bookmarks')
-        })
+        await removeBookmark(event)
       } catch (error) {
         toast({
           title: t('Remove bookmark failed'),
@@ -74,8 +62,8 @@ export default function BookmarkButton({ event }: { event: Event }) {
   return (
     <button
       className={`flex items-center gap-1 ${
-        isBookmarked ? 'text-primary' : 'text-muted-foreground'
-      } enabled:hover:text-primary px-3 h-full`}
+        isBookmarked ? 'text-rose-400' : 'text-muted-foreground'
+      } enabled:hover:text-rose-400 px-3 h-full`}
       onClick={isBookmarked ? handleRemoveBookmark : handleBookmark}
       disabled={updating}
       title={isBookmarked ? t('Remove bookmark') : t('Bookmark')}
@@ -83,7 +71,7 @@ export default function BookmarkButton({ event }: { event: Event }) {
       {updating ? (
         <Loader className="animate-spin" />
       ) : (
-        <BookmarkIcon className={isBookmarked ? 'fill-primary' : ''} />
+        <BookmarkIcon className={isBookmarked ? 'fill-rose-400' : ''} />
       )}
     </button>
   )

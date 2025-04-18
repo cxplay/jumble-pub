@@ -222,6 +222,11 @@ export default {
     'no relays found': 'no se encontraron relés',
     video: 'video',
     'Show n new notes': 'Mostrar {{n}} nuevas notas',
-    YouTabName: 'You'
+    YouTabName: 'You',
+    Bookmark: 'Marcador',
+    'Remove bookmark': 'Quitar marcador',
+    'no bookmarks found': 'No se encontraron marcadores',
+    'no more bookmarks': 'No hay más marcadores',
+    Bookmarks: 'Marcadores'
   }
 }

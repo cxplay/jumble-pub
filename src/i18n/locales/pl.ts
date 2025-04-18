@@ -220,6 +220,11 @@ export default {
     'no relays found': 'Nie znaleziono transmiterów',
     video: 'wideo',
     'Show n new notes': 'Pokaż {{n}} nowych wpisów',
-    YouTabName: 'Ty'
+    YouTabName: 'Ty',
+    Bookmark: 'Zakładka',
+    'Remove bookmark': 'Usuń zakładkę',
+    'no bookmarks found': 'Nie znaleziono zakładek',
+    'no more bookmarks': 'Brak więcej zakładek',
+    Bookmarks: 'Zakładki'
   }
 }

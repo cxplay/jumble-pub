@@ -283,10 +283,10 @@ export function createSeenNotificationsAtDraftEvent(): TDraftEvent {
   }
 }
 
-export function createBookmarkDraftEvent(tags: string[][]): TDraftEvent {
+export function createBookmarkDraftEvent(tags: string[][], content = ''): TDraftEvent {
   return {
     kind: kinds.BookmarkList,
-    content: '',
+    content,
     tags,
     created_at: dayjs().unix()
   }

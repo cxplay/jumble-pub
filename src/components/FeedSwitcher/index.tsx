@@ -1,20 +1,18 @@
 import { toRelaySettings } from '@/lib/link'
 import { simplifyUrl } from '@/lib/url'
 import { SecondaryPageLink } from '@/PageManager'
-import { useBookmarks } from '@/providers/BookmarksProvider'
 import { useFavoriteRelays } from '@/providers/FavoriteRelaysProvider'
 import { useFeed } from '@/providers/FeedProvider'
 import { useNostr } from '@/providers/NostrProvider'
+import { BookmarkIcon, UsersRound } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import RelayIcon from '../RelayIcon'
 import RelaySetCard from '../RelaySetCard'
 import SaveRelayDropdownMenu from '../SaveRelayDropdownMenu'
-import { BookmarkIcon, UsersRound } from 'lucide-react'
 
 export default function FeedSwitcher({ close }: { close?: () => void }) {
   const { t } = useTranslation()
   const { pubkey } = useNostr()
-  const { bookmarks } = useBookmarks()
   const { relaySets, favoriteRelays } = useFavoriteRelays()
   const { feedInfo, switchFeed, temporaryRelayUrls } = useFeed()
 
@@ -38,7 +36,7 @@ export default function FeedSwitcher({ close }: { close?: () => void }) {
         </FeedSwitcherItem>
       )}
 
-      {pubkey && bookmarks.length > 0 && (
+      {pubkey && (
         <FeedSwitcherItem
           isActive={feedInfo.feedType === 'bookmarks'}
           onClick={() => {

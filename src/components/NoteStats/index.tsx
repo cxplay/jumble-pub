@@ -65,9 +65,9 @@ export default function NoteStats({
           <RepostButton event={event} />
           <LikeButton event={event} />
           <ZapButton event={event} />
-          <BookmarkButton event={event} />
         </div>
         <div className="flex items-center" onClick={(e) => e.stopPropagation()}>
+          <BookmarkButton event={event} />
           <SeenOnButton event={event} />
         </div>
       </div>

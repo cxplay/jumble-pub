@@ -220,6 +220,11 @@ export default {
     'no relays found': 'nenhum relé encontrado',
     video: 'vídeo',
     'Show n new notes': 'Ver {{n}} novas notas',
-    YouTabName: 'Você'
+    YouTabName: 'Você',
+    Bookmark: 'Favorito',
+    'Remove bookmark': 'Remover favorito',
+    'no bookmarks found': 'Nenhum favorito encontrado',
+    'no more bookmarks': 'Sem mais favoritos',
+    Bookmarks: 'Favoritos'
   }
 }

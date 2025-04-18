@@ -92,6 +92,10 @@ export function FeedProvider({ children }: { children: React.ReactNode }) {
       if (feedInfo.feedType === 'following' && pubkey) {
         return await switchFeed('following', { pubkey })
       }
+
+      if (feedInfo.feedType === 'bookmarks' && pubkey) {
+        return await switchFeed('bookmarks', { pubkey })
+      }
     }
 
     init()
