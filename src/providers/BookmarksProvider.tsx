@@ -31,7 +31,7 @@ export function BookmarksProvider({ children }: { children: React.ReactNode }) {
     if (currentTags.some((tag) => tag[0] === 'e' && tag[1] === event.id)) return
 
     const newBookmarkDraftEvent = createBookmarkDraftEvent(
-      [...currentTags, ['e', event.id, client.getEventHint(event.id), event.pubkey]],
+      [...currentTags, ['e', event.id, client.getEventHint(event.id), '', event.pubkey]],
       bookmarkListEvent?.content
     )
     const newBookmarkEvent = await publish(newBookmarkDraftEvent)
