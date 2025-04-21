@@ -1,11 +1,13 @@
 import { useSecondaryPage } from '@/PageManager'
+import { ExtendedKind } from '@/constants'
 import { useFetchEvent } from '@/hooks'
-import { getParentEventId, getUsingClient } from '@/lib/event'
+import { extractImageInfosFromEventTags, getParentEventId, getUsingClient } from '@/lib/event'
 import { toNote } from '@/lib/link'
 import { Event } from 'nostr-tools'
 import { useMemo } from 'react'
 import Content from '../Content'
 import { FormattedTimestamp } from '../FormattedTimestamp'
+import ImageGallery from '../ImageGallery'
 import NoteOptions from '../NoteOptions'
 import NoteStats from '../NoteStats'
 import ParentNotePreview from '../ParentNotePreview'
@@ -32,6 +34,7 @@ export default function Note({
     () => (hideParentNotePreview ? undefined : getParentEventId(event)),
     [event, hideParentNotePreview]
   )
+  const imageInfos = useMemo(() => extractImageInfosFromEventTags(event), [event])
   const { event: parentEvent, isFetching } = useFetchEvent(parentEventId)
   const usingClient = useMemo(() => getUsingClient(event), [event])
 
@@ -72,6 +75,9 @@ export default function Note({
         />
       )}
       <Content className="mt-2" event={event} />
+      {event.kind === ExtendedKind.PICTURE && imageInfos.length > 0 && (
+        <ImageGallery images={imageInfos} />
+      )}
       {!hideStats && (
         <NoteStats className="mt-3" event={event} fetchIfNotExisting={fetchNoteStats} />
       )}
