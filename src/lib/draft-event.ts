@@ -1,6 +1,6 @@
 import { ApplicationDataKey, ExtendedKind } from '@/constants'
 import client from '@/services/client.service'
-import { TDraftEvent, TMailboxRelay, TRelaySet } from '@/types'
+import { TDraftEvent, TEmoji, TMailboxRelay, TRelaySet } from '@/types'
 import dayjs from 'dayjs'
 import { Event, kinds } from 'nostr-tools'
 import {
@@ -14,7 +14,7 @@ import {
 } from './event'
 
 // https://github.com/nostr-protocol/nips/blob/master/25.md
-export function createReactionDraftEvent(event: Event): TDraftEvent {
+export function createReactionDraftEvent(event: Event, emoji: TEmoji | string = '+'): TDraftEvent {
   const tags: string[][] = []
   const hint = client.getEventHint(event.id)
   tags.push(['e', event.id, hint, event.pubkey])
@@ -27,9 +27,17 @@ export function createReactionDraftEvent(event: Event): TDraftEvent {
     tags.push(hint ? ['a', getEventCoordinate(event), hint] : ['a', getEventCoordinate(event)])
   }
 
+  let content: string
+  if (typeof emoji === 'string') {
+    content = emoji
+  } else {
+    content = `:${emoji.shortcode}:`
+    tags.push(['emoji', emoji.shortcode, emoji.url])
+  }
+
   return {
     kind: kinds.Reaction,
-    content: '+',
+    content,
     tags,
     created_at: dayjs().unix()
   }

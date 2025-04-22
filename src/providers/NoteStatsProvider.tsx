@@ -1,13 +1,14 @@
-import { extractZapInfoFromReceipt } from '@/lib/event'
+import { extractEmojiInfosFromTags, extractZapInfoFromReceipt } from '@/lib/event'
 import { tagNameEquals } from '@/lib/tag'
 import client from '@/services/client.service'
+import { TEmoji } from '@/types'
 import dayjs from 'dayjs'
 import { Event, Filter, kinds } from 'nostr-tools'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { useNostr } from './NostrProvider'
 
 export type TNoteStats = {
-  likes: Set<string>
+  likes: { id: string; pubkey: string; created_at: number; emoji: TEmoji | string }[]
   reposts: Set<string>
   zaps: { pr: string; pubkey: string; amount: number; comment?: string }[]
   replyCount: number
@@ -123,7 +124,10 @@ export function NoteStatsProvider({ children }: { children: React.ReactNode }) {
 
   const updateNoteStatsByEvents = (events: Event[]) => {
     const newRepostsMap = new Map<string, Set<string>>()
-    const newLikesMap = new Map<string, Set<string>>()
+    const newLikesMap = new Map<
+      string,
+      { id: string; pubkey: string; created_at: number; emoji: TEmoji | string }[]
+    >()
     const newZapsMap = new Map<
       string,
       { pr: string; pubkey: string; amount: number; comment?: string }[]
@@ -141,8 +145,23 @@ export function NoteStatsProvider({ children }: { children: React.ReactNode }) {
       if (evt.kind === kinds.Reaction) {
         const targetEventId = evt.tags.findLast(tagNameEquals('e'))?.[1]
         if (targetEventId) {
-          const newLikes = newLikesMap.get(targetEventId) || new Set()
-          newLikes.add(evt.pubkey)
+          const newLikes = newLikesMap.get(targetEventId) || []
+          if (newLikes.some((like) => like.id === evt.id)) return
+
+          let emoji: TEmoji | string = evt.content.trim()
+          if (!emoji) return
+
+          if (/^:[a-zA-Z0-9_-]+:$/.test(evt.content)) {
+            const emojiInfos = extractEmojiInfosFromTags(evt.tags)
+            const shortcode = evt.content.split(':')[1]
+            const emojiInfo = emojiInfos.find((info) => info.shortcode === shortcode)
+            if (emojiInfo) {
+              emoji = emojiInfo
+            } else {
+              console.log(`Emoji not found for shortcode: ${shortcode}`, emojiInfos)
+            }
+          }
+          newLikes.push({ id: evt.id, pubkey: evt.pubkey, created_at: evt.created_at, emoji })
           newLikesMap.set(targetEventId, newLikes)
         }
         return
@@ -168,8 +187,14 @@ export function NoteStatsProvider({ children }: { children: React.ReactNode }) {
       })
       newLikesMap.forEach((newLikes, eventId) => {
         const old = prev.get(eventId) || {}
-        const likes = old.likes || new Set()
-        newLikes.forEach((like) => likes.add(like))
+        const likes = old.likes || []
+        newLikes.forEach((like) => {
+          const exists = likes.find((l) => l.id === like.id)
+          if (!exists) {
+            likes.push(like)
+          }
+        })
+        likes.sort((a, b) => b.created_at - a.created_at)
         prev.set(eventId, { ...old, likes })
       })
       newZapsMap.forEach((newZaps, eventId) => {

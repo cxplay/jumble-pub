@@ -67,7 +67,7 @@ export const EmbeddedNormalUrlParser: TContentParser = {
 
 export const EmbeddedEmojiParser: TContentParser = {
   type: 'emoji',
-  regex: /:[a-zA-Z0-9_]+:/g
+  regex: /:[a-zA-Z0-9_-]+:/g
 }
 
 export function parseContent(content: string, parsers: TContentParser[]) {

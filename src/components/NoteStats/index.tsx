@@ -2,9 +2,10 @@ import { cn } from '@/lib/utils'
 import { useNoteStats } from '@/providers/NoteStatsProvider'
 import { useScreenSize } from '@/providers/ScreenSizeProvider'
 import { Event } from 'nostr-tools'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import BookmarkButton from '../BookmarkButton'
 import LikeButton from './LikeButton'
+import Likes from './Likes'
 import ReplyButton from './ReplyButton'
 import RepostButton from './RepostButton'
 import SeenOnButton from './SeenOnButton'
@@ -28,19 +29,23 @@ export default function NoteStats({
 }) {
   const { isSmallScreen } = useScreenSize()
   const { fetchNoteStats } = useNoteStats()
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     if (!fetchIfNotExisting) return
-    fetchNoteStats(event)
+    setLoading(true)
+    fetchNoteStats(event).finally(() => setLoading(false))
   }, [event, fetchIfNotExisting])
 
   if (isSmallScreen) {
     return (
       <div className={cn('select-none', className)}>
         <TopZaps event={event} />
+        <Likes event={event} />
         <div
           className={cn(
             'flex justify-between items-center h-5 [&_svg]:size-5',
+            loading ? 'animate-pulse' : '',
             classNames?.buttonBar
           )}
           onClick={(e) => e.stopPropagation()}
@@ -59,8 +64,12 @@ export default function NoteStats({
   return (
     <div className={cn('select-none', className)}>
       <TopZaps event={event} />
+      <Likes event={event} />
       <div className="flex justify-between h-5 [&_svg]:size-4">
-        <div className="flex items-center" onClick={(e) => e.stopPropagation()}>
+        <div
+          className={cn('flex items-center', loading ? 'animate-pulse' : '')}
+          onClick={(e) => e.stopPropagation()}
+        >
           <ReplyButton event={event} variant={variant} />
           <RepostButton event={event} />
           <LikeButton event={event} />

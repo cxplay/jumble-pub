@@ -426,7 +426,8 @@ export function extractZapInfoFromReceipt(receiptEvent: Event) {
   let description: string | undefined
   let preimage: string | undefined
   try {
-    receiptEvent.tags.forEach(([tagName, tagValue]) => {
+    receiptEvent.tags.forEach((tag) => {
+      const [tagName, tagValue] = tag
       switch (tagName) {
         case 'P':
           senderPubkey = tagValue
@@ -435,7 +436,7 @@ export function extractZapInfoFromReceipt(receiptEvent: Event) {
           recipientPubkey = tagValue
           break
         case 'e':
-          eventId = tagValue
+          eventId = generateEventIdFromETag(tag)
           break
         case 'bolt11':
           invoice = tagValue

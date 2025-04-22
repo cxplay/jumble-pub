@@ -33,13 +33,15 @@ export default function ZapDialog({
   setOpen,
   pubkey,
   eventId,
-  defaultAmount
+  defaultAmount,
+  defaultComment
 }: {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
   pubkey: string
   eventId?: string
   defaultAmount?: number
+  defaultComment?: string
 }) {
   const { t } = useTranslation()
   const { isSmallScreen } = useScreenSize()
@@ -88,6 +90,7 @@ export default function ZapDialog({
             recipient={pubkey}
             eventId={eventId}
             defaultAmount={defaultAmount}
+            defaultComment={defaultComment}
           />
         </DrawerContent>
       </Drawer>
@@ -102,7 +105,7 @@ export default function ZapDialog({
           <DialogTitle className="flex gap-2 items-center">
             <div className="shrink-0">{t('Zap to')}</div>
             <UserAvatar size="small" userId={pubkey} />
-            <Username userId={pubkey} className="truncate flex-1 w-0 text-start h-5" />
+            <Username userId={pubkey} className="truncate flex-1 max-w-fit text-start h-5" />
           </DialogTitle>
         </DialogHeader>
         <ZapDialogContent
@@ -111,6 +114,7 @@ export default function ZapDialog({
           recipient={pubkey}
           eventId={eventId}
           defaultAmount={defaultAmount}
+          defaultComment={defaultComment}
         />
       </DialogContent>
     </Dialog>
@@ -121,13 +125,15 @@ function ZapDialogContent({
   setOpen,
   recipient,
   eventId,
-  defaultAmount
+  defaultAmount,
+  defaultComment
 }: {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
   recipient: string
   eventId?: string
   defaultAmount?: number
+  defaultComment?: string
 }) {
   const { t } = useTranslation()
   const { toast } = useToast()
@@ -135,7 +141,7 @@ function ZapDialogContent({
   const { defaultZapSats, defaultZapComment } = useZap()
   const { addZap } = useNoteStats()
   const [sats, setSats] = useState(defaultAmount ?? defaultZapSats)
-  const [comment, setComment] = useState(defaultZapComment)
+  const [comment, setComment] = useState(defaultComment ?? defaultZapComment)
   const [zapping, setZapping] = useState(false)
 
   const handleZap = async () => {

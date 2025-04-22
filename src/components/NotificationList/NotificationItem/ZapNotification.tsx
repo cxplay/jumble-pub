@@ -34,7 +34,7 @@ export function ZapNotification({
   return (
     <div
       className="flex items-center justify-between cursor-pointer py-2"
-      onClick={() => (event ? push(toNote(event)) : pubkey ? push(toProfile(pubkey)) : null)}
+      onClick={() => (eventId ? push(toNote(eventId)) : pubkey ? push(toProfile(pubkey)) : null)}
     >
       <div className="flex gap-2 items-center flex-1 w-0">
         <UserAvatar userId={senderPubkey} size="small" />
