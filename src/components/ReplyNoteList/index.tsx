@@ -89,7 +89,6 @@ export default function ReplyNoteList({
 
     const init = async () => {
       setLoading(true)
-      setEvents([])
 
       try {
         const relayList = await client.fetchRelayList(rootInfo.pubkey)
