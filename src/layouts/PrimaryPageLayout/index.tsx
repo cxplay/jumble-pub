@@ -39,10 +39,21 @@ const PrimaryPageLayout = forwardRef(
       []
     )
 
+    const lastScrollTopRef = useRef(0)
     useEffect(() => {
       if (isSmallScreen) {
-        window.scrollTo({ top: 0 })
-        return
+        if (scrollAreaRef.current?.checkVisibility()) {
+          window.scrollTo({ top: lastScrollTopRef.current })
+        }
+        const handleScroll = () => {
+          if (scrollAreaRef.current?.checkVisibility()) {
+            lastScrollTopRef.current = window.scrollY
+          }
+        }
+        window.addEventListener('scroll', handleScroll)
+        return () => {
+          window.removeEventListener('scroll', handleScroll)
+        }
       }
     }, [current])
 
@@ -50,6 +61,7 @@ const PrimaryPageLayout = forwardRef(
       return (
         <DeepBrowsingProvider active={current === pageName}>
           <div
+            ref={scrollAreaRef}
             style={{
               paddingBottom: 'calc(env(safe-area-inset-bottom) + 3rem)'
             }}
