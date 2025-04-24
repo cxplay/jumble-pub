@@ -35,6 +35,7 @@ export default function ZapButton({ event }: { event: Event }) {
   useEffect(() => {
     client.fetchProfile(event.pubkey).then((profile) => {
       if (!profile) return
+      if (pubkey === profile.pubkey) return
       const lightningAddress = getLightningAddressFromProfile(profile)
       if (lightningAddress) setDisable(false)
     })
