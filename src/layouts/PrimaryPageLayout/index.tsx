@@ -23,6 +23,8 @@ const PrimaryPageLayout = forwardRef(
     ref
   ) => {
     const scrollAreaRef = useRef<HTMLDivElement>(null)
+    const smallScreenScrollAreaRef = useRef<HTMLDivElement>(null)
+    const smallScreenLastScrollTopRef = useRef(0)
     const { isSmallScreen } = useScreenSize()
     const { current } = usePrimaryPage()
 
@@ -39,15 +41,14 @@ const PrimaryPageLayout = forwardRef(
       []
     )
 
-    const lastScrollTopRef = useRef(0)
     useEffect(() => {
       if (isSmallScreen) {
-        if (scrollAreaRef.current?.checkVisibility()) {
-          window.scrollTo({ top: lastScrollTopRef.current })
+        if (smallScreenScrollAreaRef.current?.checkVisibility()) {
+          window.scrollTo({ top: smallScreenLastScrollTopRef.current })
         }
         const handleScroll = () => {
-          if (scrollAreaRef.current?.checkVisibility()) {
-            lastScrollTopRef.current = window.scrollY
+          if (smallScreenScrollAreaRef.current?.checkVisibility()) {
+            smallScreenLastScrollTopRef.current = window.scrollY
           }
         }
         window.addEventListener('scroll', handleScroll)
@@ -55,13 +56,13 @@ const PrimaryPageLayout = forwardRef(
           window.removeEventListener('scroll', handleScroll)
         }
       }
-    }, [current])
+    }, [current, isSmallScreen])
 
     if (isSmallScreen) {
       return (
         <DeepBrowsingProvider active={current === pageName}>
           <div
-            ref={scrollAreaRef}
+            ref={smallScreenScrollAreaRef}
             style={{
               paddingBottom: 'calc(env(safe-area-inset-bottom) + 3rem)'
             }}
