@@ -76,7 +76,7 @@ export default function MainNoteCard({
             event={event}
           />
           {shouldCollapse && !expanded && (
-            <div className="absolute bottom-0 h-20 w-full bg-gradient-to-b from-transparent to-muted flex items-center justify-center">
+            <div className="absolute bottom-0 h-40 w-full bg-gradient-to-b from-transparent to-background/90 flex items-end justify-center pb-4">
               <div className="bg-background rounded-md">
                 <Button
                   className="bg-foreground hover:bg-foreground/80"
