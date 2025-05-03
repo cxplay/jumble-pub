@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils'
+import { cn, isInViewport } from '@/lib/utils'
 import videoManager from '@/services/video-manager.service'
 import { useEffect, useRef } from 'react'
 import NsfwOverlay from '../NsfwOverlay'
@@ -25,11 +25,17 @@ export default function VideoPlayer({
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (!entry.isIntersecting && !video.paused) {
-          videoManager.enterPiP(video)
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            if (isInViewport(container)) {
+              videoManager.autoPlay(video)
+            }
+          }, 200)
+        } else {
+          videoManager.pause(video)
         }
       },
-      { threshold: 0.5 }
+      { threshold: 1 }
     )
 
     observer.observe(container)
@@ -38,13 +44,6 @@ export default function VideoPlayer({
       observer.unobserve(container)
     }
   }, [])
-
-  const handlePlay = async () => {
-    const video = videoRef.current
-    if (!video) return
-
-    await videoManager.playVideo(video)
-  }
 
   return (
     <div ref={containerRef} className="relative">
@@ -55,7 +54,10 @@ export default function VideoPlayer({
         className={cn('rounded-lg', size === 'small' ? 'max-h-[30vh]' : 'max-h-[50vh]', className)}
         src={src}
         onClick={(e) => e.stopPropagation()}
-        onPlay={handlePlay}
+        onPlay={(event) => {
+          videoManager.play(event.currentTarget)
+        }}
+        muted
       />
       {isNsfw && <NsfwOverlay className="rounded-lg" />}
     </div>
