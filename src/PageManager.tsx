@@ -1,6 +1,6 @@
 import Sidebar from '@/components/Sidebar'
 import { Separator } from '@/components/ui/separator'
-import { cn } from '@/lib/utils'
+import { cn, isAndroid } from '@/lib/utils'
 import NoteListPage from '@/pages/primary/NoteListPage'
 import HomePage from '@/pages/secondary/HomePage'
 import { TPageRef } from '@/types'
@@ -20,6 +20,7 @@ import NotificationListPage from './pages/primary/NotificationListPage'
 import { NotificationProvider } from './providers/NotificationProvider'
 import { useScreenSize } from './providers/ScreenSizeProvider'
 import { routes } from './routes'
+import modalManager from './services/modal-manager.service'
 
 export type TPrimaryPageName = keyof typeof PRIMARY_PAGE_MAP
 
@@ -115,6 +116,9 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
     }
 
     const onPopState = (e: PopStateEvent) => {
+      const closeModal = modalManager.pop()
+      if (closeModal) return
+
       let state = e.state as { index: number; url: string } | null
       setSecondaryStack((pre) => {
         const currentItem = pre[pre.length - 1] as TStackItem | undefined
@@ -136,10 +140,7 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
         }
 
         if (state.index === currentIndex) {
-          if (currentIndex !== 0) return pre
-
-          window.history.replaceState(null, '', '/')
-          return []
+          return pre
         }
 
         // Go back
@@ -171,10 +172,25 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
       })
     }
 
+    const onLeave = (event: BeforeUnloadEvent) => {
+      // Cancel the event as stated by the standard.
+      event.preventDefault()
+      // Chrome requires returnValue to be set.
+      event.returnValue = ''
+    }
+
     window.addEventListener('popstate', onPopState)
+
+    if (isAndroid()) {
+      window.addEventListener('beforeunload', onLeave)
+    }
 
     return () => {
       window.removeEventListener('popstate', onPopState)
+
+      if (isAndroid()) {
+        window.removeEventListener('beforeunload', onLeave)
+      }
     }
   }, [])
 
