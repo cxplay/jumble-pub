@@ -112,7 +112,7 @@ export default function ImageGallery({
         createPortal(
           <div onClick={(e) => e.stopPropagation()}>
             <Lightbox
-              index={start + index}
+              index={index}
               slides={images.map(({ url }) => ({ src: url }))}
               plugins={[Zoom]}
               open={index >= 0}
