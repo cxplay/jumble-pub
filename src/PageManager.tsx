@@ -27,6 +27,7 @@ export type TPrimaryPageName = keyof typeof PRIMARY_PAGE_MAP
 type TPrimaryPageContext = {
   navigate: (page: TPrimaryPageName) => void
   current: TPrimaryPageName | null
+  display: boolean
 }
 
 type TSecondaryPageContext = {
@@ -200,7 +201,6 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
       setPrimaryPages((prev) => [...prev, { name: page, element: PRIMARY_PAGE_MAP[page] }])
     }
     setCurrentPrimaryPage(page)
-    PRIMARY_PAGE_REF_MAP[page].current?.scrollToTop()
     if (isSmallScreen) {
       clearSecondaryPages()
     }
@@ -249,7 +249,8 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
       <PrimaryPageContext.Provider
         value={{
           navigate: navigatePrimaryPage,
-          current: secondaryStack.length === 0 ? currentPrimaryPage : null
+          current: currentPrimaryPage,
+          display: secondaryStack.length === 0
         }}
       >
         <SecondaryPageContext.Provider
@@ -295,7 +296,8 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
       <PrimaryPageContext.Provider
         value={{
           navigate: navigatePrimaryPage,
-          current: currentPrimaryPage
+          current: currentPrimaryPage,
+          display: false
         }}
       >
         <SecondaryPageContext.Provider
@@ -326,7 +328,8 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
     <PrimaryPageContext.Provider
       value={{
         navigate: navigatePrimaryPage,
-        current: currentPrimaryPage
+        current: currentPrimaryPage,
+        display: true
       }}
     >
       <SecondaryPageContext.Provider
