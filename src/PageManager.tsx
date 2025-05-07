@@ -207,20 +207,24 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
   }
 
   const pushSecondaryPage = (url: string, index?: number) => {
-    setSecondaryStack((prevStack) => {
-      if (isCurrentPage(prevStack, url)) {
-        const currentItem = prevStack[prevStack.length - 1]
-        if (currentItem?.ref?.current) {
-          currentItem.ref.current.scrollToTop()
+    // FIXME: Temporary solution to prevent the back action after closing
+    // the modal when navigating.
+    setTimeout(() => {
+      setSecondaryStack((prevStack) => {
+        if (isCurrentPage(prevStack, url)) {
+          const currentItem = prevStack[prevStack.length - 1]
+          if (currentItem?.ref?.current) {
+            currentItem.ref.current.scrollToTop()
+          }
+          return prevStack
         }
-        return prevStack
-      }
 
-      const { newStack, newItem } = pushNewPageToStack(prevStack, url, maxStackSize, index)
-      if (newItem) {
-        window.history.pushState({ index: newItem.index, url }, '', url)
-      }
-      return newStack
+        const { newStack, newItem } = pushNewPageToStack(prevStack, url, maxStackSize, index)
+        if (newItem) {
+          window.history.pushState({ index: newItem.index, url }, '', url)
+        }
+        return newStack
+      })
     })
   }
 
