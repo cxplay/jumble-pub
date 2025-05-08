@@ -196,11 +196,15 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
   }, [])
 
   const navigatePrimaryPage = (page: TPrimaryPageName) => {
+    const needScrollToTop = page === currentPrimaryPage
     const exists = primaryPages.find((p) => p.name === page)
     if (!exists) {
       setPrimaryPages((prev) => [...prev, { name: page, element: PRIMARY_PAGE_MAP[page] }])
     }
     setCurrentPrimaryPage(page)
+    if (needScrollToTop) {
+      PRIMARY_PAGE_REF_MAP[page].current?.scrollToTop()
+    }
     if (isSmallScreen) {
       clearSecondaryPages()
     }
