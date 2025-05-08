@@ -229,7 +229,7 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
         }
         return newStack
       })
-    })
+    }, 10)
   }
 
   const popSecondaryPage = () => {
