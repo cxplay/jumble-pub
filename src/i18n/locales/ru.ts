@@ -228,6 +228,9 @@ export default {
     'no bookmarks found': 'Закладки не найдены',
     'no more bookmarks': 'Больше нет закладок',
     Bookmarks: 'Закладки',
-    'Show more': 'Показать больше'
+    'Show more': 'Показать больше',
+    General: 'Общие',
+    Autoplay: 'Автовоспроизведение',
+    'Enable video autoplay on this device': 'Включить автовоспроизведение видео на этом устройстве'
   }
 }

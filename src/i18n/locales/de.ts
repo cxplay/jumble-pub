@@ -228,6 +228,10 @@ export default {
     'no bookmarks found': 'Keine Lesezeichen gefunden',
     'no more bookmarks': 'Keine weiteren Lesezeichen',
     Bookmarks: 'Lesezeichen',
-    'Show more': 'Mehr anzeigen'
+    'Show more': 'Mehr anzeigen',
+    General: 'Allgemein',
+    Autoplay: 'Automatische Wiedergabe',
+    'Enable video autoplay on this device':
+      'Aktiviere die automatische Video-Wiedergabe auf diesem Gerät'
   }
 }

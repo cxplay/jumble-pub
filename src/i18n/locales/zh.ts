@@ -225,6 +225,9 @@ export default {
     'no bookmarks found': '暂无收藏',
     'no more bookmarks': '到底了',
     Bookmarks: '收藏',
-    'Show more': '显示更多'
+    'Show more': '显示更多',
+    General: '常规',
+    Autoplay: '自动播放',
+    'Enable video autoplay on this device': '在此设备上启用视频自动播放'
   }
 }

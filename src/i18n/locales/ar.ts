@@ -224,6 +224,9 @@ export default {
     'no bookmarks found': 'لم يتم العثور على إشارات',
     'no more bookmarks': 'لا مزيد من الإشارات',
     Bookmarks: 'الإشارات المرجعية',
-    'Show more': 'عرض المزيد'
+    'Show more': 'عرض المزيد',
+    General: 'عام',
+    Autoplay: 'التشغيل التلقائي',
+    'Enable video autoplay on this device': 'تمكين التشغيل التلقائي للفيديو على هذا الجهاز'
   }
 }

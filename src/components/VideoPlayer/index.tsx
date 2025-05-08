@@ -1,4 +1,5 @@
 import { cn, isInViewport } from '@/lib/utils'
+import { useAutoplay } from '@/providers/AutoplayProvider'
 import videoManager from '@/services/video-manager.service'
 import { useEffect, useRef } from 'react'
 import NsfwOverlay from '../NsfwOverlay'
@@ -12,10 +13,13 @@ export default function VideoPlayer({
   className?: string
   isNsfw?: boolean
 }) {
+  const { autoplay } = useAutoplay()
   const videoRef = useRef<HTMLVideoElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    if (!autoplay) return
+
     const video = videoRef.current
     const container = containerRef.current
 
@@ -41,7 +45,7 @@ export default function VideoPlayer({
     return () => {
       observer.unobserve(container)
     }
-  }, [])
+  }, [autoplay])
 
   return (
     <div ref={containerRef} className="relative">

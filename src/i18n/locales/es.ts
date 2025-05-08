@@ -228,6 +228,10 @@ export default {
     'no bookmarks found': 'No se encontraron marcadores',
     'no more bookmarks': 'No hay más marcadores',
     Bookmarks: 'Marcadores',
-    'Show more': 'Mostrar más'
+    'Show more': 'Mostrar más',
+    General: 'General',
+    Autoplay: 'Reproducción automática',
+    'Enable video autoplay on this device':
+      'Habilitar reproducción automática de video en este dispositivo'
   }
 }

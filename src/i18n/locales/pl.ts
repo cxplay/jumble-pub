@@ -226,6 +226,9 @@ export default {
     'no bookmarks found': 'Nie znaleziono zakładek',
     'no more bookmarks': 'Koniec zakładek',
     Bookmarks: 'Zakładki',
-    'Show more': 'Pokaż więcej'
+    'Show more': 'Pokaż więcej',
+    General: 'Ogólne',
+    Autoplay: 'Autoodtwarzanie',
+    'Enable video autoplay on this device': 'Włącz automatyczne odtwarzanie wideo na tym urządzeniu'
   }
 }

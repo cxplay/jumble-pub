@@ -224,6 +224,9 @@ export default {
     'no bookmarks found': 'no bookmarks found',
     'no more bookmarks': 'no more bookmarks',
     Bookmarks: 'Bookmarks',
-    'Show more': 'Show more'
+    'Show more': 'Show more',
+    General: 'General',
+    Autoplay: 'Autoplay',
+    'Enable video autoplay on this device': 'Enable video autoplay on this device'
   }
 }

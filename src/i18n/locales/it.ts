@@ -227,6 +227,10 @@ export default {
     'no bookmarks found': 'Nessun segnalibro trovato',
     'no more bookmarks': 'Nessun altro segnalibro',
     Bookmarks: 'Segnalibri',
-    'Show more': 'Mostra di più'
+    'Show more': 'Mostra di più',
+    General: 'Generale',
+    Autoplay: 'Riproduzione automatica',
+    'Enable video autoplay on this device':
+      'Abilita riproduzione automatica video su questo dispositivo'
   }
 }

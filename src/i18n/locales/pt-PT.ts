@@ -227,6 +227,10 @@ export default {
     'no bookmarks found': 'Nenhum favorito encontrado',
     'no more bookmarks': 'Sem mais favoritos',
     Bookmarks: 'Favoritos',
-    'Show more': 'Mostrar mais'
+    'Show more': 'Mostrar mais',
+    General: 'Geral',
+    Autoplay: 'Reprodução Automática',
+    'Enable video autoplay on this device':
+      'Habilitar reprodução automática de vídeo neste dispositivo'
   }
 }

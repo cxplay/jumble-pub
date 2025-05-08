@@ -225,6 +225,9 @@ export default {
     'no bookmarks found': 'ブックマークが見つかりません',
     'no more bookmarks': 'これ以上ブックマークはありません',
     Bookmarks: 'ブックマーク一覧',
-    'Show more': 'もっと見る'
+    'Show more': 'もっと見る',
+    General: '一般',
+    Autoplay: '自動再生',
+    'Enable video autoplay on this device': 'このデバイスでのビデオ自動再生を有効にする'
   }
 }
