@@ -6,13 +6,11 @@ import NsfwOverlay from '../NsfwOverlay'
 export default function VideoPlayer({
   src,
   className,
-  isNsfw = false,
-  size = 'normal'
+  isNsfw = false
 }: {
   src: string
   className?: string
   isNsfw?: boolean
-  size?: 'normal' | 'small'
 }) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -51,7 +49,7 @@ export default function VideoPlayer({
         ref={videoRef}
         controls
         playsInline
-        className={cn('rounded-lg', size === 'small' ? 'max-h-[30vh]' : 'max-h-[50vh]', className)}
+        className={cn('rounded-lg max-h-[80vh] sm:max-h-[50vh] border', className)}
         src={src}
         onClick={(e) => e.stopPropagation()}
         onPlay={(event) => {

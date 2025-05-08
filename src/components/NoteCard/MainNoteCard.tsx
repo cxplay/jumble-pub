@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { toNote } from '@/lib/link'
-import { cn } from '@/lib/utils'
 import { useSecondaryPage } from '@/PageManager'
 import { Event } from 'nostr-tools'
 import { useEffect, useRef, useState } from 'react'
@@ -35,7 +34,7 @@ export default function MainNoteCard({
 
     const checkHeight = () => {
       const fullHeight = contentEl.scrollHeight
-      if (fullHeight > 900) {
+      if (fullHeight > 1000) {
         setShouldCollapse(true)
       }
     }
@@ -91,7 +90,7 @@ export default function MainNoteCard({
             </div>
           )}
         </div>
-        {!embedded && <NoteStats className={cn('mt-3', embedded ? '' : 'px-4')} event={event} />}
+        {!embedded && <NoteStats className="mt-3 px-4" event={event} />}
       </div>
       {!embedded && <Separator />}
     </div>

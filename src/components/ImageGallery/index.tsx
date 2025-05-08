@@ -1,6 +1,5 @@
 import { randomString } from '@/lib/random'
 import { cn } from '@/lib/utils'
-import { useScreenSize } from '@/providers/ScreenSizeProvider'
 import modalManager from '@/services/modal-manager.service'
 import { TImageInfo } from '@/types'
 import { ReactNode, useEffect, useMemo, useState } from 'react'
@@ -14,19 +13,16 @@ export default function ImageGallery({
   className,
   images,
   isNsfw = false,
-  size = 'normal',
   start = 0,
   end = images.length
 }: {
   className?: string
   images: TImageInfo[]
   isNsfw?: boolean
-  size?: 'normal' | 'small'
   start?: number
   end?: number
 }) {
   const id = useMemo(() => `image-gallery-${randomString()}`, [])
-  const { isSmallScreen } = useScreenSize()
   const [index, setIndex] = useState(-1)
   useEffect(() => {
     if (index >= 0) {
@@ -50,34 +46,21 @@ export default function ImageGallery({
     imageContent = (
       <Image
         key={0}
-        className={cn('rounded-lg', size === 'small' ? 'max-h-[15vh]' : 'max-h-[30vh]')}
+        className="rounded-lg max-h-[80vh] sm:max-h-[50vh] border"
         classNames={{
-          errorPlaceholder: cn('aspect-square', size === 'small' ? 'h-[15vh]' : 'h-[30vh]')
+          errorPlaceholder: 'aspect-square h-[30vh]'
         }}
         image={displayImages[0]}
         onClick={(e) => handlePhotoClick(e, 0)}
       />
     )
-  } else if (size === 'small') {
+  } else if (displayImages.length === 2 || displayImages.length === 4) {
     imageContent = (
-      <div className="grid grid-cols-4 gap-2">
+      <div className="grid grid-cols-2 gap-2 w-full">
         {displayImages.map((image, i) => (
           <Image
             key={i}
-            className={cn('aspect-square w-full rounded-lg')}
-            image={image}
-            onClick={(e) => handlePhotoClick(e, i)}
-          />
-        ))}
-      </div>
-    )
-  } else if (isSmallScreen && (displayImages.length === 2 || displayImages.length === 4)) {
-    imageContent = (
-      <div className="grid grid-cols-2 gap-2">
-        {displayImages.map((image, i) => (
-          <Image
-            key={i}
-            className={cn('aspect-square w-full rounded-lg')}
+            className="aspect-square w-full rounded-lg border"
             image={image}
             onClick={(e) => handlePhotoClick(e, i)}
           />
@@ -90,7 +73,7 @@ export default function ImageGallery({
         {displayImages.map((image, i) => (
           <Image
             key={i}
-            className={cn('aspect-square w-full rounded-lg')}
+            className="aspect-square w-full rounded-lg border"
             image={image}
             onClick={(e) => handlePhotoClick(e, i)}
           />

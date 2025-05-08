@@ -55,7 +55,7 @@ export default function ReplyNote({
         </div>
         {parentEvent && (
           <ParentNotePreview
-            className="mt-1"
+            className="mt-2"
             event={parentEvent}
             onClick={(e) => {
               e.stopPropagation()
@@ -65,7 +65,7 @@ export default function ReplyNote({
         )}
         {show ? (
           <>
-            <Content className="mt-1" event={event} size="small" />
+            <Content className="mt-2" event={event} />
             <NoteStats className="mt-2" event={event} variant="reply" />
           </>
         ) : (
