@@ -143,8 +143,6 @@ export default function ReplyNoteList({
     const rootEventId = getRootEventHexId(event) ?? event.id
     const isRootEvent = rootEventId === event.id
     for (const evt of events) {
-      if (evt.created_at < event.created_at) continue
-
       const parentEventId = getParentEventHexId(evt)
       if (parentEventId) {
         const parentReplyInfo = replyMap.get(parentEventId)
