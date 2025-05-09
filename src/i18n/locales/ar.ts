@@ -110,8 +110,6 @@ export default {
     'Picture note requires images': 'ملاحظة الصورة تتطلب صور',
     Relays: 'الريلايات',
     image: 'صورة',
-    'Normal Note': 'ملاحظة عادية',
-    'Picture Note': 'ملاحظة الصورة',
     'R & W': 'قراءة وكتابة',
     Read: 'قراءة',
     Write: 'كتابة',
@@ -227,6 +225,8 @@ export default {
     'Show more': 'عرض المزيد',
     General: 'عام',
     Autoplay: 'التشغيل التلقائي',
-    'Enable video autoplay on this device': 'تمكين التشغيل التلقائي للفيديو على هذا الجهاز'
+    'Enable video autoplay on this device': 'تمكين التشغيل التلقائي للفيديو على هذا الجهاز',
+    'Paste or drop media files to upload': 'الصق أو اسحب ملفات الوسائط لتحميلها',
+    Preview: 'معاينة'
   }
 }

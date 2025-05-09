@@ -110,8 +110,6 @@ export default {
     'Picture note requires images': 'Picture note requires images',
     Relays: 'Relays',
     image: 'image',
-    'Normal Note': 'Normal Note',
-    'Picture Note': 'Picture Note',
     'R & W': 'R & W',
     Read: 'Read',
     Write: 'Write',
@@ -227,6 +225,8 @@ export default {
     'Show more': 'Show more',
     General: 'General',
     Autoplay: 'Autoplay',
-    'Enable video autoplay on this device': 'Enable video autoplay on this device'
+    'Enable video autoplay on this device': 'Enable video autoplay on this device',
+    'Paste or drop media files to upload': 'Paste or drop media files to upload',
+    Preview: 'Preview'
   }
 }

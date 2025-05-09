@@ -111,8 +111,6 @@ export default {
     'Picture note requires images': 'La nota con imagen requiere imágenes',
     Relays: 'Relés',
     image: 'imagen',
-    'Normal Note': 'Nota normal',
-    'Picture Note': 'Nota con imagen',
     'R & W': 'L y E',
     Read: 'Leer',
     Write: 'Escribir',
@@ -232,6 +230,8 @@ export default {
     General: 'General',
     Autoplay: 'Reproducción automática',
     'Enable video autoplay on this device':
-      'Habilitar reproducción automática de video en este dispositivo'
+      'Habilitar reproducción automática de video en este dispositivo',
+    'Paste or drop media files to upload': 'Pegar o soltar archivos multimedia para cargar',
+    Preview: 'Vista previa'
   }
 }

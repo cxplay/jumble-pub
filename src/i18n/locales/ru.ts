@@ -112,8 +112,6 @@ export default {
     'Picture note requires images': 'Заметка с изображением требует наличия изображений',
     Relays: 'Ретрансляторы',
     image: 'изображение',
-    'Normal Note': 'Обычная заметка',
-    'Picture Note': 'Заметка с изображением',
     'R & W': 'Чтение & Запись',
     Read: 'Читать',
     Write: 'Писать',
@@ -231,6 +229,8 @@ export default {
     'Show more': 'Показать больше',
     General: 'Общие',
     Autoplay: 'Автовоспроизведение',
-    'Enable video autoplay on this device': 'Включить автовоспроизведение видео на этом устройстве'
+    'Enable video autoplay on this device': 'Включить автовоспроизведение видео на этом устройстве',
+    'Paste or drop media files to upload': 'Вставьте или перетащите медиафайлы для загрузки',
+    Preview: 'Предварительный просмотр'
   }
 }

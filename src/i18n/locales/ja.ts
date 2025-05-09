@@ -111,8 +111,6 @@ export default {
     'Picture note requires images': '画像ノートには画像が必要です',
     Relays: 'リレイ',
     image: '画像',
-    'Normal Note': '通常ノート',
-    'Picture Note': '画像ノート',
     'R & W': '読＆書',
     Read: '読む',
     Write: '書く',
@@ -228,6 +226,8 @@ export default {
     'Show more': 'もっと見る',
     General: '一般',
     Autoplay: '自動再生',
-    'Enable video autoplay on this device': 'このデバイスでのビデオ自動再生を有効にする'
+    'Enable video autoplay on this device': 'このデバイスでのビデオ自動再生を有効にする',
+    'Paste or drop media files to upload': 'メディアファイルを貼り付けるかドロップしてアップロード',
+    Preview: 'プレビュー'
   }
 }

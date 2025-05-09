@@ -111,8 +111,6 @@ export default {
     'Picture note requires images': 'Bildnotiz erfordert Bilder',
     Relays: 'Relays',
     image: 'Bild',
-    'Normal Note': 'Normale Notiz',
-    'Picture Note': 'Bildnotiz',
     'R & W': 'R & W',
     Read: 'Lesen',
     Write: 'Schreiben',
@@ -232,6 +230,9 @@ export default {
     General: 'Allgemein',
     Autoplay: 'Automatische Wiedergabe',
     'Enable video autoplay on this device':
-      'Aktiviere die automatische Video-Wiedergabe auf diesem Gerät'
+      'Aktiviere die automatische Video-Wiedergabe auf diesem Gerät',
+    'Paste or drop media files to upload':
+      'Füge Medien-Dateien ein oder ziehe sie hierher, um sie hochzuladen',
+    Preview: 'Vorschau'
   }
 }

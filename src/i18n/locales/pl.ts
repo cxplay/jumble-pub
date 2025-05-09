@@ -110,8 +110,6 @@ export default {
     'Picture note requires images': 'Wpis graficzny wymaga obrazów',
     Relays: 'Transmitery',
     image: 'grafika',
-    'Normal Note': 'Zwykły wpis',
-    'Picture Note': 'Wpis graficzny',
     'R & W': 'O & Z',
     Read: 'Odczyt',
     Write: 'Zapis',
@@ -229,6 +227,9 @@ export default {
     'Show more': 'Pokaż więcej',
     General: 'Ogólne',
     Autoplay: 'Autoodtwarzanie',
-    'Enable video autoplay on this device': 'Włącz automatyczne odtwarzanie wideo na tym urządzeniu'
+    'Enable video autoplay on this device':
+      'Włącz automatyczne odtwarzanie wideo na tym urządzeniu',
+    'Paste or drop media files to upload': 'Wklej lub upuść pliki multimedialne, aby przesłać',
+    Preview: 'Podgląd'
   }
 }
