@@ -228,6 +228,8 @@ export default {
     Autoplay: '自动播放',
     'Enable video autoplay on this device': '在此设备上启用视频自动播放',
     'Paste or drop media files to upload': '支持粘贴或拖放媒体文件进行上传',
-    Preview: '预览'
+    Preview: '预览',
+    'You are about to publish an event signed by [{{eventAuthorName}}]. You are currently logged in as [{{currentUsername}}]. Are you sure?':
+      '您即将发布一条由 [{{eventAuthorName}}] 签名的事件。您当前以 [{{currentUsername}}] 登录。确定吗？'
   }
 }

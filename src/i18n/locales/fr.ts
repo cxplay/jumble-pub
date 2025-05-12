@@ -232,6 +232,8 @@ export default {
       'Activer la lecture automatique des vidéos sur cet appareil',
     'Paste or drop media files to upload':
       'Coller ou déposer des fichiers multimédias à télécharger',
-    Preview: 'Aperçu'
+    Preview: 'Aperçu',
+    'You are about to publish an event signed by [{{eventAuthorName}}]. You are currently logged in as [{{currentUsername}}]. Are you sure?':
+      'Vous êtes sur le point de publier un événement signé par [{{eventAuthorName}}]. Vous êtes actuellement connecté en tant que [{{currentUsername}}]. Êtes-vous sûr ?'
   }
 }

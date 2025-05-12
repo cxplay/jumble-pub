@@ -227,6 +227,8 @@ export default {
     Autoplay: 'Autoplay',
     'Enable video autoplay on this device': 'Enable video autoplay on this device',
     'Paste or drop media files to upload': 'Paste or drop media files to upload',
-    Preview: 'Preview'
+    Preview: 'Preview',
+    'You are about to publish an event signed by [{{eventAuthorName}}]. You are currently logged in as [{{currentUsername}}]. Are you sure?':
+      'You are about to publish an event signed by [{{eventAuthorName}}]. You are currently logged in as [{{currentUsername}}]. Are you sure?'
   }
 }

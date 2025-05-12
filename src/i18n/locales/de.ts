@@ -233,6 +233,8 @@ export default {
       'Aktiviere die automatische Video-Wiedergabe auf diesem Gerät',
     'Paste or drop media files to upload':
       'Füge Medien-Dateien ein oder ziehe sie hierher, um sie hochzuladen',
-    Preview: 'Vorschau'
+    Preview: 'Vorschau',
+    'You are about to publish an event signed by [{{eventAuthorName}}]. You are currently logged in as [{{currentUsername}}]. Are you sure?':
+      'Du bist dabei, ein Ereignis zu veröffentlichen, das von [{{eventAuthorName}}] signiert wurde. Du bist derzeit als [{{currentUsername}}] angemeldet. Bist du sicher?'
   }
 }

@@ -228,6 +228,8 @@ export default {
     Autoplay: '自動再生',
     'Enable video autoplay on this device': 'このデバイスでのビデオ自動再生を有効にする',
     'Paste or drop media files to upload': 'メディアファイルを貼り付けるかドロップしてアップロード',
-    Preview: 'プレビュー'
+    Preview: 'プレビュー',
+    'You are about to publish an event signed by [{{eventAuthorName}}]. You are currently logged in as [{{currentUsername}}]. Are you sure?':
+      'あなたは[{{eventAuthorName}}]によって署名されたイベントを公開しようとしています。現在[{{currentUsername}}]としてログインしています。よろしいですか？'
   }
 }

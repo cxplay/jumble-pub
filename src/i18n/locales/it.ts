@@ -231,6 +231,8 @@ export default {
     'Enable video autoplay on this device':
       'Abilita riproduzione automatica video su questo dispositivo',
     'Paste or drop media files to upload': 'Incolla o trascina i file multimediali per caricarli',
-    Preview: 'Anteprima'
+    Preview: 'Anteprima',
+    'You are about to publish an event signed by [{{eventAuthorName}}]. You are currently logged in as [{{currentUsername}}]. Are you sure?':
+      'Stai per pubblicare un evento firmato da [{{eventAuthorName}}]. Attualmente sei connesso come [{{currentUsername}}]. Sei sicuro?'
   }
 }
