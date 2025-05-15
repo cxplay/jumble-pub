@@ -40,8 +40,10 @@ class ClientService extends EventTarget {
     | string[]
     | undefined
   > = {}
-  private eventDataLoader = new DataLoader<string, NEvent | undefined>((ids) =>
-    Promise.all(ids.map((id) => this._fetchEvent(id)))
+  private eventCacheMap = new Map<string, Promise<NEvent | undefined>>()
+  private eventDataLoader = new DataLoader<string, NEvent | undefined>(
+    (ids) => Promise.all(ids.map((id) => this._fetchEvent(id))),
+    { cacheMap: this.eventCacheMap }
   )
   private fetchEventFromBigRelaysDataloader = new DataLoader<string, NEvent | undefined>(
     this.fetchEventsFromBigRelays.bind(this),
@@ -609,7 +611,7 @@ class ClientService extends EventTarget {
           break
       }
       if (eventId) {
-        const cache = await this.eventDataLoader.load(eventId)
+        const cache = this.eventCacheMap.get(eventId)
         if (cache) {
           return cache
         }
