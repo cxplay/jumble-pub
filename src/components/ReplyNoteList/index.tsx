@@ -1,21 +1,22 @@
 import { Separator } from '@/components/ui/separator'
 import { BIG_RELAY_URLS } from '@/constants'
 import {
-  getParentEventHexId,
+  getParentEventTag,
   getRootEventHexId,
   getRootEventTag,
   isReplyNoteEvent
 } from '@/lib/event'
 import { generateEventIdFromETag } from '@/lib/tag'
 import { useSecondaryPage } from '@/PageManager'
-import { useNoteStats } from '@/providers/NoteStatsProvider'
+import { useReply } from '@/providers/ReplyProvider'
 import client from '@/services/client.service'
 import { Event as NEvent, kinds } from 'nostr-tools'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import ReplyNote from '../ReplyNote'
 
 const LIMIT = 100
+const SHOW_COUNT = 10
 
 export default function ReplyNoteList({
   index,
@@ -29,16 +30,13 @@ export default function ReplyNoteList({
   const { t } = useTranslation()
   const { currentIndex } = useSecondaryPage()
   const [rootInfo, setRootInfo] = useState<{ id: string; pubkey: string } | undefined>(undefined)
+  const { repliesMap, addReplies } = useReply()
+  const replies = useMemo(() => repliesMap.get(event.id)?.events || [], [event.id, repliesMap])
   const [timelineKey, setTimelineKey] = useState<string | undefined>(undefined)
   const [until, setUntil] = useState<number | undefined>(undefined)
-  const [events, setEvents] = useState<NEvent[]>([])
-  const [replies, setReplies] = useState<NEvent[]>([])
-  const [replyMap, setReplyMap] = useState<
-    Map<string, { event: NEvent; level: number; parent?: NEvent } | undefined>
-  >(new Map())
   const [loading, setLoading] = useState<boolean>(false)
+  const [showCount, setShowCount] = useState(SHOW_COUNT)
   const [highlightReplyId, setHighlightReplyId] = useState<string | undefined>(undefined)
-  const { updateNoteReplyCount } = useNoteStats()
   const replyRefs = useRef<Record<string, HTMLDivElement | null>>({})
   const bottomRef = useRef<HTMLDivElement | null>(null)
 
@@ -66,10 +64,7 @@ export default function ReplyNoteList({
   }, [event])
 
   const onNewReply = useCallback((evt: NEvent) => {
-    setEvents((pre) => {
-      if (pre.some((reply) => reply.id === evt.id)) return pre
-      return [...pre, evt]
-    })
+    addReplies([evt])
   }, [])
 
   useEffect(() => {
@@ -114,7 +109,7 @@ export default function ReplyNoteList({
           {
             onEvents: (evts, eosed) => {
               if (evts.length > 0) {
-                setEvents(evts.filter((evt) => isReplyNoteEvent(evt)).reverse())
+                addReplies(evts.filter((evt) => isReplyNoteEvent(evt)))
               }
               if (eosed) {
                 setUntil(evts.length >= LIMIT ? evts[evts.length - 1].created_at - 1 : undefined)
@@ -123,7 +118,7 @@ export default function ReplyNoteList({
             },
             onNew: (evt) => {
               if (!isReplyNoteEvent(evt)) return
-              onNewReply(evt)
+              addReplies([evt])
             }
           }
         )
@@ -142,44 +137,45 @@ export default function ReplyNoteList({
   }, [rootInfo, currentIndex, index, onNewReply])
 
   useEffect(() => {
-    const replies: NEvent[] = []
-    const replyMap: Map<string, { event: NEvent; level: number; parent?: NEvent } | undefined> =
-      new Map()
-    const rootEventId = getRootEventHexId(event) ?? event.id
-    const isRootEvent = rootEventId === event.id
-    for (const evt of events) {
-      const parentEventId = getParentEventHexId(evt)
-      if (parentEventId) {
-        const parentReplyInfo = replyMap.get(parentEventId)
-        if (!parentReplyInfo && parentEventId !== event.id) continue
-
-        const level = parentReplyInfo ? parentReplyInfo.level + 1 : 1
-        replies.push(evt)
-        replyMap.set(evt.id, { event: evt, level, parent: parentReplyInfo?.event })
-        continue
-      }
-
-      if (!isRootEvent) continue
-
-      replies.push(evt)
-      replyMap.set(evt.id, { event: evt, level: 1 })
-    }
-    setReplyMap(replyMap)
-    setReplies(replies)
-    updateNoteReplyCount(event.id, replies.length)
     if (replies.length === 0) {
       loadMore()
     }
-  }, [events, event, updateNoteReplyCount])
+  }, [replies])
+
+  useEffect(() => {
+    const options = {
+      root: null,
+      rootMargin: '10px',
+      threshold: 0.1
+    }
+
+    const observerInstance = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && showCount < replies.length) {
+        setShowCount((prev) => prev + SHOW_COUNT)
+      }
+    }, options)
+
+    const currentBottomRef = bottomRef.current
+
+    if (currentBottomRef) {
+      observerInstance.observe(currentBottomRef)
+    }
+
+    return () => {
+      if (observerInstance && currentBottomRef) {
+        observerInstance.unobserve(currentBottomRef)
+      }
+    }
+  }, [replies, showCount])
 
   const loadMore = useCallback(async () => {
     if (loading || !until || !timelineKey) return
 
     setLoading(true)
     const events = await client.loadMoreTimeline(timelineKey, until, LIMIT)
-    const olderEvents = events.filter((evt) => isReplyNoteEvent(evt)).reverse()
+    const olderEvents = events.filter((evt) => isReplyNoteEvent(evt))
     if (olderEvents.length > 0) {
-      setEvents((pre) => [...olderEvents, ...pre])
+      addReplies(olderEvents)
     }
     setUntil(events.length ? events[events.length - 1].created_at - 1 : undefined)
     setLoading(false)
@@ -210,14 +206,16 @@ export default function ReplyNoteList({
       )}
       {replies.length > 0 && (loading || until) && <Separator className="mt-2" />}
       <div className={className}>
-        {replies.map((reply) => {
-          const info = replyMap.get(reply.id)
+        {replies.slice(0, showCount).map((reply) => {
+          const parentEventTag = getParentEventTag(reply)
+          const parentEventOriginalId = parentEventTag?.[1]
+          const parentEventId = parentEventTag ? generateEventIdFromETag(parentEventTag) : undefined
           return (
             <div ref={(el) => (replyRefs.current[reply.id] = el)} key={reply.id}>
               <ReplyNote
                 event={reply}
-                parentEvent={info?.parent}
-                onClickParent={highlightReply}
+                parentEventId={event.id !== parentEventOriginalId ? parentEventId : undefined}
+                onClickParent={() => parentEventOriginalId && highlightReply(parentEventOriginalId)}
                 highlight={highlightReplyId === reply.id}
               />
             </div>

@@ -1,6 +1,7 @@
+import client from '@/services/client.service'
 import { TImageInfo } from '@/types'
 import { isBlurhashValid } from 'blurhash'
-import { nip19 } from 'nostr-tools'
+import { Event, nip19 } from 'nostr-tools'
 import { isValidPubkey } from './pubkey'
 
 export function tagNameEquals(tagName: string) {
@@ -26,6 +27,11 @@ export function generateEventIdFromETag(tag: string[]) {
   } catch {
     return undefined
   }
+}
+
+export function generateEventId(event: Pick<Event, 'id' | 'pubkey'>) {
+  const relay = client.getEventHint(event.id)
+  return nip19.neventEncode({ id: event.id, author: event.pubkey, relays: [relay] })
 }
 
 export function extractImageInfoFromTag(tag: string[]): TImageInfo | null {

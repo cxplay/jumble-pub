@@ -16,8 +16,7 @@ export default function NoteStats({
   event,
   className,
   classNames,
-  fetchIfNotExisting = false,
-  variant = 'note'
+  fetchIfNotExisting = false
 }: {
   event: Event
   className?: string
@@ -25,7 +24,6 @@ export default function NoteStats({
     buttonBar?: string
   }
   fetchIfNotExisting?: boolean
-  variant?: 'note' | 'reply'
 }) {
   const { isSmallScreen } = useScreenSize()
   const { fetchNoteStats } = useNoteStats()
@@ -50,7 +48,7 @@ export default function NoteStats({
           )}
           onClick={(e) => e.stopPropagation()}
         >
-          <ReplyButton event={event} variant={variant} />
+          <ReplyButton event={event} />
           <RepostButton event={event} />
           <LikeButton event={event} />
           <ZapButton event={event} />
@@ -70,7 +68,7 @@ export default function NoteStats({
           className={cn('flex items-center', loading ? 'animate-pulse' : '')}
           onClick={(e) => e.stopPropagation()}
         >
-          <ReplyButton event={event} variant={variant} />
+          <ReplyButton event={event} />
           <RepostButton event={event} />
           <LikeButton event={event} />
           <ZapButton event={event} />

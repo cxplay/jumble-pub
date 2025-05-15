@@ -1,5 +1,5 @@
 import { useNostr } from '@/providers/NostrProvider'
-import { useNoteStats } from '@/providers/NoteStatsProvider'
+import { useReply } from '@/providers/ReplyProvider'
 import { MessageCircle } from 'lucide-react'
 import { Event } from 'nostr-tools'
 import { useMemo, useState } from 'react'
@@ -7,19 +7,13 @@ import { useTranslation } from 'react-i18next'
 import PostEditor from '../PostEditor'
 import { formatCount } from './utils'
 
-export default function ReplyButton({
-  event,
-  variant = 'note'
-}: {
-  event: Event
-  variant?: 'note' | 'reply'
-}) {
+export default function ReplyButton({ event }: { event: Event }) {
   const { t } = useTranslation()
   const { checkLogin } = useNostr()
-  const { noteStatsMap } = useNoteStats()
-  const { replyCount } = useMemo(
-    () => (variant === 'reply' ? {} : (noteStatsMap.get(event.id) ?? {})),
-    [noteStatsMap, event.id, variant]
+  const { repliesMap } = useReply()
+  const replyCount = useMemo(
+    () => repliesMap.get(event.id)?.events.length || 0,
+    [repliesMap, event.id]
   )
   const [open, setOpen] = useState(false)
 
@@ -36,9 +30,7 @@ export default function ReplyButton({
         title={t('Reply')}
       >
         <MessageCircle />
-        {variant !== 'reply' && !!replyCount && (
-          <div className="text-sm">{formatCount(replyCount)}</div>
-        )}
+        {!!replyCount && <div className="text-sm">{formatCount(replyCount)}</div>}
       </button>
       <PostEditor parentEvent={event} open={open} setOpen={setOpen} />
     </>

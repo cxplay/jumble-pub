@@ -1,9 +1,11 @@
+import { useReply } from '@/providers/ReplyProvider'
 import client from '@/services/client.service'
 import { Event } from 'nostr-tools'
 import { useEffect, useState } from 'react'
 
 export function useFetchEvent(eventId?: string) {
   const [isFetching, setIsFetching] = useState(true)
+  const { addReplies } = useReply()
   const [error, setError] = useState<Error | null>(null)
   const [event, setEvent] = useState<Event | undefined>(undefined)
 
@@ -20,6 +22,7 @@ export function useFetchEvent(eventId?: string) {
         const event = await client.fetchEvent(eventId)
         if (event) {
           setEvent(event)
+          addReplies([event])
         }
       } catch (error) {
         setError(error as Error)

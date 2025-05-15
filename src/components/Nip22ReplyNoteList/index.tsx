@@ -1,10 +1,9 @@
 import { Separator } from '@/components/ui/separator'
 import { BIG_RELAY_URLS, ExtendedKind } from '@/constants'
 import { isCommentEvent, isProtectedEvent } from '@/lib/event'
-import { tagNameEquals } from '@/lib/tag'
+import { generateEventId, tagNameEquals } from '@/lib/tag'
 import { cn } from '@/lib/utils'
 import { useNostr } from '@/providers/NostrProvider'
-import { useNoteStats } from '@/providers/NoteStatsProvider'
 import client from '@/services/client.service'
 import dayjs from 'dayjs'
 import { Event as NEvent } from 'nostr-tools'
@@ -31,7 +30,6 @@ export default function Nip22ReplyNoteList({
   >({})
   const [loading, setLoading] = useState<boolean>(false)
   const [highlightReplyId, setHighlightReplyId] = useState<string | undefined>(undefined)
-  const { updateNoteReplyCount } = useNoteStats()
   const replyRefs = useRef<Record<string, HTMLDivElement | null>>({})
   const bottomRef = useRef<HTMLDivElement | null>(null)
 
@@ -111,8 +109,6 @@ export default function Nip22ReplyNoteList({
   }, [event])
 
   useEffect(() => {
-    updateNoteReplyCount(event.id, replies.length)
-
     const replyMap: Record<string, { event: NEvent; level: number; parent?: NEvent } | undefined> =
       {}
     for (const reply of replies) {
@@ -128,7 +124,7 @@ export default function Nip22ReplyNoteList({
       continue
     }
     setReplyMap(replyMap)
-  }, [replies, event.id, updateNoteReplyCount])
+  }, [replies, event.id])
 
   const loadMore = useCallback(async () => {
     if (loading || !until || !timelineKey) return
@@ -192,8 +188,8 @@ export default function Nip22ReplyNoteList({
             <div ref={(el) => (replyRefs.current[reply.id] = el)} key={reply.id}>
               <ReplyNote
                 event={reply}
-                parentEvent={info?.parent}
-                onClickParent={highlightReply}
+                parentEventId={info?.parent ? generateEventId(info.parent) : undefined}
+                onClickParent={() => info?.parent?.id && highlightReply(info?.parent?.id)}
                 highlight={highlightReplyId === reply.id}
               />
             </div>

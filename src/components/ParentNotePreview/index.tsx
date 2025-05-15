@@ -1,25 +1,24 @@
 import { Skeleton } from '@/components/ui/skeleton'
+import { useFetchEvent } from '@/hooks'
 import { cn } from '@/lib/utils'
 import { useMuteList } from '@/providers/MuteListProvider'
-import { Event } from 'nostr-tools'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import ContentPreview from '../ContentPreview'
 import UserAvatar from '../UserAvatar'
 
 export default function ParentNotePreview({
-  event,
-  isFetching = false,
+  eventId,
   className,
   onClick
 }: {
-  event?: Event
-  isFetching?: boolean
+  eventId: string
   className?: string
   onClick?: React.MouseEventHandler<HTMLDivElement> | undefined
 }) {
   const { t } = useTranslation()
   const { mutePubkeys } = useMuteList()
+  const { event, isFetching } = useFetchEvent(eventId)
   const isMuted = useMemo(
     () => (event ? mutePubkeys.includes(event.pubkey) : false),
     [mutePubkeys, event]
@@ -39,6 +38,20 @@ export default function ParentNotePreview({
         <div className="py-1 flex-1">
           <Skeleton className="h-3" />
         </div>
+      </div>
+    )
+  }
+
+  if (!event) {
+    return (
+      <div
+        className={cn(
+          'flex gap-1 items-center text-sm rounded-full px-2 bg-muted w-fit max-w-full text-muted-foreground',
+          className
+        )}
+      >
+        <div className="shrink-0">{t('reply to')}</div>
+        <div>{`[${t('Not found the note')}]`}</div>
       </div>
     )
   }

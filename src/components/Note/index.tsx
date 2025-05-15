@@ -1,6 +1,5 @@
 import { useSecondaryPage } from '@/PageManager'
 import { ExtendedKind } from '@/constants'
-import { useFetchEvent } from '@/hooks'
 import { extractImageInfosFromEventTags, getParentEventId, getUsingClient } from '@/lib/event'
 import { toNote } from '@/lib/link'
 import { Event } from 'nostr-tools'
@@ -30,7 +29,6 @@ export default function Note({
     [event, hideParentNotePreview]
   )
   const imageInfos = useMemo(() => extractImageInfosFromEventTags(event), [event])
-  const { event: parentEvent, isFetching } = useFetchEvent(parentEventId)
   const usingClient = useMemo(() => getUsingClient(event), [event])
 
   return (
@@ -60,8 +58,7 @@ export default function Note({
       </div>
       {parentEventId && (
         <ParentNotePreview
-          event={parentEvent}
-          isFetching={isFetching}
+          eventId={parentEventId}
           className="mt-2"
           onClick={(e) => {
             e.stopPropagation()

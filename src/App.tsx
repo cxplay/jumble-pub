@@ -13,6 +13,7 @@ import { MediaUploadServiceProvider } from './providers/MediaUploadServiceProvid
 import { MuteListProvider } from './providers/MuteListProvider'
 import { NostrProvider } from './providers/NostrProvider'
 import { NoteStatsProvider } from './providers/NoteStatsProvider'
+import { ReplyProvider } from './providers/ReplyProvider'
 import { ScreenSizeProvider } from './providers/ScreenSizeProvider'
 import { ZapProvider } from './providers/ZapProvider'
 
@@ -28,12 +29,14 @@ export default function App(): JSX.Element {
                   <MuteListProvider>
                     <BookmarksProvider>
                       <FeedProvider>
-                        <NoteStatsProvider>
-                          <MediaUploadServiceProvider>
-                            <PageManager />
-                            <Toaster />
-                          </MediaUploadServiceProvider>
-                        </NoteStatsProvider>
+                        <ReplyProvider>
+                          <NoteStatsProvider>
+                            <MediaUploadServiceProvider>
+                              <PageManager />
+                              <Toaster />
+                            </MediaUploadServiceProvider>
+                          </NoteStatsProvider>
+                        </ReplyProvider>
                       </FeedProvider>
                     </BookmarksProvider>
                   </MuteListProvider>

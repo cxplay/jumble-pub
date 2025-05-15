@@ -1,12 +1,11 @@
-import client from '@/services/client.service'
 import { Event, nip19 } from 'nostr-tools'
 import { getSharableEventId } from './event'
+import { generateEventId } from './tag'
 
 export const toHome = () => '/'
 export const toNote = (eventOrId: Pick<Event, 'id' | 'pubkey'> | string) => {
   if (typeof eventOrId === 'string') return `/notes/${eventOrId}`
-  const relay = client.getEventHint(eventOrId.id)
-  const nevent = nip19.neventEncode({ id: eventOrId.id, author: eventOrId.pubkey, relays: [relay] })
+  const nevent = generateEventId(eventOrId)
   return `/notes/${nevent}`
 }
 export const toNoteList = ({ hashtag, search }: { hashtag?: string; search?: string }) => {

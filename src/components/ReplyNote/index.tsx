@@ -1,4 +1,6 @@
+import { useSecondaryPage } from '@/PageManager'
 import { Button } from '@/components/ui/button'
+import { toNote } from '@/lib/link'
 import { useMuteList } from '@/providers/MuteListProvider'
 import { Event } from 'nostr-tools'
 import { useMemo, useState } from 'react'
@@ -10,18 +12,16 @@ import NoteStats from '../NoteStats'
 import ParentNotePreview from '../ParentNotePreview'
 import UserAvatar from '../UserAvatar'
 import Username from '../Username'
-import { useSecondaryPage } from '@/PageManager'
-import { toNote } from '@/lib/link'
 
 export default function ReplyNote({
   event,
-  parentEvent,
+  parentEventId,
   onClickParent = () => {},
   highlight = false
 }: {
   event: Event
-  parentEvent?: Event
-  onClickParent?: (eventId: string) => void
+  parentEventId?: string
+  onClickParent?: () => void
   highlight?: boolean
 }) {
   const { t } = useTranslation()
@@ -53,20 +53,20 @@ export default function ReplyNote({
           </div>
           <NoteOptions event={event} className="shrink-0 [&_svg]:size-5" />
         </div>
-        {parentEvent && (
+        {parentEventId && (
           <ParentNotePreview
             className="mt-2"
-            event={parentEvent}
+            eventId={parentEventId}
             onClick={(e) => {
               e.stopPropagation()
-              onClickParent(parentEvent.id)
+              onClickParent()
             }}
           />
         )}
         {show ? (
           <>
             <Content className="mt-2" event={event} />
-            <NoteStats className="mt-2" event={event} variant="reply" />
+            <NoteStats className="mt-2" event={event} />
           </>
         ) : (
           <Button

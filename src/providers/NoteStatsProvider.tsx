@@ -11,13 +11,11 @@ export type TNoteStats = {
   likes: { id: string; pubkey: string; created_at: number; emoji: TEmoji | string }[]
   reposts: Set<string>
   zaps: { pr: string; pubkey: string; amount: number; comment?: string }[]
-  replyCount: number
   updatedAt?: number
 }
 
 type TNoteStatsContext = {
   noteStatsMap: Map<string, Partial<TNoteStats>>
-  updateNoteReplyCount: (noteId: string, replyCount: number) => void
   addZap: (eventId: string, pr: string, amount: number, comment?: string) => void
   updateNoteStatsByEvents: (events: Event[]) => void
   fetchNoteStats: (event: Event) => Promise<Partial<TNoteStats> | undefined>
@@ -215,20 +213,6 @@ export function NoteStatsProvider({ children }: { children: React.ReactNode }) {
     return
   }
 
-  const updateNoteReplyCount = (noteId: string, replyCount: number) => {
-    setNoteStatsMap((prev) => {
-      const old = prev.get(noteId)
-      if (!old) {
-        prev.set(noteId, { replyCount })
-        return new Map(prev)
-      } else if (old.replyCount === undefined || old.replyCount < replyCount) {
-        prev.set(noteId, { ...old, replyCount })
-        return new Map(prev)
-      }
-      return prev
-    })
-  }
-
   const addZap = (eventId: string, pr: string, amount: number, comment?: string) => {
     if (!pubkey) return
     setNoteStatsMap((prev) => {
@@ -247,7 +231,6 @@ export function NoteStatsProvider({ children }: { children: React.ReactNode }) {
       value={{
         noteStatsMap,
         fetchNoteStats,
-        updateNoteReplyCount,
         addZap,
         updateNoteStatsByEvents
       }}
