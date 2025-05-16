@@ -13,7 +13,7 @@ import { useNostr } from '@/providers/NostrProvider'
 import { useNoteStats } from '@/providers/NoteStatsProvider'
 import { useScreenSize } from '@/providers/ScreenSizeProvider'
 import { Loader, PencilLine, Repeat } from 'lucide-react'
-import { Event } from 'nostr-tools'
+import { Event, kinds } from 'nostr-tools'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import PostEditor from '../PostEditor'
@@ -48,8 +48,10 @@ export default function RepostButton({ event }: { event: Event }) {
         const hasReposted = noteStats?.reposts?.has(pubkey)
         if (hasReposted) return
         if (!noteStats?.updatedAt) {
-          const stats = await fetchNoteStats(event)
-          if (stats?.reposts?.has(pubkey)) return
+          const events = await fetchNoteStats(event)
+          if (events.some((e) => e.kind === kinds.Repost && e.pubkey === pubkey)) {
+            return
+          }
         }
 
         const repost = createRepostDraftEvent(event)

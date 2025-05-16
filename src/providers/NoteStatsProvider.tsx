@@ -18,7 +18,7 @@ type TNoteStatsContext = {
   noteStatsMap: Map<string, Partial<TNoteStats>>
   addZap: (eventId: string, pr: string, amount: number, comment?: string) => void
   updateNoteStatsByEvents: (events: Event[]) => void
-  fetchNoteStats: (event: Event) => Promise<Partial<TNoteStats> | undefined>
+  fetchNoteStats: (event: Event) => Promise<Event[]>
 }
 
 const NoteStatsContext = createContext<TNoteStatsContext | undefined>(undefined)
@@ -108,16 +108,18 @@ export function NoteStatsProvider({ children }: { children: React.ReactNode }) {
         filter.since = since
       })
     }
-    const events = await client.fetchEvents(relayList.read.slice(0, 4), filters)
-    updateNoteStatsByEvents(events)
-    let stats: Partial<TNoteStats> | undefined
+    const events: Event[] = []
+    await client.fetchEvents(relayList.read.slice(0, 5), filters, {
+      onevent(evt) {
+        updateNoteStatsByEvents([evt])
+        events.push(evt)
+      }
+    })
     setNoteStatsMap((prev) => {
-      const old = prev.get(event.id) || {}
-      prev.set(event.id, { ...old, updatedAt: dayjs().unix() })
-      stats = prev.get(event.id)
+      prev.set(event.id, { ...(prev.get(event.id) ?? {}), updatedAt: dayjs().unix() })
       return new Map(prev)
     })
-    return stats
+    return events
   }
 
   const updateNoteStatsByEvents = (events: Event[]) => {
