@@ -16,7 +16,8 @@ export default function NoteStats({
   event,
   className,
   classNames,
-  fetchIfNotExisting = false
+  fetchIfNotExisting = false,
+  displayTopZapsAndLikes = false
 }: {
   event: Event
   className?: string
@@ -24,6 +25,7 @@ export default function NoteStats({
     buttonBar?: string
   }
   fetchIfNotExisting?: boolean
+  displayTopZapsAndLikes?: boolean
 }) {
   const { isSmallScreen } = useScreenSize()
   const { fetchNoteStats } = useNoteStats()
@@ -38,8 +40,12 @@ export default function NoteStats({
   if (isSmallScreen) {
     return (
       <div className={cn('select-none', className)}>
-        <TopZaps event={event} />
-        <Likes event={event} />
+        {displayTopZapsAndLikes && (
+          <>
+            <TopZaps event={event} />
+            <Likes event={event} />
+          </>
+        )}
         <div
           className={cn(
             'flex justify-between items-center h-5 [&_svg]:size-5',
@@ -61,8 +67,12 @@ export default function NoteStats({
 
   return (
     <div className={cn('select-none', className)}>
-      <TopZaps event={event} />
-      <Likes event={event} />
+      {displayTopZapsAndLikes && (
+        <>
+          <TopZaps event={event} />
+          <Likes event={event} />
+        </>
+      )}
       <div className="flex justify-between h-5 [&_svg]:size-4">
         <div
           className={cn('flex items-center', loading ? 'animate-pulse' : '')}

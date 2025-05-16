@@ -5,7 +5,6 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 import { createReactionDraftEvent } from '@/lib/draft-event'
-import { cn } from '@/lib/utils'
 import { useNostr } from '@/providers/NostrProvider'
 import { useNoteStats } from '@/providers/NoteStatsProvider'
 import { useScreenSize } from '@/providers/ScreenSizeProvider'
@@ -16,6 +15,7 @@ import { useTranslation } from 'react-i18next'
 import Emoji from '../Emoji'
 import EmojiPicker from '../EmojiPicker'
 import SuggestedEmojis from '../SuggestedEmojis'
+import { formatCount } from './utils'
 
 export default function LikeButton({ event }: { event: Event }) {
   const { t } = useTranslation()
@@ -25,10 +25,10 @@ export default function LikeButton({ event }: { event: Event }) {
   const [liking, setLiking] = useState(false)
   const [isEmojiReactionsOpen, setIsEmojiReactionsOpen] = useState(false)
   const [isPickerOpen, setIsPickerOpen] = useState(false)
-  const myLastEmoji = useMemo(() => {
+  const { myLastEmoji, likeCount } = useMemo(() => {
     const stats = noteStatsMap.get(event.id) || {}
     const like = stats.likes?.find((like) => like.pubkey === pubkey)
-    return like?.emoji
+    return { myLastEmoji: like?.emoji, likeCount: stats.likes?.length }
   }, [noteStatsMap, event, pubkey])
 
   const like = async (emoji: string) => {
@@ -58,10 +58,7 @@ export default function LikeButton({ event }: { event: Event }) {
 
   const trigger = (
     <button
-      className={cn(
-        'flex items-center enabled:hover:text-primary gap-1 px-3 h-full',
-        !myLastEmoji ? 'text-muted-foreground' : ''
-      )}
+      className="flex items-center enabled:hover:text-primary gap-1 px-3 h-full text-muted-foreground"
       title={t('Like')}
       onClick={() => {
         if (isSmallScreen) {
@@ -72,11 +69,17 @@ export default function LikeButton({ event }: { event: Event }) {
       {liking ? (
         <Loader className="animate-spin" />
       ) : myLastEmoji ? (
-        <div className="h-5 w-5 flex items-center justify-center">
-          <Emoji emoji={myLastEmoji} />
-        </div>
+        <>
+          <div className="h-5 w-5 flex items-center justify-center">
+            <Emoji emoji={myLastEmoji} />
+          </div>
+          {!!likeCount && <div className="text-sm">{formatCount(likeCount)}</div>}
+        </>
       ) : (
-        <SmilePlus />
+        <>
+          <SmilePlus />
+          {!!likeCount && <div className="text-sm">{formatCount(likeCount)}</div>}
+        </>
       )}
     </button>
   )

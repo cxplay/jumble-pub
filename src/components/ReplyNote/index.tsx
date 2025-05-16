@@ -66,7 +66,7 @@ export default function ReplyNote({
         {show ? (
           <>
             <Content className="mt-2" event={event} />
-            <NoteStats className="mt-2" event={event} />
+            <NoteStats className="mt-2" event={event} displayTopZapsAndLikes />
           </>
         ) : (
           <Button
