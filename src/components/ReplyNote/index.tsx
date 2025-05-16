@@ -39,7 +39,7 @@ export default function ReplyNote({
       className={`pb-3 border-b transition-colors duration-500 clickable ${highlight ? 'bg-primary/50' : ''}`}
       onClick={() => push(toNote(event))}
     >
-      <Collapsible threshold={600} collapsedHeight={400}>
+      <Collapsible>
         <div className="flex space-x-2 items-start px-4 pt-3">
           <UserAvatar userId={event.pubkey} className="shrink-0 h-8 w-8" />
           <div className="w-full overflow-hidden">
