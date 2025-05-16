@@ -12,12 +12,14 @@ export default function TabSwitcher({
   tabs,
   value,
   className,
-  onTabChange
+  onTabChange,
+  threshold = 800
 }: {
   tabs: TabDefinition[]
   value: string
   className?: string
   onTabChange?: (tab: string) => void
+  threshold?: number
 }) {
   const { t } = useTranslation()
   const { deepBrowsing, lastScrollTop } = useDeepBrowsing()
@@ -27,7 +29,7 @@ export default function TabSwitcher({
     <div
       className={cn(
         'sticky top-12 bg-background z-30 w-full transition-transform',
-        deepBrowsing && lastScrollTop > 800 ? '-translate-y-[calc(100%+12rem)]' : '',
+        deepBrowsing && lastScrollTop > threshold ? '-translate-y-[calc(100%+12rem)]' : '',
         className
       )}
     >

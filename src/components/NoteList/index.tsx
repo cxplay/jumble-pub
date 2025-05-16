@@ -31,7 +31,8 @@ export default function NoteList({
   className,
   filterMutedNotes = true,
   needCheckAlgoRelay = false,
-  isMainFeed = false
+  isMainFeed = false,
+  topSpace = 0
 }: {
   relayUrls?: string[]
   filter?: Filter
@@ -40,6 +41,7 @@ export default function NoteList({
   filterMutedNotes?: boolean
   needCheckAlgoRelay?: boolean
   isMainFeed?: boolean
+  topSpace?: number
 }) {
   const { t } = useTranslation()
   const { isLargeScreen } = useScreenSize()
@@ -315,6 +317,7 @@ export default function NoteList({
             topRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
           }, 0)
         }}
+        threshold={Math.max(800, topSpace)}
       />
       {filteredNewEvents.length > 0 && (
         <NewNotesButton newEvents={filteredNewEvents} onClick={showNewEvents} />
