@@ -50,7 +50,6 @@ export function ReplyProvider({ children }: { children: React.ReactNode }) {
             replies.eventIdSet.add(reply.id)
           }
         })
-        replies.events.sort((a, b) => a.created_at - b.created_at)
         prev.set(id, replies)
       }
       return new Map(prev)

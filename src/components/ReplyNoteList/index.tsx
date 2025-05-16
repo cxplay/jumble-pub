@@ -31,7 +31,21 @@ export default function ReplyNoteList({
   const { currentIndex } = useSecondaryPage()
   const [rootInfo, setRootInfo] = useState<{ id: string; pubkey: string } | undefined>(undefined)
   const { repliesMap, addReplies } = useReply()
-  const replies = useMemo(() => repliesMap.get(event.id)?.events || [], [event.id, repliesMap])
+  const replies = useMemo(() => {
+    const replyIdSet = new Set<string>()
+    const replyEvents: NEvent[] = []
+    let parentEventIds = [event.id]
+    while (parentEventIds.length > 0) {
+      const events = parentEventIds.flatMap((id) => repliesMap.get(id)?.events || [])
+      events.forEach((evt) => {
+        if (replyIdSet.has(evt.id)) return
+        replyIdSet.add(evt.id)
+        replyEvents.push(evt)
+      })
+      parentEventIds = events.map((evt) => evt.id)
+    }
+    return replyEvents.sort((a, b) => a.created_at - b.created_at)
+  }, [event.id, repliesMap])
   const [timelineKey, setTimelineKey] = useState<string | undefined>(undefined)
   const [until, setUntil] = useState<number | undefined>(undefined)
   const [loading, setLoading] = useState<boolean>(false)
