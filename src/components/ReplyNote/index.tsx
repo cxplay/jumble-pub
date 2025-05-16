@@ -12,6 +12,7 @@ import NoteStats from '../NoteStats'
 import ParentNotePreview from '../ParentNotePreview'
 import UserAvatar from '../UserAvatar'
 import Username from '../Username'
+import Collapsible from '../Collapsible'
 
 export default function ReplyNote({
   event,
@@ -35,49 +36,51 @@ export default function ReplyNote({
 
   return (
     <div
-      className={`flex space-x-2 items-start px-4 py-3 border-b transition-colors duration-500 clickable ${highlight ? 'bg-primary/50' : ''}`}
+      className={`pb-3 border-b transition-colors duration-500 clickable ${highlight ? 'bg-primary/50' : ''}`}
       onClick={() => push(toNote(event))}
     >
-      <UserAvatar userId={event.pubkey} size="small" className="shrink-0" />
-      <div className="w-full overflow-hidden">
-        <div className="flex items-start justify-between gap-2">
-          <div className="flex gap-2 items-center flex-1">
-            <Username
-              userId={event.pubkey}
-              className="text-sm font-semibold text-muted-foreground hover:text-foreground truncate"
-              skeletonClassName="h-3"
-            />
-            <div className="text-xs text-muted-foreground shrink-0">
-              <FormattedTimestamp timestamp={event.created_at} />
+      <Collapsible threshold={600} collapsedHeight={400}>
+        <div className="flex space-x-2 items-start px-4 pt-3">
+          <UserAvatar userId={event.pubkey} className="shrink-0 h-8 w-8" />
+          <div className="w-full overflow-hidden">
+            <div className="flex items-start justify-between gap-2">
+              <div className="flex gap-2 items-center flex-1">
+                <Username
+                  userId={event.pubkey}
+                  className="text-sm font-semibold text-muted-foreground hover:text-foreground truncate"
+                  skeletonClassName="h-3"
+                />
+                <div className="text-xs text-muted-foreground shrink-0">
+                  <FormattedTimestamp timestamp={event.created_at} />
+                </div>
+              </div>
+              <NoteOptions event={event} className="shrink-0 [&_svg]:size-5" />
             </div>
+            {parentEventId && (
+              <ParentNotePreview
+                className="mt-2"
+                eventId={parentEventId}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onClickParent()
+                }}
+              />
+            )}
+            {show ? (
+              <Content className="mt-2" event={event} />
+            ) : (
+              <Button
+                variant="outline"
+                className="text-muted-foreground font-medium mt-2"
+                onClick={() => setShowMuted(true)}
+              >
+                {t('Temporarily display this reply')}
+              </Button>
+            )}
           </div>
-          <NoteOptions event={event} className="shrink-0 [&_svg]:size-5" />
         </div>
-        {parentEventId && (
-          <ParentNotePreview
-            className="mt-2"
-            eventId={parentEventId}
-            onClick={(e) => {
-              e.stopPropagation()
-              onClickParent()
-            }}
-          />
-        )}
-        {show ? (
-          <>
-            <Content className="mt-2" event={event} />
-            <NoteStats className="mt-2" event={event} displayTopZapsAndLikes />
-          </>
-        ) : (
-          <Button
-            variant="outline"
-            className="text-muted-foreground font-medium mt-2"
-            onClick={() => setShowMuted(true)}
-          >
-            {t('Temporarily display this reply')}
-          </Button>
-        )}
-      </div>
+      </Collapsible>
+      {show && <NoteStats className="ml-14 mr-4 mt-2" event={event} displayTopZapsAndLikes />}
     </div>
   )
 }

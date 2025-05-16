@@ -23,6 +23,7 @@ import { useTranslation } from 'react-i18next'
 import NotFoundPage from '../NotFoundPage'
 import Followings from './Followings'
 import Relays from './Relays'
+import Collapsible from '@/components/Collapsible'
 
 const ProfilePage = forwardRef(({ id, index }: { id?: string; index?: number }, ref) => {
   const { t } = useTranslation()
@@ -116,10 +117,12 @@ const ProfilePage = forwardRef(({ id, index }: { id?: string; index?: number }, 
             <PubkeyCopy pubkey={pubkey} />
             <QrCodePopover pubkey={pubkey} />
           </div>
-          <ProfileAbout
-            about={about}
-            className="text-wrap break-words whitespace-pre-wrap mt-2 select-text"
-          />
+          <Collapsible>
+            <ProfileAbout
+              about={about}
+              className="text-wrap break-words whitespace-pre-wrap mt-2 select-text"
+            />
+          </Collapsible>
           {website && (
             <div className="flex gap-1 items-center text-primary mt-2 truncate select-text">
               <Link size={14} className="shrink-0" />
