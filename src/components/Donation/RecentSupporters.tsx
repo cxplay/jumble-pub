@@ -1,9 +1,9 @@
 import { formatAmount } from '@/lib/lightning'
 import lightning, { TRecentSupporter } from '@/services/lightning.service'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import UserAvatar from '../UserAvatar'
 import Username from '../Username'
-import { useTranslation } from 'react-i18next'
 
 export default function RecentSupporters() {
   const { t } = useTranslation()
@@ -32,7 +32,9 @@ export default function RecentSupporters() {
               <UserAvatar userId={item.pubkey} />
               <div className="flex-1 w-0">
                 <Username className="font-semibold w-fit" userId={item.pubkey} />
-                <div className="text-xs text-muted-foreground line-clamp-3">{item.comment}</div>
+                <div className="text-xs text-muted-foreground line-clamp-3 select-text">
+                  {item.comment}
+                </div>
               </div>
             </div>
             <div className="font-semibold text-yellow-400 shrink-0">
