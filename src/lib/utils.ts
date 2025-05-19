@@ -18,6 +18,12 @@ export function isAndroid() {
   return /android/i.test(ua)
 }
 
+export function isTorBrowser() {
+  if (typeof window === 'undefined' || !window.navigator) return false
+  const ua = window.navigator.userAgent
+  return /torbrowser/i.test(ua)
+}
+
 export function isInViewport(el: HTMLElement) {
   const rect = el.getBoundingClientRect()
   return (

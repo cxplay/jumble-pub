@@ -54,7 +54,6 @@ const ProfilePage = forwardRef(({ id, index }: { id?: string; index?: number }, 
     if (!topContainer) return
 
     const checkHeight = () => {
-      console.log('checkHeight', topContainer.scrollHeight)
       setTopContainerHeight(topContainer.scrollHeight)
     }
 

@@ -13,6 +13,7 @@ import {
   tagNameEquals
 } from './tag'
 import { isWebsocketUrl, normalizeHttpUrl, normalizeUrl } from './url'
+import { isTorBrowser } from './utils'
 
 const EVENT_EMBEDDED_EVENT_IDS_CACHE = new LRUCache<string, string[]>({ max: 10000 })
 const EVENT_IS_REPLY_NOTE_CACHE = new LRUCache<string, boolean>({ max: 10000 })
@@ -137,30 +138,35 @@ export function getRelayListFromRelayListEvent(event?: Event) {
     return { write: BIG_RELAY_URLS, read: BIG_RELAY_URLS, originalRelays: [] }
   }
 
+  const torBrowserDetected = isTorBrowser()
   const relayList = { write: [], read: [], originalRelays: [] } as TRelayList
   event.tags.filter(tagNameEquals('r')).forEach(([, url, type]) => {
     if (!url || !isWebsocketUrl(url)) return
 
     const normalizedUrl = normalizeUrl(url)
     if (!normalizedUrl) return
-    switch (type) {
-      case 'write':
-        relayList.write.push(normalizedUrl)
-        relayList.originalRelays.push({ url: normalizedUrl, scope: 'write' })
-        break
-      case 'read':
-        relayList.read.push(normalizedUrl)
-        relayList.originalRelays.push({ url: normalizedUrl, scope: 'read' })
-        break
-      default:
-        relayList.write.push(normalizedUrl)
-        relayList.read.push(normalizedUrl)
-        relayList.originalRelays.push({ url: normalizedUrl, scope: 'both' })
+
+    const scope = type === 'read' ? 'read' : type === 'write' ? 'write' : 'both'
+    relayList.originalRelays.push({ url: normalizedUrl, scope })
+
+    // Filter out .onion URLs if not using Tor browser
+    if (normalizedUrl.endsWith('.onion/') && !torBrowserDetected) return
+
+    if (type === 'write') {
+      relayList.write.push(normalizedUrl)
+    } else if (type === 'read') {
+      relayList.read.push(normalizedUrl)
+    } else {
+      relayList.write.push(normalizedUrl)
+      relayList.read.push(normalizedUrl)
     }
   })
+
+  // If there are too many relays, use the default BIG_RELAY_URLS
+  // Because they don't know anything about relays, their settings cannot be trusted
   return {
-    write: relayList.write.length ? relayList.write : BIG_RELAY_URLS,
-    read: relayList.read.length ? relayList.read : BIG_RELAY_URLS,
+    write: relayList.write.length && relayList.write.length <= 8 ? relayList.write : BIG_RELAY_URLS,
+    read: relayList.read.length && relayList.write.length <= 8 ? relayList.read : BIG_RELAY_URLS,
     originalRelays: relayList.originalRelays
   }
 }
