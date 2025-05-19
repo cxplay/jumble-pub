@@ -186,6 +186,7 @@ class ClientService extends EventTarget {
   ) {
     const newEventIdSet = new Set<string>()
     const requestCount = subRequests.length
+    const threshold = Math.ceil(requestCount / 2)
     let eventIdSet = new Set<string>()
     let events: NEvent[] = []
     let eosedCount = 0
@@ -200,6 +201,10 @@ class ClientService extends EventTarget {
               if (_eosed) {
                 eosedCount++
               }
+              if (eosedCount < threshold) {
+                return
+              }
+
               _events.forEach((evt) => {
                 if (eventIdSet.has(evt.id)) return
                 eventIdSet.add(evt.id)
