@@ -201,9 +201,6 @@ class ClientService extends EventTarget {
               if (_eosed) {
                 eosedCount++
               }
-              if (eosedCount < threshold) {
-                return
-              }
 
               _events.forEach((evt) => {
                 if (eventIdSet.has(evt.id)) return
@@ -212,7 +209,10 @@ class ClientService extends EventTarget {
               })
               events = events.sort((a, b) => b.created_at - a.created_at).slice(0, filter.limit)
               eventIdSet = new Set(events.map((evt) => evt.id))
-              onEvents(events, eosedCount >= requestCount)
+
+              if (eosedCount >= threshold) {
+                onEvents(events, eosedCount >= requestCount)
+              }
             },
             onNew: (evt) => {
               if (newEventIdSet.has(evt.id)) return
