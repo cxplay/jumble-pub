@@ -686,12 +686,7 @@ class ClientService extends EventTarget {
   }
 
   async fetchProfile(id: string, skipCache: boolean = false): Promise<TProfile | undefined> {
-    let profileEvent: NEvent | undefined
-    if (skipCache) {
-      profileEvent = await this.fetchProfileEvent(id, skipCache)
-    } else {
-      profileEvent = await this.fetchProfileEvent(id)
-    }
+    const profileEvent = await this.fetchProfileEvent(id, skipCache)
     if (profileEvent) {
       return getProfileFromProfileEvent(profileEvent)
     }

@@ -28,7 +28,7 @@ import Relays from './Relays'
 const ProfilePage = forwardRef(({ id, index }: { id?: string; index?: number }, ref) => {
   const { t } = useTranslation()
   const { push } = useSecondaryPage()
-  const { profile, isFetching } = useFetchProfile(id)
+  const { profile, isFetching } = useFetchProfile(id, true)
   const { pubkey: accountPubkey } = useNostr()
   const { mutePubkeys } = useMuteList()
   const { followings } = useFetchFollowings(profile?.pubkey)
