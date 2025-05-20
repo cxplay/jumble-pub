@@ -369,6 +369,7 @@ export default function NoteList({
           )}
         </div>
       </PullToRefresh>
+      <div className="h-40" />
     </div>
   )
 }

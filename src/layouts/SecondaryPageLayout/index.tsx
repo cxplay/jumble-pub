@@ -46,7 +46,7 @@ const SecondaryPageLayout = forwardRef(
 
     useEffect(() => {
       if (isSmallScreen) {
-        window.scrollTo({ top: 0 })
+        setTimeout(() => window.scrollTo({ top: 0 }), 0)
         return
       }
     }, [])
