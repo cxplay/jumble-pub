@@ -135,6 +135,11 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
   const clearNewNotifications = async () => {
     if (!pubkey) return
 
+    if (subCloserRef.current) {
+      subCloserRef.current.close()
+      subCloserRef.current = null
+    }
+
     setNewNotificationIds(new Set())
     await updateNotificationsSeenAt()
   }

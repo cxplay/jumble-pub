@@ -130,6 +130,7 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
       setProfileEvent(null)
       setNsec(null)
       setFavoriteRelaysEvent(null)
+      setNotificationsSeenAt(-1)
       if (!account) {
         return
       }
@@ -147,6 +148,12 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
       } else {
         setNcryptsec(null)
       }
+
+      const storedNotificationsSeenAt = storage.getLastReadNotificationTime(account.pubkey)
+      if (storedNotificationsSeenAt) {
+        setNotificationsSeenAt(storedNotificationsSeenAt)
+      }
+
       const [
         storedRelayListEvent,
         storedProfileEvent,
@@ -251,15 +258,12 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
         await indexedDb.putReplaceableEvent(favoriteRelaysEvent)
       }
 
-      const storedNotificationsSeenAt = storage.getLastReadNotificationTime(account.pubkey)
       if (
         notificationsSeenAtEvent &&
         notificationsSeenAtEvent.created_at > storedNotificationsSeenAt
       ) {
         setNotificationsSeenAt(notificationsSeenAtEvent.created_at)
         storage.setLastReadNotificationTime(account.pubkey, notificationsSeenAtEvent.created_at)
-      } else {
-        setNotificationsSeenAt(storedNotificationsSeenAt)
       }
 
       client.initUserIndexFromFollowings(account.pubkey, controller.signal)
