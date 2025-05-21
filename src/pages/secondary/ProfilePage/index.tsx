@@ -18,6 +18,7 @@ import { generateImageByPubkey } from '@/lib/pubkey'
 import { SecondaryPageLink, useSecondaryPage } from '@/PageManager'
 import { useMuteList } from '@/providers/MuteListProvider'
 import { useNostr } from '@/providers/NostrProvider'
+import client from '@/services/client.service'
 import { Link, Zap } from 'lucide-react'
 import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -28,7 +29,7 @@ import Relays from './Relays'
 const ProfilePage = forwardRef(({ id, index }: { id?: string; index?: number }, ref) => {
   const { t } = useTranslation()
   const { push } = useSecondaryPage()
-  const { profile, isFetching } = useFetchProfile(id, true)
+  const { profile, isFetching } = useFetchProfile(id)
   const { pubkey: accountPubkey } = useNostr()
   const { mutePubkeys } = useMuteList()
   const { followings } = useFetchFollowings(profile?.pubkey)
@@ -49,6 +50,18 @@ const ProfilePage = forwardRef(({ id, index }: { id?: string; index?: number }, 
       setTopContainer(node)
     }
   }, [])
+
+  useEffect(() => {
+    if (!profile?.pubkey) return
+
+    const forceUpdateCache = async () => {
+      await Promise.all([
+        client.forceUpdateRelayListEvent(profile.pubkey),
+        client.fetchProfile(profile.pubkey, true)
+      ])
+    }
+    forceUpdateCache()
+  }, [profile?.pubkey])
 
   useEffect(() => {
     if (!topContainer) return

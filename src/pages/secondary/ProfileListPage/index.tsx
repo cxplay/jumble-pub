@@ -66,7 +66,7 @@ const ProfileListPage = forwardRef(({ index }: { index?: number }, ref) => {
     if (urls.length === 0) {
       return setHasMore(false)
     }
-    const profiles = await client.fetchProfiles(urls, { ...filter, limit: LIMIT })
+    const profiles = await client.searchProfiles(urls, { ...filter, limit: LIMIT })
     const newPubkeySet = new Set<string>()
     profiles.forEach((profile) => {
       if (!pubkeySet.has(profile.pubkey)) {

@@ -699,7 +699,7 @@ class ClientService extends EventTarget {
     }
   }
 
-  async fetchProfiles(relayUrls: string[], filter: Filter): Promise<TProfile[]> {
+  async searchProfiles(relayUrls: string[], filter: Filter): Promise<TProfile[]> {
     const events = await this.query(relayUrls, {
       ...filter,
       kinds: [kinds.Metadata]
@@ -715,21 +715,32 @@ class ClientService extends EventTarget {
   }
 
   async fetchRelayList(pubkey: string): Promise<TRelayList> {
-    const event = await this.relayListEventDataLoader.load(pubkey)
-    if (!event) {
-      return {
-        write: BIG_RELAY_URLS,
-        read: BIG_RELAY_URLS,
-        originalRelays: []
-      }
-    }
-    return getRelayListFromRelayListEvent(event)
+    const [relayList] = await this.fetchRelayLists([pubkey])
+    return relayList
   }
 
-  async fetchRelayLists(pubkeys: string[]) {
-    const events = await this.relayListEventDataLoader.loadMany(pubkeys)
-    return events.map((event) => {
+  async fetchRelayLists(pubkeys: string[]): Promise<TRelayList[]> {
+    const relayEvents = await indexedDb.getManyReplaceableEvents(pubkeys, kinds.RelayList)
+    const nonExistingPubkeyIndexMap = new Map<string, number>()
+    pubkeys.forEach((pubkey, i) => {
+      if (!relayEvents[i]) {
+        nonExistingPubkeyIndexMap.set(pubkey, i)
+      }
+    })
+    const newEvents = await this.relayListEventDataLoader.loadMany(
+      Array.from(nonExistingPubkeyIndexMap.keys())
+    )
+    newEvents.forEach((event) => {
       if (event && !(event instanceof Error)) {
+        const index = nonExistingPubkeyIndexMap.get(event.pubkey)
+        if (index !== undefined) {
+          relayEvents[index] = event
+        }
+      }
+    })
+
+    return relayEvents.map((event) => {
+      if (event) {
         return getRelayListFromRelayListEvent(event)
       }
       return {
@@ -738,6 +749,10 @@ class ClientService extends EventTarget {
         originalRelays: []
       }
     })
+  }
+
+  async forceUpdateRelayListEvent(pubkey: string) {
+    await this.relayListEventBatchLoadFn([pubkey])
   }
 
   async fetchFollowListEvent(pubkey: string, storeToIndexedDb = false) {
@@ -998,33 +1013,22 @@ class ClientService extends EventTarget {
   }
 
   private async relayListEventBatchLoadFn(pubkeys: readonly string[]) {
-    const relayEvents = await indexedDb.getManyReplaceableEvents(pubkeys, kinds.RelayList)
-    const nonExistingPubkeys = pubkeys.filter((_, i) => !relayEvents[i])
-    if (nonExistingPubkeys.length) {
-      const events = await this.query(BIG_RELAY_URLS, {
-        authors: nonExistingPubkeys as string[],
-        kinds: [kinds.RelayList],
-        limit: pubkeys.length
-      })
-      const eventsMap = new Map<string, NEvent>()
-      for (const event of events) {
-        const pubkey = event.pubkey
-        const existing = eventsMap.get(pubkey)
-        if (!existing || existing.created_at < event.created_at) {
-          eventsMap.set(pubkey, event)
-        }
+    const events = await this.query(BIG_RELAY_URLS, {
+      authors: pubkeys as string[],
+      kinds: [kinds.RelayList],
+      limit: pubkeys.length
+    })
+    const eventsMap = new Map<string, NEvent>()
+    for (const event of events) {
+      const pubkey = event.pubkey
+      const existing = eventsMap.get(pubkey)
+      if (!existing || existing.created_at < event.created_at) {
+        eventsMap.set(pubkey, event)
       }
-      Array.from(eventsMap.values()).forEach((evt) => indexedDb.putReplaceableEvent(evt))
-      nonExistingPubkeys.forEach((pubkey) => {
-        const event = eventsMap.get(pubkey)
-        if (event) {
-          const index = pubkeys.indexOf(pubkey)
-          relayEvents[index] = event
-        }
-      })
     }
+    Array.from(eventsMap.values()).forEach((evt) => indexedDb.putReplaceableEvent(evt))
 
-    return relayEvents
+    return pubkeys.map((pubkey) => eventsMap.get(pubkey))
   }
 
   private async _fetchFollowListEvent(pubkey: string) {
