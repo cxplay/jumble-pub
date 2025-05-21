@@ -36,7 +36,7 @@ export default function LikeButton({ event }: { event: Event }) {
       if (liking || !pubkey) return
 
       setLiking(true)
-      const timer = setTimeout(() => setLiking(false), 5000)
+      const timer = setTimeout(() => setLiking(false), 10_000)
 
       try {
         const noteStats = noteStatsMap.get(event.id)
