@@ -231,6 +231,7 @@ export default {
     Preview: '预览',
     'You are about to publish an event signed by [{{eventAuthorName}}]. You are currently logged in as [{{currentUsername}}]. Are you sure?':
       '您即将发布一条由 [{{eventAuthorName}}] 签名的事件。您当前以 [{{currentUsername}}] 登录。确定吗？',
-    'Platinum Sponsors': '白金赞助商'
+    'Platinum Sponsors': '白金赞助商',
+    From: '来自'
   }
 }

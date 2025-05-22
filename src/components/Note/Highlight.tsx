@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils'
 import { useSecondaryPage } from '@/PageManager'
 import { Event } from 'nostr-tools'
 import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import Content from '../Content'
 import ContentPreview from '../ContentPreview'
 import UserAvatar from '../UserAvatar'
@@ -27,6 +28,7 @@ export default function Highlight({ event, className }: { event: Event; classNam
 }
 
 function HighlightSource({ event }: { event: Event }) {
+  const { t } = useTranslation()
   const { push } = useSecondaryPage()
   const sourceTag = useMemo(() => {
     let sourceTag: string[] | undefined
@@ -84,7 +86,7 @@ function HighlightSource({ event }: { event: Event }) {
   if (sourceTag[0] === 'r') {
     return (
       <div className="truncate text-muted-foreground">
-        {'From '}
+        {t('From')}{' '}
         <a
           href={sourceTag[1]}
           target="_blank"
@@ -100,7 +102,7 @@ function HighlightSource({ event }: { event: Event }) {
 
   return (
     <div className="flex items-center gap-2 text-muted-foreground">
-      <div>{'From'}</div>
+      <div>{t('From')}</div>
       {pubkey && <UserAvatar userId={pubkey} size="xSmall" className="cursor-pointer" />}
       {referenceEvent && isSupportedKind(referenceEvent.kind) ? (
         <ContentPreview

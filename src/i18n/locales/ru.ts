@@ -234,6 +234,7 @@ export default {
     Preview: 'Предварительный просмотр',
     'You are about to publish an event signed by [{{eventAuthorName}}]. You are currently logged in as [{{currentUsername}}]. Are you sure?':
       'Вы собираетесь опубликовать событие, подписанное [{{eventAuthorName}}]. Вы в данный момент вошли как [{{currentUsername}}]. Вы уверены?',
-    'Platinum Sponsors': 'Платиновые спонсоры'
+    'Platinum Sponsors': 'Платиновые спонсоры',
+    From: 'От'
   }
 }

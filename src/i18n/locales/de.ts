@@ -236,6 +236,7 @@ export default {
     Preview: 'Vorschau',
     'You are about to publish an event signed by [{{eventAuthorName}}]. You are currently logged in as [{{currentUsername}}]. Are you sure?':
       'Du bist dabei, ein Ereignis zu veröffentlichen, das von [{{eventAuthorName}}] signiert wurde. Du bist derzeit als [{{currentUsername}}] angemeldet. Bist du sicher?',
-    'Platinum Sponsors': 'Platin-Sponsoren'
+    'Platinum Sponsors': 'Platin-Sponsoren',
+    From: 'Von'
   }
 }
