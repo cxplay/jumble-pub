@@ -225,7 +225,11 @@ export default function ReplyNoteList({
           const parentEventOriginalId = parentEventTag?.[1]
           const parentEventId = parentEventTag ? generateEventIdFromETag(parentEventTag) : undefined
           return (
-            <div ref={(el) => (replyRefs.current[reply.id] = el)} key={reply.id}>
+            <div
+              ref={(el) => (replyRefs.current[reply.id] = el)}
+              key={reply.id}
+              className="scroll-mt-12"
+            >
               <ReplyNote
                 event={reply}
                 parentEventId={event.id !== parentEventOriginalId ? parentEventId : undefined}
