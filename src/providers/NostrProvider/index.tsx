@@ -8,7 +8,7 @@ import {
   getRelayListFromRelayListEvent,
   getReplaceableEventIdentifier
 } from '@/lib/event'
-import { formatPubkey, isValidPubkey } from '@/lib/pubkey'
+import { formatPubkey, isValidPubkey, pubkeyToNpub } from '@/lib/pubkey'
 import client from '@/services/client.service'
 import indexedDb from '@/services/indexed-db.service'
 import storage from '@/services/local-storage.service'
@@ -238,6 +238,7 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
       } else if (!storedProfileEvent) {
         setProfile({
           pubkey: account.pubkey,
+          npub: pubkeyToNpub(account.pubkey) ?? '',
           username: formatPubkey(account.pubkey)
         })
       }

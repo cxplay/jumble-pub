@@ -1,6 +1,6 @@
 import { Card } from '@/components/ui/card'
 import { createFakeEvent } from '@/lib/event'
-import Content from '../Content'
+import Content from '../../Content'
 
 export default function Preview({ content }: { content: string }) {
   return (

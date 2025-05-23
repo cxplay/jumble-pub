@@ -1,24 +1,22 @@
 import Note from '@/components/Note'
 import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useToast } from '@/hooks/use-toast'
 import { createCommentDraftEvent, createShortTextNoteDraftEvent } from '@/lib/draft-event'
 import { useNostr } from '@/providers/NostrProvider'
 import postContentCache from '@/services/post-content-cache.service'
 import { ChevronDown, ImageUp, LoaderCircle } from 'lucide-react'
 import { Event, kinds } from 'nostr-tools'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import PostTextarea from '../PostTextarea'
 import Mentions from './Mentions'
+import { usePostEditor } from './PostEditorProvider'
 import PostOptions from './PostOptions'
-import Preview from './Preview'
+import PostTextarea, { TPostTextareaHandle } from './PostTextarea'
 import SendOnlyToSwitch from './SendOnlyToSwitch'
 import Uploader from './Uploader'
-import { preprocessContent } from './utils'
 
-export default function NormalPostContent({
+export default function PostContent({
   defaultContent = '',
   parentEvent,
   close
@@ -30,38 +28,15 @@ export default function NormalPostContent({
   const { t } = useTranslation()
   const { toast } = useToast()
   const { publish, checkLogin } = useNostr()
-  const [content, setContent] = useState('')
-  const [processedContent, setProcessedContent] = useState('')
-  const [pictureInfos, setPictureInfos] = useState<{ url: string; tags: string[][] }[]>([])
+  const { uploadingFiles, setUploadingFiles } = usePostEditor()
+  const [text, setText] = useState('')
+  const textareaRef = useRef<TPostTextareaHandle>(null)
   const [posting, setPosting] = useState(false)
   const [showMoreOptions, setShowMoreOptions] = useState(false)
   const [addClientTag, setAddClientTag] = useState(false)
   const [specifiedRelayUrls, setSpecifiedRelayUrls] = useState<string[] | undefined>(undefined)
-  const [uploadingPicture, setUploadingPicture] = useState(false)
   const [mentions, setMentions] = useState<string[]>([])
-  const [cursorOffset, setCursorOffset] = useState(0)
-  const initializedRef = useRef(false)
-  const canPost = !!content && !posting
-
-  useEffect(() => {
-    const cached = postContentCache.getNormalPostCache({ defaultContent, parentEvent })
-    if (cached) {
-      setContent(cached.content || '')
-      setPictureInfos(cached.pictureInfos || [])
-    }
-    if (defaultContent) {
-      setCursorOffset(defaultContent.length)
-    }
-    setTimeout(() => {
-      initializedRef.current = true
-    }, 100)
-  }, [defaultContent, parentEvent])
-
-  useEffect(() => {
-    setProcessedContent(preprocessContent(content))
-    if (!initializedRef.current) return
-    postContentCache.setNormalPostCache({ defaultContent, parentEvent }, content, pictureInfos)
-  }, [content, pictureInfos])
+  const canPost = !!text && !posting && !uploadingFiles
 
   const post = async (e: React.MouseEvent) => {
     e.stopPropagation()
@@ -75,17 +50,17 @@ export default function NormalPostContent({
       try {
         const draftEvent =
           parentEvent && parentEvent.kind !== kinds.ShortTextNote
-            ? await createCommentDraftEvent(processedContent, parentEvent, pictureInfos, mentions, {
+            ? await createCommentDraftEvent(text, parentEvent, mentions, {
                 addClientTag,
                 protectedEvent: !!specifiedRelayUrls
               })
-            : await createShortTextNoteDraftEvent(processedContent, pictureInfos, mentions, {
+            : await createShortTextNoteDraftEvent(text, mentions, {
                 parentEvent,
                 addClientTag,
                 protectedEvent: !!specifiedRelayUrls
               })
         await publish(draftEvent, { specifiedRelayUrls })
-        setContent('')
+        postContentCache.clearPostCache({ defaultContent, parentEvent })
         close()
       } catch (error) {
         if (error instanceof AggregateError) {
@@ -124,29 +99,13 @@ export default function NormalPostContent({
           </div>
         </ScrollArea>
       )}
-      <Tabs defaultValue="edit" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="edit">{t('Edit')}</TabsTrigger>
-          <TabsTrigger value="preview">{t('Preview')}</TabsTrigger>
-        </TabsList>
-        <TabsContent value="edit">
-          <PostTextarea
-            className="h-52"
-            setTextValue={setContent}
-            textValue={content}
-            placeholder={
-              t('Write something...') + ' (' + t('Paste or drop media files to upload') + ')'
-            }
-            cursorOffset={cursorOffset}
-            onUploadImage={({ url, tags }) => {
-              setPictureInfos((prev) => [...prev, { url, tags }])
-            }}
-          />
-        </TabsContent>
-        <TabsContent value="preview">
-          <Preview content={processedContent} />
-        </TabsContent>
-      </Tabs>
+      <PostTextarea
+        ref={textareaRef}
+        text={text}
+        setText={setText}
+        defaultContent={defaultContent}
+        parentEvent={parentEvent}
+      />
       <SendOnlyToSwitch
         parentEvent={parentEvent}
         specifiedRelayUrls={specifiedRelayUrls}
@@ -155,15 +114,16 @@ export default function NormalPostContent({
       <div className="flex items-center justify-between">
         <div className="flex gap-2 items-center">
           <Uploader
-            onUploadSuccess={({ url, tags }) => {
-              setPictureInfos((prev) => [...prev, { url, tags }])
-              setContent((prev) => (prev === '' ? url : `${prev}\n${url}`))
+            onUploadSuccess={({ url }) => {
+              textareaRef.current?.appendText(url)
             }}
-            onUploadingChange={setUploadingPicture}
+            onUploadingChange={(uploading) =>
+              setUploadingFiles((prev) => (uploading ? prev + 1 : prev - 1))
+            }
             accept="image/*,video/*,audio/*"
           >
-            <Button variant="secondary" disabled={uploadingPicture}>
-              {uploadingPicture ? <LoaderCircle className="animate-spin" /> : <ImageUp />}
+            <Button variant="secondary" disabled={uploadingFiles > 0}>
+              {uploadingFiles > 0 ? <LoaderCircle className="animate-spin" /> : <ImageUp />}
             </Button>
           </Uploader>
           <Button
@@ -179,7 +139,7 @@ export default function NormalPostContent({
         </div>
         <div className="flex gap-2 items-center">
           <Mentions
-            content={processedContent}
+            content={text}
             parentEvent={parentEvent}
             mentions={mentions}
             setMentions={setMentions}

@@ -12,6 +12,7 @@ import {
 import { extractEmojiInfosFromTags, isNsfwEvent } from '@/lib/event'
 import { extractImageInfoFromTag } from '@/lib/tag'
 import { cn } from '@/lib/utils'
+import mediaUpload from '@/services/media-upload.service'
 import { TImageInfo } from '@/types'
 import { Event } from 'nostr-tools'
 import { memo } from 'react'
@@ -46,7 +47,11 @@ const Content = memo(({ event, className }: { event: Event; className?: string }
     .map((node) => {
       if (node.type === 'image') {
         const imageInfo = imageInfos.find((image) => image.url === node.data)
-        return imageInfo ?? { url: node.data }
+        if (imageInfo) {
+          return imageInfo
+        }
+        const tag = mediaUpload.getImetaTagByUrl(node.data)
+        return tag ? extractImageInfoFromTag(tag) : { url: node.data }
       }
       if (node.type === 'images') {
         const urls = Array.isArray(node.data) ? node.data : [node.data]

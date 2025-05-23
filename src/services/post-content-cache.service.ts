@@ -1,19 +1,10 @@
+import { Content } from '@tiptap/react'
 import { Event } from 'nostr-tools'
 
 class PostContentCacheService {
   static instance: PostContentCacheService
 
-  private normalPostCache: Map<
-    string,
-    {
-      content: string
-      pictureInfos: { url: string; tags: string[][] }[]
-    }
-  > = new Map()
-  private picturePostCache: {
-    content: string
-    pictureInfos: { url: string; tags: string[][] }[]
-  } = { content: '', pictureInfos: [] }
+  private normalPostCache: Map<string, Content> = new Map()
 
   constructor() {
     if (!PostContentCacheService.instance) {
@@ -22,35 +13,30 @@ class PostContentCacheService {
     return PostContentCacheService.instance
   }
 
-  getNormalPostCache({
+  getPostCache({
     defaultContent,
     parentEvent
   }: { defaultContent?: string; parentEvent?: Event } = {}) {
     return (
-      this.normalPostCache.get(this.generateCacheKey(defaultContent, parentEvent)) ?? {
-        content: defaultContent,
-        pictureInfos: [] as { url: string; tags: string[][] }[]
-      }
+      this.normalPostCache.get(this.generateCacheKey(defaultContent, parentEvent)) ?? defaultContent
     )
   }
 
-  setNormalPostCache(
+  setPostCache(
     { defaultContent, parentEvent }: { defaultContent?: string; parentEvent?: Event },
-    content: string,
-    pictureInfos: { url: string; tags: string[][] }[]
+    content: Content
   ) {
-    this.normalPostCache.set(this.generateCacheKey(defaultContent, parentEvent), {
-      content,
-      pictureInfos
-    })
+    this.normalPostCache.set(this.generateCacheKey(defaultContent, parentEvent), content)
   }
 
-  getPicturePostCache() {
-    return this.picturePostCache
-  }
-
-  setPicturePostCache(content: string, pictureInfos: { url: string; tags: string[][] }[]) {
-    this.picturePostCache = { content, pictureInfos }
+  clearPostCache({
+    defaultContent,
+    parentEvent
+  }: {
+    defaultContent?: string
+    parentEvent?: Event
+  }) {
+    this.normalPostCache.delete(this.generateCacheKey(defaultContent, parentEvent))
   }
 
   generateCacheKey(defaultContent: string = '', parentEvent?: Event): string {

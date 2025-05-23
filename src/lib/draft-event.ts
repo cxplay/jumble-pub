@@ -1,5 +1,6 @@
 import { ApplicationDataKey, ExtendedKind } from '@/constants'
 import client from '@/services/client.service'
+import mediaUpload from '@/services/media-upload.service'
 import { TDraftEvent, TEmoji, TMailboxRelay, TRelaySet } from '@/types'
 import dayjs from 'dayjs'
 import { Event, kinds } from 'nostr-tools'
@@ -61,7 +62,6 @@ export function createRepostDraftEvent(event: Event): TDraftEvent {
 
 export async function createShortTextNoteDraftEvent(
   content: string,
-  pictureInfos: { url: string; tags: string[][] }[],
   mentions: string[],
   options: {
     parentEvent?: Event
@@ -80,7 +80,7 @@ export async function createShortTextNoteDraftEvent(
   // imeta tags
   const { images } = extractImagesFromContent(content)
   if (images && images.length) {
-    tags.push(...generateImetaTags(images, pictureInfos))
+    tags.push(...generateImetaTags(images))
   }
 
   // q tags
@@ -168,7 +168,6 @@ export async function createPictureNoteDraftEvent(
 export async function createCommentDraftEvent(
   content: string,
   parentEvent: Event,
-  pictureInfos: { url: string; tags: string[][] }[],
   mentions: string[],
   options: {
     addClientTag?: boolean
@@ -192,7 +191,7 @@ export async function createCommentDraftEvent(
 
   const { images } = extractImagesFromContent(content)
   if (images && images.length) {
-    tags.push(...generateImetaTags(images, pictureInfos))
+    tags.push(...generateImetaTags(images))
   }
 
   tags.push(
@@ -300,11 +299,11 @@ export function createBookmarkDraftEvent(tags: string[][], content = ''): TDraft
   }
 }
 
-function generateImetaTags(imageUrls: string[], pictureInfos: { url: string; tags: string[][] }[]) {
+function generateImetaTags(imageUrls: string[]) {
   return imageUrls
     .map((imageUrl) => {
-      const pictureInfo = pictureInfos.find((info) => info.url === imageUrl)
-      return pictureInfo ? ['imeta', ...pictureInfo.tags.map(([n, v]) => `${n} ${v}`)] : null
+      const tag = mediaUpload.getImetaTagByUrl(imageUrl)
+      return tag ?? null
     })
     .filter(Boolean) as string[][]
 }

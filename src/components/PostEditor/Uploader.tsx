@@ -1,5 +1,5 @@
 import { useToast } from '@/hooks/use-toast'
-import { useMediaUploadService } from '@/providers/MediaUploadServiceProvider'
+import mediaUpload from '@/services/media-upload.service'
 import { useRef } from 'react'
 
 export default function Uploader({
@@ -16,7 +16,6 @@ export default function Uploader({
   accept?: string
 }) {
   const { toast } = useToast()
-  const { upload } = useMediaUploadService()
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,7 +24,7 @@ export default function Uploader({
     onUploadingChange?.(true)
     try {
       for (const file of event.target.files) {
-        const result = await upload(file)
+        const result = await mediaUpload.upload(file)
         console.log('File uploaded successfully', result)
         onUploadSuccess(result)
       }

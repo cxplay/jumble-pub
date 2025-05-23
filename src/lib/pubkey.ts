@@ -23,6 +23,13 @@ export function formatNpub(npub: string, length = 12) {
   return npub.slice(0, prefixLength) + '...' + npub.slice(-suffixLength)
 }
 
+export function formatUserId(userId: string) {
+  if (userId.startsWith('npub1')) {
+    return formatNpub(userId)
+  }
+  return formatPubkey(userId)
+}
+
 export function pubkeyToNpub(pubkey: string) {
   try {
     return nip19.npubEncode(pubkey)

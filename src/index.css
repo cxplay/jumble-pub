@@ -42,6 +42,15 @@
     }
   }
 
+  .tiptap p.is-editor-empty:first-child::before {
+    color: hsl(var(--muted-foreground));
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
+  }
+  
+
   @media (hover: hover) and (pointer: fine) {
     .clickable:hover {
       background-color: hsl(var(--muted) / 0.5);

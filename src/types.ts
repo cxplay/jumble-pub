@@ -3,6 +3,7 @@ import { Event, VerifiedEvent } from 'nostr-tools'
 export type TProfile = {
   username: string
   pubkey: string
+  npub: string
   original_username?: string
   banner?: string
   avatar?: string
