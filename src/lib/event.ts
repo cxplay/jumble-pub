@@ -112,7 +112,7 @@ export function getRootEventId(event?: Event) {
 }
 
 export function isReplaceable(kind: number) {
-  return kinds.isReplaceableKind(kind) || kinds.isParameterizedReplaceableKind(kind)
+  return kinds.isReplaceableKind(kind) || kinds.isAddressableKind(kind)
 }
 
 export function getEventCoordinate(event: Event) {
@@ -127,10 +127,6 @@ export function getSharableEventId(event: Event) {
     return nip19.naddrEncode({ pubkey: event.pubkey, kind: event.kind, identifier, relays: hints })
   }
   return nip19.neventEncode({ id: event.id, author: event.pubkey, kind: event.kind, relays: hints })
-}
-
-export function getSharableEventLink(event: Event) {
-  return `https://njump.me/${getSharableEventId(event)}`
 }
 
 export function getUsingClient(event: Event) {

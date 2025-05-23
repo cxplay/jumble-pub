@@ -7,7 +7,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
-import { getSharableEventId, getSharableEventLink } from '@/lib/event'
+import { getSharableEventId } from '@/lib/event'
+import { toNjump } from '@/lib/link'
 import { pubkeyToNpub } from '@/lib/pubkey'
 import { useMuteList } from '@/providers/MuteListProvider'
 import { useNostr } from '@/providers/NostrProvider'
@@ -77,7 +78,7 @@ export default function NoteOptions({ event, className }: { event: Event; classN
               <Button
                 onClick={() => {
                   setIsDrawerOpen(false)
-                  navigator.clipboard.writeText(getSharableEventLink(event))
+                  navigator.clipboard.writeText(toNjump(getSharableEventId(event)))
                 }}
                 className="w-full p-6 justify-start text-lg gap-4 [&_svg]:size-5"
                 variant="ghost"
@@ -138,7 +139,7 @@ export default function NoteOptions({ event, className }: { event: Event; classN
             {t('Copy user ID')}
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() => navigator.clipboard.writeText(getSharableEventLink(event))}
+            onClick={() => navigator.clipboard.writeText(toNjump(getSharableEventId(event)))}
           >
             <Link />
             {t('Copy share link')}
