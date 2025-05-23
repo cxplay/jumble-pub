@@ -7,12 +7,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
-import { getSharableEventId } from '@/lib/event'
+import { getSharableEventId, getSharableEventLink } from '@/lib/event'
 import { pubkeyToNpub } from '@/lib/pubkey'
 import { useMuteList } from '@/providers/MuteListProvider'
 import { useNostr } from '@/providers/NostrProvider'
 import { useScreenSize } from '@/providers/ScreenSizeProvider'
-import { Bell, BellOff, Code, Copy, Ellipsis } from 'lucide-react'
+import { Bell, BellOff, Code, Copy, Ellipsis, Link } from 'lucide-react'
 import { Event } from 'nostr-tools'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -76,6 +76,17 @@ export default function NoteOptions({ event, className }: { event: Event; classN
               </Button>
               <Button
                 onClick={() => {
+                  setIsDrawerOpen(false)
+                  navigator.clipboard.writeText(getSharableEventLink(event))
+                }}
+                className="w-full p-6 justify-start text-lg gap-4 [&_svg]:size-5"
+                variant="ghost"
+              >
+                <Link />
+                {t('Copy share link')}
+              </Button>
+              <Button
+                onClick={() => {
                   setIsRawEventDialogOpen(true)
                 }}
                 className="w-full p-6 justify-start text-lg gap-4 [&_svg]:size-5"
@@ -126,7 +137,15 @@ export default function NoteOptions({ event, className }: { event: Event; classN
             <Copy />
             {t('Copy user ID')}
           </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => navigator.clipboard.writeText(getSharableEventLink(event))}
+          >
+            <Link />
+            {t('Copy share link')}
+          </DropdownMenuItem>
+
           <DropdownMenuSeparator />
+
           <DropdownMenuItem onClick={() => setIsRawEventDialogOpen(true)}>
             <Code />
             {t('View raw event')}
