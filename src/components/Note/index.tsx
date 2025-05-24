@@ -3,7 +3,8 @@ import {
   extractImageInfosFromEventTags,
   getParentEventId,
   getUsingClient,
-  isPictureEvent
+  isPictureEvent,
+  isSupportedKind
 } from '@/lib/event'
 import { toNote } from '@/lib/link'
 import { Event, kinds } from 'nostr-tools'
@@ -16,6 +17,7 @@ import ParentNotePreview from '../ParentNotePreview'
 import UserAvatar from '../UserAvatar'
 import Username from '../Username'
 import Highlight from './Highlight'
+import { UnknownNote } from './UnknownNote'
 
 export default function Note({
   event,
@@ -30,10 +32,7 @@ export default function Note({
 }) {
   const { push } = useSecondaryPage()
   const parentEventId = useMemo(
-    () =>
-      !hideParentNotePreview && event.kind === kinds.ShortTextNote
-        ? getParentEventId(event)
-        : undefined,
+    () => (hideParentNotePreview ? undefined : getParentEventId(event)),
     [event, hideParentNotePreview]
   )
   const imageInfos = useMemo(
@@ -79,8 +78,10 @@ export default function Note({
       )}
       {event.kind === kinds.Highlights ? (
         <Highlight className="mt-2" event={event} />
-      ) : (
+      ) : isSupportedKind(event.kind) ? (
         <Content className="mt-2" event={event} />
+      ) : (
+        <UnknownNote className="mt-2" event={event} />
       )}
       {imageInfos.length > 0 && <ImageGallery images={imageInfos} />}
     </div>

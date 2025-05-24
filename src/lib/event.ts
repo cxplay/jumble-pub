@@ -61,7 +61,12 @@ export function isProtectedEvent(event: Event) {
 }
 
 export function isSupportedKind(kind: number) {
-  return [kinds.ShortTextNote, kinds.Highlights, ExtendedKind.PICTURE].includes(kind)
+  return [
+    kinds.ShortTextNote,
+    kinds.Highlights,
+    ExtendedKind.PICTURE,
+    ExtendedKind.COMMENT
+  ].includes(kind)
 }
 
 export function getParentEventTag(event?: Event) {
