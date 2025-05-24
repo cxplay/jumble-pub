@@ -723,7 +723,7 @@ class ClientService extends EventTarget {
     const relayEvents = await indexedDb.getManyReplaceableEvents(pubkeys, kinds.RelayList)
     const nonExistingPubkeyIndexMap = new Map<string, number>()
     pubkeys.forEach((pubkey, i) => {
-      if (!relayEvents[i]) {
+      if (relayEvents[i] === undefined) {
         nonExistingPubkeyIndexMap.set(pubkey, i)
       }
     })
@@ -1024,7 +1024,14 @@ class ClientService extends EventTarget {
         eventsMap.set(pubkey, event)
       }
     }
-    Array.from(eventsMap.values()).forEach((evt) => indexedDb.putReplaceableEvent(evt))
+    pubkeys.forEach((pubkey) => {
+      const event = eventsMap.get(pubkey)
+      if (event) {
+        indexedDb.putReplaceableEvent(event)
+      } else {
+        indexedDb.putNullReplaceableEvent(pubkey, kinds.RelayList)
+      }
+    })
 
     return pubkeys.map((pubkey) => eventsMap.get(pubkey))
   }

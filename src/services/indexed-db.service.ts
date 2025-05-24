@@ -84,6 +84,45 @@ class IndexedDbService {
     return this.initPromise
   }
 
+  async putNullReplaceableEvent(pubkey: string, kind: number) {
+    const storeName = this.getStoreNameByKind(kind)
+    if (!storeName) {
+      return Promise.reject('store name not found')
+    }
+    await this.initPromise
+    return new Promise((resolve, reject) => {
+      if (!this.db) {
+        return reject('database not initialized')
+      }
+      const transaction = this.db.transaction(storeName, 'readwrite')
+      const store = transaction.objectStore(storeName)
+
+      const getRequest = store.get(pubkey)
+      getRequest.onsuccess = () => {
+        const oldValue = getRequest.result as TValue<Event> | undefined
+        if (oldValue) {
+          transaction.commit()
+          return resolve(oldValue.value)
+        }
+        const putRequest = store.put(this.formatValue(pubkey, null))
+        putRequest.onsuccess = () => {
+          transaction.commit()
+          resolve(null)
+        }
+
+        putRequest.onerror = (event) => {
+          transaction.commit()
+          reject(event)
+        }
+      }
+
+      getRequest.onerror = (event) => {
+        transaction.commit()
+        reject(event)
+      }
+    })
+  }
+
   async putReplaceableEvent(event: Event): Promise<Event> {
     const storeName = this.getStoreNameByKind(event.kind)
     if (!storeName) {
@@ -154,7 +193,7 @@ class IndexedDbService {
   async getManyReplaceableEvents(
     pubkeys: readonly string[],
     kind: number
-  ): Promise<(Event | undefined)[]> {
+  ): Promise<(Event | undefined | null)[]> {
     const storeName = this.getStoreNameByKind(kind)
     if (!storeName) {
       return Promise.reject('store name not found')
@@ -166,14 +205,14 @@ class IndexedDbService {
       }
       const transaction = this.db.transaction(storeName, 'readonly')
       const store = transaction.objectStore(storeName)
-      const events: Event[] = new Array(pubkeys.length).fill(undefined)
+      const events: (Event | null)[] = new Array(pubkeys.length).fill(undefined)
       let count = 0
       pubkeys.forEach((pubkey, i) => {
         const request = store.get(pubkey)
 
         request.onsuccess = () => {
-          const event = (request.result as TValue<Event>)?.value
-          if (event) {
+          const event = (request.result as TValue<Event | null>)?.value
+          if (event || event === null) {
             events[i] = event
           }
 
@@ -384,8 +423,7 @@ class IndexedDbService {
             const cursor = (event.target as IDBRequest).result
             if (cursor) {
               const value: TValue = cursor.value
-              // 10% chance to delete
-              if (value.addedAt < expirationTimestamp && Math.random() < 0.1) {
+              if (value.addedAt < expirationTimestamp) {
                 cursor.delete()
               }
               cursor.continue()
