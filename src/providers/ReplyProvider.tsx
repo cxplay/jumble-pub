@@ -30,14 +30,16 @@ export function ReplyProvider({ children }: { children: React.ReactNode }) {
       newReplyIdSet.add(reply.id)
 
       const rootETag = getRootEventTag(reply)
-      if (!rootETag) return
-      const rootId = rootETag[1]
-      newReplyEventMap.set(rootId, [...(newReplyEventMap.get(rootId) || []), reply])
+      if (rootETag) {
+        const rootId = rootETag[1]
+        newReplyEventMap.set(rootId, [...(newReplyEventMap.get(rootId) || []), reply])
+      }
 
       const parentETag = getParentEventTag(reply)
-      if (!parentETag) return
-      const parentId = parentETag[1]
-      newReplyEventMap.set(parentId, [...(newReplyEventMap.get(parentId) || []), reply])
+      if (parentETag) {
+        const parentId = parentETag[1]
+        newReplyEventMap.set(parentId, [...(newReplyEventMap.get(parentId) || []), reply])
+      }
     })
     if (newReplyEventMap.size === 0) return
 

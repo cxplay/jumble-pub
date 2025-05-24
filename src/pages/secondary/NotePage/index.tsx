@@ -8,10 +8,12 @@ import UserAvatar from '@/components/UserAvatar'
 import { Card } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import { Skeleton } from '@/components/ui/skeleton'
+import { ExtendedKind } from '@/constants'
 import { useFetchEvent } from '@/hooks'
 import SecondaryPageLayout from '@/layouts/SecondaryPageLayout'
 import { getParentEventId, getRootEventId, isPictureEvent } from '@/lib/event'
 import { toNote } from '@/lib/link'
+import { tagNameEquals } from '@/lib/tag'
 import { useMuteList } from '@/providers/MuteListProvider'
 import { forwardRef, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -22,6 +24,10 @@ const NotePage = forwardRef(({ id, index }: { id?: string; index?: number }, ref
   const { event, isFetching } = useFetchEvent(id)
   const parentEventId = useMemo(() => getParentEventId(event), [event])
   const rootEventId = useMemo(() => getRootEventId(event), [event])
+  const rootITag = useMemo(
+    () => (event?.kind === ExtendedKind.COMMENT ? event.tags.find(tagNameEquals('I')) : undefined),
+    [event]
+  )
 
   if (!event && isFetching) {
     return (
@@ -65,7 +71,8 @@ const NotePage = forwardRef(({ id, index }: { id?: string; index?: number }, ref
   return (
     <SecondaryPageLayout ref={ref} index={index} title={t('Note')} displayScrollToTopButton>
       <div className="px-4">
-        {rootEventId !== parentEventId && (
+        {rootITag && <OtherRoot value={rootITag[1]} />}
+        {!rootITag && rootEventId !== parentEventId && (
           <ParentNote key={`root-note-${event.id}`} eventId={rootEventId} />
         )}
         <ParentNote key={`parent-note-${event.id}`} eventId={parentEventId} />
@@ -84,6 +91,33 @@ const NotePage = forwardRef(({ id, index }: { id?: string; index?: number }, ref
 })
 NotePage.displayName = 'NotePage'
 export default NotePage
+
+function OtherRoot({ value }: { value: string }) {
+  const type = useMemo(() => (value.startsWith('http') ? 'url' : 'other'), [value])
+
+  if (type === 'url') {
+    return (
+      <div>
+        <Card
+          className="flex space-x-1 p-1 pl-2 clickable text-sm text-muted-foreground hover:text-foreground"
+          onClick={() => window.open(value, '_blank')}
+        >
+          <div className="truncate">{value}</div>
+        </Card>
+        <div className="ml-5 w-px h-2 bg-border" />
+      </div>
+    )
+  }
+
+  return (
+    <div>
+      <Card className="flex space-x-1 p-1 text-sm text-muted-foreground">
+        <div className="truncate">{value}</div>
+      </Card>
+      <div className="ml-5 w-px h-2 bg-border" />
+    </div>
+  )
+}
 
 function ParentNote({ eventId }: { eventId?: string }) {
   const { t } = useTranslation()

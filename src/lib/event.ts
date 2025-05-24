@@ -354,15 +354,15 @@ export async function extractRelatedEventIds(content: string, parentEvent?: Even
 
 export async function extractCommentMentions(content: string, parentEvent: Event) {
   const quoteEventIds: string[] = []
-  let rootEventId =
+  const rootEventId =
     parentEvent.kind === ExtendedKind.COMMENT
       ? parentEvent.tags.find(tagNameEquals('E'))?.[1]
       : parentEvent.id
-  let rootKind =
+  const rootKind =
     parentEvent.kind === ExtendedKind.COMMENT
       ? parentEvent.tags.find(tagNameEquals('K'))?.[1]
       : parentEvent.kind
-  let rootPubkey =
+  const rootPubkey =
     parentEvent.kind === ExtendedKind.COMMENT
       ? parentEvent.tags.find(tagNameEquals('P'))?.[1]
       : parentEvent.pubkey
@@ -370,12 +370,6 @@ export async function extractCommentMentions(content: string, parentEvent: Event
     parentEvent.kind === ExtendedKind.COMMENT
       ? parentEvent.tags.find(tagNameEquals('I'))?.[1]
       : undefined
-
-  if (parentEvent.kind === ExtendedKind.COMMENT && !rootEventId) {
-    rootEventId = parentEvent.id
-    rootKind = parentEvent.kind
-    rootPubkey = parentEvent.pubkey
-  }
 
   const parentEventId = parentEvent.id
   const parentKind = parentEvent.kind

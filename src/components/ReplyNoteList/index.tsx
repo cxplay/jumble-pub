@@ -6,7 +6,7 @@ import {
   getRootEventTag,
   isReplyNoteEvent
 } from '@/lib/event'
-import { generateEventIdFromETag } from '@/lib/tag'
+import { generateEventIdFromETag, tagNameEquals } from '@/lib/tag'
 import { useSecondaryPage } from '@/PageManager'
 import { useReply } from '@/providers/ReplyProvider'
 import client from '@/services/client.service'
@@ -14,6 +14,8 @@ import { Filter, Event as NEvent, kinds } from 'nostr-tools'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import ReplyNote from '../ReplyNote'
+
+type TRootInfo = { type: 'event'; id: string; pubkey: string } | { type: 'I'; id: string }
 
 const LIMIT = 100
 const SHOW_COUNT = 10
@@ -29,7 +31,7 @@ export default function ReplyNoteList({
 }) {
   const { t } = useTranslation()
   const { currentIndex } = useSecondaryPage()
-  const [rootInfo, setRootInfo] = useState<{ id: string; pubkey: string } | undefined>(undefined)
+  const [rootInfo, setRootInfo] = useState<TRootInfo | undefined>(undefined)
   const { repliesMap, addReplies } = useReply()
   const replies = useMemo(() => {
     const replyIdSet = new Set<string>()
@@ -56,20 +58,25 @@ export default function ReplyNoteList({
 
   useEffect(() => {
     const fetchRootEvent = async () => {
-      let root = { id: event.id, pubkey: event.pubkey }
+      let root: TRootInfo = { type: 'event', id: event.id, pubkey: event.pubkey }
       const rootEventTag = getRootEventTag(event)
       if (rootEventTag) {
         const [, rootEventHexId, , , rootEventPubkey] = rootEventTag
         if (rootEventHexId && rootEventPubkey) {
-          root = { id: rootEventHexId, pubkey: rootEventPubkey }
+          root = { type: 'event', id: rootEventHexId, pubkey: rootEventPubkey }
         } else {
           const rootEventId = generateEventIdFromETag(rootEventTag)
           if (rootEventId) {
             const rootEvent = await client.fetchEvent(rootEventId)
             if (rootEvent) {
-              root = { id: rootEvent.id, pubkey: rootEvent.pubkey }
+              root = { type: 'event', id: rootEvent.id, pubkey: rootEvent.pubkey }
             }
           }
+        }
+      } else if (event.kind === ExtendedKind.COMMENT) {
+        const rootITag = event.tags.find(tagNameEquals('I'))
+        if (rootITag) {
+          root = { type: 'I', id: rootITag[1] }
         }
       }
       setRootInfo(root)
@@ -105,23 +112,32 @@ export default function ReplyNoteList({
       setLoading(true)
 
       try {
-        const relayList = await client.fetchRelayList(rootInfo.pubkey)
+        const relayList = await client.fetchRelayList(
+          (rootInfo as { pubkey?: string }).pubkey ?? event.pubkey
+        )
         const relayUrls = relayList.read.concat(BIG_RELAY_URLS)
         const seenOn = client.getSeenEventRelayUrls(rootInfo.id)
         relayUrls.unshift(...seenOn)
 
         const filters: (Omit<Filter, 'since' | 'until'> & {
           limit: number
-        })[] = [
-          {
+        })[] = []
+        if (rootInfo.type === 'event') {
+          filters.push({
             '#e': [rootInfo.id],
             kinds: [kinds.ShortTextNote],
             limit: LIMIT
+          })
+          if (event.kind !== kinds.ShortTextNote) {
+            filters.push({
+              '#E': [rootInfo.id],
+              kinds: [ExtendedKind.COMMENT],
+              limit: LIMIT
+            })
           }
-        ]
-        if (event.kind !== kinds.ShortTextNote) {
+        } else {
           filters.push({
-            '#E': [rootInfo.id],
+            '#I': [rootInfo.id],
             kinds: [ExtendedKind.COMMENT],
             limit: LIMIT
           })
