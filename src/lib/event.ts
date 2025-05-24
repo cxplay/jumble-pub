@@ -26,6 +26,7 @@ export function isNsfwEvent(event: Event) {
 }
 
 export function isReplyNoteEvent(event: Event) {
+  if (event.kind === ExtendedKind.COMMENT) return true
   if (event.kind !== kinds.ShortTextNote) return false
 
   const cache = EVENT_IS_REPLY_NOTE_CACHE.get(event.id)
@@ -64,7 +65,12 @@ export function isSupportedKind(kind: number) {
 }
 
 export function getParentEventTag(event?: Event) {
-  if (!event) return undefined
+  if (!event || ![kinds.ShortTextNote, ExtendedKind.COMMENT].includes(event.kind)) return undefined
+
+  if (event.kind === ExtendedKind.COMMENT) {
+    return event.tags.find(tagNameEquals('e')) ?? event.tags.find(tagNameEquals('E'))
+  }
+
   let tag = event.tags.find(isReplyETag)
   if (!tag) {
     const embeddedEventIds = extractEmbeddedEventIds(event)
@@ -88,7 +94,12 @@ export function getParentEventId(event?: Event) {
 }
 
 export function getRootEventTag(event?: Event) {
-  if (!event) return undefined
+  if (!event || ![kinds.ShortTextNote, ExtendedKind.COMMENT].includes(event.kind)) return undefined
+
+  if (event.kind === ExtendedKind.COMMENT) {
+    return event.tags.find(tagNameEquals('E'))
+  }
+
   let tag = event.tags.find(isRootETag)
   if (!tag) {
     const embeddedEventIds = extractEmbeddedEventIds(event)
@@ -338,12 +349,32 @@ export async function extractRelatedEventIds(content: string, parentEvent?: Even
 
 export async function extractCommentMentions(content: string, parentEvent: Event) {
   const quoteEventIds: string[] = []
-  const rootEventId = parentEvent.tags.find(tagNameEquals('E'))?.[1] ?? parentEvent.id
-  const rootEventKind = parentEvent.tags.find(tagNameEquals('K'))?.[1] ?? parentEvent.kind
-  const rootEventPubkey = parentEvent.tags.find(tagNameEquals('P'))?.[1] ?? parentEvent.pubkey
+  let rootEventId =
+    parentEvent.kind === ExtendedKind.COMMENT
+      ? parentEvent.tags.find(tagNameEquals('E'))?.[1]
+      : parentEvent.id
+  let rootKind =
+    parentEvent.kind === ExtendedKind.COMMENT
+      ? parentEvent.tags.find(tagNameEquals('K'))?.[1]
+      : parentEvent.kind
+  let rootPubkey =
+    parentEvent.kind === ExtendedKind.COMMENT
+      ? parentEvent.tags.find(tagNameEquals('P'))?.[1]
+      : parentEvent.pubkey
+  const rootUrl =
+    parentEvent.kind === ExtendedKind.COMMENT
+      ? parentEvent.tags.find(tagNameEquals('I'))?.[1]
+      : undefined
+
+  if (parentEvent.kind === ExtendedKind.COMMENT && !rootEventId) {
+    rootEventId = parentEvent.id
+    rootKind = parentEvent.kind
+    rootPubkey = parentEvent.pubkey
+  }
+
   const parentEventId = parentEvent.id
-  const parentEventKind = parentEvent.kind
-  const parentEventPubkey = parentEvent.pubkey
+  const parentKind = parentEvent.kind
+  const parentPubkey = parentEvent.pubkey
 
   const addToSet = (arr: string[], item: string) => {
     if (!arr.includes(item)) arr.push(item)
@@ -367,11 +398,12 @@ export async function extractCommentMentions(content: string, parentEvent: Event
   return {
     quoteEventIds,
     rootEventId,
-    rootEventKind,
-    rootEventPubkey,
+    rootKind,
+    rootPubkey,
+    rootUrl,
     parentEventId,
-    parentEventKind,
-    parentEventPubkey
+    parentKind,
+    parentPubkey
   }
 }
 

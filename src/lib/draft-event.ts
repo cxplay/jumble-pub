@@ -177,11 +177,12 @@ export async function createCommentDraftEvent(
   const {
     quoteEventIds,
     rootEventId,
-    rootEventKind,
-    rootEventPubkey,
+    rootKind,
+    rootPubkey,
+    rootUrl,
     parentEventId,
-    parentEventKind,
-    parentEventPubkey
+    parentKind,
+    parentPubkey
   } = await extractCommentMentions(content, parentEvent)
   const hashtags = extractHashtags(content)
 
@@ -194,17 +195,29 @@ export async function createCommentDraftEvent(
     tags.push(...generateImetaTags(images))
   }
 
-  tags.push(
-    ...mentions.filter((pubkey) => pubkey !== parentEventPubkey).map((pubkey) => ['p', pubkey])
-  )
+  tags.push(...mentions.filter((pubkey) => pubkey !== parentPubkey).map((pubkey) => ['p', pubkey]))
+
+  if (rootEventId) {
+    tags.push(
+      rootPubkey
+        ? ['E', rootEventId, client.getEventHint(rootEventId), rootPubkey]
+        : ['E', rootEventId, client.getEventHint(rootEventId)]
+    )
+  }
+  if (rootPubkey) {
+    tags.push(['P', rootPubkey])
+  }
+  if (rootKind) {
+    tags.push(['K', rootKind.toString()])
+  }
+  if (rootUrl) {
+    tags.push(['I', rootUrl])
+  }
   tags.push(
     ...[
-      ['E', rootEventId, client.getEventHint(rootEventId), rootEventPubkey],
-      ['K', rootEventKind.toString()],
-      ['P', rootEventPubkey],
-      ['e', parentEventId, client.getEventHint(parentEventId), parentEventPubkey],
-      ['k', parentEventKind.toString()],
-      ['p', parentEventPubkey]
+      ['e', parentEventId, client.getEventHint(parentEventId), parentPubkey],
+      ['k', parentKind.toString()],
+      ['p', parentPubkey]
     ]
   )
 

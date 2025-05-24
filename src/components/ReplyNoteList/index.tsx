@@ -1,5 +1,5 @@
 import { Separator } from '@/components/ui/separator'
-import { BIG_RELAY_URLS } from '@/constants'
+import { BIG_RELAY_URLS, ExtendedKind } from '@/constants'
 import {
   getParentEventTag,
   getRootEventHexId,
@@ -10,7 +10,7 @@ import { generateEventIdFromETag } from '@/lib/tag'
 import { useSecondaryPage } from '@/PageManager'
 import { useReply } from '@/providers/ReplyProvider'
 import client from '@/services/client.service'
-import { Event as NEvent, kinds } from 'nostr-tools'
+import { Filter, Event as NEvent, kinds } from 'nostr-tools'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import ReplyNote from '../ReplyNote'
@@ -109,17 +109,28 @@ export default function ReplyNoteList({
         const relayUrls = relayList.read.concat(BIG_RELAY_URLS)
         const seenOn = client.getSeenEventRelayUrls(rootInfo.id)
         relayUrls.unshift(...seenOn)
+
+        const filters: (Omit<Filter, 'since' | 'until'> & {
+          limit: number
+        })[] = [
+          {
+            '#e': [rootInfo.id],
+            kinds: [kinds.ShortTextNote],
+            limit: LIMIT
+          }
+        ]
+        if (event.kind !== kinds.ShortTextNote) {
+          filters.push({
+            '#E': [rootInfo.id],
+            kinds: [ExtendedKind.COMMENT],
+            limit: LIMIT
+          })
+        }
         const { closer, timelineKey } = await client.subscribeTimeline(
-          [
-            {
-              urls: relayUrls.slice(0, 5),
-              filter: {
-                '#e': [rootInfo.id],
-                kinds: [kinds.ShortTextNote],
-                limit: LIMIT
-              }
-            }
-          ],
+          filters.map((filter) => ({
+            urls: relayUrls.slice(0, 5),
+            filter
+          })),
           {
             onEvents: (evts, eosed) => {
               if (evts.length > 0) {

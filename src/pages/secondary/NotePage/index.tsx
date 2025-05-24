@@ -1,6 +1,5 @@
 import { useSecondaryPage } from '@/PageManager'
 import ContentPreview from '@/components/ContentPreview'
-import Nip22ReplyNoteList from '@/components/Nip22ReplyNoteList'
 import Note from '@/components/Note'
 import NoteStats from '@/components/NoteStats'
 import PictureNote from '@/components/PictureNote'
@@ -14,7 +13,6 @@ import SecondaryPageLayout from '@/layouts/SecondaryPageLayout'
 import { getParentEventId, getRootEventId, isPictureEvent } from '@/lib/event'
 import { toNote } from '@/lib/link'
 import { useMuteList } from '@/providers/MuteListProvider'
-import { kinds } from 'nostr-tools'
 import { forwardRef, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import NotFoundPage from '../NotFoundPage'
@@ -22,14 +20,8 @@ import NotFoundPage from '../NotFoundPage'
 const NotePage = forwardRef(({ id, index }: { id?: string; index?: number }, ref) => {
   const { t } = useTranslation()
   const { event, isFetching } = useFetchEvent(id)
-  const parentEventId = useMemo(
-    () => (event?.kind === kinds.ShortTextNote ? getParentEventId(event) : undefined),
-    [event]
-  )
-  const rootEventId = useMemo(
-    () => (event?.kind === kinds.ShortTextNote ? getRootEventId(event) : undefined),
-    [event]
-  )
+  const parentEventId = useMemo(() => getParentEventId(event), [event])
+  const rootEventId = useMemo(() => getRootEventId(event), [event])
 
   if (!event && isFetching) {
     return (
@@ -65,7 +57,7 @@ const NotePage = forwardRef(({ id, index }: { id?: string; index?: number }, ref
       <SecondaryPageLayout ref={ref} index={index} title={t('Note')} displayScrollToTopButton>
         <PictureNote key={`note-${event.id}`} event={event} fetchNoteStats />
         <Separator className="mt-4" />
-        <Nip22ReplyNoteList key={`nip22-reply-note-list-${event.id}`} event={event} />
+        <ReplyNoteList key={`reply-note-list-${event.id}`} index={index} event={event} />
       </SecondaryPageLayout>
     )
   }
@@ -86,11 +78,7 @@ const NotePage = forwardRef(({ id, index }: { id?: string; index?: number }, ref
         <NoteStats className="mt-3" event={event} fetchIfNotExisting displayTopZapsAndLikes />
       </div>
       <Separator className="mt-4" />
-      {[kinds.ShortTextNote, kinds.Highlights].includes(event.kind) ? (
-        <ReplyNoteList key={`reply-note-list-${event.id}`} index={index} event={event} />
-      ) : (
-        <Nip22ReplyNoteList key={`nip22-reply-note-list-${event.id}`} event={event} />
-      )}
+      <ReplyNoteList key={`reply-note-list-${event.id}`} index={index} event={event} />
     </SecondaryPageLayout>
   )
 })
