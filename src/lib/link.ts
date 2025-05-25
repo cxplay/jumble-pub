@@ -8,11 +8,20 @@ export const toNote = (eventOrId: Pick<Event, 'id' | 'pubkey'> | string) => {
   const nevent = generateEventId(eventOrId)
   return `/notes/${nevent}`
 }
-export const toNoteList = ({ hashtag, search }: { hashtag?: string; search?: string }) => {
+export const toNoteList = ({
+  hashtag,
+  search,
+  externalContentId
+}: {
+  hashtag?: string
+  search?: string
+  externalContentId?: string
+}) => {
   const path = '/notes'
   const query = new URLSearchParams()
   if (hashtag) query.set('t', hashtag.toLowerCase())
   if (search) query.set('s', search)
+  if (externalContentId) query.set('i', externalContentId)
   return `${path}?${query.toString()}`
 }
 export const toProfile = (userId: string) => {

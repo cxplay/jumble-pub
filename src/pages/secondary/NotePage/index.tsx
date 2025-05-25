@@ -12,7 +12,7 @@ import { ExtendedKind } from '@/constants'
 import { useFetchEvent } from '@/hooks'
 import SecondaryPageLayout from '@/layouts/SecondaryPageLayout'
 import { getParentEventId, getRootEventId, isPictureEvent } from '@/lib/event'
-import { toNote } from '@/lib/link'
+import { toNote, toNoteList } from '@/lib/link'
 import { tagNameEquals } from '@/lib/tag'
 import { useMuteList } from '@/providers/MuteListProvider'
 import { forwardRef, useMemo } from 'react'
@@ -71,8 +71,8 @@ const NotePage = forwardRef(({ id, index }: { id?: string; index?: number }, ref
   return (
     <SecondaryPageLayout ref={ref} index={index} title={t('Note')} displayScrollToTopButton>
       <div className="px-4">
-        {rootITag && <OtherRoot value={rootITag[1]} />}
-        {!rootITag && rootEventId !== parentEventId && (
+        {rootITag && <ExternalRoot value={rootITag[1]} />}
+        {rootEventId !== parentEventId && (
           <ParentNote key={`root-note-${event.id}`} eventId={rootEventId} />
         )}
         <ParentNote key={`parent-note-${event.id}`} eventId={parentEventId} />
@@ -92,26 +92,15 @@ const NotePage = forwardRef(({ id, index }: { id?: string; index?: number }, ref
 NotePage.displayName = 'NotePage'
 export default NotePage
 
-function OtherRoot({ value }: { value: string }) {
-  const type = useMemo(() => (value.startsWith('http') ? 'url' : 'other'), [value])
-
-  if (type === 'url') {
-    return (
-      <div>
-        <Card
-          className="flex space-x-1 p-1 pl-2 clickable text-sm text-muted-foreground hover:text-foreground"
-          onClick={() => window.open(value, '_blank')}
-        >
-          <div className="truncate">{value}</div>
-        </Card>
-        <div className="ml-5 w-px h-2 bg-border" />
-      </div>
-    )
-  }
+function ExternalRoot({ value }: { value: string }) {
+  const { push } = useSecondaryPage()
 
   return (
     <div>
-      <Card className="flex space-x-1 p-1 text-sm text-muted-foreground">
+      <Card
+        className="flex space-x-1 p-1 items-center clickable text-sm text-muted-foreground hover:text-foreground"
+        onClick={() => push(toNoteList({ externalContentId: value }))}
+      >
         <div className="truncate">{value}</div>
       </Card>
       <div className="ml-5 w-px h-2 bg-border" />

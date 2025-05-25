@@ -1,12 +1,14 @@
 import NoteList from '@/components/NoteList'
 import { BIG_RELAY_URLS, SEARCHABLE_RELAY_URLS } from '@/constants'
 import SecondaryPageLayout from '@/layouts/SecondaryPageLayout'
+import { useNostr } from '@/providers/NostrProvider'
 import { Filter } from 'nostr-tools'
 import { forwardRef, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 const NoteListPage = forwardRef(({ index }: { index?: number }, ref) => {
   const { t } = useTranslation()
+  const { relayList } = useNostr()
   const {
     title = '',
     filter,
@@ -22,8 +24,7 @@ const NoteListPage = forwardRef(({ index }: { index?: number }, ref) => {
       return {
         title: `# ${hashtag}`,
         filter: { '#t': [hashtag] },
-        urls: BIG_RELAY_URLS,
-        type: 'hashtag'
+        urls: BIG_RELAY_URLS
       }
     }
     const search = searchParams.get('s')
@@ -31,8 +32,15 @@ const NoteListPage = forwardRef(({ index }: { index?: number }, ref) => {
       return {
         title: `${t('Search')}: ${search}`,
         filter: { search },
-        urls: SEARCHABLE_RELAY_URLS,
-        type: 'search'
+        urls: SEARCHABLE_RELAY_URLS
+      }
+    }
+    const externalContentId = searchParams.get('i')
+    if (externalContentId) {
+      return {
+        title: externalContentId,
+        filter: { '#I': [externalContentId] },
+        urls: BIG_RELAY_URLS.concat(relayList?.write || [])
       }
     }
     return { urls: BIG_RELAY_URLS }
