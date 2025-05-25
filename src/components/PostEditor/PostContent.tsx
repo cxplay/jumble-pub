@@ -38,13 +38,10 @@ export default function PostContent({
   const [mentions, setMentions] = useState<string[]>([])
   const canPost = !!text && !posting && !uploadingFiles
 
-  const post = async (e: React.MouseEvent) => {
-    e.stopPropagation()
+  const post = async (e?: React.MouseEvent) => {
+    e?.stopPropagation()
     checkLogin(async () => {
-      if (!canPost) {
-        close()
-        return
-      }
+      if (!canPost) return
 
       setPosting(true)
       try {
@@ -105,6 +102,7 @@ export default function PostContent({
         setText={setText}
         defaultContent={defaultContent}
         parentEvent={parentEvent}
+        onSubmit={() => post()}
       />
       <SendOnlyToSwitch
         parentEvent={parentEvent}
