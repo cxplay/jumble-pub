@@ -17,6 +17,7 @@ import ParentNotePreview from '../ParentNotePreview'
 import UserAvatar from '../UserAvatar'
 import Username from '../Username'
 import Highlight from './Highlight'
+import IValue from './IValue'
 import { UnknownNote } from './UnknownNote'
 
 export default function Note({
@@ -76,6 +77,7 @@ export default function Note({
           }}
         />
       )}
+      <IValue event={event} className="mt-2" />
       {event.kind === kinds.Highlights ? (
         <Highlight className="mt-2" event={event} />
       ) : isSupportedKind(event.kind) ? (

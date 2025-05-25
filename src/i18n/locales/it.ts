@@ -235,6 +235,7 @@ export default {
     'You are about to publish an event signed by [{{eventAuthorName}}]. You are currently logged in as [{{currentUsername}}]. Are you sure?':
       'Stai per pubblicare un evento firmato da [{{eventAuthorName}}]. Attualmente sei connesso come [{{currentUsername}}]. Sei sicuro?',
     'Platinum Sponsors': 'Sponsor Platino',
-    From: 'Da'
+    From: 'Da',
+    'Comment on': 'Commenta su'
   }
 }

@@ -26,7 +26,9 @@ export function isNsfwEvent(event: Event) {
 }
 
 export function isReplyNoteEvent(event: Event) {
-  if (event.kind === ExtendedKind.COMMENT) return true
+  if (event.kind === ExtendedKind.COMMENT) {
+    return !!getParentEventTag(event)
+  }
   if (event.kind !== kinds.ShortTextNote) return false
 
   const cache = EVENT_IS_REPLY_NOTE_CACHE.get(event.id)
