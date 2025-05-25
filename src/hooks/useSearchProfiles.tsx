@@ -22,14 +22,27 @@ export function useSearchProfiles(search: string, limit: number) {
       setIsFetching(true)
       setProfiles([])
       try {
-        const profiles = await client.searchProfiles(
+        const profiles = await client.searchProfilesFromCache(search, limit)
+        setProfiles(profiles)
+        if (profiles.length >= limit) {
+          return
+        }
+        const existingPubkeys = new Set(profiles.map((profile) => profile.pubkey))
+        const fetchedProfiles = await client.searchProfiles(
           searchableRelayUrls.concat(SEARCHABLE_RELAY_URLS).slice(0, 4),
           {
             search,
             limit
           }
         )
-        if (profiles) {
+        if (fetchedProfiles.length) {
+          fetchedProfiles.forEach((profile) => {
+            if (existingPubkeys.has(profile.pubkey)) {
+              return
+            }
+            existingPubkeys.add(profile.pubkey)
+            profiles.push(profile)
+          })
           setProfiles(profiles)
         }
       } catch (err) {

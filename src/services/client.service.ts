@@ -833,9 +833,15 @@ class ClientService extends EventTarget {
     this.relayListEventDataLoader.prime(event.pubkey, Promise.resolve(event))
   }
 
-  async searchNpubs(query: string, limit: number = 100) {
+  async searchNpubsFromCache(query: string, limit: number = 100) {
     const result = await this.userIndex.searchAsync(query, { limit })
     return result.map((pubkey) => pubkeyToNpub(pubkey as string)).filter(Boolean) as string[]
+  }
+
+  async searchProfilesFromCache(query: string, limit: number = 100) {
+    const npubs = await this.searchNpubsFromCache(query, limit)
+    const profiles = await Promise.all(npubs.map((npub) => this.fetchProfile(npub)))
+    return profiles.filter((profile) => !!profile) as TProfile[]
   }
 
   async initUserIndexFromFollowings(pubkey: string, signal: AbortSignal) {
