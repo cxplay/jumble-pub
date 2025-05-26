@@ -233,6 +233,7 @@ export default {
       'あなたは[{{eventAuthorName}}]によって署名されたイベントを公開しようとしています。現在[{{currentUsername}}]としてログインしています。よろしいですか？',
     'Platinum Sponsors': 'プラチナスポンサー',
     From: 'から',
-    'Comment on': 'にコメント'
+    'Comment on': 'にコメント',
+    'View on njump.me': 'njump.meで表示'
   }
 }

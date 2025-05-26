@@ -236,6 +236,7 @@ export default {
       'Stai per pubblicare un evento firmato da [{{eventAuthorName}}]. Attualmente sei connesso come [{{currentUsername}}]. Sei sicuro?',
     'Platinum Sponsors': 'Sponsor Platino',
     From: 'Da',
-    'Comment on': 'Commenta su'
+    'Comment on': 'Commenta su',
+    'View on njump.me': 'Visualizza su njump.me'
   }
 }

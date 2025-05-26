@@ -233,6 +233,7 @@ export default {
       '您即将发布一条由 [{{eventAuthorName}}] 签名的事件。您当前以 [{{currentUsername}}] 登录。确定吗？',
     'Platinum Sponsors': '白金赞助商',
     From: '来自',
-    'Comment on': '评论于'
+    'Comment on': '评论于',
+    'View on njump.me': '在 njump.me 上查看'
   }
 }

@@ -236,6 +236,7 @@ export default {
       'Вы собираетесь опубликовать событие, подписанное [{{eventAuthorName}}]. Вы в данный момент вошли как [{{currentUsername}}]. Вы уверены?',
     'Platinum Sponsors': 'Платиновые спонсоры',
     From: 'От',
-    'Comment on': 'Прокомментировать'
+    'Comment on': 'Прокомментировать',
+    'View on njump.me': 'Посмотреть на njump.me'
   }
 }

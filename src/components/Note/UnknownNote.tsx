@@ -1,14 +1,13 @@
 import { Button } from '@/components/ui/button'
 import { getSharableEventId } from '@/lib/event'
+import { toNjump } from '@/lib/link'
 import { cn } from '@/lib/utils'
-import { Check, Copy } from 'lucide-react'
+import { ExternalLink } from 'lucide-react'
 import { Event } from 'nostr-tools'
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export function UnknownNote({ event, className }: { event: Event; className?: string }) {
   const { t } = useTranslation()
-  const [isCopied, setIsCopied] = useState(false)
 
   return (
     <div
@@ -21,13 +20,12 @@ export function UnknownNote({ event, className }: { event: Event; className?: st
       <Button
         onClick={(e) => {
           e.stopPropagation()
-          navigator.clipboard.writeText(getSharableEventId(event))
-          setIsCopied(true)
-          setTimeout(() => setIsCopied(false), 2000)
+          window.open(toNjump(getSharableEventId(event)), '_blank')
         }}
         variant="outline"
       >
-        {isCopied ? <Check /> : <Copy />} Copy event ID
+        <ExternalLink />
+        <div>{t('View on njump.me')}</div>
       </Button>
     </div>
   )

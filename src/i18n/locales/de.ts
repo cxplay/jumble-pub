@@ -238,6 +238,7 @@ export default {
       'Du bist dabei, ein Ereignis zu veröffentlichen, das von [{{eventAuthorName}}] signiert wurde. Du bist derzeit als [{{currentUsername}}] angemeldet. Bist du sicher?',
     'Platinum Sponsors': 'Platin-Sponsoren',
     From: 'Von',
-    'Comment on': 'Kommentar zu'
+    'Comment on': 'Kommentar zu',
+    'View on njump.me': 'Auf njump.me ansehen'
   }
 }

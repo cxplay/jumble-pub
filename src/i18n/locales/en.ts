@@ -232,6 +232,7 @@ export default {
       'You are about to publish an event signed by [{{eventAuthorName}}]. You are currently logged in as [{{currentUsername}}]. Are you sure?',
     'Platinum Sponsors': 'Platinum Sponsors',
     From: 'From',
-    'Comment on': 'Comment on'
+    'Comment on': 'Comment on',
+    'View on njump.me': 'View on njump.me'
   }
 }

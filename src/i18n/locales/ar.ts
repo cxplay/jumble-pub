@@ -232,6 +232,7 @@ export default {
       'أنت على وشك نشر حدث موقع من قبل [{{eventAuthorName}}]. أنت حالياً مسجل الدخول كـ [{{currentUsername}}]. هل أنت متأكد؟',
     'Platinum Sponsors': 'الرعاة البلاتينيون',
     From: 'من',
-    'Comment on': 'تعليق على'
+    'Comment on': 'تعليق على',
+    'View on njump.me': 'عرض على njump.me'
   }
 }
