@@ -24,7 +24,8 @@ export default function EmojiPickerDialog({
         <DrawerTrigger asChild>{children}</DrawerTrigger>
         <DrawerContent>
           <EmojiPicker
-            onEmojiClick={(data) => {
+            onEmojiClick={(data, e) => {
+              e.stopPropagation()
               setOpen(false)
               onEmojiClick?.(data.emoji)
             }}
