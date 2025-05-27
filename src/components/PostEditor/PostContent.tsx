@@ -5,10 +5,11 @@ import { useToast } from '@/hooks/use-toast'
 import { createCommentDraftEvent, createShortTextNoteDraftEvent } from '@/lib/draft-event'
 import { useNostr } from '@/providers/NostrProvider'
 import postContentCache from '@/services/post-content-cache.service'
-import { ChevronDown, ImageUp, LoaderCircle } from 'lucide-react'
+import { ImageUp, LoaderCircle, Settings, Smile } from 'lucide-react'
 import { Event, kinds } from 'nostr-tools'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import EmojiPickerDialog from '../EmojiPickerDialog'
 import Mentions from './Mentions'
 import { usePostEditor } from './PostEditorProvider'
 import PostOptions from './PostOptions'
@@ -88,7 +89,7 @@ export default function PostContent({
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-2">
       {parentEvent && (
         <ScrollArea className="flex max-h-48 flex-col overflow-y-auto rounded-lg border bg-muted/40">
           <div className="p-2 sm:p-3 pointer-events-none">
@@ -120,19 +121,22 @@ export default function PostContent({
             }
             accept="image/*,video/*,audio/*"
           >
-            <Button variant="secondary" disabled={uploadingFiles > 0}>
+            <Button variant="ghost" size="icon" disabled={uploadingFiles > 0}>
               {uploadingFiles > 0 ? <LoaderCircle className="animate-spin" /> : <ImageUp />}
             </Button>
           </Uploader>
+          <EmojiPickerDialog onEmojiClick={(emoji) => textareaRef.current?.insertText(emoji)}>
+            <Button variant="ghost" size="icon">
+              <Smile />
+            </Button>
+          </EmojiPickerDialog>
           <Button
-            variant="link"
-            className="text-foreground gap-0 px-0"
+            variant="ghost"
+            size="icon"
+            className={showMoreOptions ? 'bg-accent' : ''}
             onClick={() => setShowMoreOptions((pre) => !pre)}
           >
-            {t('More options')}
-            <ChevronDown
-              className={`transition-transform ${showMoreOptions ? 'rotate-180' : ''}`}
-            />
+            <Settings />
           </Button>
         </div>
         <div className="flex gap-2 items-center">

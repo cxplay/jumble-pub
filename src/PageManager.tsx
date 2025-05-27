@@ -12,6 +12,7 @@ import {
   RefObject,
   useContext,
   useEffect,
+  useRef,
   useState
 } from 'react'
 import ExplorePage from './pages/primary/ExplorePage'
@@ -90,6 +91,7 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
   const [secondaryStack, setSecondaryStack] = useState<TStackItem[]>([])
   const [isShared, setIsShared] = useState(false)
   const { isSmallScreen } = useScreenSize()
+  const ignorePopStateRef = useRef(false)
 
   useEffect(() => {
     window.history.pushState(null, '', window.location.href)
@@ -118,8 +120,14 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
     }
 
     const onPopState = (e: PopStateEvent) => {
+      if (ignorePopStateRef.current) {
+        ignorePopStateRef.current = false
+        return
+      }
+
       const closeModal = modalManager.pop()
       if (closeModal) {
+        ignorePopStateRef.current = true
         window.history.forward()
         return
       }

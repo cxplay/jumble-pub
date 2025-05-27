@@ -19,6 +19,7 @@ import suggestion from './suggestion'
 
 export type TPostTextareaHandle = {
   appendText: (text: string) => void
+  insertText: (text: string) => void
 }
 
 const PostTextarea = forwardRef<
@@ -93,6 +94,11 @@ const PostTextarea = forwardRef<
           })
           .insertContent(text)
           .run()
+      }
+    },
+    insertText: (text: string) => {
+      if (editor) {
+        editor.chain().focus().insertContent(text).run()
       }
     }
   }))
