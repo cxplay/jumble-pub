@@ -88,6 +88,7 @@ export default function NoteOptions({ event, className }: { event: Event; classN
               </Button>
               <Button
                 onClick={() => {
+                  setIsDrawerOpen(false)
                   setIsRawEventDialogOpen(true)
                 }}
                 className="w-full p-6 justify-start text-lg gap-4 [&_svg]:size-5"

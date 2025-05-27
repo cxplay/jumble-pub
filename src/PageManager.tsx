@@ -1,6 +1,6 @@
 import Sidebar from '@/components/Sidebar'
 import { Separator } from '@/components/ui/separator'
-import { cn, isAndroid } from '@/lib/utils'
+import { cn } from '@/lib/utils'
 import NoteListPage from '@/pages/primary/NoteListPage'
 import HomePage from '@/pages/secondary/HomePage'
 import { TPageRef } from '@/types'
@@ -92,6 +92,7 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
   const { isSmallScreen } = useScreenSize()
 
   useEffect(() => {
+    window.history.pushState(null, '', window.location.href)
     if (window.location.pathname !== '/') {
       if (
         ['/users', '/notes', '/relays'].some((path) => window.location.pathname.startsWith(path)) &&
@@ -118,7 +119,10 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
 
     const onPopState = (e: PopStateEvent) => {
       const closeModal = modalManager.pop()
-      if (closeModal) return
+      if (closeModal) {
+        window.history.forward()
+        return
+      }
 
       let state = e.state as { index: number; url: string } | null
       setSecondaryStack((pre) => {
@@ -173,25 +177,10 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
       })
     }
 
-    const onLeave = (event: BeforeUnloadEvent) => {
-      // Cancel the event as stated by the standard.
-      event.preventDefault()
-      // Chrome requires returnValue to be set.
-      event.returnValue = ''
-    }
-
     window.addEventListener('popstate', onPopState)
-
-    if (isAndroid()) {
-      window.addEventListener('beforeunload', onLeave)
-    }
 
     return () => {
       window.removeEventListener('popstate', onPopState)
-
-      if (isAndroid()) {
-        window.removeEventListener('beforeunload', onLeave)
-      }
     }
   }, [])
 
@@ -211,25 +200,21 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
   }
 
   const pushSecondaryPage = (url: string, index?: number) => {
-    // FIXME: Temporary solution to prevent the back action after closing
-    // the modal when navigating.
-    setTimeout(() => {
-      setSecondaryStack((prevStack) => {
-        if (isCurrentPage(prevStack, url)) {
-          const currentItem = prevStack[prevStack.length - 1]
-          if (currentItem?.ref?.current) {
-            currentItem.ref.current.scrollToTop()
-          }
-          return prevStack
+    setSecondaryStack((prevStack) => {
+      if (isCurrentPage(prevStack, url)) {
+        const currentItem = prevStack[prevStack.length - 1]
+        if (currentItem?.ref?.current) {
+          currentItem.ref.current.scrollToTop()
         }
+        return prevStack
+      }
 
-        const { newStack, newItem } = pushNewPageToStack(prevStack, url, maxStackSize, index)
-        if (newItem) {
-          window.history.pushState({ index: newItem.index, url }, '', url)
-        }
-        return newStack
-      })
-    }, 10)
+      const { newStack, newItem } = pushNewPageToStack(prevStack, url, maxStackSize, index)
+      if (newItem) {
+        window.history.pushState({ index: newItem.index, url }, '', url)
+      }
+      return newStack
+    })
   }
 
   const popSecondaryPage = () => {

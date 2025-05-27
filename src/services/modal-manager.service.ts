@@ -1,8 +1,7 @@
 class ModalManagerService {
   static instance: ModalManagerService
 
-  private modal?: { id: string; cb: () => void }
-  private closeByUnregister = false
+  private modals: { id: string; cb: () => void }[] = []
 
   constructor() {
     if (!ModalManagerService.instance) {
@@ -12,30 +11,22 @@ class ModalManagerService {
   }
 
   register(id: string, cb: () => void) {
-    if (this.modal) {
-      this.modal.cb()
-    }
-    this.modal = { id, cb }
-    window.history.pushState(window.history.state, '', window.location.href)
+    this.modals.push({ id, cb })
   }
 
   unregister(id: string) {
-    if (!this.modal || this.modal.id !== id) return
+    const modal = this.modals.find((m) => m.id === id)
+    if (!modal) return
 
-    this.modal.cb()
-    this.modal = undefined
-    this.closeByUnregister = true
-    window.history.back()
+    modal.cb()
+    this.modals = this.modals.filter((m) => m.id !== id)
   }
 
   pop() {
-    if (this.closeByUnregister) {
-      this.closeByUnregister = false
-      return true
-    }
-    if (!this.modal) return false
-    this.modal.cb()
-    this.modal = undefined
+    const modal = this.modals.pop()
+    if (!modal) return false
+
+    modal.cb()
     return true
   }
 }
