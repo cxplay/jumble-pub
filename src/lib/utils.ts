@@ -24,6 +24,11 @@ export function isTorBrowser() {
   return /torbrowser/i.test(ua)
 }
 
+export function isTouchDevice() {
+  if (typeof window === 'undefined' || !window.navigator) return false
+  return 'ontouchstart' in window || navigator.maxTouchPoints > 0
+}
+
 export function isInViewport(el: HTMLElement) {
   const rect = el.getBoundingClientRect()
   return (

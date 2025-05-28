@@ -3,12 +3,14 @@ import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { useToast } from '@/hooks/use-toast'
 import { createCommentDraftEvent, createShortTextNoteDraftEvent } from '@/lib/draft-event'
+import { isTouchDevice } from '@/lib/utils'
 import { useNostr } from '@/providers/NostrProvider'
 import postContentCache from '@/services/post-content-cache.service'
-import { ImageUp, LoaderCircle, Settings } from 'lucide-react'
+import { ImageUp, LoaderCircle, Settings, Smile } from 'lucide-react'
 import { Event, kinds } from 'nostr-tools'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import EmojiPickerDialog from '../EmojiPickerDialog'
 import Mentions from './Mentions'
 import { usePostEditor } from './PostEditorProvider'
 import PostOptions from './PostOptions'
@@ -124,6 +126,16 @@ export default function PostContent({
               {uploadingFiles > 0 ? <LoaderCircle className="animate-spin" /> : <ImageUp />}
             </Button>
           </Uploader>
+          {/* I'm not sure why, but after triggering the virtual keyboard,
+              opening the emoji picker drawer causes an issue,
+              the emoji I tap isn't the one that gets inserted. */}
+          {!isTouchDevice() && (
+            <EmojiPickerDialog onEmojiClick={(emoji) => textareaRef.current?.insertText(emoji)}>
+              <Button variant="ghost" size="icon">
+                <Smile />
+              </Button>
+            </EmojiPickerDialog>
+          )}
           <Button
             variant="ghost"
             size="icon"
