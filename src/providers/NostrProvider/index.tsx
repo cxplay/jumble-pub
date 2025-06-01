@@ -485,6 +485,21 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
       throw new Error('You need to login first')
     }
 
+    const event = await signEvent(draftEvent)
+
+    if (event.pubkey !== account.pubkey) {
+      const eventAuthor = await client.fetchProfile(event.pubkey)
+      const result = confirm(
+        t(
+          'You are about to publish an event signed by [{{eventAuthorName}}]. You are currently logged in as [{{currentUsername}}]. Are you sure?',
+          { eventAuthorName: eventAuthor?.username, currentUsername: profile?.username }
+        )
+      )
+      if (!result) {
+        throw new Error(t('Cancelled'))
+      }
+    }
+
     const additionalRelayUrls: string[] = []
     if (
       !specifiedRelayUrls?.length &&
@@ -514,23 +529,8 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
         })
       }
     }
-    if ([kinds.RelayList, ExtendedKind.FAVORITE_RELAYS].includes(draftEvent.kind)) {
+    if ([kinds.RelayList, kinds.Contacts, ExtendedKind.FAVORITE_RELAYS].includes(draftEvent.kind)) {
       additionalRelayUrls.push(...BIG_RELAY_URLS)
-    }
-
-    const event = await signEvent(draftEvent)
-
-    if (event.pubkey !== account.pubkey) {
-      const eventAuthor = await client.fetchProfile(event.pubkey)
-      const result = confirm(
-        t(
-          'You are about to publish an event signed by [{{eventAuthorName}}]. You are currently logged in as [{{currentUsername}}]. Are you sure?',
-          { eventAuthorName: eventAuthor?.username, currentUsername: profile?.username }
-        )
-      )
-      if (!result) {
-        throw new Error(t('Cancelled'))
-      }
     }
 
     let relays: string[]
