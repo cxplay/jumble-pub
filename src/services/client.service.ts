@@ -56,6 +56,13 @@ class ClientService extends EventTarget {
       maxBatchSize: 500
     }
   )
+  private fetchFollowListEventFromBigRelaysDataloader = new DataLoader<string, NEvent | undefined>(
+    this.followListEventBatchLoadFn.bind(this),
+    {
+      batchScheduleFn: (callback) => setTimeout(callback, 50),
+      maxBatchSize: 500
+    }
+  )
   private relayListEventDataLoader = new DataLoader<string, NEvent | undefined>(
     this.relayListEventBatchLoadFn.bind(this),
     {
@@ -659,7 +666,6 @@ class ClientService extends EventTarget {
     const profileFromBigRelays = await this.fetchProfileEventFromBigRelaysDataloader.load(pubkey)
     if (profileFromBigRelays) {
       this.addUsernameToIndex(profileFromBigRelays)
-      await indexedDb.putReplaceableEvent(profileFromBigRelays)
       return profileFromBigRelays
     }
 
@@ -755,12 +761,8 @@ class ClientService extends EventTarget {
     await this.relayListEventBatchLoadFn([pubkey])
   }
 
-  async fetchFollowListEvent(pubkey: string, storeToIndexedDb = false) {
-    const event = await this.followListCache.fetch(pubkey)
-    if (storeToIndexedDb && event) {
-      await indexedDb.putReplaceableEvent(event)
-    }
-    return event
+  async fetchFollowListEvent(pubkey: string) {
+    return await this.followListCache.fetch(pubkey)
   }
 
   async fetchBookmarkListEvent(pubkey: string): Promise<NEvent | undefined> {
@@ -778,8 +780,8 @@ class ClientService extends EventTarget {
     return events.sort((a, b) => b.created_at - a.created_at)[0]
   }
 
-  async fetchFollowings(pubkey: string, storeToIndexedDb = false) {
-    const followListEvent = await this.fetchFollowListEvent(pubkey, storeToIndexedDb)
+  async fetchFollowings(pubkey: string) {
+    const followListEvent = await this.fetchFollowListEvent(pubkey)
     return followListEvent ? extractPubkeysFromEventTags(followListEvent.tags) : []
   }
 
@@ -826,11 +828,13 @@ class ClientService extends EventTarget {
 
   updateFollowListCache(event: NEvent) {
     this.followListCache.set(event.pubkey, Promise.resolve(event))
+    indexedDb.putReplaceableEvent(event)
   }
 
   updateRelayListCache(event: NEvent) {
     this.relayListEventDataLoader.clear(event.pubkey)
     this.relayListEventDataLoader.prime(event.pubkey, Promise.resolve(event))
+    indexedDb.putReplaceableEvent(event)
   }
 
   async searchNpubsFromCache(query: string, limit: number = 100) {
@@ -845,7 +849,7 @@ class ClientService extends EventTarget {
   }
 
   async initUserIndexFromFollowings(pubkey: string, signal: AbortSignal) {
-    const followings = await this.fetchFollowings(pubkey, true)
+    const followings = await this.fetchFollowings(pubkey)
     for (let i = 0; i * 20 < followings.length; i++) {
       if (signal.aborted) return
       await Promise.all(
@@ -1016,6 +1020,30 @@ class ClientService extends EventTarget {
     return profileEvents
   }
 
+  private async followListEventBatchLoadFn(pubkeys: readonly string[]) {
+    const events = await this.query(BIG_RELAY_URLS, {
+      authors: Array.from(new Set(pubkeys)),
+      kinds: [kinds.Contacts],
+      limit: pubkeys.length
+    })
+    const eventsMap = new Map<string, NEvent>()
+    for (const event of events) {
+      const pubkey = event.pubkey
+      const existing = eventsMap.get(pubkey)
+      if (!existing || existing.created_at < event.created_at) {
+        eventsMap.set(pubkey, event)
+      }
+    }
+    const followListEvents = pubkeys.map((pubkey) => {
+      return eventsMap.get(pubkey)
+    })
+
+    followListEvents.forEach(
+      (followListEvent) => followListEvent && indexedDb.putReplaceableEvent(followListEvent)
+    )
+    return followListEvents
+  }
+
   private async relayListEventBatchLoadFn(pubkeys: readonly string[]) {
     const events = await this.query(BIG_RELAY_URLS, {
       authors: pubkeys as string[],
@@ -1047,9 +1075,19 @@ class ClientService extends EventTarget {
     if (storedFollowListEvent) {
       return storedFollowListEvent
     }
+    const followListEventFromBigRelays =
+      await this.fetchFollowListEventFromBigRelaysDataloader.load(pubkey)
+    if (followListEventFromBigRelays) {
+      return followListEventFromBigRelays
+    }
 
     const relayList = await this.fetchRelayList(pubkey)
-    const followListEvents = await this.query(relayList.write.concat(BIG_RELAY_URLS), {
+    const relays = relayList.write.filter((url) => !BIG_RELAY_URLS.includes(url))
+    if (!relays.length) {
+      return undefined
+    }
+
+    const followListEvents = await this.query(relays, {
       authors: [pubkey],
       kinds: [kinds.Contacts]
     })

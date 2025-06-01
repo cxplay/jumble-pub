@@ -9,6 +9,7 @@ import {
 import { generateEventIdFromETag, tagNameEquals } from '@/lib/tag'
 import { useSecondaryPage } from '@/PageManager'
 import { useReply } from '@/providers/ReplyProvider'
+import { useUserTrust } from '@/providers/UserTrustProvider'
 import client from '@/services/client.service'
 import { Filter, Event as NEvent, kinds } from 'nostr-tools'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
@@ -31,6 +32,7 @@ export default function ReplyNoteList({
 }) {
   const { t } = useTranslation()
   const { currentIndex } = useSecondaryPage()
+  const { isUserTrusted } = useUserTrust()
   const [rootInfo, setRootInfo] = useState<TRootInfo | undefined>(undefined)
   const { repliesMap, addReplies } = useReply()
   const replies = useMemo(() => {
@@ -248,6 +250,10 @@ export default function ReplyNoteList({
       {replies.length > 0 && (loading || until) && <Separator className="mt-2" />}
       <div className={className}>
         {replies.slice(0, showCount).map((reply) => {
+          if (!isUserTrusted(reply.pubkey)) {
+            return null
+          }
+
           const parentEventTag = getParentEventTag(reply)
           const parentEventOriginalId = parentEventTag?.[1]
           const parentEventId = parentEventTag ? generateEventIdFromETag(parentEventTag) : undefined

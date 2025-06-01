@@ -5,6 +5,7 @@ import { useMuteList } from '@/providers/MuteListProvider'
 import { Event } from 'nostr-tools'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import Collapsible from '../Collapsible'
 import Content from '../Content'
 import { FormattedTimestamp } from '../FormattedTimestamp'
 import NoteOptions from '../NoteOptions'
@@ -12,7 +13,6 @@ import NoteStats from '../NoteStats'
 import ParentNotePreview from '../ParentNotePreview'
 import UserAvatar from '../UserAvatar'
 import Username from '../Username'
-import Collapsible from '../Collapsible'
 
 export default function ReplyNote({
   event,

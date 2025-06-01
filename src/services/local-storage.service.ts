@@ -25,6 +25,7 @@ class LocalStorageService {
   private accountFeedInfoMap: Record<string, TFeedInfo | undefined> = {}
   private mediaUploadService: string = DEFAULT_NIP_96_SERVICE
   private autoplay: boolean = true
+  private hideUntrustedReplies: boolean = true
 
   constructor() {
     if (!LocalStorageService.instance) {
@@ -91,6 +92,9 @@ class LocalStorageService {
       window.localStorage.getItem(StorageKey.MEDIA_UPLOAD_SERVICE) ?? DEFAULT_NIP_96_SERVICE
 
     this.autoplay = window.localStorage.getItem(StorageKey.AUTOPLAY) !== 'false'
+
+    this.hideUntrustedReplies =
+      window.localStorage.getItem(StorageKey.HIDE_UNTRUSTED_REPLIES) !== 'false'
 
     // Clean up deprecated data
     window.localStorage.removeItem(StorageKey.ACCOUNT_PROFILE_EVENT_MAP)
@@ -246,6 +250,14 @@ class LocalStorageService {
   setAutoplay(autoplay: boolean) {
     this.autoplay = autoplay
     window.localStorage.setItem(StorageKey.AUTOPLAY, autoplay.toString())
+  }
+
+  getHideUntrustedReplies() {
+    return this.hideUntrustedReplies
+  }
+  setHideUntrustedReplies(hide: boolean) {
+    this.hideUntrustedReplies = hide
+    window.localStorage.setItem(StorageKey.HIDE_UNTRUSTED_REPLIES, hide.toString())
   }
 }
 
