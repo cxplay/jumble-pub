@@ -487,7 +487,7 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
 
     const event = await signEvent(draftEvent)
 
-    if (event.pubkey !== account.pubkey) {
+    if (event.kind !== kinds.Application && event.pubkey !== account.pubkey) {
       const eventAuthor = await client.fetchProfile(event.pubkey)
       const result = confirm(
         t(
