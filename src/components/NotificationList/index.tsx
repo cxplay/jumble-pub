@@ -5,6 +5,7 @@ import { usePrimaryPage } from '@/PageManager'
 import { useNostr } from '@/providers/NostrProvider'
 import { useNoteStats } from '@/providers/NoteStatsProvider'
 import { useNotification } from '@/providers/NotificationProvider'
+import { useUserTrust } from '@/providers/UserTrustProvider'
 import client from '@/services/client.service'
 import { TNotificationType } from '@/types'
 import dayjs from 'dayjs'
@@ -22,6 +23,7 @@ const NotificationList = forwardRef((_, ref) => {
   const { t } = useTranslation()
   const { current } = usePrimaryPage()
   const { pubkey } = useNostr()
+  const { enabled: hideUntrustedEvents, isUserTrusted } = useUserTrust()
   const { clearNewNotifications, getNotificationsSeenAt } = useNotification()
   const { updateNoteStatsByEvents } = useNoteStats()
   const [notificationType, setNotificationType] = useState<TNotificationType>('all')
@@ -122,7 +124,9 @@ const NotificationList = forwardRef((_, ref) => {
   }, [pubkey, refreshCount, filterKinds, current])
 
   useEffect(() => {
-    const visibleNotifications = notifications.slice(0, showCount)
+    const visibleNotifications = notifications
+      .slice(0, showCount)
+      .filter((event) => isUserTrusted(event.pubkey))
     const index = visibleNotifications.findIndex((event) => event.created_at <= lastReadTime)
     if (index === -1) {
       setNewNotifications(visibleNotifications)
@@ -131,7 +135,7 @@ const NotificationList = forwardRef((_, ref) => {
       setNewNotifications(visibleNotifications.slice(0, index))
       setOldNotifications(visibleNotifications.slice(index))
     }
-  }, [notifications, lastReadTime, showCount])
+  }, [notifications, lastReadTime, showCount, hideUntrustedEvents])
 
   useEffect(() => {
     const options = {

@@ -237,6 +237,9 @@ export default {
     'Platinum Sponsors': 'Sponsor Platino',
     From: 'Da',
     'Comment on': 'Commenta su',
-    'View on njump.me': 'Visualizza su njump.me'
+    'View on njump.me': 'Visualizza su njump.me',
+    'Hide content from untrusted users': 'Nascondi contenuti da utenti non fidati',
+    'Only show content from your followed users and the users they follow':
+      'Mostra solo contenuti dai tuoi utenti seguiti e dagli utenti che seguono'
   }
 }

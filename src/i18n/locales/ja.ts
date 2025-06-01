@@ -234,6 +234,9 @@ export default {
     'Platinum Sponsors': 'プラチナスポンサー',
     From: 'から',
     'Comment on': 'にコメント',
-    'View on njump.me': 'njump.meで表示'
+    'View on njump.me': 'njump.meで表示',
+    'Hide content from untrusted users': '信頼できないユーザーのコンテンツを非表示',
+    'Only show content from your followed users and the users they follow':
+      'フォローしているユーザーとそのユーザーがフォローしているユーザーのコンテンツのみを表示'
   }
 }

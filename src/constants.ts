@@ -14,7 +14,7 @@ export const StorageKey = {
   ACCOUNT_FEED_INFO_MAP: 'accountFeedInfoMap',
   MEDIA_UPLOAD_SERVICE: 'mediaUploadService',
   AUTOPLAY: 'autoplay',
-  HIDE_UNTRUSTED_REPLIES: 'hideUntrustedReplies',
+  HIDE_UNTRUSTED_EVENTS: 'hideUntrustedEvents',
   ACCOUNT_RELAY_LIST_EVENT_MAP: 'accountRelayListEventMap', // deprecated
   ACCOUNT_FOLLOW_LIST_EVENT_MAP: 'accountFollowListEventMap', // deprecated
   ACCOUNT_MUTE_LIST_EVENT_MAP: 'accountMuteListEventMap', // deprecated

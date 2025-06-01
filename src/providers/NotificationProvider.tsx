@@ -5,6 +5,7 @@ import { SubCloser } from 'nostr-tools/abstract-pool'
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { useMuteList } from './MuteListProvider'
 import { useNostr } from './NostrProvider'
+import { useUserTrust } from './UserTrustProvider'
 
 type TNotificationContext = {
   hasNewNotification: boolean
@@ -24,6 +25,7 @@ export const useNotification = () => {
 
 export function NotificationProvider({ children }: { children: React.ReactNode }) {
   const { pubkey, notificationsSeenAt, updateNotificationsSeenAt } = useNostr()
+  const { isUserTrusted } = useUserTrust()
   const { mutePubkeys } = useMuteList()
   const [newNotificationIds, setNewNotificationIds] = useState(new Set<string>())
   const subCloserRef = useRef<SubCloser | null>(null)
@@ -61,7 +63,11 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
           {
             onevent: (evt) => {
               // Only show notification if not from self and not muted
-              if (evt.pubkey !== pubkey && !mutePubkeys.includes(evt.pubkey)) {
+              if (
+                evt.pubkey !== pubkey &&
+                !mutePubkeys.includes(evt.pubkey) &&
+                isUserTrusted(evt.pubkey)
+              ) {
                 setNewNotificationIds((prev) => new Set([...prev, evt.id]))
               }
             },

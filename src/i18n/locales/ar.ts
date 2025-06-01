@@ -233,6 +233,9 @@ export default {
     'Platinum Sponsors': 'الرعاة البلاتينيون',
     From: 'من',
     'Comment on': 'تعليق على',
-    'View on njump.me': 'عرض على njump.me'
+    'View on njump.me': 'عرض على njump.me',
+    'Hide content from untrusted users': 'إخفاء المحتوى من المستخدمين غير الموثوقين',
+    'Only show content from your followed users and the users they follow':
+      'فقط عرض المحتوى من المستخدمين الذين تتابعهم والمستخدمين الذين يتابعونهم'
   }
 }

@@ -234,6 +234,9 @@ export default {
     'Platinum Sponsors': '白金赞助商',
     From: '来自',
     'Comment on': '评论于',
-    'View on njump.me': '在 njump.me 上查看'
+    'View on njump.me': '在 njump.me 上查看',
+    'Hide content from untrusted users': '隐藏不受信任用户的内容',
+    'Only show content from your followed users and the users they follow':
+      '仅显示您关注的用户及其关注的用户的内容'
   }
 }

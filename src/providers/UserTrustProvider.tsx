@@ -23,7 +23,7 @@ const wotSet = new Set<string>()
 
 export function UserTrustProvider({ children }: { children: React.ReactNode }) {
   const { pubkey: currentPubkey } = useNostr()
-  const [enabled, setEnabled] = useState(storage.getHideUntrustedReplies())
+  const [enabled, setEnabled] = useState(storage.getHideUntrustedEvents())
 
   useEffect(() => {
     if (!currentPubkey) return
@@ -43,7 +43,7 @@ export function UserTrustProvider({ children }: { children: React.ReactNode }) {
 
   const updateEnabled = (enabled: boolean) => {
     setEnabled(enabled)
-    storage.setHideUntrustedReplies(enabled)
+    storage.setHideUntrustedEvents(enabled)
   }
 
   const isUserTrusted = (pubkey: string) => {

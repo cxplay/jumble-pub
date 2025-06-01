@@ -237,6 +237,9 @@ export default {
     'Platinum Sponsors': 'Платиновые спонсоры',
     From: 'От',
     'Comment on': 'Прокомментировать',
-    'View on njump.me': 'Посмотреть на njump.me'
+    'View on njump.me': 'Посмотреть на njump.me',
+    'Hide content from untrusted users': 'Скрыть контент от недоверенных пользователей',
+    'Only show content from your followed users and the users they follow':
+      'Показывать только контент от пользователей, на которых вы подписаны, и от пользователей, на которых они подписаны'
   }
 }
