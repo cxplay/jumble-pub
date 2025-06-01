@@ -166,7 +166,7 @@ export function FeedProvider({ children }: { children: React.ReactNode }) {
       feedInfoRef.current = newFeedInfo
       storage.setFeedInfo(newFeedInfo, pubkey)
 
-      const followings = await client.fetchFollowings(options.pubkey, true)
+      const followings = await client.fetchFollowings(options.pubkey)
       setRelayUrls([])
       setFilter({
         authors: followings.includes(options.pubkey) ? followings : [...followings, options.pubkey]
