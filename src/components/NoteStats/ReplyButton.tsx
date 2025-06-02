@@ -1,5 +1,6 @@
 import { useNostr } from '@/providers/NostrProvider'
 import { useReply } from '@/providers/ReplyProvider'
+import { useUserTrust } from '@/providers/UserTrustProvider'
 import { MessageCircle } from 'lucide-react'
 import { Event } from 'nostr-tools'
 import { useMemo, useState } from 'react'
@@ -11,9 +12,10 @@ export default function ReplyButton({ event }: { event: Event }) {
   const { t } = useTranslation()
   const { checkLogin } = useNostr()
   const { repliesMap } = useReply()
+  const { isUserTrusted } = useUserTrust()
   const replyCount = useMemo(
-    () => repliesMap.get(event.id)?.events.length || 0,
-    [repliesMap, event.id]
+    () => repliesMap.get(event.id)?.events.filter((evt) => isUserTrusted(evt.pubkey)).length || 0,
+    [repliesMap, event.id, isUserTrusted]
   )
   const [open, setOpen] = useState(false)
 

@@ -1,5 +1,5 @@
 import client from '@/services/client.service'
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 import { useNostr } from './NostrProvider'
 import storage from '@/services/local-storage.service'
 
@@ -41,14 +41,17 @@ export function UserTrustProvider({ children }: { children: React.ReactNode }) {
     initWoT()
   }, [currentPubkey])
 
+  const isUserTrusted = useCallback(
+    (pubkey: string) => {
+      if (!currentPubkey || !enabled) return true
+      return wotSet.has(pubkey)
+    },
+    [enabled]
+  )
+
   const updateEnabled = (enabled: boolean) => {
     setEnabled(enabled)
     storage.setHideUntrustedEvents(enabled)
-  }
-
-  const isUserTrusted = (pubkey: string) => {
-    if (!currentPubkey || !enabled) return true
-    return wotSet.has(pubkey)
   }
 
   return (
