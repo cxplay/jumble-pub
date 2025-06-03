@@ -46,7 +46,7 @@ export function UserTrustProvider({ children }: { children: React.ReactNode }) {
       if (!currentPubkey || !enabled) return true
       return wotSet.has(pubkey)
     },
-    [enabled]
+    [currentPubkey, enabled]
   )
 
   const updateEnabled = (enabled: boolean) => {
