@@ -24,6 +24,7 @@ import { BunkerSigner } from './bunker.signer'
 import { Nip07Signer } from './nip-07.signer'
 import { NpubSigner } from './npub.signer'
 import { NsecSigner } from './nsec.signer'
+import { NostrConnectionSigner } from './nostrConnection.signer'
 
 type TNostrContext = {
   isInitialized: boolean
@@ -45,6 +46,7 @@ type TNostrContext = {
   ncryptsecLogin: (ncryptsec: string) => Promise<string>
   nip07Login: () => Promise<string>
   bunkerLogin: (bunker: string) => Promise<string>
+  nostrConnectionLogin: (clientSecretKey: Uint8Array, connectionString: string) => Promise<string>
   npubLogin(npub: string): Promise<string>
   removeAccount: (account: TAccountPointer) => void
   /**
@@ -404,6 +406,20 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
     })
   }
 
+  const nostrConnectionLogin = async (clientSecretKey: Uint8Array, connectionString: string) => {
+    const bunkerSigner = new NostrConnectionSigner(clientSecretKey, connectionString)
+    const loginResult = await bunkerSigner.login()
+    if (!loginResult.pubkey) {
+      throw new Error('Invalid bunker')
+    }
+    return login(bunkerSigner, {
+      pubkey: loginResult.pubkey,
+      signerType: 'bunker',
+      bunker: loginResult.bunkerString!,
+      bunkerClientSecretKey: bunkerSigner.getClientSecretKey()
+    })
+  }
+
   const loginWithAccountPointer = async (act: TAccountPointer): Promise<string | null> => {
     let account = storage.findAccount(act)
     if (!account) {
@@ -655,6 +671,7 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
         ncryptsecLogin,
         nip07Login,
         bunkerLogin,
+        nostrConnectionLogin,
         npubLogin,
         removeAccount,
         publish,
