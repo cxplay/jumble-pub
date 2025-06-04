@@ -237,6 +237,7 @@ export default {
     'View on njump.me': '在 njump.me 上查看',
     'Hide content from untrusted users': '隐藏不受信任用户的内容',
     'Only show content from your followed users and the users they follow':
-      '仅显示您关注的用户及其关注的用户的内容'
+      '仅显示您关注的用户及其关注的用户的内容',
+    'Followed by': '关注者'
   }
 }

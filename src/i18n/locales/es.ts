@@ -241,6 +241,7 @@ export default {
     'View on njump.me': 'Ver en njump.me',
     'Hide content from untrusted users': 'Ocultar contenido de usuarios no confiables',
     'Only show content from your followed users and the users they follow':
-      'Solo mostrar contenido de tus usuarios seguidos y los usuarios que ellos siguen'
+      'Solo mostrar contenido de tus usuarios seguidos y los usuarios que ellos siguen',
+    'Followed by': 'Seguidos por'
   }
 }

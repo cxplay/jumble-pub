@@ -243,6 +243,7 @@ export default {
     'Hide content from untrusted users':
       'Inhalte von nicht vertrauenswürdigen Benutzern ausblenden',
     'Only show content from your followed users and the users they follow':
-      'Nur Inhalte von Benutzern anzeigen, denen du folgst und die sie folgen'
+      'Nur Inhalte von Benutzern anzeigen, denen du folgst und die sie folgen',
+    'Followed by': 'Gefolgt von'
   }
 }

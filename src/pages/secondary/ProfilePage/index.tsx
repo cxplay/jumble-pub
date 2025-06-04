@@ -23,6 +23,7 @@ import { Link, Zap } from 'lucide-react'
 import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import NotFoundPage from '../NotFoundPage'
+import FollowedBy from './FollowedBy'
 import Followings from './Followings'
 import Relays from './Relays'
 
@@ -176,15 +177,18 @@ const ProfilePage = forwardRef(({ id, index }: { id?: string; index?: number }, 
                 </a>
               </div>
             )}
-            <div className="flex gap-4 items-center mt-2 text-sm">
-              <Followings pubkey={pubkey} />
-              <Relays pubkey={pubkey} />
-              {isSelf && (
-                <SecondaryPageLink to={toMuteList()} className="flex gap-1 hover:underline w-fit">
-                  {mutePubkeys.length}
-                  <div className="text-muted-foreground">{t('Muted')}</div>
-                </SecondaryPageLink>
-              )}
+            <div className="flex justify-between items-center mt-2 text-sm">
+              <div className="flex gap-4 items-center">
+                <Followings pubkey={pubkey} />
+                <Relays pubkey={pubkey} />
+                {isSelf && (
+                  <SecondaryPageLink to={toMuteList()} className="flex gap-1 hover:underline w-fit">
+                    {mutePubkeys.length}
+                    <div className="text-muted-foreground">{t('Muted')}</div>
+                  </SecondaryPageLink>
+                )}
+              </div>
+              {!isSelf && <FollowedBy pubkey={pubkey} />}
             </div>
           </div>
         </div>

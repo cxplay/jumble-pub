@@ -236,6 +236,7 @@ export default {
     'View on njump.me': 'عرض على njump.me',
     'Hide content from untrusted users': 'إخفاء المحتوى من المستخدمين غير الموثوقين',
     'Only show content from your followed users and the users they follow':
-      'فقط عرض المحتوى من المستخدمين الذين تتابعهم والمستخدمين الذين يتابعونهم'
+      'فقط عرض المحتوى من المستخدمين الذين تتابعهم والمستخدمين الذين يتابعونهم',
+    'Followed by': 'متابع من قبل'
   }
 }

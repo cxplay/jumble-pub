@@ -229,7 +229,7 @@ export default function NoteList({
     return () => {
       promise.then((closer) => closer())
     }
-  }, [JSON.stringify(relayUrls), filterType, refreshCount])
+  }, [JSON.stringify(relayUrls), filterType, refreshCount, JSON.stringify(filter)])
 
   useEffect(() => {
     const options = {
