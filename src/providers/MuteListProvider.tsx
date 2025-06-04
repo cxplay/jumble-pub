@@ -7,6 +7,7 @@ import { Event } from 'nostr-tools'
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { z } from 'zod'
 import { useNostr } from './NostrProvider'
+import { useToast } from '@/hooks'
 
 type TMuteListContext = {
   mutePubkeys: string[]
@@ -31,6 +32,7 @@ export const useMuteList = () => {
 }
 
 export function MuteListProvider({ children }: { children: React.ReactNode }) {
+  const { toast } = useToast()
   const {
     pubkey: accountPubkey,
     muteListEvent,
@@ -108,7 +110,12 @@ export function MuteListProvider({ children }: { children: React.ReactNode }) {
       await new Promise((resolve) => setTimeout(resolve, 1000))
     }
     const newMuteListDraftEvent = createMuteListDraftEvent(tags, content)
-    return await publish(newMuteListDraftEvent)
+    const event = await publish(newMuteListDraftEvent)
+    toast({
+      title: 'Mute list updated',
+      description: 'Your mute list has been updated successfully.'
+    })
+    return event
   }
 
   const mutePubkeyPublicly = async (pubkey: string) => {
