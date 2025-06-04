@@ -1,19 +1,22 @@
 import MuteButton from '@/components/MuteButton'
 import Nip05 from '@/components/Nip05'
+import { Button } from '@/components/ui/button'
 import UserAvatar from '@/components/UserAvatar'
 import Username from '@/components/Username'
 import { useFetchProfile } from '@/hooks'
 import SecondaryPageLayout from '@/layouts/SecondaryPageLayout'
 import { useMuteList } from '@/providers/MuteListProvider'
 import { useNostr } from '@/providers/NostrProvider'
-import { forwardRef, useEffect, useRef, useState } from 'react'
+import { Loader, Lock, Unlock } from 'lucide-react'
+import { forwardRef, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import NotFoundPage from '../NotFoundPage'
 
 const MuteListPage = forwardRef(({ index }: { index?: number }, ref) => {
   const { t } = useTranslation()
-  const { profile } = useNostr()
-  const { mutePubkeys } = useMuteList()
+  const { profile, pubkey } = useNostr()
+  const { getMutePubkeys } = useMuteList()
+  const mutePubkeys = useMemo(() => getMutePubkeys(), [pubkey])
   const [visibleMutePubkeys, setVisibleMutePubkeys] = useState<string[]>([])
   const bottomRef = useRef<HTMLDivElement>(null)
 
@@ -73,17 +76,59 @@ MuteListPage.displayName = 'MuteListPage'
 export default MuteListPage
 
 function UserItem({ pubkey }: { pubkey: string }) {
+  const { changing, getMuteType, switchToPrivateMute, switchToPublicMute } = useMuteList()
   const { profile } = useFetchProfile(pubkey)
+  const muteType = useMemo(() => getMuteType(pubkey), [pubkey, getMuteType])
+  const [switching, setSwitching] = useState(false)
 
   return (
     <div className="flex gap-2 items-start">
       <UserAvatar userId={pubkey} className="shrink-0" />
       <div className="w-full overflow-hidden">
-        <Username userId={pubkey} className="font-semibold truncate" skeletonClassName="h-4" />
+        <Username
+          userId={pubkey}
+          className="font-semibold truncate max-w-full w-fit"
+          skeletonClassName="h-4"
+        />
         <Nip05 pubkey={pubkey} />
         <div className="truncate text-muted-foreground text-sm">{profile?.about}</div>
       </div>
-      <MuteButton pubkey={pubkey} />
+      <div className="flex gap-2 items-center">
+        {switching ? (
+          <Button disabled variant="ghost" size="icon">
+            <Loader className="animate-spin" />
+          </Button>
+        ) : muteType === 'private' ? (
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => {
+              if (switching) return
+
+              setSwitching(true)
+              switchToPublicMute(pubkey).finally(() => setSwitching(false))
+            }}
+            disabled={changing}
+          >
+            <Lock className="text-green-400" />
+          </Button>
+        ) : muteType === 'public' ? (
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => {
+              if (switching) return
+
+              setSwitching(true)
+              switchToPrivateMute(pubkey).finally(() => setSwitching(false))
+            }}
+            disabled={changing}
+          >
+            <Unlock className="text-muted-foreground" />
+          </Button>
+        ) : null}
+        <MuteButton pubkey={pubkey} />
+      </div>
     </div>
   )
 }

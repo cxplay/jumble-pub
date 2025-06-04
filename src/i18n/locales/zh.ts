@@ -150,7 +150,6 @@ export default {
     Mute: '屏蔽',
     Muted: '已屏蔽',
     Unmute: '取消屏蔽',
-    'Mute user': '屏蔽用户',
     'Unmute user': '取消屏蔽用户',
     'Append n relays': '追加 {{n}} 个服务器',
     Append: '追加',
@@ -238,6 +237,8 @@ export default {
     'Hide content from untrusted users': '隐藏不受信任用户的内容',
     'Only show content from your followed users and the users they follow':
       '仅显示您关注的用户及其关注的用户的内容',
-    'Followed by': '关注者'
+    'Followed by': '关注者',
+    'Mute user privately': '悄悄屏蔽',
+    'Mute user publicly': '公开屏蔽'
   }
 }

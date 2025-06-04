@@ -150,7 +150,6 @@ export default {
     Mute: 'ミュート',
     Muted: 'ミュート済み',
     Unmute: 'ミュート解除',
-    'Mute user': 'ユーザーをミュート',
     'Unmute user': 'ユーザーのミュート解除',
     'Append n relays': '{{n}} 個のリレイを追加',
     Append: '追加',
@@ -238,6 +237,8 @@ export default {
     'Hide content from untrusted users': '信頼できないユーザーのコンテンツを非表示',
     'Only show content from your followed users and the users they follow':
       'フォローしているユーザーとそのユーザーがフォローしているユーザーのコンテンツのみを表示',
-    'Followed by': 'フォロワー'
+    'Followed by': 'フォロワー',
+    'Mute user privately': 'ユーザーを非公開でミュート',
+    'Mute user publicly': 'ユーザーを公開でミュート'
   }
 }

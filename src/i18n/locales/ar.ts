@@ -148,7 +148,6 @@ export default {
     Mute: 'كتم',
     Muted: 'تم كتمه',
     Unmute: 'إلغاء الكتم',
-    'Mute user': 'كتم المستخدم',
     'Unmute user': 'إلغاء كتم المستخدم',
     'Append n relays': 'إضافة {{n}} ريلايات',
     Append: 'إضافة',
@@ -237,6 +236,8 @@ export default {
     'Hide content from untrusted users': 'إخفاء المحتوى من المستخدمين غير الموثوقين',
     'Only show content from your followed users and the users they follow':
       'فقط عرض المحتوى من المستخدمين الذين تتابعهم والمستخدمين الذين يتابعونهم',
-    'Followed by': 'متابع من قبل'
+    'Followed by': 'متابع من قبل',
+    'Mute user privately': 'كتم المستخدم بشكل خاص',
+    'Mute user publicly': 'كتم المستخدم علنياً'
   }
 }

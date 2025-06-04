@@ -149,7 +149,6 @@ export default {
     Mute: 'Mute',
     Muted: 'Muted',
     Unmute: 'Unmute',
-    'Mute user': 'Mute user',
     'Unmute user': 'Unmute user',
     'Append n relays': 'Append {{n}} relays',
     Append: 'Append',
@@ -237,6 +236,8 @@ export default {
     'Hide content from untrusted users': 'Hide content from untrusted users',
     'Only show content from your followed users and the users they follow':
       'Only show content from your followed users and the users they follow',
-    'Followed by': 'Followed by'
+    'Followed by': 'Followed by',
+    'Mute user privately': 'Mute user privately',
+    'Mute user publicly': 'Mute user publicly'
   }
 }

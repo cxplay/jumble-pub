@@ -151,7 +151,6 @@ export default {
     Mute: 'Couper le son',
     Muted: 'En sourdine',
     Unmute: 'Activer le son',
-    'Mute user': "Mettre l'utilisateur en sourdine",
     'Unmute user': "Désactiver la sourdine de l'utilisateur",
     'Append n relays': 'Ajouter {{n}} relais',
     Append: 'Ajouter',
@@ -242,6 +241,8 @@ export default {
     'Hide content from untrusted users': 'Hider le contenu des utilisateurs non fiables',
     'Only show content from your followed users and the users they follow':
       'Afficher uniquement le contenu de vos utilisateurs suivis et des utilisateurs qu’ils suivent',
-    'Followed by': 'Suivi par'
+    'Followed by': 'Suivi par',
+    'Mute user privately': 'Mettre l’utilisateur en sourdine en privé',
+    'Mute user publicly': 'Mettre l’utilisateur en sourdine publiquement'
   }
 }

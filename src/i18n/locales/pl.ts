@@ -148,7 +148,6 @@ export default {
     Mute: 'Zablokuj',
     Muted: 'Zablokowani',
     Unmute: 'Przywróć',
-    'Mute user': 'Ucisz użytkownika ',
     'Unmute user': 'Przywróć użytkownika ',
     'Append n relays': 'Dodaj {{n}} transmiterów',
     Append: 'Dodaj',
@@ -240,6 +239,8 @@ export default {
     'Hide content from untrusted users': 'Ukryj treści od nieznanych użytkowników',
     'Only show content from your followed users and the users they follow':
       'Pokaż tylko treści od użytkowników, których obserwujesz i ich obserwowanych',
-    'Followed by': 'Obserwowany przez'
+    'Followed by': 'Obserwowany przez',
+    'Mute user privately': 'Zablokuj użytkownika prywatnie',
+    'Mute user publicly': 'Zablokuj użytkownika publicznie'
   }
 }

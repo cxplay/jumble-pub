@@ -62,7 +62,7 @@ type TNostrContext = {
   updateRelayListEvent: (relayListEvent: Event) => Promise<void>
   updateProfileEvent: (profileEvent: Event) => Promise<void>
   updateFollowListEvent: (followListEvent: Event) => Promise<void>
-  updateMuteListEvent: (muteListEvent: Event, tags: string[][]) => Promise<void>
+  updateMuteListEvent: (muteListEvent: Event, privateTags: string[][]) => Promise<void>
   updateBookmarkListEvent: (bookmarkListEvent: Event) => Promise<void>
   updateFavoriteRelaysEvent: (favoriteRelaysEvent: Event) => Promise<void>
   updateNotificationsSeenAt: () => Promise<void>
@@ -614,11 +614,11 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
     client.updateFollowListCache(newFollowListEvent)
   }
 
-  const updateMuteListEvent = async (muteListEvent: Event, tags: string[][]) => {
+  const updateMuteListEvent = async (muteListEvent: Event, privateTags: string[][]) => {
     const newMuteListEvent = await indexedDb.putReplaceableEvent(muteListEvent)
     if (newMuteListEvent.id !== muteListEvent.id) return
 
-    await indexedDb.putMuteDecryptedTags(muteListEvent.id, tags)
+    await indexedDb.putMuteDecryptedTags(muteListEvent.id, privateTags)
     setMuteListEvent(muteListEvent)
   }
 

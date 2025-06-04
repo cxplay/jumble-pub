@@ -241,6 +241,8 @@ export default {
     'Hide content from untrusted users': 'Скрыть контент от недоверенных пользователей',
     'Only show content from your followed users and the users they follow':
       'Показывать только контент от пользователей, на которых вы подписаны, и от пользователей, на которых они подписаны',
-    'Followed by': 'Подписан на'
+    'Followed by': 'Подписан на',
+    'Mute user privately': 'Заглушить пользователя приватно',
+    'Mute user publicly': 'Заглушить пользователя публично'
   }
 }

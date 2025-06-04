@@ -14,9 +14,11 @@ import { useTranslation } from 'react-i18next'
 export default function ProfileOptions({ pubkey }: { pubkey: string }) {
   const { t } = useTranslation()
   const { pubkey: accountPubkey } = useNostr()
-  const { mutePubkeys, mutePubkey, unmutePubkey } = useMuteList()
+  const { mutePubkeys, mutePubkeyPrivately, mutePubkeyPublicly, unmutePubkey } = useMuteList()
 
   if (pubkey === accountPubkey) return null
+
+  const isMuted = mutePubkeys.includes(pubkey)
 
   return (
     <DropdownMenu>
@@ -32,7 +34,7 @@ export default function ProfileOptions({ pubkey }: { pubkey: string }) {
           <Copy />
           {t('Copy user ID')}
         </DropdownMenuItem>
-        {mutePubkeys.includes(pubkey) ? (
+        {isMuted ? (
           <DropdownMenuItem
             onClick={() => unmutePubkey(pubkey)}
             className="text-destructive focus:text-destructive"
@@ -41,13 +43,22 @@ export default function ProfileOptions({ pubkey }: { pubkey: string }) {
             {t('Unmute user')}
           </DropdownMenuItem>
         ) : (
-          <DropdownMenuItem
-            onClick={() => mutePubkey(pubkey)}
-            className="text-destructive focus:text-destructive"
-          >
-            <BellOff />
-            {t('Mute user')}
-          </DropdownMenuItem>
+          <>
+            <DropdownMenuItem
+              onClick={() => mutePubkeyPrivately(pubkey)}
+              className="text-destructive focus:text-destructive"
+            >
+              <BellOff />
+              {t('Mute user privately')}
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => mutePubkeyPublicly(pubkey)}
+              className="text-destructive focus:text-destructive"
+            >
+              <BellOff />
+              {t('Mute user publicly')}
+            </DropdownMenuItem>
+          </>
         )}
       </DropdownMenuContent>
     </DropdownMenu>

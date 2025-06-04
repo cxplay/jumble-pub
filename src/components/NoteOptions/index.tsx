@@ -25,7 +25,7 @@ export default function NoteOptions({ event, className }: { event: Event; classN
   const { pubkey } = useNostr()
   const [isRawEventDialogOpen, setIsRawEventDialogOpen] = useState(false)
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-  const { mutePubkey, unmutePubkey, mutePubkeys } = useMuteList()
+  const { mutePubkeyPublicly, mutePubkeyPrivately, unmutePubkey, mutePubkeys } = useMuteList()
   const isMuted = useMemo(() => mutePubkeys.includes(event.pubkey), [mutePubkeys, event])
 
   const trigger = (
@@ -97,23 +97,45 @@ export default function NoteOptions({ event, className }: { event: Event; classN
                 <Code />
                 {t('View raw event')}
               </Button>
-              {pubkey && (
-                <Button
-                  onClick={() => {
-                    setIsDrawerOpen(false)
-                    if (isMuted) {
+              {pubkey &&
+                (isMuted ? (
+                  <Button
+                    onClick={() => {
+                      setIsDrawerOpen(false)
                       unmutePubkey(event.pubkey)
-                    } else {
-                      mutePubkey(event.pubkey)
-                    }
-                  }}
-                  className="w-full p-6 justify-start text-destructive text-lg gap-4 [&_svg]:size-5 focus:text-destructive"
-                  variant="ghost"
-                >
-                  {isMuted ? <Bell /> : <BellOff />}
-                  {isMuted ? t('Unmute user') : t('Mute user')}
-                </Button>
-              )}
+                    }}
+                    className="w-full p-6 justify-start text-destructive text-lg gap-4 [&_svg]:size-5 focus:text-destructive"
+                    variant="ghost"
+                  >
+                    <Bell />
+                    {t('Unmute user')}
+                  </Button>
+                ) : (
+                  <>
+                    <Button
+                      onClick={() => {
+                        setIsDrawerOpen(false)
+                        mutePubkeyPrivately(event.pubkey)
+                      }}
+                      className="w-full p-6 justify-start text-destructive text-lg gap-4 [&_svg]:size-5 focus:text-destructive"
+                      variant="ghost"
+                    >
+                      <BellOff />
+                      {t('Mute user privately')}
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        setIsDrawerOpen(false)
+                        mutePubkeyPublicly(event.pubkey)
+                      }}
+                      className="w-full p-6 justify-start text-destructive text-lg gap-4 [&_svg]:size-5 focus:text-destructive"
+                      variant="ghost"
+                    >
+                      <BellOff />
+                      {t('Mute user publicly')}
+                    </Button>
+                  </>
+                ))}
             </div>
           </DrawerContent>
         </Drawer>
@@ -155,13 +177,32 @@ export default function NoteOptions({ event, className }: { event: Event; classN
           {pubkey && (
             <>
               <DropdownMenuSeparator />
-              <DropdownMenuItem
-                onClick={() => (isMuted ? unmutePubkey(event.pubkey) : mutePubkey(event.pubkey))}
-                className="text-destructive focus:text-destructive"
-              >
-                {isMuted ? <Bell /> : <BellOff />}
-                {isMuted ? t('Unmute user') : t('Mute user')}
-              </DropdownMenuItem>
+              {isMuted ? (
+                <DropdownMenuItem
+                  onClick={() => unmutePubkey(event.pubkey)}
+                  className="text-destructive focus:text-destructive"
+                >
+                  <Bell />
+                  {t('Unmute user')}
+                </DropdownMenuItem>
+              ) : (
+                <>
+                  <DropdownMenuItem
+                    onClick={() => mutePubkeyPrivately(event.pubkey)}
+                    className="text-destructive focus:text-destructive"
+                  >
+                    <BellOff />
+                    {t('Mute user privately')}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => mutePubkeyPublicly(event.pubkey)}
+                    className="text-destructive focus:text-destructive"
+                  >
+                    <BellOff />
+                    {t('Mute user publicly')}
+                  </DropdownMenuItem>
+                </>
+              )}
             </>
           )}
         </DropdownMenuContent>

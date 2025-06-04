@@ -151,7 +151,6 @@ export default {
     Mute: 'Stummschalten',
     Muted: 'Stummgeschaltet',
     Unmute: 'Stummschaltung aufheben',
-    'Mute user': 'Benutzer stummschalten',
     'Unmute user': 'Benutzer-Stummschaltung aufheben',
     'Append n relays': 'Füge {{n}} Relays hinzu',
     Append: 'Hinzufügen',
@@ -244,6 +243,8 @@ export default {
       'Inhalte von nicht vertrauenswürdigen Benutzern ausblenden',
     'Only show content from your followed users and the users they follow':
       'Nur Inhalte von Benutzern anzeigen, denen du folgst und die sie folgen',
-    'Followed by': 'Gefolgt von'
+    'Followed by': 'Gefolgt von',
+    'Mute user privately': 'Benutzer privat stummschalten',
+    'Mute user publicly': 'Benutzer öffentlich stummschalten'
   }
 }

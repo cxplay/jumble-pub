@@ -151,7 +151,6 @@ export default {
     Mute: 'Zittisci',
     Muted: 'Zittiti',
     Unmute: 'Ridai voce',
-    'Mute user': 'Zittisci utente',
     'Unmute user': 'Ridai voce a questo utente',
     'Append n relays': 'Aggiungi {{n}} relays',
     Append: 'Aggiungi',
@@ -241,6 +240,8 @@ export default {
     'Hide content from untrusted users': 'Nascondi contenuti da utenti non fidati',
     'Only show content from your followed users and the users they follow':
       'Mostra solo contenuti dai tuoi utenti seguiti e dagli utenti che seguono',
-    'Followed by': 'Seguito da'
+    'Followed by': 'Seguito da',
+    'Mute user privately': 'Zittisci utente privatamente',
+    'Mute user publicly': 'Zittisci utente pubblicamente'
   }
 }

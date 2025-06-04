@@ -150,7 +150,6 @@ export default {
     Mute: 'Silenciar',
     Muted: 'Silenciado',
     Unmute: 'Desativar silêncio',
-    'Mute user': 'Silenciar usuário',
     'Unmute user': 'Desativar silêncio do usuário',
     'Append n relays': 'Adicionar {{n}} relés',
     Append: 'Adicionar',
@@ -240,6 +239,8 @@ export default {
     'Hide content from untrusted users': 'Ocultar conteúdo de usuários não confiáveis',
     'Only show content from your followed users and the users they follow':
       'Mostrar apenas conteúdo dos usuários que você segue e dos usuários que eles seguem',
-    'Followed by': 'Seguido por'
+    'Followed by': 'Seguido por',
+    'Mute user privately': 'Silenciar usuário privadamente',
+    'Mute user publicly': 'Silenciar usuário publicamente'
   }
 }

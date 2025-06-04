@@ -765,6 +765,23 @@ class ClientService extends EventTarget {
     return await this.followListCache.fetch(pubkey)
   }
 
+  async fetchMuteListEvent(pubkey: string): Promise<NEvent | undefined> {
+    const storedEvent = await indexedDb.getReplaceableEvent(pubkey, kinds.Mutelist)
+    if (storedEvent) {
+      return storedEvent
+    }
+    const relayList = await this.fetchRelayList(pubkey)
+    const events = await this.query(relayList.write.concat(BIG_RELAY_URLS), {
+      authors: [pubkey],
+      kinds: [kinds.Mutelist]
+    })
+    const muteList = events.sort((a, b) => b.created_at - a.created_at)[0]
+    if (muteList) {
+      await indexedDb.putReplaceableEvent(muteList)
+    }
+    return muteList
+  }
+
   async fetchBookmarkListEvent(pubkey: string): Promise<NEvent | undefined> {
     const storedBookmarkListEvent = await indexedDb.getReplaceableEvent(pubkey, kinds.BookmarkList)
     if (storedBookmarkListEvent) {
