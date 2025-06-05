@@ -102,7 +102,7 @@ function HighlightSource({ event }: { event: Event }) {
 
   return (
     <div className="flex items-center gap-2 text-muted-foreground">
-      <div>{t('From')}</div>
+      <div className="shrink-0">{t('From')}</div>
       {pubkey && <UserAvatar userId={pubkey} size="xSmall" className="cursor-pointer" />}
       {referenceEvent && isSupportedKind(referenceEvent.kind) ? (
         <ContentPreview

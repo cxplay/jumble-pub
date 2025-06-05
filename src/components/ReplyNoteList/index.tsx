@@ -251,7 +251,14 @@ export default function ReplyNoteList({
       <div className={className}>
         {replies.slice(0, showCount).map((reply) => {
           if (!isUserTrusted(reply.pubkey)) {
-            return null
+            const repliesForThisReply = repliesMap.get(reply.id)
+            // If the reply is not trusted and there are no trusted replies for this reply, skip rendering
+            if (
+              !repliesForThisReply ||
+              repliesForThisReply.events.every((evt) => !isUserTrusted(evt.pubkey))
+            ) {
+              return null
+            }
           }
 
           const parentEventTag = getParentEventTag(reply)

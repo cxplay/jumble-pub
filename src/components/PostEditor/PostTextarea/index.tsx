@@ -108,7 +108,7 @@ const PostTextarea = forwardRef<
   }
 
   return (
-    <Tabs defaultValue="edit" className="space-y-4">
+    <Tabs defaultValue="edit" className="space-y-2">
       <TabsList>
         <TabsTrigger value="edit">{t('Edit')}</TabsTrigger>
         <TabsTrigger value="preview">{t('Preview')}</TabsTrigger>
