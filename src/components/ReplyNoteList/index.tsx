@@ -1,4 +1,3 @@
-import { Separator } from '@/components/ui/separator'
 import { BIG_RELAY_URLS, ExtendedKind } from '@/constants'
 import {
   getParentEventTag,
@@ -14,7 +13,8 @@ import client from '@/services/client.service'
 import { Filter, Event as NEvent, kinds } from 'nostr-tools'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import ReplyNote from '../ReplyNote'
+import { LoadingBar } from '../LoadingBar'
+import ReplyNote, { ReplyNoteSkeleton } from '../ReplyNote'
 
 type TRootInfo = { type: 'event'; id: string; pubkey: string } | { type: 'I'; id: string }
 
@@ -239,15 +239,15 @@ export default function ReplyNoteList({
 
   return (
     <>
-      {(loading || (!!until && replies.length > 0)) && (
+      {loading && (replies.length === 0 ? <ReplyNoteSkeleton /> : <LoadingBar />)}
+      {!loading && until && (
         <div
-          className={`text-sm text-center text-muted-foreground mt-2 ${!loading ? 'hover:text-foreground cursor-pointer' : ''}`}
+          className={`text-sm text-center text-muted-foreground border-b py-2 ${!loading ? 'hover:text-foreground cursor-pointer' : ''}`}
           onClick={loadMore}
         >
-          {loading ? t('loading...') : t('load more older replies')}
+          {t('load more older replies')}
         </div>
       )}
-      {replies.length > 0 && (loading || until) && <Separator className="mt-2" />}
       <div className={className}>
         {replies.slice(0, showCount).map((reply) => {
           if (!isUserTrusted(reply.pubkey)) {

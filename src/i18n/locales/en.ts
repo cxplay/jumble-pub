@@ -238,6 +238,7 @@ export default {
       'Only show content from your followed users and the users they follow',
     'Followed by': 'Followed by',
     'Mute user privately': 'Mute user privately',
-    'Mute user publicly': 'Mute user publicly'
+    'Mute user publicly': 'Mute user publicly',
+    Quotes: 'Quotes'
   }
 }

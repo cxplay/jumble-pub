@@ -241,6 +241,7 @@ export default {
       'Pokaż tylko treści od użytkowników, których obserwujesz i ich obserwowanych',
     'Followed by': 'Obserwowany przez',
     'Mute user privately': 'Zablokuj użytkownika prywatnie',
-    'Mute user publicly': 'Zablokuj użytkownika publicznie'
+    'Mute user publicly': 'Zablokuj użytkownika publicznie',
+    Quotes: 'Cytaty'
   }
 }

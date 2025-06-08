@@ -1,9 +1,9 @@
 import { useSecondaryPage } from '@/PageManager'
 import ContentPreview from '@/components/ContentPreview'
 import Note from '@/components/Note'
+import NoteInteractions from '@/components/NoteInteractions'
 import NoteStats from '@/components/NoteStats'
 import PictureNote from '@/components/PictureNote'
-import ReplyNoteList from '@/components/ReplyNoteList'
 import UserAvatar from '@/components/UserAvatar'
 import { Card } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
@@ -63,7 +63,7 @@ const NotePage = forwardRef(({ id, index }: { id?: string; index?: number }, ref
       <SecondaryPageLayout ref={ref} index={index} title={t('Note')} displayScrollToTopButton>
         <PictureNote key={`note-${event.id}`} event={event} fetchNoteStats />
         <Separator className="mt-4" />
-        <ReplyNoteList key={`reply-note-list-${event.id}`} index={index} event={event} />
+        <NoteInteractions key={`note-interactions-${event.id}`} pageIndex={index} event={event} />
       </SecondaryPageLayout>
     )
   }
@@ -85,7 +85,7 @@ const NotePage = forwardRef(({ id, index }: { id?: string; index?: number }, ref
         <NoteStats className="mt-3" event={event} fetchIfNotExisting displayTopZapsAndLikes />
       </div>
       <Separator className="mt-4" />
-      <ReplyNoteList key={`reply-note-list-${event.id}`} index={index} event={event} />
+      <NoteInteractions key={`note-interactions-${event.id}`} pageIndex={index} event={event} />
     </SecondaryPageLayout>
   )
 })

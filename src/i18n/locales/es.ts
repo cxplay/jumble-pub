@@ -243,6 +243,7 @@ export default {
       'Solo mostrar contenido de tus usuarios seguidos y los usuarios que ellos siguen',
     'Followed by': 'Seguidos por',
     'Mute user privately': 'Silenciar usuario en privado',
-    'Mute user publicly': 'Silenciar usuario públicamente'
+    'Mute user publicly': 'Silenciar usuario públicamente',
+    Quotes: 'Citas'
   }
 }

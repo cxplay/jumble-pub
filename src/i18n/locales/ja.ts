@@ -239,6 +239,7 @@ export default {
       'フォローしているユーザーとそのユーザーがフォローしているユーザーのコンテンツのみを表示',
     'Followed by': 'フォロワー',
     'Mute user privately': 'ユーザーを非公開でミュート',
-    'Mute user publicly': 'ユーザーを公開でミュート'
+    'Mute user publicly': 'ユーザーを公開でミュート',
+    Quotes: '引用'
   }
 }

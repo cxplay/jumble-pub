@@ -1,5 +1,6 @@
 import { useSecondaryPage } from '@/PageManager'
 import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
 import { toNote } from '@/lib/link'
 import { useMuteList } from '@/providers/MuteListProvider'
 import { Event } from 'nostr-tools'
@@ -81,6 +82,25 @@ export default function ReplyNote({
         </div>
       </Collapsible>
       {show && <NoteStats className="ml-14 mr-4 mt-2" event={event} displayTopZapsAndLikes />}
+    </div>
+  )
+}
+
+export function ReplyNoteSkeleton() {
+  return (
+    <div className="px-4 py-3 flex items-start space-x-2 w-full">
+      <Skeleton className="w-8 h-8 rounded-full shrink-0" />
+      <div className="w-full">
+        <div className="py-1">
+          <Skeleton className="h-3 w-16" />
+        </div>
+        <div className="my-1">
+          <Skeleton className="w-full h-4 my-1 mt-2" />
+        </div>
+        <div className="my-1">
+          <Skeleton className="w-2/3 h-4 my-1" />
+        </div>
+      </div>
     </div>
   )
 }
