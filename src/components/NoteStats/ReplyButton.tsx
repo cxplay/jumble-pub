@@ -12,11 +12,13 @@ export default function ReplyButton({ event }: { event: Event }) {
   const { t } = useTranslation()
   const { checkLogin } = useNostr()
   const { repliesMap } = useReply()
-  const { isUserTrusted } = useUserTrust()
-  const replyCount = useMemo(
-    () => repliesMap.get(event.id)?.events.filter((evt) => isUserTrusted(evt.pubkey)).length || 0,
-    [repliesMap, event.id, isUserTrusted]
-  )
+  const { hideUntrustedInteractions, isUserTrusted } = useUserTrust()
+  const replyCount = useMemo(() => {
+    if (hideUntrustedInteractions) {
+      return repliesMap.get(event.id)?.events.filter((evt) => isUserTrusted(evt.pubkey)).length ?? 0
+    }
+    return repliesMap.get(event.id)?.events.length ?? 0
+  }, [repliesMap, event.id, isUserTrusted])
   const [open, setOpen] = useState(false)
 
   return (

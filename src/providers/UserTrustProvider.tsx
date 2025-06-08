@@ -1,11 +1,13 @@
 import client from '@/services/client.service'
+import storage from '@/services/local-storage.service'
 import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 import { useNostr } from './NostrProvider'
-import storage from '@/services/local-storage.service'
 
 type TUserTrustContext = {
-  enabled: boolean
-  updateEnabled: (enabled: boolean) => void
+  hideUntrustedInteractions: boolean
+  hideUntrustedNotifications: boolean
+  updateHideUntrustedInteractions: (hide: boolean) => void
+  updateHideUntrustedNotifications: (hide: boolean) => void
   isUserTrusted: (pubkey: string) => boolean
 }
 
@@ -23,7 +25,12 @@ const wotSet = new Set<string>()
 
 export function UserTrustProvider({ children }: { children: React.ReactNode }) {
   const { pubkey: currentPubkey } = useNostr()
-  const [enabled, setEnabled] = useState(storage.getHideUntrustedEvents())
+  const [hideUntrustedInteractions, setHideUntrustedInteractions] = useState(() =>
+    storage.getHideUntrustedInteractions()
+  )
+  const [hideUntrustedNotifications, setHideUntrustedNotifications] = useState(() =>
+    storage.getHideUntrustedNotifications()
+  )
 
   useEffect(() => {
     if (!currentPubkey) return
@@ -43,19 +50,32 @@ export function UserTrustProvider({ children }: { children: React.ReactNode }) {
 
   const isUserTrusted = useCallback(
     (pubkey: string) => {
-      if (!currentPubkey || !enabled) return true
+      if (!currentPubkey) return true
       return wotSet.has(pubkey)
     },
-    [currentPubkey, enabled]
+    [currentPubkey]
   )
 
-  const updateEnabled = (enabled: boolean) => {
-    setEnabled(enabled)
-    storage.setHideUntrustedEvents(enabled)
+  const updateHideUntrustedInteractions = (hide: boolean) => {
+    setHideUntrustedInteractions(hide)
+    storage.setHideUntrustedInteractions(hide)
+  }
+
+  const updateHideUntrustedNotifications = (hide: boolean) => {
+    setHideUntrustedNotifications(hide)
+    storage.setHideUntrustedNotifications(hide)
   }
 
   return (
-    <UserTrustContext.Provider value={{ enabled, updateEnabled, isUserTrusted }}>
+    <UserTrustContext.Provider
+      value={{
+        hideUntrustedInteractions,
+        hideUntrustedNotifications,
+        updateHideUntrustedInteractions,
+        updateHideUntrustedNotifications,
+        isUserTrusted
+      }}
+    >
       {children}
     </UserTrustContext.Provider>
   )

@@ -25,7 +25,8 @@ class LocalStorageService {
   private accountFeedInfoMap: Record<string, TFeedInfo | undefined> = {}
   private mediaUploadService: string = DEFAULT_NIP_96_SERVICE
   private autoplay: boolean = true
-  private hideUntrustedEvents: boolean = true
+  private hideUntrustedInteractions: boolean = false
+  private hideUntrustedNotifications: boolean = false
 
   constructor() {
     if (!LocalStorageService.instance) {
@@ -93,8 +94,20 @@ class LocalStorageService {
 
     this.autoplay = window.localStorage.getItem(StorageKey.AUTOPLAY) !== 'false'
 
-    this.hideUntrustedEvents =
-      window.localStorage.getItem(StorageKey.HIDE_UNTRUSTED_EVENTS) !== 'false'
+    const hideUntrustedEvents =
+      window.localStorage.getItem(StorageKey.HIDE_UNTRUSTED_EVENTS) === 'true'
+    const storedHideUntrustedInteractions = window.localStorage.getItem(
+      StorageKey.HIDE_UNTRUSTED_INTERACTIONS
+    )
+    const storedHideUntrustedNotifications = window.localStorage.getItem(
+      StorageKey.HIDE_UNTRUSTED_NOTIFICATIONS
+    )
+    this.hideUntrustedInteractions = storedHideUntrustedInteractions
+      ? storedHideUntrustedInteractions === 'true'
+      : hideUntrustedEvents
+    this.hideUntrustedNotifications = storedHideUntrustedNotifications
+      ? storedHideUntrustedNotifications === 'true'
+      : hideUntrustedEvents
 
     // Clean up deprecated data
     window.localStorage.removeItem(StorageKey.ACCOUNT_PROFILE_EVENT_MAP)
@@ -252,13 +265,28 @@ class LocalStorageService {
     window.localStorage.setItem(StorageKey.AUTOPLAY, autoplay.toString())
   }
 
-  getHideUntrustedEvents() {
-    return this.hideUntrustedEvents
+  getHideUntrustedInteractions() {
+    return this.hideUntrustedInteractions
   }
 
-  setHideUntrustedEvents(hide: boolean) {
-    this.hideUntrustedEvents = hide
-    window.localStorage.setItem(StorageKey.HIDE_UNTRUSTED_EVENTS, hide.toString())
+  setHideUntrustedInteractions(hideUntrustedInteractions: boolean) {
+    this.hideUntrustedInteractions = hideUntrustedInteractions
+    window.localStorage.setItem(
+      StorageKey.HIDE_UNTRUSTED_INTERACTIONS,
+      hideUntrustedInteractions.toString()
+    )
+  }
+
+  getHideUntrustedNotifications() {
+    return this.hideUntrustedNotifications
+  }
+
+  setHideUntrustedNotifications(hideUntrustedNotifications: boolean) {
+    this.hideUntrustedNotifications = hideUntrustedNotifications
+    window.localStorage.setItem(
+      StorageKey.HIDE_UNTRUSTED_NOTIFICATIONS,
+      hideUntrustedNotifications.toString()
+    )
   }
 }
 

@@ -6,7 +6,6 @@ import SecondaryPageLayout from '@/layouts/SecondaryPageLayout'
 import { cn } from '@/lib/utils'
 import { useAutoplay } from '@/providers/AutoplayProvider'
 import { useTheme } from '@/providers/ThemeProvider'
-import { useUserTrust } from '@/providers/UserTrustProvider'
 import { SelectValue } from '@radix-ui/react-select'
 import { forwardRef, HTMLProps, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -16,8 +15,6 @@ const GeneralSettingsPage = forwardRef(({ index }: { index?: number }, ref) => {
   const [language, setLanguage] = useState<TLanguage>(i18n.language as TLanguage)
   const { themeSetting, setThemeSetting } = useTheme()
   const { autoplay, setAutoplay } = useAutoplay()
-  const { enabled: hideUntrustedEventsEnabled, updateEnabled: updateHideUntrustedEventsEnabled } =
-    useUserTrust()
 
   const handleLanguageChange = (value: TLanguage) => {
     i18n.changeLanguage(value)
@@ -65,19 +62,6 @@ const GeneralSettingsPage = forwardRef(({ index }: { index?: number }, ref) => {
             <div className="text-muted-foreground">{t('Enable video autoplay on this device')}</div>
           </Label>
           <Switch id="autoplay" checked={autoplay} onCheckedChange={setAutoplay} />
-        </SettingItem>
-        <SettingItem>
-          <Label htmlFor="hide-untrusted-events" className="text-base font-normal">
-            {t('Hide content from untrusted users')}
-            <div className="text-muted-foreground">
-              {t('Only show content from your followed users and the users they follow')}
-            </div>
-          </Label>
-          <Switch
-            id="hide-untrusted-events"
-            checked={hideUntrustedEventsEnabled}
-            onCheckedChange={updateHideUntrustedEventsEnabled}
-          />
         </SettingItem>
       </div>
     </SecondaryPageLayout>

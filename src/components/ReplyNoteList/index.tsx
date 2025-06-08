@@ -32,7 +32,7 @@ export default function ReplyNoteList({
 }) {
   const { t } = useTranslation()
   const { currentIndex } = useSecondaryPage()
-  const { isUserTrusted } = useUserTrust()
+  const { hideUntrustedInteractions, isUserTrusted } = useUserTrust()
   const [rootInfo, setRootInfo] = useState<TRootInfo | undefined>(undefined)
   const { repliesMap, addReplies } = useReply()
   const replies = useMemo(() => {
@@ -250,7 +250,7 @@ export default function ReplyNoteList({
       )}
       <div className={className}>
         {replies.slice(0, showCount).map((reply) => {
-          if (!isUserTrusted(reply.pubkey)) {
+          if (hideUntrustedInteractions && !isUserTrusted(reply.pubkey)) {
             const repliesForThisReply = repliesMap.get(reply.id)
             // If the reply is not trusted and there are no trusted replies for this reply, skip rendering
             if (

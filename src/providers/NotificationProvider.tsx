@@ -25,7 +25,7 @@ export const useNotification = () => {
 
 export function NotificationProvider({ children }: { children: React.ReactNode }) {
   const { pubkey, notificationsSeenAt, updateNotificationsSeenAt } = useNostr()
-  const { isUserTrusted } = useUserTrust()
+  const { hideUntrustedNotifications, isUserTrusted } = useUserTrust()
   const { mutePubkeys } = useMuteList()
   const [newNotificationIds, setNewNotificationIds] = useState(new Set<string>())
   const subCloserRef = useRef<SubCloser | null>(null)
@@ -66,7 +66,7 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
               if (
                 evt.pubkey !== pubkey &&
                 !mutePubkeys.includes(evt.pubkey) &&
-                isUserTrusted(evt.pubkey)
+                (!hideUntrustedNotifications || isUserTrusted(evt.pubkey))
               ) {
                 setNewNotificationIds((prev) => new Set([...prev, evt.id]))
               }

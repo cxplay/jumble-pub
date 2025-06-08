@@ -14,7 +14,9 @@ export const StorageKey = {
   ACCOUNT_FEED_INFO_MAP: 'accountFeedInfoMap',
   MEDIA_UPLOAD_SERVICE: 'mediaUploadService',
   AUTOPLAY: 'autoplay',
-  HIDE_UNTRUSTED_EVENTS: 'hideUntrustedEvents',
+  HIDE_UNTRUSTED_INTERACTIONS: 'hideUntrustedInteractions',
+  HIDE_UNTRUSTED_NOTIFICATIONS: 'hideUntrustedNotifications',
+  HIDE_UNTRUSTED_EVENTS: 'hideUntrustedEvents', // deprecated
   ACCOUNT_RELAY_LIST_EVENT_MAP: 'accountRelayListEventMap', // deprecated
   ACCOUNT_FOLLOW_LIST_EVENT_MAP: 'accountFollowListEventMap', // deprecated
   ACCOUNT_MUTE_LIST_EVENT_MAP: 'accountMuteListEventMap', // deprecated
@@ -85,4 +87,4 @@ export const NIP_96_SERVICE = [
 ]
 export const DEFAULT_NIP_96_SERVICE = 'https://nostr.build'
 
-export const DEFAULT_NOSTRCONNECT_RELAY = ['wss://relay.nsec.app/'];
+export const DEFAULT_NOSTRCONNECT_RELAY = ['wss://relay.nsec.app/']

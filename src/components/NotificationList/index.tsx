@@ -23,7 +23,7 @@ const NotificationList = forwardRef((_, ref) => {
   const { t } = useTranslation()
   const { current } = usePrimaryPage()
   const { pubkey } = useNostr()
-  const { isUserTrusted } = useUserTrust()
+  const { hideUntrustedNotifications, isUserTrusted } = useUserTrust()
   const { clearNewNotifications, getNotificationsSeenAt } = useNotification()
   const { updateNoteStatsByEvents } = useNoteStats()
   const [notificationType, setNotificationType] = useState<TNotificationType>('all')
@@ -124,9 +124,11 @@ const NotificationList = forwardRef((_, ref) => {
   }, [pubkey, refreshCount, filterKinds, current])
 
   useEffect(() => {
-    const visibleNotifications = notifications
-      .slice(0, showCount)
-      .filter((event) => isUserTrusted(event.pubkey))
+    let visibleNotifications = notifications.slice(0, showCount)
+    if (hideUntrustedNotifications) {
+      visibleNotifications = visibleNotifications.filter((event) => isUserTrusted(event.pubkey))
+    }
+
     const index = visibleNotifications.findIndex((event) => event.created_at <= lastReadTime)
     if (index === -1) {
       setNewNotifications(visibleNotifications)
@@ -135,7 +137,7 @@ const NotificationList = forwardRef((_, ref) => {
       setNewNotifications(visibleNotifications.slice(0, index))
       setOldNotifications(visibleNotifications.slice(index))
     }
-  }, [notifications, lastReadTime, showCount, isUserTrusted])
+  }, [notifications, lastReadTime, showCount, hideUntrustedNotifications, isUserTrusted])
 
   useEffect(() => {
     const options = {

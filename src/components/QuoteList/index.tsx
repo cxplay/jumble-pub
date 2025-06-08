@@ -1,5 +1,6 @@
 import { BIG_RELAY_URLS } from '@/constants'
 import { useNostr } from '@/providers/NostrProvider'
+import { useUserTrust } from '@/providers/UserTrustProvider'
 import client from '@/services/client.service'
 import dayjs from 'dayjs'
 import { Event, kinds } from 'nostr-tools'
@@ -13,6 +14,7 @@ const SHOW_COUNT = 10
 export default function QuoteList({ event, className }: { event: Event; className?: string }) {
   const { t } = useTranslation()
   const { startLogin } = useNostr()
+  const { hideUntrustedInteractions, isUserTrusted } = useUserTrust()
   const [timelineKey, setTimelineKey] = useState<string | undefined>(undefined)
   const [events, setEvents] = useState<Event[]>([])
   const [showCount, setShowCount] = useState(SHOW_COUNT)
@@ -124,9 +126,12 @@ export default function QuoteList({ event, className }: { event: Event; classNam
     <div className={className}>
       <div className="min-h-screen">
         <div>
-          {events.slice(0, showCount).map((event) => (
-            <NoteCard key={event.id} className="w-full" event={event} />
-          ))}
+          {events.slice(0, showCount).map((event) => {
+            if (hideUntrustedInteractions && !isUserTrusted(event.pubkey)) {
+              return null
+            }
+            return <NoteCard key={event.id} className="w-full" event={event} />
+          })}
         </div>
         {hasMore || loading ? (
           <div ref={bottomRef}>
