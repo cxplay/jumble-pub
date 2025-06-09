@@ -89,7 +89,7 @@ const ProfilePage = forwardRef(({ id, index }: { id?: string; index?: number }, 
       <SecondaryPageLayout index={index} ref={ref}>
         <div className="sm:px-4">
           <div className="relative bg-cover bg-center mb-2">
-            <Skeleton className="w-full aspect-video sm:rounded-lg" />
+            <Skeleton className="w-full aspect-[3/1] sm:rounded-lg" />
             <Skeleton className="w-24 h-24 absolute bottom-0 left-3 translate-y-1/2 border-4 border-background rounded-full" />
           </div>
         </div>
@@ -111,7 +111,7 @@ const ProfilePage = forwardRef(({ id, index }: { id?: string; index?: number }, 
             <ProfileBanner
               banner={banner}
               pubkey={pubkey}
-              className="w-full aspect-video sm:rounded-lg"
+              className="w-full aspect-[3/1] sm:rounded-lg"
             />
             <Avatar className="w-24 h-24 absolute left-3 bottom-0 translate-y-1/2 border-4 border-background">
               <AvatarImage src={avatar} className="object-cover object-center" />
