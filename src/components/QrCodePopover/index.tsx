@@ -21,7 +21,12 @@ export default function QrCodePopover({ pubkey }: { pubkey: string }) {
         </DrawerTrigger>
         <DrawerContent className="h-1/2">
           <div className="flex justify-center items-center h-full">
-            <QRCodeSVG size={300} value={`nostr:${npub}`} />
+            <QRCodeSVG
+              size={300}
+              value={`nostr:${npub}`}
+              bgColor="hsl(var(--background))"
+              fgColor="hsl(var(--foreground))"
+            />
           </div>
         </DrawerContent>
       </Drawer>
@@ -36,7 +41,11 @@ export default function QrCodePopover({ pubkey }: { pubkey: string }) {
         </div>
       </PopoverTrigger>
       <PopoverContent className="w-fit h-fit">
-        <QRCodeSVG value={`nostr:${npub}`} />
+        <QRCodeSVG
+          value={`nostr:${npub}`}
+          bgColor="hsl(var(--background))"
+          fgColor="hsl(var(--foreground))"
+        />
       </PopoverContent>
     </Popover>
   )

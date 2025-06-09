@@ -48,12 +48,12 @@ export default function NostrConnectLogin({
       relays: DEFAULT_NOSTRCONNECT_RELAY,
       secret: Math.random().toString(36).substring(7),
       name: document.location.host,
-      url: document.location.origin,
+      url: document.location.origin
     }
     const newConnectionString = createNostrConnectURI(newMeta)
     return {
       privKey: newPrivKey,
-      connectionString: newConnectionString,
+      connectionString: newConnectionString
     }
   })
 
@@ -83,16 +83,17 @@ export default function NostrConnectLogin({
   }, [])
 
   useEffect(() => {
-    if (!loginDetails.privKey || !loginDetails.connectionString) return;
+    if (!loginDetails.privKey || !loginDetails.connectionString) return
     setNostrConnectionErrMsg(null)
     nostrConnectionLogin(loginDetails.privKey, loginDetails.connectionString)
       .then(() => onLoginSuccess())
       .catch((err) => {
-        console.error("NostrConnectionLogin Error:", err)
-        setNostrConnectionErrMsg(err.message ? `${err.message}. Please reload.` : 'Connection failed. Please reload.')
+        console.error('NostrConnectionLogin Error:', err)
+        setNostrConnectionErrMsg(
+          err.message ? `${err.message}. Please reload.` : 'Connection failed. Please reload.'
+        )
       })
   }, [loginDetails, nostrConnectionLogin, onLoginSuccess])
-
 
   const copyConnectionString = async () => {
     if (!loginDetails.connectionString) return
@@ -106,19 +107,22 @@ export default function NostrConnectLogin({
     <>
       <div ref={qrContainerRef} className="flex flex-col items-center w-full space-y-3 mb-3">
         <a href={loginDetails.connectionString} aria-label="Open with Nostr signer app">
-          <QRCodeSVG size={qrCodeSize} value={loginDetails.connectionString} marginSize={1} />
+          <QRCodeSVG
+            size={qrCodeSize}
+            value={loginDetails.connectionString}
+            bgColor="hsl(var(--background))"
+            fgColor="hsl(var(--foreground))"
+          />
         </a>
         {nostrConnectionErrMsg && (
-          <div className="text-xs text-destructive text-center pt-1">
-            {nostrConnectionErrMsg}
-          </div>
+          <div className="text-xs text-destructive text-center pt-1">{nostrConnectionErrMsg}</div>
         )}
       </div>
       <div className="flex justify-center w-full mb-3">
         <div
           className="flex items-center gap-2 text-sm text-muted-foreground bg-muted px-3 py-2 rounded-full cursor-pointer transition-all hover:bg-muted/80"
           style={{
-            width: qrCodeSize > 0 ? `${Math.max(150, Math.min(qrCodeSize, 320))}px` : 'auto',
+            width: qrCodeSize > 0 ? `${Math.max(150, Math.min(qrCodeSize, 320))}px` : 'auto'
           }}
           onClick={copyConnectionString}
           role="button"
@@ -127,9 +131,7 @@ export default function NostrConnectLogin({
           <div className="flex-grow min-w-0 truncate select-none">
             {loginDetails.connectionString}
           </div>
-          <div className="flex-shrink-0">
-            {copied ? <Check size={14} /> : <Copy size={14} />}
-          </div>
+          <div className="flex-shrink-0">{copied ? <Check size={14} /> : <Copy size={14} />}</div>
         </div>
       </div>
 
