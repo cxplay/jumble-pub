@@ -171,9 +171,7 @@ class LocalStorageService {
   }
 
   addAccount(account: TAccount) {
-    if (this.accounts.find((act) => isSameAccount(act, account))) {
-      return
-    }
+    this.accounts = this.accounts.filter((act) => !isSameAccount(act, account))
     this.accounts.push(account)
     window.localStorage.setItem(StorageKey.ACCOUNTS, JSON.stringify(this.accounts))
     return account
