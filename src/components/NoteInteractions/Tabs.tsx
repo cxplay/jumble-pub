@@ -49,7 +49,7 @@ export function Tabs({
           </div>
         ))}
         <div
-          className="absolute top-0 h-1 bg-primary rounded-full transition-all duration-500"
+          className="absolute bottom-0 h-1 bg-primary rounded-full transition-all duration-500"
           style={{
             width: `${indicatorStyle.width}px`,
             left: `${indicatorStyle.left}px`
