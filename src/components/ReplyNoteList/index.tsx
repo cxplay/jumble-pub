@@ -21,15 +21,7 @@ type TRootInfo = { type: 'event'; id: string; pubkey: string } | { type: 'I'; id
 const LIMIT = 100
 const SHOW_COUNT = 10
 
-export default function ReplyNoteList({
-  index,
-  event,
-  className
-}: {
-  index?: number
-  event: NEvent
-  className?: string
-}) {
+export default function ReplyNoteList({ index, event }: { index?: number; event: NEvent }) {
   const { t } = useTranslation()
   const { currentIndex } = useSecondaryPage()
   const { hideUntrustedInteractions, isUserTrusted } = useUserTrust()
@@ -238,7 +230,7 @@ export default function ReplyNoteList({
   }, [])
 
   return (
-    <>
+    <div className="min-h-screen">
       {loading && (replies.length === 0 ? <ReplyNoteSkeleton /> : <LoadingBar />)}
       {!loading && until && (
         <div
@@ -248,7 +240,7 @@ export default function ReplyNoteList({
           {t('load more older replies')}
         </div>
       )}
-      <div className={className}>
+      <div>
         {replies.slice(0, showCount).map((reply) => {
           if (hideUntrustedInteractions && !isUserTrusted(reply.pubkey)) {
             const repliesForThisReply = repliesMap.get(reply.id)
@@ -286,6 +278,6 @@ export default function ReplyNoteList({
         </div>
       )}
       <div ref={bottomRef} />
-    </>
+    </div>
   )
 }
