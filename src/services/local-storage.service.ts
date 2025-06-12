@@ -171,8 +171,12 @@ class LocalStorageService {
   }
 
   addAccount(account: TAccount) {
-    this.accounts = this.accounts.filter((act) => !isSameAccount(act, account))
-    this.accounts.push(account)
+    const index = this.accounts.findIndex((act) => isSameAccount(act, account))
+    if (index !== -1) {
+      this.accounts[index] = account
+    } else {
+      this.accounts.push(account)
+    }
     window.localStorage.setItem(StorageKey.ACCOUNTS, JSON.stringify(this.accounts))
     return account
   }
