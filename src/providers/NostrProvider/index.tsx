@@ -172,9 +172,7 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
         indexedDb.getReplaceableEvent(account.pubkey, ExtendedKind.FAVORITE_RELAYS)
       ])
       if (storedRelayListEvent) {
-        setRelayList(
-          storedRelayListEvent ? getRelayListFromRelayListEvent(storedRelayListEvent) : null
-        )
+        setRelayList(getRelayListFromRelayListEvent(storedRelayListEvent))
       }
       if (storedProfileEvent) {
         setProfileEvent(storedProfileEvent)

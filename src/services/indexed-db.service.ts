@@ -4,7 +4,7 @@ import { Event, kinds } from 'nostr-tools'
 
 type TValue<T = any> = {
   key: string
-  value: T
+  value: T | null
   addedAt: number
 }
 
@@ -140,7 +140,7 @@ class IndexedDbService {
       const getRequest = store.get(key)
       getRequest.onsuccess = () => {
         const oldValue = getRequest.result as TValue<Event> | undefined
-        if (oldValue && oldValue.value.created_at >= event.created_at) {
+        if (oldValue?.value && oldValue.value.created_at >= event.created_at) {
           transaction.commit()
           return resolve(oldValue.value)
         }
@@ -163,7 +163,11 @@ class IndexedDbService {
     })
   }
 
-  async getReplaceableEvent(pubkey: string, kind: number, d?: string): Promise<Event | undefined> {
+  async getReplaceableEvent(
+    pubkey: string,
+    kind: number,
+    d?: string
+  ): Promise<Event | undefined | null> {
     const storeName = this.getStoreNameByKind(kind)
     if (!storeName) {
       return Promise.reject('store name not found')
@@ -232,7 +236,7 @@ class IndexedDbService {
     })
   }
 
-  async getMuteDecryptedTags(id: string): Promise<string[][]> {
+  async getMuteDecryptedTags(id: string): Promise<string[][] | null> {
     await this.initPromise
     return new Promise((resolve, reject) => {
       if (!this.db) {
@@ -288,7 +292,11 @@ class IndexedDbService {
 
       request.onsuccess = () => {
         transaction.commit()
-        resolve((request.result as TValue<Event>[])?.map((item) => item.value))
+        resolve(
+          ((request.result as TValue<Event>[])
+            ?.map((item) => item.value)
+            .filter(Boolean) as Event[]) ?? []
+        )
       }
 
       request.onerror = (event) => {
@@ -337,7 +345,10 @@ class IndexedDbService {
       request.onsuccess = (event) => {
         const cursor = (event.target as IDBRequest).result
         if (cursor) {
-          callback((cursor.value as TValue<Event>).value)
+          const value = (cursor.value as TValue<Event>).value
+          if (value) {
+            callback(value)
+          }
           cursor.continue()
         } else {
           transaction.commit()
