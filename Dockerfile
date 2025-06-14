@@ -1,10 +1,18 @@
 # Step 1: Build the application
 FROM node:20-alpine as builder
 
-WORKDIR /app
-COPY . .
+ARG VITE_PROXY_SERVER
+ENV VITE_PROXY_SERVER=${VITE_PROXY_SERVER}
 
-RUN npm install && npm run build
+WORKDIR /app
+
+# Copy package files first
+COPY package*.json ./
+RUN npm install
+
+# Copy the source code to prevent invaliding cache whenever there is a change in the code
+COPY . .
+RUN npm run build
 
 # Step 2: Final container with Nginx and embedded config
 FROM nginx:alpine
