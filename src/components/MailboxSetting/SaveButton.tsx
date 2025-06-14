@@ -24,11 +24,8 @@ export default function SaveButton({
 
     setPushing(true)
     const event = createRelayListDraftEvent(mailboxRelays)
-    console.log('Saving mailbox relays:', event)
     const relayListEvent = await publish(event)
-    console.log('Published relay list event:', relayListEvent)
     await updateRelayListEvent(relayListEvent)
-
     toast({
       title: 'Save Successful',
       description: 'Successfully saved mailbox relays'
