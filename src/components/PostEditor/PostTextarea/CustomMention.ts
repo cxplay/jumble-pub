@@ -1,5 +1,4 @@
 import { formatNpub } from '@/lib/pubkey'
-import { ExtendedRegExpMatchArray, InputRule, PasteRule, Range, SingleCommands } from '@tiptap/core'
 import Mention from '@tiptap/extension-mention'
 import { ReactNodeViewRenderer } from '@tiptap/react'
 import MentionNode from './MentionNode'
@@ -12,7 +11,7 @@ declare module '@tiptap/core' {
   }
 }
 
-const MENTION_REGEX = /(nostr:)?(npub1[a-z0-9]{58}|nprofile1[a-z0-9]+)/g
+// const MENTION_REGEX = /(nostr:)?(npub1[a-z0-9]{58}|nprofile1[a-z0-9]+)/g
 
 const CustomMention = Mention.extend({
   selectable: true,
@@ -48,45 +47,45 @@ const CustomMention = Mention.extend({
           return true
         }
     }
-  },
-
-  addInputRules() {
-    return [
-      new InputRule({
-        find: MENTION_REGEX,
-        handler: (props) => handler(props)
-      })
-    ]
-  },
-
-  addPasteRules() {
-    return [
-      new PasteRule({
-        find: MENTION_REGEX,
-        handler: (props) => handler(props)
-      })
-    ]
   }
+
+  // addInputRules() {
+  //   return [
+  //     new InputRule({
+  //       find: MENTION_REGEX,
+  //       handler: (props) => handler(props)
+  //     })
+  //   ]
+  // },
+
+  // addPasteRules() {
+  //   return [
+  //     new PasteRule({
+  //       find: MENTION_REGEX,
+  //       handler: (props) => handler(props)
+  //     })
+  //   ]
+  // }
 })
 export default CustomMention
 
-function handler({
-  range,
-  match,
-  commands
-}: {
-  commands: SingleCommands
-  match: ExtendedRegExpMatchArray
-  range: Range
-}) {
-  const mention = match[0]
-  if (!mention) return
-  const npub = mention.replace('nostr:', '')
+// function handler({
+//   range,
+//   match,
+//   commands
+// }: {
+//   commands: SingleCommands
+//   match: ExtendedRegExpMatchArray
+//   range: Range
+// }) {
+//   const mention = match[0]
+//   if (!mention) return
+//   const npub = mention.replace('nostr:', '')
 
-  const matchLength = mention.length
-  const end = range.to
-  const start = Math.max(0, end - matchLength)
+//   const matchLength = mention.length
+//   const end = range.to
+//   const start = Math.max(0, end - matchLength)
 
-  commands.deleteRange({ from: start, to: end })
-  commands.createMention(npub)
-}
+//   commands.deleteRange({ from: start, to: end })
+//   commands.createMention(npub)
+// }
