@@ -239,6 +239,7 @@ export default {
     'Followed by': 'متابع من قبل',
     'Mute user privately': 'كتم المستخدم بشكل خاص',
     'Mute user publicly': 'كتم المستخدم علنياً',
-    Quotes: 'الاقتباسات'
+    Quotes: 'الاقتباسات',
+    'Lightning Invoice': 'فاتورة Lightning'
   }
 }

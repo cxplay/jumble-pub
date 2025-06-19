@@ -240,6 +240,7 @@ export default {
     'Followed by': '关注者',
     'Mute user privately': '悄悄屏蔽',
     'Mute user publicly': '公开屏蔽',
-    Quotes: '引用'
+    Quotes: '引用',
+    'Lightning Invoice': '闪电发票'
   }
 }

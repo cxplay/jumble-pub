@@ -239,6 +239,7 @@ export default {
     'Followed by': 'Followed by',
     'Mute user privately': 'Mute user privately',
     'Mute user publicly': 'Mute user publicly',
-    Quotes: 'Quotes'
+    Quotes: 'Quotes',
+    'Lightning Invoice': 'Lightning Invoice'
   }
 }

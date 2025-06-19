@@ -244,6 +244,7 @@ export default {
     'Followed by': 'Suivi par',
     'Mute user privately': 'Mettre l’utilisateur en sourdine en privé',
     'Mute user publicly': 'Mettre l’utilisateur en sourdine publiquement',
-    Quotes: 'Citations'
+    Quotes: 'Citations',
+    'Lightning Invoice': 'Facture Lightning'
   }
 }

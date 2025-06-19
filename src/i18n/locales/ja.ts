@@ -240,6 +240,7 @@ export default {
     'Followed by': 'フォロワー',
     'Mute user privately': 'ユーザーを非公開でミュート',
     'Mute user publicly': 'ユーザーを公開でミュート',
-    Quotes: '引用'
+    Quotes: '引用',
+    'Lightning Invoice': 'ライトニングインボイス'
   }
 }

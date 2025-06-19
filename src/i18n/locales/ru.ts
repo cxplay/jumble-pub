@@ -244,6 +244,7 @@ export default {
     'Followed by': 'Подписан на',
     'Mute user privately': 'Заглушить пользователя приватно',
     'Mute user publicly': 'Заглушить пользователя публично',
-    Quotes: 'Цитаты'
+    Quotes: 'Цитаты',
+    'Lightning Invoice': 'Lightning-счет'
   }
 }
