@@ -94,11 +94,12 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
   const ignorePopStateRef = useRef(false)
 
   useEffect(() => {
+    const hasHistoryState = !!history.state
     window.history.pushState(null, '', window.location.href)
     if (window.location.pathname !== '/') {
       if (
         ['/users', '/notes', '/relays'].some((path) => window.location.pathname.startsWith(path)) &&
-        !history.state
+        !hasHistoryState
       ) {
         setIsShared(true)
       }
