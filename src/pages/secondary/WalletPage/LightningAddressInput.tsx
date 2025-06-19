@@ -1,17 +1,16 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { useToast } from '@/hooks'
 import { isEmail } from '@/lib/common'
 import { createProfileDraftEvent } from '@/lib/draft-event'
 import { useNostr } from '@/providers/NostrProvider'
 import { Loader } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
 
 export default function LightningAddressInput() {
   const { t } = useTranslation()
-  const { toast } = useToast()
   const { profile, profileEvent, publish, updateProfileEvent } = useNostr()
   const [lightningAddress, setLightningAddress] = useState('')
   const [hasChanged, setHasChanged] = useState(false)
@@ -36,11 +35,7 @@ export default function LightningAddressInput() {
     } else if (isEmail(lightningAddress)) {
       lud16 = lightningAddress
     } else {
-      toast({
-        title: 'Invalid Lightning Address',
-        description: 'Please enter a valid Lightning Address or LNURL',
-        variant: 'destructive'
-      })
+      toast.error(t('Invalid Lightning Address. Please enter a valid Lightning Address or LNURL.'))
       setSaving(false)
       return
     }

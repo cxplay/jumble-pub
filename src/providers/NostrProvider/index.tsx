@@ -1,6 +1,5 @@
 import LoginDialog from '@/components/LoginDialog'
 import { ApplicationDataKey, BIG_RELAY_URLS, ExtendedKind } from '@/constants'
-import { useToast } from '@/hooks'
 import { createSeenNotificationsAtDraftEvent } from '@/lib/draft-event'
 import {
   getLatestEvent,
@@ -20,11 +19,12 @@ import * as nip19 from 'nostr-tools/nip19'
 import * as nip49 from 'nostr-tools/nip49'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
 import { BunkerSigner } from './bunker.signer'
 import { Nip07Signer } from './nip-07.signer'
+import { NostrConnectionSigner } from './nostrConnection.signer'
 import { NpubSigner } from './npub.signer'
 import { NsecSigner } from './nsec.signer'
-import { NostrConnectionSigner } from './nostrConnection.signer'
 
 type TNostrContext = {
   isInitialized: boolean
@@ -80,7 +80,6 @@ export const useNostr = () => {
 
 export function NostrProvider({ children }: { children: React.ReactNode }) {
   const { t } = useTranslation()
-  const { toast } = useToast()
   const [account, setAccount] = useState<TAccountPointer | null>(null)
   const [nsec, setNsec] = useState<string | null>(null)
   const [ncryptsec, setNcryptsec] = useState<string | null>(null)
@@ -379,11 +378,7 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
       }
       return login(nip07Signer, { pubkey, signerType: 'nip-07' })
     } catch (err) {
-      toast({
-        title: 'Login failed',
-        description: (err as Error).message,
-        variant: 'destructive'
-      })
+      toast.error(t('Login failed') + ': ' + (err as Error).message)
       throw err
     }
   }

@@ -245,6 +245,8 @@ export default {
     'Mute user privately': 'Mettre l’utilisateur en sourdine en privé',
     'Mute user publicly': 'Mettre l’utilisateur en sourdine publiquement',
     Quotes: 'Citations',
-    'Lightning Invoice': 'Facture Lightning'
+    'Lightning Invoice': 'Facture Lightning',
+    'Bookmark failed': 'Échec de la mise en favori',
+    'Remove bookmark failed': 'Échec de la suppression du favori'
   }
 }

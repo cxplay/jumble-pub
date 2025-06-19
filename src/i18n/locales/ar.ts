@@ -240,6 +240,8 @@ export default {
     'Mute user privately': 'كتم المستخدم بشكل خاص',
     'Mute user publicly': 'كتم المستخدم علنياً',
     Quotes: 'الاقتباسات',
-    'Lightning Invoice': 'فاتورة Lightning'
+    'Lightning Invoice': 'فاتورة Lightning',
+    'Bookmark failed': 'فشل في الإشارة المرجعية',
+    'Remove bookmark failed': 'فشل في إزالة الإشارة المرجعية'
   }
 }

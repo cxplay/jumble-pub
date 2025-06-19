@@ -1,10 +1,10 @@
-import { useToast } from '@/hooks'
+import { Button } from '@/components/ui/button'
 import { createRelayListDraftEvent } from '@/lib/draft-event'
 import { useNostr } from '@/providers/NostrProvider'
 import { TMailboxRelay } from '@/types'
 import { CloudUpload, Loader } from 'lucide-react'
 import { useState } from 'react'
-import { Button } from '../ui/button'
+import { toast } from 'sonner'
 
 export default function SaveButton({
   mailboxRelays,
@@ -15,7 +15,6 @@ export default function SaveButton({
   hasChange: boolean
   setHasChange: (hasChange: boolean) => void
 }) {
-  const { toast } = useToast()
   const { pubkey, publish, updateRelayListEvent } = useNostr()
   const [pushing, setPushing] = useState(false)
 
@@ -26,10 +25,7 @@ export default function SaveButton({
     const event = createRelayListDraftEvent(mailboxRelays)
     const relayListEvent = await publish(event)
     await updateRelayListEvent(relayListEvent)
-    toast({
-      title: 'Save Successful',
-      description: 'Successfully saved mailbox relays'
-    })
+    toast.success('Successfully saved mailbox relays')
     setHasChange(false)
     setPushing(false)
   }

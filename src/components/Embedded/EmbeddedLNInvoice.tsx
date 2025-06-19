@@ -1,15 +1,14 @@
 import { Button } from '@/components/ui/button'
-import { useToast } from '@/hooks'
 import { formatAmount, getAmountFromInvoice } from '@/lib/lightning'
 import { useNostr } from '@/providers/NostrProvider'
 import lightning from '@/services/lightning.service'
 import { Loader, Zap } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
 
 export function EmbeddedLNInvoice({ invoice }: { invoice: string }) {
   const { t } = useTranslation()
-  const { toast } = useToast()
   const { checkLogin, pubkey } = useNostr()
   const [paying, setPaying] = useState(false)
 
@@ -29,11 +28,7 @@ export function EmbeddedLNInvoice({ invoice }: { invoice: string }) {
         return
       }
     } catch (error) {
-      toast({
-        title: t('Lightning payment failed'),
-        description: (error as Error).message,
-        variant: 'destructive'
-      })
+      toast.error(t('Lightning payment failed') + ': ' + (error as Error).message)
     } finally {
       setPaying(false)
     }

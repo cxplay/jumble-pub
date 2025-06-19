@@ -6,18 +6,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
-import { useToast } from '@/hooks'
 import { useMuteList } from '@/providers/MuteListProvider'
 import { useNostr } from '@/providers/NostrProvider'
 import { useScreenSize } from '@/providers/ScreenSizeProvider'
 import { BellOff, Loader } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
 
 export default function MuteButton({ pubkey }: { pubkey: string }) {
   const { t } = useTranslation()
   const { isSmallScreen } = useScreenSize()
-  const { toast } = useToast()
   const { pubkey: accountPubkey, checkLogin } = useNostr()
   const { mutePubkeys, changing, mutePubkeyPrivately, mutePubkeyPublicly, unmutePubkey } =
     useMuteList()
@@ -39,11 +38,7 @@ export default function MuteButton({ pubkey }: { pubkey: string }) {
           await mutePubkeyPublicly(pubkey)
         }
       } catch (error) {
-        toast({
-          title: t('Mute failed'),
-          description: (error as Error).message,
-          variant: 'destructive'
-        })
+        toast.error(`${t('Mute failed')}: ${(error as Error).message}`)
       } finally {
         setUpdating(false)
       }
@@ -59,11 +54,7 @@ export default function MuteButton({ pubkey }: { pubkey: string }) {
       try {
         await unmutePubkey(pubkey)
       } catch (error) {
-        toast({
-          title: t('Unmute failed'),
-          description: (error as Error).message,
-          variant: 'destructive'
-        })
+        toast.error(`${t('Unmute failed')}: ${(error as Error).message}`)
       } finally {
         setUpdating(false)
       }

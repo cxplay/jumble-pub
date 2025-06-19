@@ -1,4 +1,3 @@
-export * from './use-toast'
 export * from './useFetchEvent'
 export * from './useFetchFollowings'
 export * from './useFetchNip05'

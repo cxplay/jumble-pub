@@ -1,8 +1,8 @@
 import 'yet-another-react-lightbox/styles.css'
 import './index.css'
 
-import { Toaster } from '@/components/ui/toaster'
 import { ThemeProvider } from '@/providers/ThemeProvider'
+import { Toaster } from './components/ui/sonner'
 import { PageManager } from './PageManager'
 import { AutoplayProvider } from './providers/AutoplayProvider'
 import { BookmarksProvider } from './providers/BookmarksProvider'

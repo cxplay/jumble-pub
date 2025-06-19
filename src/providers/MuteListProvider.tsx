@@ -5,9 +5,9 @@ import indexedDb from '@/services/indexed-db.service'
 import dayjs from 'dayjs'
 import { Event } from 'nostr-tools'
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { toast } from 'sonner'
 import { z } from 'zod'
 import { useNostr } from './NostrProvider'
-import { useToast } from '@/hooks'
 
 type TMuteListContext = {
   mutePubkeys: string[]
@@ -32,7 +32,6 @@ export const useMuteList = () => {
 }
 
 export function MuteListProvider({ children }: { children: React.ReactNode }) {
-  const { toast } = useToast()
   const {
     pubkey: accountPubkey,
     muteListEvent,
@@ -111,10 +110,7 @@ export function MuteListProvider({ children }: { children: React.ReactNode }) {
     }
     const newMuteListDraftEvent = createMuteListDraftEvent(tags, content)
     const event = await publish(newMuteListDraftEvent)
-    toast({
-      title: 'Mute list updated',
-      description: 'Your mute list has been updated successfully.'
-    })
+    toast.success('Successfully updated mute list')
     return event
   }
 

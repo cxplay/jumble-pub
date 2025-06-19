@@ -1,6 +1,6 @@
-import { useToast } from '@/hooks/use-toast'
 import mediaUpload from '@/services/media-upload.service'
 import { useRef } from 'react'
+import { toast } from 'sonner'
 
 export default function Uploader({
   children,
@@ -15,7 +15,6 @@ export default function Uploader({
   className?: string
   accept?: string
 }) {
-  const { toast } = useToast()
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,11 +29,7 @@ export default function Uploader({
       }
     } catch (error) {
       console.error('Error uploading file', error)
-      toast({
-        variant: 'destructive',
-        title: 'Failed to upload file',
-        description: (error as Error).message
-      })
+      toast.error(`Failed to upload file: ${(error as Error).message}`)
       if (fileInputRef.current) {
         fileInputRef.current.value = ''
       }

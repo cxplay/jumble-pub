@@ -240,6 +240,8 @@ export default {
     'Mute user privately': 'Mute user privately',
     'Mute user publicly': 'Mute user publicly',
     Quotes: 'Quotes',
-    'Lightning Invoice': 'Lightning Invoice'
+    'Lightning Invoice': 'Lightning Invoice',
+    'Bookmark failed': 'Bookmark failed',
+    'Remove bookmark failed': 'Remove bookmark failed'
   }
 }

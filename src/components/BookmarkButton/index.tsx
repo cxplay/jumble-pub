@@ -1,14 +1,13 @@
-import { useToast } from '@/hooks'
 import { useBookmarks } from '@/providers/BookmarksProvider'
 import { useNostr } from '@/providers/NostrProvider'
 import { BookmarkIcon, Loader } from 'lucide-react'
+import { Event } from 'nostr-tools'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Event } from 'nostr-tools'
+import { toast } from 'sonner'
 
 export default function BookmarkButton({ event }: { event: Event }) {
   const { t } = useTranslation()
-  const { toast } = useToast()
   const { pubkey: accountPubkey, bookmarkListEvent, checkLogin } = useNostr()
   const { addBookmark, removeBookmark } = useBookmarks()
   const [updating, setUpdating] = useState(false)
@@ -28,11 +27,7 @@ export default function BookmarkButton({ event }: { event: Event }) {
       try {
         await addBookmark(event)
       } catch (error) {
-        toast({
-          title: t('Bookmark failed'),
-          description: (error as Error).message,
-          variant: 'destructive'
-        })
+        toast.error(t('Bookmark failed') + ': ' + (error as Error).message)
       } finally {
         setUpdating(false)
       }
@@ -48,11 +43,7 @@ export default function BookmarkButton({ event }: { event: Event }) {
       try {
         await removeBookmark(event)
       } catch (error) {
-        toast({
-          title: t('Remove bookmark failed'),
-          description: (error as Error).message,
-          variant: 'destructive'
-        })
+        toast.error(t('Remove bookmark failed') + ': ' + (error as Error).message)
       } finally {
         setUpdating(false)
       }

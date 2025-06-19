@@ -241,6 +241,8 @@ export default {
     'Mute user privately': 'ユーザーを非公開でミュート',
     'Mute user publicly': 'ユーザーを公開でミュート',
     Quotes: '引用',
-    'Lightning Invoice': 'ライトニングインボイス'
+    'Lightning Invoice': 'ライトニングインボイス',
+    'Bookmark failed': 'ブックマークに失敗しました',
+    'Remove bookmark failed': 'ブックマークの削除に失敗しました'
   }
 }

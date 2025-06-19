@@ -3,12 +3,13 @@ import RelayInfo from '@/components/RelayInfo'
 import SaveRelayDropdownMenu from '@/components/SaveRelayDropdownMenu'
 import SearchInput from '@/components/SearchInput'
 import { Button } from '@/components/ui/button'
-import { useFetchRelayInfo, useToast } from '@/hooks'
+import { useFetchRelayInfo } from '@/hooks'
 import SecondaryPageLayout from '@/layouts/SecondaryPageLayout'
 import { normalizeUrl, simplifyUrl } from '@/lib/url'
 import { Check, Copy, Link } from 'lucide-react'
 import { forwardRef, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
 import NotFoundPage from '../NotFoundPage'
 
 const RelayPage = forwardRef(({ url, index }: { url?: string; index?: number }, ref) => {
@@ -63,7 +64,6 @@ RelayPage.displayName = 'RelayPage'
 export default RelayPage
 
 function RelayPageControls({ url }: { url: string }) {
-  const { toast } = useToast()
   const [copiedUrl, setCopiedUrl] = useState(false)
   const [copiedShareableUrl, setCopiedShareableUrl] = useState(false)
 
@@ -76,10 +76,7 @@ function RelayPageControls({ url }: { url: string }) {
   const handleCopyShareableUrl = () => {
     navigator.clipboard.writeText(`https://nostr.moe/?r=${url}`)
     setCopiedShareableUrl(true)
-    toast({
-      title: 'Shareable URL copied to clipboard',
-      description: 'You can share this URL with others.'
-    })
+    toast.success('Shareable URL copied to clipboard')
     setTimeout(() => setCopiedShareableUrl(false), 2000)
   }
 

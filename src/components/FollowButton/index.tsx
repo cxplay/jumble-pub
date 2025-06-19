@@ -10,16 +10,15 @@ import {
   AlertDialogTrigger
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
-import { useToast } from '@/hooks'
 import { useFollowList } from '@/providers/FollowListProvider'
 import { useNostr } from '@/providers/NostrProvider'
 import { Loader } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
 
 export default function FollowButton({ pubkey }: { pubkey: string }) {
   const { t } = useTranslation()
-  const { toast } = useToast()
   const { pubkey: accountPubkey, checkLogin } = useNostr()
   const { followings, follow, unfollow } = useFollowList()
   const [updating, setUpdating] = useState(false)
@@ -37,11 +36,7 @@ export default function FollowButton({ pubkey }: { pubkey: string }) {
       try {
         await follow(pubkey)
       } catch (error) {
-        toast({
-          title: t('Follow failed'),
-          description: (error as Error).message,
-          variant: 'destructive'
-        })
+        toast.error(t('Follow failed') + ': ' + (error as Error).message)
       } finally {
         setUpdating(false)
       }
@@ -57,11 +52,7 @@ export default function FollowButton({ pubkey }: { pubkey: string }) {
       try {
         await unfollow(pubkey)
       } catch (error) {
-        toast({
-          title: t('Unfollow failed'),
-          description: (error as Error).message,
-          variant: 'destructive'
-        })
+        toast.error(t('Unfollow failed') + ': ' + (error as Error).message)
       } finally {
         setUpdating(false)
       }

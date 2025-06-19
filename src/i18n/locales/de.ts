@@ -247,6 +247,8 @@ export default {
     'Mute user privately': 'Benutzer privat stummschalten',
     'Mute user publicly': 'Benutzer öffentlich stummschalten',
     Quotes: 'Zitate',
-    'Lightning Invoice': 'Lightning-Rechnung'
+    'Lightning Invoice': 'Lightning-Rechnung',
+    'Bookmark failed': 'Bookmark fehlgeschlagen',
+    'Remove bookmark failed': 'Bookmark entfernen fehlgeschlagen'
   }
 }

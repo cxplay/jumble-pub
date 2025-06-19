@@ -1,7 +1,6 @@
 import Note from '@/components/Note'
 import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { useToast } from '@/hooks/use-toast'
 import { createCommentDraftEvent, createShortTextNoteDraftEvent } from '@/lib/draft-event'
 import { isTouchDevice } from '@/lib/utils'
 import { useNostr } from '@/providers/NostrProvider'
@@ -10,6 +9,7 @@ import { ImageUp, LoaderCircle, Settings, Smile } from 'lucide-react'
 import { Event, kinds } from 'nostr-tools'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
 import EmojiPickerDialog from '../EmojiPickerDialog'
 import Mentions from './Mentions'
 import { usePostEditor } from './PostEditorProvider'
@@ -28,7 +28,6 @@ export default function PostContent({
   close: () => void
 }) {
   const { t } = useTranslation()
-  const { toast } = useToast()
   const { publish, checkLogin } = useNostr()
   const { uploadingFiles, setUploadingFiles } = usePostEditor()
   const [text, setText] = useState('')
@@ -63,29 +62,16 @@ export default function PostContent({
         close()
       } catch (error) {
         if (error instanceof AggregateError) {
-          error.errors.forEach((e) =>
-            toast({
-              variant: 'destructive',
-              title: t('Failed to post'),
-              description: e.message
-            })
-          )
+          error.errors.forEach((e) => toast.error(`${t('Failed to post')}: ${e.message}`))
         } else if (error instanceof Error) {
-          toast({
-            variant: 'destructive',
-            title: t('Failed to post'),
-            description: error.message
-          })
+          toast.error(`${t('Failed to post')}: ${error.message}`)
         }
         console.error(error)
         return
       } finally {
         setPosting(false)
       }
-      toast({
-        title: t('Post successful'),
-        description: t('Your post has been published')
-      })
+      toast.success(t('Post successful'), { duration: 2000 })
     })
   }
 

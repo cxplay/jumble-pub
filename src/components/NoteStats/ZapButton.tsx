@@ -1,4 +1,3 @@
-import { useToast } from '@/hooks'
 import { getLightningAddressFromProfile } from '@/lib/lightning'
 import { cn } from '@/lib/utils'
 import { useNostr } from '@/providers/NostrProvider'
@@ -10,11 +9,11 @@ import { Loader, Zap } from 'lucide-react'
 import { Event } from 'nostr-tools'
 import { MouseEvent, TouchEvent, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
 import ZapDialog from '../ZapDialog'
 
 export default function ZapButton({ event }: { event: Event }) {
   const { t } = useTranslation()
-  const { toast } = useToast()
   const { checkLogin, pubkey } = useNostr()
   const { noteStatsMap, addZap } = useNoteStats()
   const { defaultZapSats, defaultZapComment, quickZap } = useZap()
@@ -60,11 +59,7 @@ export default function ZapButton({ event }: { event: Event }) {
       }
       addZap(event.id, zapResult.invoice, defaultZapSats, defaultZapComment)
     } catch (error) {
-      toast({
-        title: t('Zap failed'),
-        description: (error as Error).message,
-        variant: 'destructive'
-      })
+      toast.error(`${t('Zap failed')}: ${(error as Error).message}`)
     } finally {
       setZapping(false)
     }

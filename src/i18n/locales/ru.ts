@@ -245,6 +245,8 @@ export default {
     'Mute user privately': 'Заглушить пользователя приватно',
     'Mute user publicly': 'Заглушить пользователя публично',
     Quotes: 'Цитаты',
-    'Lightning Invoice': 'Lightning-счет'
+    'Lightning Invoice': 'Lightning-счет',
+    'Bookmark failed': 'Не удалось добавить закладку',
+    'Remove bookmark failed': 'Не удалось удалить закладку'
   }
 }

@@ -15,7 +15,6 @@ import {
 } from '@/components/ui/drawer'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { useToast } from '@/hooks'
 import { useNostr } from '@/providers/NostrProvider'
 import { useNoteStats } from '@/providers/NoteStatsProvider'
 import { useScreenSize } from '@/providers/ScreenSizeProvider'
@@ -24,6 +23,7 @@ import lightning from '@/services/lightning.service'
 import { Loader } from 'lucide-react'
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
 import UserAvatar from '../UserAvatar'
 import Username from '../Username'
 
@@ -134,7 +134,6 @@ function ZapDialogContent({
   defaultComment?: string
 }) {
   const { t } = useTranslation()
-  const { toast } = useToast()
   const { pubkey } = useNostr()
   const { defaultZapSats, defaultZapComment } = useZap()
   const { addZap } = useNoteStats()
@@ -159,11 +158,7 @@ function ZapDialogContent({
         addZap(eventId, zapResult.invoice, sats, comment)
       }
     } catch (error) {
-      toast({
-        title: t('Zap failed'),
-        description: (error as Error).message,
-        variant: 'destructive'
-      })
+      toast.error(`${t('Zap failed')}: ${(error as Error).message}`)
     } finally {
       setZapping(false)
     }

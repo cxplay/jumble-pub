@@ -244,6 +244,8 @@ export default {
     'Mute user privately': 'Silenciar usuário privadamente',
     'Mute user publicly': 'Silenciar usuário publicamente',
     Quotes: 'Citações',
-    'Lightning Invoice': 'Fatura Lightning'
+    'Lightning Invoice': 'Fatura Lightning',
+    'Bookmark failed': 'Falha ao favoritar',
+    'Remove bookmark failed': 'Falha ao remover favorito'
   }
 }
