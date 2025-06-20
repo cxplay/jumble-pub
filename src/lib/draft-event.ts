@@ -60,6 +60,7 @@ export function createRepostDraftEvent(event: Event): TDraftEvent {
   }
 }
 
+const shortTextNoteDraftEventCache: Map<string, TDraftEvent> = new Map()
 export async function createShortTextNoteDraftEvent(
   content: string,
   mentions: string[],
@@ -106,12 +107,20 @@ export async function createShortTextNoteDraftEvent(
     tags.push(['-'])
   }
 
-  return {
+  const baseDraft = {
     kind: kinds.ShortTextNote,
     content,
-    tags,
-    created_at: dayjs().unix()
+    tags
   }
+  const cacheKey = JSON.stringify(baseDraft)
+  const cache = shortTextNoteDraftEventCache.get(cacheKey)
+  if (cache) {
+    return cache
+  }
+  const draftEvent = { ...baseDraft, created_at: dayjs().unix() }
+  shortTextNoteDraftEventCache.set(cacheKey, draftEvent)
+
+  return draftEvent
 }
 
 // https://github.com/nostr-protocol/nips/blob/master/51.md
@@ -165,6 +174,7 @@ export async function createPictureNoteDraftEvent(
   }
 }
 
+const commentDraftEventCache: Map<string, TDraftEvent> = new Map()
 export async function createCommentDraftEvent(
   content: string,
   parentEvent: Event,
@@ -229,12 +239,20 @@ export async function createCommentDraftEvent(
     tags.push(['-'])
   }
 
-  return {
+  const baseDraft = {
     kind: ExtendedKind.COMMENT,
     content,
-    tags,
-    created_at: dayjs().unix()
+    tags
   }
+  const cacheKey = JSON.stringify(baseDraft)
+  const cache = commentDraftEventCache.get(cacheKey)
+  if (cache) {
+    return cache
+  }
+  const draftEvent = { ...baseDraft, created_at: dayjs().unix() }
+  commentDraftEventCache.set(cacheKey, draftEvent)
+
+  return draftEvent
 }
 
 export function createRelayListDraftEvent(mailboxRelays: TMailboxRelay[]): TDraftEvent {
