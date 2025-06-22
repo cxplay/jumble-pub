@@ -76,7 +76,13 @@ export const MONITOR_RELAYS = ['wss://relay.nostr.watch/']
 
 export const CODY_PUBKEY = '8125b911ed0e94dbe3008a0be48cfe5cd0c0b05923cfff917ae7e87da8400883'
 
-export const DEFAULT_FAVORITE_RELAYS = []
+export const DEFAULT_FAVORITE_RELAYS = [
+  'wss://nostr.wine/',
+  'wss://pyramid.fiatjaf.com/',
+  'wss://140.f7z.io/',
+  'wss://news.utxo.one/',
+  'wss://algo.utxo.one/'
+]
 
 export const NIP_96_SERVICE = [
   'https://mockingyou.com',
