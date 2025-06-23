@@ -8,7 +8,7 @@ import {
 } from '@/lib/content-parser'
 import { extractEmojiInfosFromTags } from '@/lib/event'
 import { cn } from '@/lib/utils'
-import { Event } from 'nostr-tools'
+import { Event, kinds } from 'nostr-tools'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { EmbeddedMentionText } from '../Embedded'
@@ -27,6 +27,8 @@ export default function ContentPreview({
   const nodes = useMemo(() => {
     if (!event) return [{ type: 'text', data: `[${t('Not found the note')}]` }]
 
+    if (event.kind === kinds.Highlights) return []
+
     return parseContent(event.content, [
       EmbeddedImageParser,
       EmbeddedVideoParser,
@@ -35,6 +37,14 @@ export default function ContentPreview({
       EmbeddedEmojiParser
     ])
   }, [event])
+
+  if (event?.kind === kinds.Highlights) {
+    return (
+      <div className={cn('pointer-events-none italic', className)} onClick={onClick}>
+        {event.content}
+      </div>
+    )
+  }
 
   const emojiInfos = extractEmojiInfosFromTags(event?.tags)
 
