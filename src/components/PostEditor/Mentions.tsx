@@ -8,6 +8,7 @@ import { HTMLAttributes, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { SimpleUserAvatar } from '../UserAvatar'
 import { SimpleUsername } from '../Username'
+import { useMuteList } from '@/providers/MuteListProvider'
 
 export default function Mentions({
   content,
@@ -22,6 +23,7 @@ export default function Mentions({
 }) {
   const { t } = useTranslation()
   const { pubkey } = useNostr()
+  const { mutePubkeys } = useMuteList()
   const [potentialMentions, setPotentialMentions] = useState<string[]>([])
   const [parentEventPubkey, setParentEventPubkey] = useState<string | undefined>()
   const [removedPubkeys, setRemovedPubkeys] = useState<string[]>([])
@@ -36,7 +38,15 @@ export default function Mentions({
       }
       setPotentialMentions(potentialMentions)
       setRemovedPubkeys((pubkeys) => {
-        return pubkeys.filter((p) => potentialMentions.includes(p))
+        return Array.from(
+          new Set(
+            pubkeys
+              .filter((p) => potentialMentions.includes(p))
+              .concat(
+                potentialMentions.filter((p) => mutePubkeys.includes(p) && p !== _parentEventPubkey)
+              )
+          )
+        )
       })
     })
   }, [content, parentEvent, pubkey])
