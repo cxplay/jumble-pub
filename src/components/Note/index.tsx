@@ -14,6 +14,7 @@ import { FormattedTimestamp } from '../FormattedTimestamp'
 import ImageGallery from '../ImageGallery'
 import NoteOptions from '../NoteOptions'
 import ParentNotePreview from '../ParentNotePreview'
+import TranslateButton from '../TranslateButton'
 import UserAvatar from '../UserAvatar'
 import Username from '../Username'
 import Highlight from './Highlight'
@@ -65,7 +66,10 @@ export default function Note({
             </div>
           </div>
         </div>
-        {size === 'normal' && <NoteOptions event={event} className="shrink-0 [&_svg]:size-5" />}
+        <div className="flex items-center">
+          <TranslateButton event={event} className={size === 'normal' ? '' : 'pr-0'} />
+          {size === 'normal' && <NoteOptions event={event} className="shrink-0 [&_svg]:size-5" />}
+        </div>
       </div>
       {parentEventId && (
         <ParentNotePreview
