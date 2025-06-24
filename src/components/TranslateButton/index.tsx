@@ -58,11 +58,9 @@ export default function TranslateButton({
     if (/[\u4e00-\u9fff]/.test(cleanText)) {
       return i18n.language !== 'zh'
     }
-
     if (/[\u0600-\u06ff]/.test(cleanText)) {
       return i18n.language !== 'ar'
     }
-
     if (/[\u0400-\u04ff]/.test(cleanText)) {
       return i18n.language !== 'ru'
     }

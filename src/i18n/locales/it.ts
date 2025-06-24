@@ -277,6 +277,7 @@ export default {
       'Clicca su continua per nascondere {{type}} da utenti non fidati.',
     'Trusted users include people you follow and people they follow.':
       'Gli utenti fidati includono le persone che segui e le persone che seguono loro.',
-    Continue: 'Continua'
+    Continue: 'Continua',
+    'Successfully updated mute list': 'Lista di silenziamento aggiornata con successo'
   }
 }

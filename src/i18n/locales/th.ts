@@ -272,6 +272,7 @@ export default {
       'คลิกดำเนินการต่อเพื่อซ่อน {{type}} จากผู้ใช้ที่ไม่น่าเชื่อถือ',
     'Trusted users include people you follow and people they follow.':
       'ผู้ใช้ที่เชื่อถือได้รวมถึงผู้ที่คุณติดตามและผู้ที่พวกเขาติดตาม',
-    Continue: 'ดำเนินการต่อ'
+    Continue: 'ดำเนินการต่อ',
+    'Successfully updated mute list': 'อัปเดตรายการปิดเสียงสำเร็จ'
   }
 }

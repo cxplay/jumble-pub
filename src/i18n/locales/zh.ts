@@ -273,6 +273,7 @@ export default {
       '点击继续隐藏来自不受信任用户的{{type}}。',
     'Trusted users include people you follow and people they follow.':
       '受信任的用户包括您关注的人和他们关注的人。',
-    Continue: '继续'
+    Continue: '继续',
+    'Successfully updated mute list': '成功更新屏蔽列表'
   }
 }

@@ -278,6 +278,7 @@ export default {
       'Нажмите "Продолжить", чтобы скрыть {{type}} от недоверенных пользователей.',
     'Trusted users include people you follow and people they follow.':
       'Доверенные пользователи включают людей, на которых вы подписаны, и людей, на которых они подписаны.',
-    Continue: 'Продолжить'
+    Continue: 'Продолжить',
+    'Successfully updated mute list': 'Успешно обновлен список заглушенных пользователей'
   }
 }

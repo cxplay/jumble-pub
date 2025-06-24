@@ -280,6 +280,7 @@ export default {
       'Klicke auf Weiter, um {{type}} von nicht vertrauenswürdigen Benutzern auszublenden.',
     'Trusted users include people you follow and people they follow.':
       'Vertrauenswürdige Benutzer sind Personen, denen du folgst, und Personen, denen sie folgen.',
-    Continue: 'Weiter'
+    Continue: 'Weiter',
+    'Successfully updated mute list': 'Stummschalteliste erfolgreich aktualisiert'
   }
 }

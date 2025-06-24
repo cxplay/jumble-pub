@@ -275,6 +275,7 @@ export default {
       '信頼されていないユーザーからの{{type}}を非表示にするには続行をクリックしてください。',
     'Trusted users include people you follow and people they follow.':
       '信頼できるユーザーには、あなたがフォローしている人とその人がフォローしている人が含まれます。',
-    Continue: '続行'
+    Continue: '続行',
+    'Successfully updated mute list': 'ミュートリストの更新に成功しました'
   }
 }

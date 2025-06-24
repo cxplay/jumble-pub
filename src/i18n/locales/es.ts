@@ -278,6 +278,7 @@ export default {
       'Haz clic en continuar para ocultar {{type}} de usuarios no confiables.',
     'Trusted users include people you follow and people they follow.':
       'Los usuarios confiables incluyen a las personas que sigues y a las personas que ellos siguen.',
-    Continue: 'Continuar'
+    Continue: 'Continuar',
+    'Successfully updated mute list': 'Lista de silenciamiento actualizada con éxito'
   }
 }

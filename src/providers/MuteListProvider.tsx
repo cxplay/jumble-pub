@@ -8,6 +8,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 import { toast } from 'sonner'
 import { z } from 'zod'
 import { useNostr } from './NostrProvider'
+import { useTranslation } from 'react-i18next'
 
 type TMuteListContext = {
   mutePubkeys: string[]
@@ -32,6 +33,7 @@ export const useMuteList = () => {
 }
 
 export function MuteListProvider({ children }: { children: React.ReactNode }) {
+  const { t } = useTranslation()
   const {
     pubkey: accountPubkey,
     muteListEvent,
@@ -110,7 +112,7 @@ export function MuteListProvider({ children }: { children: React.ReactNode }) {
     }
     const newMuteListDraftEvent = createMuteListDraftEvent(tags, content)
     const event = await publish(newMuteListDraftEvent)
-    toast.success('Successfully updated mute list')
+    toast.success(t('Successfully updated mute list'))
     return event
   }
 

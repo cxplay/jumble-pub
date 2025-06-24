@@ -273,6 +273,7 @@ export default {
       'Click continue to hide {{type}} from untrusted users.',
     'Trusted users include people you follow and people they follow.':
       'Trusted users include people you follow and people they follow.',
-    Continue: 'Continue'
+    Continue: 'Continue',
+    'Successfully updated mute list': 'Successfully updated mute list'
   }
 }

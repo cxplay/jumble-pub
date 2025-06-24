@@ -276,6 +276,7 @@ export default {
       'Kliknij kontynuuj, aby ukryć {{type}} od nieznanych użytkowników.',
     'Trusted users include people you follow and people they follow.':
       'Zaufani użytkownicy to osoby, które obserwujesz i osoby, które oni obserwują.',
-    Continue: 'Kontynuuj'
+    Continue: 'Kontynuuj',
+    'Successfully updated mute list': 'Sukces aktualizacji listy zablokowanych użytkowników'
   }
 }

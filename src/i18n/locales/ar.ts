@@ -273,6 +273,7 @@ export default {
       'انقر على متابعة لإخفاء {{type}} من المستخدمين غير الموثوقين.',
     'Trusted users include people you follow and people they follow.':
       'المستخدمون الموثوقون هم الأشخاص الذين تتابعهم والأشخاص الذين يتابعونهم.',
-    Continue: 'متابعة'
+    Continue: 'متابعة',
+    'Successfully updated mute list': 'تم تحديث قائمة الكتم بنجاح'
   }
 }

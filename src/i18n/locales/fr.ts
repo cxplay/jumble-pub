@@ -278,6 +278,7 @@ export default {
       'Cliquez sur continuer pour masquer les {{type}} des utilisateurs non fiables.',
     'Trusted users include people you follow and people they follow.':
       'Les utilisateurs de confiance incluent les personnes que vous suivez et les personnes qu’elles suivent.',
-    Continue: 'Continuer'
+    Continue: 'Continuer',
+    'Successfully updated mute list': 'Liste de sourdine mise à jour avec succès'
   }
 }
