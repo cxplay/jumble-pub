@@ -107,7 +107,7 @@ const Content = memo(({ event, className }: { event: Event; className?: string }
           return <EmbeddedNormalUrl url={node.data} key={index} />
         }
         if (node.type === 'invoice') {
-          return <EmbeddedLNInvoice invoice={node.data} key={index} />
+          return <EmbeddedLNInvoice invoice={node.data} key={index} className="mt-2" />
         }
         if (node.type === 'websocket-url') {
           return <EmbeddedWebsocketUrl url={node.data} key={index} />

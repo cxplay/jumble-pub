@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { formatAmount, getAmountFromInvoice } from '@/lib/lightning'
+import { cn } from '@/lib/utils'
 import { useNostr } from '@/providers/NostrProvider'
 import lightning from '@/services/lightning.service'
 import { Loader, Zap } from 'lucide-react'
@@ -7,7 +8,7 @@ import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 
-export function EmbeddedLNInvoice({ invoice }: { invoice: string }) {
+export function EmbeddedLNInvoice({ invoice, className }: { invoice: string; className?: string }) {
   const { t } = useTranslation()
   const { checkLogin, pubkey } = useNostr()
   const [paying, setPaying] = useState(false)
@@ -41,7 +42,7 @@ export function EmbeddedLNInvoice({ invoice }: { invoice: string }) {
 
   return (
     <div
-      className="p-2 sm:p-3 border rounded-lg cursor-default flex flex-col gap-3 max-w-sm"
+      className={cn('p-3 border rounded-lg cursor-default flex flex-col gap-3 max-w-sm', className)}
       onClick={(e) => e.stopPropagation()}
     >
       <div className="flex items-center gap-2">
