@@ -260,6 +260,19 @@ export default {
     Warning: '警告',
     'Your current API key will become invalid immediately, and any applications using it will stop working until you update them with the new key.':
       '您当前的 API key 将立即失效，任何使用它的应用程序将停止工作，直到您用新 key 更新它们。',
-    'Service address': '服务地址'
+    'Service address': '服务地址',
+    Pay: '支付',
+    interactions: '互动',
+    notifications: '通知',
+    'Show untrusted {type}': '显示不受信任的{{type}}',
+    'Hide untrusted {type}': '隐藏不受信任的{{type}}',
+    'Currently hiding {type} from untrusted users.': '当前隐藏来自不受信任用户的{{type}}。',
+    'Currently showing all {type}.': '当前显示所有{{type}}。',
+    'Click continue to show all {type}.': '点击继续显示所有{{type}}。',
+    'Click continue to hide {type} from untrusted users.':
+      '点击继续隐藏来自不受信任用户的{{type}}。',
+    'Trusted users include people you follow and people they follow.':
+      '受信任的用户包括您关注的人和他们关注的人。',
+    Continue: '继续'
   }
 }

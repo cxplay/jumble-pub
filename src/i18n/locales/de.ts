@@ -266,6 +266,20 @@ export default {
     Warning: 'Warnung',
     'Your current API key will become invalid immediately, and any applications using it will stop working until you update them with the new key.':
       'Dein aktueller API-Schlüssel wird sofort ungültig, und alle Anwendungen, die ihn verwenden, werden nicht mehr funktionieren, bis du sie mit dem neuen Schlüssel aktualisierst.',
-    'Service address': 'Service-Adresse'
+    'Service address': 'Service-Adresse',
+    Pay: 'Bezahlen',
+    interactions: 'Interaktionen',
+    notifications: 'Benachrichtigungen',
+    'Show untrusted {type}': 'Untrusted {{type}} anzeigen',
+    'Hide untrusted {type}': 'Untrusted {{type}} ausblenden',
+    'Currently hiding {type} from untrusted users.':
+      'Derzeit werden {{type}} von nicht vertrauenswürdigen Benutzern ausgeblendet.',
+    'Currently showing all {type}.': 'Derzeit werden alle {{type}} angezeigt.',
+    'Click continue to show all {type}.': 'Klicke auf Weiter, um alle {{type}} anzuzeigen.',
+    'Click continue to hide {type} from untrusted users.':
+      'Klicke auf Weiter, um {{type}} von nicht vertrauenswürdigen Benutzern auszublenden.',
+    'Trusted users include people you follow and people they follow.':
+      'Vertrauenswürdige Benutzer sind Personen, denen du folgst, und Personen, denen sie folgen.',
+    Continue: 'Weiter'
   }
 }

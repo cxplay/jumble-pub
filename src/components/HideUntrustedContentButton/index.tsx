@@ -13,6 +13,7 @@ import { Button, buttonVariants } from '@/components/ui/button'
 import { useUserTrust } from '@/providers/UserTrustProvider'
 import { VariantProps } from 'class-variance-authority'
 import { Shield, ShieldCheck } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 export default function HideUntrustedContentButton({
   type,
@@ -21,6 +22,7 @@ export default function HideUntrustedContentButton({
   type: 'interactions' | 'notifications'
   size?: VariantProps<typeof buttonVariants>['size']
 }) {
+  const { t } = useTranslation()
   const {
     hideUntrustedInteractions,
     hideUntrustedNotifications,
@@ -32,6 +34,8 @@ export default function HideUntrustedContentButton({
 
   const updateEnabled =
     type === 'interactions' ? updateHideUntrustedInteractions : updateHideUntrustedNotifications
+
+  const typeText = t(type)
 
   return (
     <AlertDialog>
@@ -47,21 +51,25 @@ export default function HideUntrustedContentButton({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            {enabled ? 'Show' : 'Hide'} untrusted {type}
+            {enabled
+              ? t('Show untrusted {type}', { type: typeText })
+              : t('Hide untrusted {type}', { type: typeText })}
           </AlertDialogTitle>
           <AlertDialogDescription>
             {enabled
-              ? `Currently hiding ${type} from untrusted users. `
-              : `Currently showing all ${type}. `}
-            Trusted users include people you follow and people they follow.
+              ? t('Currently hiding {type} from untrusted users.', { type: typeText })
+              : t('Currently showing all {type}.', { type: typeText })}{' '}
+            {t('Trusted users include people you follow and people they follow.')}{' '}
             {enabled
-              ? ` Click continue to show all ${type}.`
-              : ` Click continue to hide ${type} from untrusted users.`}
+              ? t('Click continue to show all {type}.', { type: typeText })
+              : t('Click continue to hide {type} from untrusted users.', { type: typeText })}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={() => updateEnabled(!enabled)}>Continue</AlertDialogAction>
+          <AlertDialogCancel>{t('Cancel')}</AlertDialogCancel>
+          <AlertDialogAction onClick={() => updateEnabled(!enabled)}>
+            {t('Continue')}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

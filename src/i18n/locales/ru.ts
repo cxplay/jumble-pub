@@ -264,6 +264,20 @@ export default {
     Warning: 'Предупреждение',
     'Your current API key will become invalid immediately, and any applications using it will stop working until you update them with the new key.':
       'Ваш текущий API-ключ станет недействительным немедленно, и любые приложения, использующие его, перестанут работать, пока вы не обновите их новым ключом.',
-    'Service address': 'Адрес сервиса'
+    'Service address': 'Адрес сервиса',
+    Pay: 'Оплатить',
+    interactions: 'взаимодействия',
+    notifications: 'уведомления',
+    'Show untrusted {type}': 'Показать недоверенные {{type}}',
+    'Hide untrusted {type}': 'Скрыть недоверенные {{type}}',
+    'Currently hiding {type} from untrusted users.':
+      'В настоящее время скрываются {{type}} от недоверенных пользователей.',
+    'Currently showing all {type}.': 'В настоящее время отображаются все {{type}}.',
+    'Click continue to show all {type}.': 'Нажмите "Продолжить", чтобы показать все {{type}}.',
+    'Click continue to hide {type} from untrusted users.':
+      'Нажмите "Продолжить", чтобы скрыть {{type}} от недоверенных пользователей.',
+    'Trusted users include people you follow and people they follow.':
+      'Доверенные пользователи включают людей, на которых вы подписаны, и людей, на которых они подписаны.',
+    Continue: 'Продолжить'
   }
 }

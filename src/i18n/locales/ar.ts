@@ -259,6 +259,20 @@ export default {
     Warning: 'تحذير',
     'Your current API key will become invalid immediately, and any applications using it will stop working until you update them with the new key.':
       'مفتاح API الحالي الخاص بك سيصبح غير صالح على الفور، وأي تطبيقات تستخدمه ستتوقف عن العمل حتى تقوم بتحديثها بالمفتاح الجديد.',
-    'Service address': 'عنوان الخدمة'
+    'Service address': 'عنوان الخدمة',
+    Pay: 'دفع',
+    interactions: 'التفاعلات',
+    notifications: 'الإشعارات',
+    'Show untrusted {type}': 'إظهار {{type}} غير الموثوق',
+    'Hide untrusted {type}': 'إخفاء {{type}} غير الموثوق',
+    'Currently hiding {type} from untrusted users.':
+      'حاليًا إخفاء {{type}} من المستخدمين غير الموثوقين.',
+    'Currently showing all {type}.': 'حاليًا عرض جميع {{type}}.',
+    'Click continue to show all {type}.': 'انقر على متابعة لعرض جميع {{type}}.',
+    'Click continue to hide {type} from untrusted users.':
+      'انقر على متابعة لإخفاء {{type}} من المستخدمين غير الموثوقين.',
+    'Trusted users include people you follow and people they follow.':
+      'المستخدمون الموثوقون هم الأشخاص الذين تتابعهم والأشخاص الذين يتابعونهم.',
+    Continue: 'متابعة'
   }
 }

@@ -260,6 +260,21 @@ export default {
     Warning: '警告',
     'Your current API key will become invalid immediately, and any applications using it will stop working until you update them with the new key.':
       '現在のAPIキーはすぐに無効になり、それを使用しているアプリケーションは新しいキーで更新するまで動作しなくなります。',
-    'Service address': 'サービスアドレス'
+    'Service address': 'サービスアドレス',
+    Pay: '支払う',
+    interactions: 'インタラクション',
+    notifications: '通知',
+    'Show untrusted {type}': '信頼されていない{{type}}を表示',
+    'Hide untrusted {type}': '信頼されていない{{type}}を非表示',
+    'Currently hiding {type} from untrusted users.':
+      '現在、信頼されていないユーザーからの{{type}}を非表示にしています。',
+    'Currently showing all {type}.': '現在、すべての{{type}}を表示しています。',
+    'Click continue to show all {type}.':
+      'すべての{{type}}を表示するには続行をクリックしてください。',
+    'Click continue to hide {type} from untrusted users.':
+      '信頼されていないユーザーからの{{type}}を非表示にするには続行をクリックしてください。',
+    'Trusted users include people you follow and people they follow.':
+      '信頼できるユーザーには、あなたがフォローしている人とその人がフォローしている人が含まれます。',
+    Continue: '続行'
   }
 }
