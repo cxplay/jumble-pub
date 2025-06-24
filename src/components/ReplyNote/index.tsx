@@ -77,7 +77,10 @@ export default function ReplyNote({
               <Button
                 variant="outline"
                 className="text-muted-foreground font-medium mt-2"
-                onClick={() => setShowMuted(true)}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setShowMuted(true)
+                }}
               >
                 {t('Temporarily display this reply')}
               </Button>
