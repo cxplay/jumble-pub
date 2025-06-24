@@ -49,16 +49,23 @@ export default function TranslateButton({
       return false
     }
 
-    const hasChinese = /[\u4e00-\u9fff]/.test(cleanText)
-    const hasJapanese = /[\u3040-\u309f\u30a0-\u30ff]/.test(cleanText)
-    const hasArabic = /[\u0600-\u06ff]/.test(cleanText)
-    const hasRussian = /[\u0400-\u04ff]/.test(cleanText)
+    if (/[\u3040-\u309f\u30a0-\u30ff]/.test(cleanText)) {
+      return i18n.language !== 'ja'
+    }
+    if (/[\u0e00-\u0e7f]/.test(cleanText)) {
+      return i18n.language !== 'th'
+    }
+    if (/[\u4e00-\u9fff]/.test(cleanText)) {
+      return i18n.language !== 'zh'
+    }
 
-    if (hasJapanese) return i18n.language !== 'ja'
-    if (hasChinese && !hasJapanese) return i18n.language !== 'zh'
+    if (/[\u0600-\u06ff]/.test(cleanText)) {
+      return i18n.language !== 'ar'
+    }
 
-    if (hasArabic) return i18n.language !== 'ar'
-    if (hasRussian) return i18n.language !== 'ru'
+    if (/[\u0400-\u04ff]/.test(cleanText)) {
+      return i18n.language !== 'ru'
+    }
 
     try {
       const detectedLang = franc(cleanText)
