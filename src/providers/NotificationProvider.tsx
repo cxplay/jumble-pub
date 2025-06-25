@@ -68,7 +68,12 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
                 !mutePubkeys.includes(evt.pubkey) &&
                 (!hideUntrustedNotifications || isUserTrusted(evt.pubkey))
               ) {
-                setNewNotificationIds((prev) => new Set([...prev, evt.id]))
+                setNewNotificationIds((prev) => {
+                  if (prev.has(evt.id)) {
+                    return prev
+                  }
+                  return new Set([...prev, evt.id])
+                })
               }
             },
             onclose: (reasons) => {
@@ -127,10 +132,42 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
 
   useEffect(() => {
     const newNotificationCount = newNotificationIds.size
+
+    // Update title
     if (newNotificationCount > 0) {
       document.title = `(${newNotificationCount >= 10 ? '9+' : newNotificationCount}) Nostr!moe`
     } else {
       document.title = 'Nostr!moe'
+    }
+
+    // Update favicons
+    const favicons = document.querySelectorAll<HTMLLinkElement>("link[rel*='icon']")
+    if (!favicons.length) return
+
+    if (newNotificationCount === 0) {
+      favicons.forEach((favicon) => {
+        favicon.href = '/favicon.ico'
+      })
+    } else {
+      const img = document.createElement('img')
+      img.src = '/favicon.ico'
+      img.onload = () => {
+        const size = Math.max(img.width, img.height, 32)
+        const canvas = document.createElement('canvas')
+        canvas.width = size
+        canvas.height = size
+        const ctx = canvas.getContext('2d')
+        if (!ctx) return
+        ctx.drawImage(img, 0, 0, size, size)
+        const r = size * 0.16
+        ctx.beginPath()
+        ctx.arc(size - r - 6, r + 6, r, 0, 2 * Math.PI)
+        ctx.fillStyle = '#FF0000'
+        ctx.fill()
+        favicons.forEach((favicon) => {
+          favicon.href = canvas.toDataURL('image/png')
+        })
+      }
     }
   }, [newNotificationIds])
 
