@@ -156,11 +156,18 @@ export default function ReplyNoteList({ index, event }: { index?: number; event:
             })
           }
         } else if (rootInfo.type === 'A') {
-          filters.push({
-            '#A': [rootInfo.id],
-            kinds: [ExtendedKind.COMMENT],
-            limit: LIMIT
-          })
+          filters.push(
+            {
+              '#a': [rootInfo.id],
+              kinds: [kinds.ShortTextNote],
+              limit: LIMIT
+            },
+            {
+              '#A': [rootInfo.id],
+              kinds: [ExtendedKind.COMMENT],
+              limit: LIMIT
+            }
+          )
           if (rootInfo.relay) {
             relayUrls.push(rootInfo.relay)
           }

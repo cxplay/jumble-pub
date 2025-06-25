@@ -36,10 +36,14 @@ export function isReplyNoteEvent(event: Event) {
   if (cache !== undefined) return cache
 
   const mentionsEventIds: string[] = []
-  for (const [tagName, eventId, , marker] of event.tags) {
-    if (tagName !== 'e' || !eventId) continue
+  for (const [tagName, id, , marker] of event.tags) {
+    if (tagName === 'a' && id) {
+      EVENT_IS_REPLY_NOTE_CACHE.set(event.id, true)
+      return true
+    }
+    if (tagName !== 'e' || !id) continue
 
-    mentionsEventIds.push(eventId)
+    mentionsEventIds.push(id)
     if (['root', 'reply'].includes(marker)) {
       EVENT_IS_REPLY_NOTE_CACHE.set(event.id, true)
       return true
@@ -90,7 +94,7 @@ export function getParentEventTag(event?: Event) {
 }
 
 export function getParentAddressableEventTag(event?: Event) {
-  if (!event || event.kind !== ExtendedKind.COMMENT) return undefined
+  if (!event || ![kinds.ShortTextNote, ExtendedKind.COMMENT].includes(event.kind)) return undefined
 
   return event.tags.find(tagNameEquals('a')) ?? event.tags.find(tagNameEquals('A'))
 }
