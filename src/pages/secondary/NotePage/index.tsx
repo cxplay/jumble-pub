@@ -11,7 +11,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { ExtendedKind } from '@/constants'
 import { useFetchEvent } from '@/hooks'
 import SecondaryPageLayout from '@/layouts/SecondaryPageLayout'
-import { getParentEventId, getRootEventId, isPictureEvent } from '@/lib/event'
+import { getParentEventId, getRootEventId, isPictureEvent, isSupportedKind } from '@/lib/event'
 import { toNote, toNoteList } from '@/lib/link'
 import { tagNameEquals } from '@/lib/tag'
 import { useMuteList } from '@/providers/MuteListProvider'
@@ -152,6 +152,21 @@ function ParentNote({ eventId }: { eventId?: string }) {
         >
           <UserAvatar userId={event.pubkey} size="tiny" className="shrink-0" />
           <div className="shrink-0">[{t('This user has been muted')}]</div>
+        </Card>
+        <div className="ml-5 w-px h-2 bg-border" />
+      </div>
+    )
+  }
+
+  if (!isSupportedKind(event.kind)) {
+    return (
+      <div>
+        <Card
+          className="flex space-x-1 p-1 items-center clickable text-sm text-muted-foreground hover:text-foreground"
+          onClick={() => push(toNote(eventId))}
+        >
+          <UserAvatar userId={event.pubkey} size="tiny" className="shrink-0" />
+          <div className="shrink-0">[{t('Cannot handle event of kind k', { k: event.kind })}]</div>
         </Card>
         <div className="ml-5 w-px h-2 bg-border" />
       </div>

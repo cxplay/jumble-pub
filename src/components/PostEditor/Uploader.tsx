@@ -24,7 +24,6 @@ export default function Uploader({
     try {
       for (const file of event.target.files) {
         const result = await mediaUpload.upload(file)
-        console.log('File uploaded successfully', result)
         onUploadSuccess(result)
       }
     } catch (error) {

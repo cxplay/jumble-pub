@@ -187,10 +187,12 @@ export async function createCommentDraftEvent(
   const {
     quoteEventIds,
     rootEventId,
+    rootCoordinateTag,
     rootKind,
     rootPubkey,
     rootUrl,
     parentEventId,
+    parentCoordinate,
     parentKind,
     parentPubkey
   } = await extractCommentMentions(content, parentEvent)
@@ -207,7 +209,9 @@ export async function createCommentDraftEvent(
 
   tags.push(...mentions.filter((pubkey) => pubkey !== parentPubkey).map((pubkey) => ['p', pubkey]))
 
-  if (rootEventId) {
+  if (rootCoordinateTag) {
+    tags.push(rootCoordinateTag)
+  } else if (rootEventId) {
     tags.push(
       rootPubkey
         ? ['E', rootEventId, client.getEventHint(rootEventId), rootPubkey]
@@ -225,7 +229,9 @@ export async function createCommentDraftEvent(
   }
   tags.push(
     ...[
-      ['e', parentEventId, client.getEventHint(parentEventId), parentPubkey],
+      parentCoordinate
+        ? ['a', parentCoordinate, client.getEventHint(parentEventId)]
+        : ['e', parentEventId, client.getEventHint(parentEventId), parentPubkey],
       ['k', parentKind.toString()],
       ['p', parentPubkey]
     ]

@@ -1,5 +1,6 @@
 import { Skeleton } from '@/components/ui/skeleton'
 import { useFetchEvent } from '@/hooks'
+import { isSupportedKind } from '@/lib/event'
 import { cn } from '@/lib/utils'
 import { useMuteList } from '@/providers/MuteListProvider'
 import { useMemo } from 'react'
@@ -68,6 +69,8 @@ export default function ParentNotePreview({
       {event && <UserAvatar className="shrink-0" userId={event.pubkey} size="tiny" />}
       {isMuted ? (
         <div className="truncate">[{t('This user has been muted')}]</div>
+      ) : !isSupportedKind(event.kind) ? (
+        <div className="truncate">[{t('Cannot handle event of kind k', { k: event.kind })}]</div>
       ) : (
         <ContentPreview className="truncate" event={event} />
       )}

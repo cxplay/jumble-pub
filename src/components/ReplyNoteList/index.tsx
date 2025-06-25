@@ -1,8 +1,11 @@
 import { BIG_RELAY_URLS, ExtendedKind } from '@/constants'
 import {
+  getEventCoordinate,
   getParentEventTag,
+  getRootAddressableEventTag,
   getRootEventHexId,
   getRootEventTag,
+  isReplaceable,
   isReplyNoteEvent
 } from '@/lib/event'
 import { generateEventIdFromETag, tagNameEquals } from '@/lib/tag'
@@ -16,7 +19,10 @@ import { useTranslation } from 'react-i18next'
 import { LoadingBar } from '../LoadingBar'
 import ReplyNote, { ReplyNoteSkeleton } from '../ReplyNote'
 
-type TRootInfo = { type: 'event'; id: string; pubkey: string } | { type: 'I'; id: string }
+type TRootInfo =
+  | { type: 'E'; id: string; pubkey: string }
+  | { type: 'A'; id: string; eventId: string; pubkey: string; relay?: string }
+  | { type: 'I'; id: string }
 
 const LIMIT = 100
 const SHOW_COUNT = 10
@@ -30,7 +36,8 @@ export default function ReplyNoteList({ index, event }: { index?: number; event:
   const replies = useMemo(() => {
     const replyIdSet = new Set<string>()
     const replyEvents: NEvent[] = []
-    let parentEventIds = [event.id]
+    const currentEventId = isReplaceable(event.kind) ? getEventCoordinate(event) : event.id
+    let parentEventIds = [currentEventId]
     while (parentEventIds.length > 0) {
       const events = parentEventIds.flatMap((id) => repliesMap.get(id)?.events || [])
       events.forEach((evt) => {
@@ -52,22 +59,36 @@ export default function ReplyNoteList({ index, event }: { index?: number; event:
 
   useEffect(() => {
     const fetchRootEvent = async () => {
-      let root: TRootInfo = { type: 'event', id: event.id, pubkey: event.pubkey }
+      let root: TRootInfo = isReplaceable(event.kind)
+        ? {
+            type: 'A',
+            id: getEventCoordinate(event),
+            eventId: event.id,
+            pubkey: event.pubkey,
+            relay: client.getEventHint(event.id)
+          }
+        : { type: 'E', id: event.id, pubkey: event.pubkey }
       const rootEventTag = getRootEventTag(event)
       if (rootEventTag) {
         const [, rootEventHexId, , , rootEventPubkey] = rootEventTag
         if (rootEventHexId && rootEventPubkey) {
-          root = { type: 'event', id: rootEventHexId, pubkey: rootEventPubkey }
+          root = { type: 'E', id: rootEventHexId, pubkey: rootEventPubkey }
         } else {
           const rootEventId = generateEventIdFromETag(rootEventTag)
           if (rootEventId) {
             const rootEvent = await client.fetchEvent(rootEventId)
             if (rootEvent) {
-              root = { type: 'event', id: rootEvent.id, pubkey: rootEvent.pubkey }
+              root = { type: 'E', id: rootEvent.id, pubkey: rootEvent.pubkey }
             }
           }
         }
       } else if (event.kind === ExtendedKind.COMMENT) {
+        const rootATag = getRootAddressableEventTag(event)
+        if (rootATag) {
+          const [, coordinate, relay] = rootATag
+          const [, pubkey] = coordinate.split(':')
+          root = { type: 'A', id: coordinate, eventId: event.id, pubkey, relay }
+        }
         const rootITag = event.tags.find(tagNameEquals('I'))
         if (rootITag) {
           root = { type: 'I', id: rootITag[1] }
@@ -110,13 +131,18 @@ export default function ReplyNoteList({ index, event }: { index?: number; event:
           (rootInfo as { pubkey?: string }).pubkey ?? event.pubkey
         )
         const relayUrls = relayList.read.concat(BIG_RELAY_URLS)
-        const seenOn = client.getSeenEventRelayUrls(rootInfo.id)
+        const seenOn =
+          rootInfo.type === 'E'
+            ? client.getSeenEventRelayUrls(rootInfo.id)
+            : rootInfo.type === 'A'
+              ? client.getCurrentRelayUrls()
+              : []
         relayUrls.unshift(...seenOn)
 
         const filters: (Omit<Filter, 'since' | 'until'> & {
           limit: number
         })[] = []
-        if (rootInfo.type === 'event') {
+        if (rootInfo.type === 'E') {
           filters.push({
             '#e': [rootInfo.id],
             kinds: [kinds.ShortTextNote],
@@ -128,6 +154,15 @@ export default function ReplyNoteList({ index, event }: { index?: number; event:
               kinds: [ExtendedKind.COMMENT],
               limit: LIMIT
             })
+          }
+        } else if (rootInfo.type === 'A') {
+          filters.push({
+            '#A': [rootInfo.id],
+            kinds: [ExtendedKind.COMMENT],
+            limit: LIMIT
+          })
+          if (rootInfo.relay) {
+            relayUrls.push(rootInfo.relay)
           }
         } else {
           filters.push({

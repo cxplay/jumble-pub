@@ -7,6 +7,7 @@ import { getAmountFromInvoice, getLightningAddressFromProfile } from './lightnin
 import { formatPubkey, pubkeyToNpub } from './pubkey'
 import {
   extractImageInfoFromTag,
+  generateEventIdFromATag,
   generateEventIdFromETag,
   isReplyETag,
   isRootETag,
@@ -27,7 +28,7 @@ export function isNsfwEvent(event: Event) {
 
 export function isReplyNoteEvent(event: Event) {
   if (event.kind === ExtendedKind.COMMENT) {
-    return !!getParentEventTag(event)
+    return !!getParentEventTag(event) || !!getParentAddressableEventTag(event)
   }
   if (event.kind !== kinds.ShortTextNote) return false
 
@@ -88,16 +89,27 @@ export function getParentEventTag(event?: Event) {
   return tag
 }
 
+export function getParentAddressableEventTag(event?: Event) {
+  if (!event || event.kind !== ExtendedKind.COMMENT) return undefined
+
+  return event.tags.find(tagNameEquals('a')) ?? event.tags.find(tagNameEquals('A'))
+}
+
 export function getParentEventHexId(event?: Event) {
   const tag = getParentEventTag(event)
   return tag?.[1]
 }
 
 export function getParentEventId(event?: Event) {
-  const tag = getParentEventTag(event)
-  if (!tag) return undefined
+  const eTag = getParentEventTag(event)
+  if (!eTag) {
+    const aTag = getParentAddressableEventTag(event)
+    if (!aTag) return undefined
 
-  return generateEventIdFromETag(tag)
+    return generateEventIdFromATag(aTag)
+  }
+
+  return generateEventIdFromETag(eTag)
 }
 
 export function getRootEventTag(event?: Event) {
@@ -117,6 +129,12 @@ export function getRootEventTag(event?: Event) {
   return tag
 }
 
+export function getRootAddressableEventTag(event?: Event) {
+  if (!event || event.kind !== ExtendedKind.COMMENT) return undefined
+
+  return event.tags.find(tagNameEquals('A'))
+}
+
 export function getRootEventHexId(event?: Event) {
   const tag = getRootEventTag(event)
   return tag?.[1]
@@ -124,7 +142,12 @@ export function getRootEventHexId(event?: Event) {
 
 export function getRootEventId(event?: Event) {
   const tag = getRootEventTag(event)
-  if (!tag) return undefined
+  if (!tag) {
+    const aTag = getRootAddressableEventTag(event)
+    if (!aTag) return undefined
+
+    return generateEventIdFromATag(aTag)
+  }
 
   return generateEventIdFromETag(tag)
 }
@@ -356,6 +379,13 @@ export async function extractRelatedEventIds(content: string, parentEvent?: Even
 
 export async function extractCommentMentions(content: string, parentEvent: Event) {
   const quoteEventIds: string[] = []
+  const parentEventIsReplaceable = isReplaceable(parentEvent.kind)
+  const rootCoordinateTag =
+    parentEvent.kind === ExtendedKind.COMMENT
+      ? parentEvent.tags.find(tagNameEquals('A'))
+      : isReplaceable(parentEvent.kind)
+        ? ['A', getEventCoordinate(parentEvent), client.getEventHint(parentEvent.id)]
+        : undefined
   const rootEventId =
     parentEvent.kind === ExtendedKind.COMMENT
       ? parentEvent.tags.find(tagNameEquals('E'))?.[1]
@@ -374,6 +404,7 @@ export async function extractCommentMentions(content: string, parentEvent: Event
       : undefined
 
   const parentEventId = parentEvent.id
+  const parentCoordinate = parentEventIsReplaceable ? getEventCoordinate(parentEvent) : undefined
   const parentKind = parentEvent.kind
   const parentPubkey = parentEvent.pubkey
 
@@ -399,10 +430,12 @@ export async function extractCommentMentions(content: string, parentEvent: Event
   return {
     quoteEventIds,
     rootEventId,
+    rootCoordinateTag,
     rootKind,
     rootPubkey,
     rootUrl,
     parentEventId,
+    parentCoordinate,
     parentKind,
     parentPubkey
   }
