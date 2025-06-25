@@ -151,9 +151,6 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
       }
 
       const storedNotificationsSeenAt = storage.getLastReadNotificationTime(account.pubkey)
-      if (storedNotificationsSeenAt) {
-        setNotificationsSeenAt(storedNotificationsSeenAt)
-      }
 
       const [
         storedRelayListEvent,
@@ -258,13 +255,12 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
         await indexedDb.putReplaceableEvent(favoriteRelaysEvent)
       }
 
-      if (
-        notificationsSeenAtEvent &&
-        notificationsSeenAtEvent.created_at > storedNotificationsSeenAt
-      ) {
-        setNotificationsSeenAt(notificationsSeenAtEvent.created_at)
-        storage.setLastReadNotificationTime(account.pubkey, notificationsSeenAtEvent.created_at)
-      }
+      const notificationsSeenAt = Math.max(
+        notificationsSeenAtEvent?.created_at ?? 0,
+        storedNotificationsSeenAt
+      )
+      setNotificationsSeenAt(notificationsSeenAt)
+      storage.setLastReadNotificationTime(account.pubkey, notificationsSeenAt)
 
       client.initUserIndexFromFollowings(account.pubkey, controller.signal)
       return controller
