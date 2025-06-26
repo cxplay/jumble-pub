@@ -1,20 +1,23 @@
 import { useSecondaryPage } from '@/PageManager'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
+import { getUsingClient } from '@/lib/event'
 import { toNote } from '@/lib/link'
 import { useMuteList } from '@/providers/MuteListProvider'
+import { useScreenSize } from '@/providers/ScreenSizeProvider'
 import { Event } from 'nostr-tools'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Collapsible from '../Collapsible'
 import Content from '../Content'
 import { FormattedTimestamp } from '../FormattedTimestamp'
+import Nip05 from '../Nip05'
 import NoteOptions from '../NoteOptions'
 import NoteStats from '../NoteStats'
 import ParentNotePreview from '../ParentNotePreview'
+import TranslateButton from '../TranslateButton'
 import UserAvatar from '../UserAvatar'
 import Username from '../Username'
-import TranslateButton from '../TranslateButton'
 
 export default function ReplyNote({
   event,
@@ -28,6 +31,7 @@ export default function ReplyNote({
   highlight?: boolean
 }) {
   const { t } = useTranslation()
+  const { isSmallScreen } = useScreenSize()
   const { push } = useSecondaryPage()
   const { mutePubkeys } = useMuteList()
   const [showMuted, setShowMuted] = useState(false)
@@ -35,6 +39,7 @@ export default function ReplyNote({
     () => showMuted || !mutePubkeys.includes(event.pubkey),
     [showMuted, mutePubkeys, event]
   )
+  const usingClient = useMemo(() => getUsingClient(event), [event])
 
   return (
     <div
@@ -43,21 +48,33 @@ export default function ReplyNote({
     >
       <Collapsible>
         <div className="flex space-x-2 items-start px-4 pt-3">
-          <UserAvatar userId={event.pubkey} className="shrink-0 h-8 w-8" />
+          <UserAvatar userId={event.pubkey} size="medium" className="shrink-0 mt-1" />
           <div className="w-full overflow-hidden">
             <div className="flex items-start justify-between gap-2">
-              <div className="flex gap-2 items-center flex-1 w-0">
-                <Username
-                  userId={event.pubkey}
-                  className="text-sm font-semibold text-muted-foreground hover:text-foreground truncate"
-                  skeletonClassName="h-3"
-                />
-                <div className="text-xs text-muted-foreground shrink-0">
-                  <FormattedTimestamp timestamp={event.created_at} />
+              <div className="flex-1 w-0">
+                <div className="flex gap-1 items-baseline">
+                  <Username
+                    userId={event.pubkey}
+                    className="text-sm font-semibold text-muted-foreground hover:text-foreground truncate"
+                    skeletonClassName="h-3"
+                  />
+                  {usingClient && (
+                    <span className="text-sm text-muted-foreground shrink-0">
+                      using {usingClient}
+                    </span>
+                  )}
+                </div>
+                <div className="flex items-baseline gap-1 text-sm text-muted-foreground">
+                  <Nip05 pubkey={event.pubkey} append="·" />
+                  <FormattedTimestamp
+                    timestamp={event.created_at}
+                    className="shrink-0"
+                    short={isSmallScreen}
+                  />
                 </div>
               </div>
               <div className="flex items-center shrink-0">
-                <TranslateButton event={event} />
+                <TranslateButton event={event} className="py-0" />
                 <NoteOptions event={event} className="shrink-0 [&_svg]:size-5" />
               </div>
             </div>
