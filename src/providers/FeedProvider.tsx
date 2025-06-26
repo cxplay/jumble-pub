@@ -134,7 +134,7 @@ export function FeedProvider({ children }: { children: React.ReactNode }) {
     }
     if (feedType === 'relays') {
       const relaySetId = options.activeRelaySetId ?? (relaySets.length > 0 ? relaySets[0].id : null)
-      if (!relaySetId || !pubkey) {
+      if (!relaySetId) {
         setIsReady(true)
         return
       }
