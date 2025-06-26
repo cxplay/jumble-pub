@@ -24,20 +24,27 @@ export default function Nip05({ pubkey, append }: { pubkey: string; append?: str
   if (!profile?.nip05 || !nip05Name || !nip05Domain) return null
 
   return (
-    <div className="flex items-center gap-1 truncate" onClick={(e) => e.stopPropagation()}>
+    <div
+      className="flex items-center gap-1 truncate [&_svg]:size-3.5 [&_svg]:shrink-0"
+      onClick={(e) => e.stopPropagation()}
+    >
       {nip05Name !== '_' ? (
         <span className="text-sm text-muted-foreground truncate">@{nip05Name}</span>
       ) : null}
+      {nip05IsVerified ? (
+        <Favicon
+          domain={nip05Domain}
+          className="w-3.5 h-3.5"
+          fallback={<BadgeCheck className="text-primary" />}
+        />
+      ) : (
+        <BadgeAlert className="text-muted-foreground" />
+      )}
       <SecondaryPageLink
         to={toNoteList({ domain: nip05Domain })}
-        className={`flex items-center gap-1 hover:underline truncate [&_svg]:size-3.5 [&_svg]:shrink-0 ${nip05IsVerified ? 'text-primary' : 'text-muted-foreground'}`}
+        className={`hover:underline truncate ${nip05IsVerified ? 'text-primary' : 'text-muted-foreground'}`}
       >
-        {nip05IsVerified ? (
-          <Favicon domain={nip05Domain} className="w-3.5 h-3.5" fallback={<BadgeCheck />} />
-        ) : (
-          <BadgeAlert />
-        )}
-        <span className="text-sm truncate">{nip05Domain}</span>
+        {nip05Domain}
       </SecondaryPageLink>
       {append && <span className="text-sm text-muted-foreground truncate">{append}</span>}
     </div>

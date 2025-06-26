@@ -62,7 +62,7 @@ export default function Note({
                 <span className="text-sm text-muted-foreground shrink-0">using {usingClient}</span>
               )}
             </div>
-            <div className="flex items-baseline gap-1 text-sm text-muted-foreground">
+            <div className="flex items-center gap-1 text-sm text-muted-foreground">
               <Nip05 pubkey={event.pubkey} append="·" />
               <FormattedTimestamp
                 timestamp={event.created_at}

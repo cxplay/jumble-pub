@@ -52,7 +52,7 @@ export default function ReplyNote({
           <div className="w-full overflow-hidden">
             <div className="flex items-start justify-between gap-2">
               <div className="flex-1 w-0">
-                <div className="flex gap-1 items-baseline">
+                <div className="flex gap-1 items-center">
                   <Username
                     userId={event.pubkey}
                     className="text-sm font-semibold text-muted-foreground hover:text-foreground truncate"
@@ -64,7 +64,7 @@ export default function ReplyNote({
                     </span>
                   )}
                 </div>
-                <div className="flex items-baseline gap-1 text-sm text-muted-foreground">
+                <div className="flex items-center gap-1 text-sm text-muted-foreground">
                   <Nip05 pubkey={event.pubkey} append="·" />
                   <FormattedTimestamp
                     timestamp={event.created_at}
