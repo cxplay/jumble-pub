@@ -32,10 +32,13 @@ export default function Nip05({ pubkey, append }: { pubkey: string; append?: str
         to={toNoteList({ domain: nip05Domain })}
         className={`flex items-center gap-1 hover:underline truncate [&_svg]:size-3.5 [&_svg]:shrink-0 ${nip05IsVerified ? 'text-primary' : 'text-muted-foreground'}`}
       >
-        {nip05IsVerified ? <BadgeCheck /> : <BadgeAlert />}
+        {nip05IsVerified ? (
+          <Favicon domain={nip05Domain} className="w-3.5 h-3.5" fallback={<BadgeCheck />} />
+        ) : (
+          <BadgeAlert />
+        )}
         <span className="text-sm truncate">{nip05Domain}</span>
       </SecondaryPageLink>
-      <Favicon domain={nip05Domain} className="w-3.5 h-3.5" />
       {append && <span className="text-sm text-muted-foreground truncate">{append}</span>}
     </div>
   )

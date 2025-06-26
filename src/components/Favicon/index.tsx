@@ -1,15 +1,29 @@
+import { cn } from '@/lib/utils'
 import { useState } from 'react'
 
-export function Favicon({ domain, className }: { domain: string; className?: string }) {
+export function Favicon({
+  domain,
+  className,
+  fallback = null
+}: {
+  domain: string
+  className?: string
+  fallback?: React.ReactNode
+}) {
+  const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
-  if (error) return null
+  if (error) return fallback
 
   return (
-    <img
-      src={`https://${domain}/favicon.ico`}
-      alt={domain}
-      className={className}
-      onError={() => setError(true)}
-    />
+    <div className={cn('relative', className)}>
+      {loading && <div className={cn('absolute inset-0', className)}>{fallback}</div>}
+      <img
+        src={`https://${domain}/favicon.ico`}
+        alt={domain}
+        className={cn('absolute inset-0', className)}
+        onError={() => setError(true)}
+        onLoad={() => setLoading(false)}
+      />
+    </div>
   )
 }
