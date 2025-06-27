@@ -3,13 +3,14 @@ import {
   extractImageInfosFromEventTags,
   getParentEventId,
   getUsingClient,
+  isNsfwEvent,
   isPictureEvent,
   isSupportedKind
 } from '@/lib/event'
 import { toNote } from '@/lib/link'
 import { useScreenSize } from '@/providers/ScreenSizeProvider'
 import { Event, kinds } from 'nostr-tools'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import Content from '../Content'
 import { FormattedTimestamp } from '../FormattedTimestamp'
 import ImageGallery from '../ImageGallery'
@@ -21,6 +22,7 @@ import UserAvatar from '../UserAvatar'
 import Username from '../Username'
 import Highlight from './Highlight'
 import IValue from './IValue'
+import NsfwNote from './NsfwNote'
 import { UnknownNote } from './UnknownNote'
 
 export default function Note({
@@ -45,6 +47,18 @@ export default function Note({
     [event]
   )
   const usingClient = useMemo(() => getUsingClient(event), [event])
+  const [showNsfw, setShowNsfw] = useState(false)
+
+  let content: React.ReactNode
+  if (!isSupportedKind(event.kind)) {
+    content = <UnknownNote className="mt-2" event={event} />
+  } else if (isNsfwEvent(event) && !showNsfw) {
+    content = <NsfwNote show={() => setShowNsfw(true)} />
+  } else if (event.kind === kinds.Highlights) {
+    content = <Highlight className="mt-2" event={event} />
+  } else {
+    content = <Content className="mt-2" event={event} />
+  }
 
   return (
     <div className={className}>
@@ -90,13 +104,7 @@ export default function Note({
         />
       )}
       <IValue event={event} className="mt-2" />
-      {event.kind === kinds.Highlights ? (
-        <Highlight className="mt-2" event={event} />
-      ) : isSupportedKind(event.kind) ? (
-        <Content className="mt-2" event={event} />
-      ) : (
-        <UnknownNote className="mt-2" event={event} />
-      )}
+      {content}
       {imageInfos.length > 0 && <ImageGallery images={imageInfos} />}
     </div>
   )

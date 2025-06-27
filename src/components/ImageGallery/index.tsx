@@ -7,18 +7,15 @@ import { createPortal } from 'react-dom'
 import Lightbox from 'yet-another-react-lightbox'
 import Zoom from 'yet-another-react-lightbox/plugins/zoom'
 import Image from '../Image'
-import NsfwOverlay from '../NsfwOverlay'
 
 export default function ImageGallery({
   className,
   images,
-  isNsfw = false,
   start = 0,
   end = images.length
 }: {
   className?: string
   images: TImageInfo[]
-  isNsfw?: boolean
   start?: number
   end?: number
 }) {
@@ -83,13 +80,7 @@ export default function ImageGallery({
   }
 
   return (
-    <div
-      className={cn(
-        'relative',
-        displayImages.length === 1 ? 'w-fit max-w-full' : 'w-full',
-        className
-      )}
-    >
+    <div className={cn(displayImages.length === 1 ? 'w-fit max-w-full' : 'w-full', className)}>
       {imageContent}
       {index >= 0 &&
         createPortal(
@@ -112,7 +103,6 @@ export default function ImageGallery({
           </div>,
           document.body
         )}
-      {isNsfw && <NsfwOverlay className="rounded-lg" />}
     </div>
   )
 }

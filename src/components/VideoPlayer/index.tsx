@@ -2,17 +2,8 @@ import { cn, isInViewport } from '@/lib/utils'
 import { useAutoplay } from '@/providers/AutoplayProvider'
 import videoManager from '@/services/video-manager.service'
 import { useEffect, useRef } from 'react'
-import NsfwOverlay from '../NsfwOverlay'
 
-export default function VideoPlayer({
-  src,
-  className,
-  isNsfw = false
-}: {
-  src: string
-  className?: string
-  isNsfw?: boolean
-}) {
+export default function VideoPlayer({ src, className }: { src: string; className?: string }) {
   const { autoplay } = useAutoplay()
   const videoRef = useRef<HTMLVideoElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -48,7 +39,7 @@ export default function VideoPlayer({
   }, [autoplay])
 
   return (
-    <div ref={containerRef} className="relative">
+    <div ref={containerRef}>
       <video
         ref={videoRef}
         controls
@@ -61,7 +52,6 @@ export default function VideoPlayer({
         }}
         muted
       />
-      {isNsfw && <NsfwOverlay className="rounded-lg" />}
     </div>
   )
 }

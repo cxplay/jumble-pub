@@ -11,7 +11,7 @@ import {
   EmbeddedWebsocketUrlParser,
   parseContent
 } from '@/lib/content-parser'
-import { extractEmojiInfosFromTags, isNsfwEvent } from '@/lib/event'
+import { extractEmojiInfosFromTags } from '@/lib/event'
 import { extractImageInfoFromTag } from '@/lib/tag'
 import { cn } from '@/lib/utils'
 import mediaUpload from '@/services/media-upload.service'
@@ -88,20 +88,11 @@ const Content = memo(({ event, className }: { event: Event; className?: string }
           const end = imageIndex + (Array.isArray(node.data) ? node.data.length : 1)
           imageIndex = end
           return (
-            <ImageGallery
-              className="mt-2"
-              key={index}
-              images={allImages}
-              isNsfw={isNsfwEvent(event)}
-              start={start}
-              end={end}
-            />
+            <ImageGallery className="mt-2" key={index} images={allImages} start={start} end={end} />
           )
         }
         if (node.type === 'video') {
-          return (
-            <VideoPlayer className="mt-2" key={index} src={node.data} isNsfw={isNsfwEvent(event)} />
-          )
+          return <VideoPlayer className="mt-2" key={index} src={node.data} />
         }
         if (node.type === 'url') {
           return <EmbeddedNormalUrl url={node.data} key={index} />

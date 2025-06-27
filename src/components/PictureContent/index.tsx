@@ -1,13 +1,13 @@
 import {
   EmbeddedEmojiParser,
-  EmbeddedLNInvoiceParser,
   EmbeddedHashtagParser,
+  EmbeddedLNInvoiceParser,
   EmbeddedMentionParser,
   EmbeddedNormalUrlParser,
   EmbeddedWebsocketUrlParser,
   parseContent
 } from '@/lib/content-parser'
-import { extractEmojiInfosFromTags, extractImageInfosFromEventTags, isNsfwEvent } from '@/lib/event'
+import { extractEmojiInfosFromTags, extractImageInfosFromEventTags } from '@/lib/event'
 import { cn } from '@/lib/utils'
 import { Event } from 'nostr-tools'
 import { memo, useMemo } from 'react'
@@ -18,12 +18,11 @@ import {
   EmbeddedNormalUrl,
   EmbeddedWebsocketUrl
 } from '../Embedded'
-import { ImageCarousel } from '../ImageCarousel'
 import Emoji from '../Emoji'
+import { ImageCarousel } from '../ImageCarousel'
 
 const PictureContent = memo(({ event, className }: { event: Event; className?: string }) => {
   const images = useMemo(() => extractImageInfosFromEventTags(event), [event])
-  const isNsfw = isNsfwEvent(event)
 
   const nodes = parseContent(event.content, [
     EmbeddedNormalUrlParser,
@@ -38,7 +37,7 @@ const PictureContent = memo(({ event, className }: { event: Event; className?: s
 
   return (
     <div className={cn('text-wrap break-words whitespace-pre-wrap space-y-2', className)}>
-      <ImageCarousel images={images} isNsfw={isNsfw} />
+      <ImageCarousel images={images} />
       <div className="px-4">
         {nodes.map((node, index) => {
           if (node.type === 'text') {

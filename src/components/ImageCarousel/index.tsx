@@ -6,15 +6,8 @@ import { useEffect, useState } from 'react'
 import Lightbox from 'yet-another-react-lightbox'
 import Zoom from 'yet-another-react-lightbox/plugins/zoom'
 import Image from '../Image'
-import NsfwOverlay from '../NsfwOverlay'
 
-export function ImageCarousel({
-  images,
-  isNsfw = false
-}: {
-  images: TImageInfo[]
-  isNsfw?: boolean
-}) {
+export function ImageCarousel({ images }: { images: TImageInfo[] }) {
   const [api, setApi] = useState<CarouselApi>()
   const [currentIndex, setCurrentIndex] = useState(0)
   const [lightboxIndex, setLightboxIndex] = useState(-1)
@@ -42,7 +35,7 @@ export function ImageCarousel({
   }
 
   return (
-    <div className="relative space-y-2">
+    <div className="space-y-2">
       <Carousel className="w-full" setApi={setApi}>
         <CarouselContent className="xl:px-4">
           {images.map((image, index) => (
@@ -78,7 +71,6 @@ export function ImageCarousel({
         }}
         styles={{ toolbar: { paddingTop: '2.25rem' } }}
       />
-      {isNsfw && <NsfwOverlay className="rounded-lg" />}
     </div>
   )
 }
