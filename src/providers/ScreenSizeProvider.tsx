@@ -16,7 +16,7 @@ export const useScreenSize = () => {
 }
 
 export function ScreenSizeProvider({ children }: { children: React.ReactNode }) {
-  const isSmallScreen = useMemo(() => window.innerWidth < 640, [])
+  const isSmallScreen = useMemo(() => window.innerWidth <= 768, [])
   const isLargeScreen = useMemo(() => window.innerWidth >= 1280, [])
 
   return (
