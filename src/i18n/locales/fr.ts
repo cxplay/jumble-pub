@@ -280,6 +280,9 @@ export default {
       'Les utilisateurs de confiance incluent les personnes que vous suivez et les personnes qu’elles suivent.',
     Continue: 'Continuer',
     'Successfully updated mute list': 'Liste de sourdine mise à jour avec succès',
-    'No pubkeys found from {url}': 'Aucun pubkey trouvé à partir de {{url}}'
+    'No pubkeys found from {url}': 'Aucun pubkey trouvé à partir de {{url}}',
+    'Translating...': 'Traduction en cours...',
+    Translate: 'Traduire',
+    'Show original': 'Afficher l’original'
   }
 }

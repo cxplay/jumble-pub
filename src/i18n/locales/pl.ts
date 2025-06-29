@@ -278,6 +278,9 @@ export default {
       'Zaufani użytkownicy to osoby, które obserwujesz i osoby, które oni obserwują.',
     Continue: 'Kontynuuj',
     'Successfully updated mute list': 'Sukces aktualizacji listy zablokowanych użytkowników',
-    'No pubkeys found from {url}': 'Nie znaleziono kluczy publicznych z {{url}}'
+    'No pubkeys found from {url}': 'Nie znaleziono kluczy publicznych z {{url}}',
+    'Translating...': 'Tłumaczenie...',
+    Translate: 'Przetłumacz',
+    'Show original': 'Pokaż oryginał'
   }
 }

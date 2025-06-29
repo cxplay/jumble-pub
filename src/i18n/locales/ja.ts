@@ -277,6 +277,9 @@ export default {
       '信頼できるユーザーには、あなたがフォローしている人とその人がフォローしている人が含まれます。',
     Continue: '続行',
     'Successfully updated mute list': 'ミュートリストの更新に成功しました',
-    'No pubkeys found from {url}': 'URL {{url}} からのpubkeyは見つかりませんでした'
+    'No pubkeys found from {url}': 'URL {{url}} からのpubkeyは見つかりませんでした',
+    'Translating...': '翻訳中...',
+    Translate: '翻訳',
+    'Show original': '原文を表示'
   }
 }

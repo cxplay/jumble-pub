@@ -1,19 +1,9 @@
-import {
-  EMAIL_REGEX,
-  EMBEDDED_EVENT_REGEX,
-  EMBEDDED_MENTION_REGEX,
-  EMOJI_REGEX,
-  HASHTAG_REGEX,
-  URL_REGEX,
-  WS_URL_REGEX
-} from '@/constants'
 import { useTranslatedEvent } from '@/hooks'
 import { isSupportedKind } from '@/lib/event'
 import { toTranslation } from '@/lib/link'
-import { cn } from '@/lib/utils'
+import { cn, detectLanguage } from '@/lib/utils'
 import { useSecondaryPage } from '@/PageManager'
 import { useTranslationService } from '@/providers/TranslationServiceProvider'
-import { franc } from 'franc-min'
 import { Languages, Loader } from 'lucide-react'
 import { Event } from 'nostr-tools'
 import { useMemo, useState } from 'react'
@@ -29,68 +19,16 @@ export default function TranslateButton({
 }) {
   const { i18n } = useTranslation()
   const { push } = useSecondaryPage()
-  const { translate, showOriginalEvent } = useTranslationService()
+  const { translateEvent, showOriginalEvent } = useTranslationService()
   const [translating, setTranslating] = useState(false)
   const translatedEvent = useTranslatedEvent(event.id)
   const supported = useMemo(() => isSupportedKind(event.kind), [event])
 
   const needTranslation = useMemo(() => {
-    const cleanText = event.content
-      .replace(URL_REGEX, '')
-      .replace(WS_URL_REGEX, '')
-      .replace(EMAIL_REGEX, '')
-      .replace(EMBEDDED_MENTION_REGEX, '')
-      .replace(EMBEDDED_EVENT_REGEX, '')
-      .replace(HASHTAG_REGEX, '')
-      .replace(EMOJI_REGEX, '')
-      .trim()
-
-    if (!cleanText) {
-      return false
-    }
-
-    if (/[\u3040-\u309f\u30a0-\u30ff]/.test(cleanText)) {
-      return i18n.language !== 'ja'
-    }
-    if (/[\u0e00-\u0e7f]/.test(cleanText)) {
-      return i18n.language !== 'th'
-    }
-    if (/[\u4e00-\u9fff]/.test(cleanText)) {
-      return i18n.language !== 'zh'
-    }
-    if (/[\u0600-\u06ff]/.test(cleanText)) {
-      return i18n.language !== 'ar'
-    }
-    if (/[\u0400-\u04ff]/.test(cleanText)) {
-      return i18n.language !== 'ru'
-    }
-
-    try {
-      const detectedLang = franc(cleanText)
-      const langMap: { [key: string]: string } = {
-        ara: 'ar', // Arabic
-        deu: 'de', // German
-        eng: 'en', // English
-        spa: 'es', // Spanish
-        fra: 'fr', // French
-        ita: 'it', // Italian
-        jpn: 'ja', // Japanese
-        pol: 'pl', // Polish
-        por: 'pt', // Portuguese
-        rus: 'ru', // Russian
-        cmn: 'zh', // Chinese (Mandarin)
-        zho: 'zh' // Chinese (alternative code)
-      }
-
-      const normalizedLang = langMap[detectedLang]
-      if (!normalizedLang) {
-        return true
-      }
-
-      return !i18n.language.startsWith(normalizedLang)
-    } catch {
-      return true
-    }
+    const detected = detectLanguage(event.content)
+    if (!detected) return false
+    if (detected === 'und') return true
+    return !i18n.language.startsWith(detected)
   }, [event, i18n.language])
 
   if (!supported || !needTranslation) {
@@ -101,7 +39,7 @@ export default function TranslateButton({
     if (translating) return
 
     setTranslating(true)
-    await translate(event)
+    await translateEvent(event)
       .catch((error) => {
         toast.error(
           'Translation failed: ' + (error.message || 'An error occurred while translating the note')

@@ -1,4 +1,14 @@
+import {
+  EMAIL_REGEX,
+  EMBEDDED_EVENT_REGEX,
+  EMBEDDED_MENTION_REGEX,
+  EMOJI_REGEX,
+  HASHTAG_REGEX,
+  URL_REGEX,
+  WS_URL_REGEX
+} from '@/constants'
 import { clsx, type ClassValue } from 'clsx'
+import { franc } from 'franc-min'
 import { twMerge } from 'tailwind-merge'
 
 export function cn(...inputs: ClassValue[]) {
@@ -37,4 +47,66 @@ export function isInViewport(el: HTMLElement) {
     rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
     rect.right <= (window.innerWidth || document.documentElement.clientWidth)
   )
+}
+
+export function detectLanguage(text?: string): string | null {
+  if (!text) {
+    return null
+  }
+  const cleanText = text
+    .replace(URL_REGEX, '')
+    .replace(WS_URL_REGEX, '')
+    .replace(EMAIL_REGEX, '')
+    .replace(EMBEDDED_MENTION_REGEX, '')
+    .replace(EMBEDDED_EVENT_REGEX, '')
+    .replace(HASHTAG_REGEX, '')
+    .replace(EMOJI_REGEX, '')
+    .trim()
+
+  if (!cleanText) {
+    return null
+  }
+
+  if (/[\u3040-\u309f\u30a0-\u30ff]/.test(cleanText)) {
+    return 'ja'
+  }
+  if (/[\u0e00-\u0e7f]/.test(cleanText)) {
+    return 'th'
+  }
+  if (/[\u4e00-\u9fff]/.test(cleanText)) {
+    return 'zh'
+  }
+  if (/[\u0600-\u06ff]/.test(cleanText)) {
+    return 'ar'
+  }
+  if (/[\u0400-\u04ff]/.test(cleanText)) {
+    return 'ru'
+  }
+
+  try {
+    const detectedLang = franc(cleanText)
+    const langMap: { [key: string]: string } = {
+      ara: 'ar', // Arabic
+      deu: 'de', // German
+      eng: 'en', // English
+      spa: 'es', // Spanish
+      fra: 'fr', // French
+      ita: 'it', // Italian
+      jpn: 'ja', // Japanese
+      pol: 'pl', // Polish
+      por: 'pt', // Portuguese
+      rus: 'ru', // Russian
+      cmn: 'zh', // Chinese (Mandarin)
+      zho: 'zh' // Chinese (alternative code)
+    }
+
+    const normalizedLang = langMap[detectedLang]
+    if (!normalizedLang) {
+      return 'und'
+    }
+
+    return normalizedLang
+  } catch {
+    return 'und'
+  }
 }

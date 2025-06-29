@@ -274,6 +274,9 @@ export default {
       'ผู้ใช้ที่เชื่อถือได้รวมถึงผู้ที่คุณติดตามและผู้ที่พวกเขาติดตาม',
     Continue: 'ดำเนินการต่อ',
     'Successfully updated mute list': 'อัปเดตรายการปิดเสียงสำเร็จ',
-    'No pubkeys found from {url}': 'ไม่พบ pubkeys จาก {{url}}'
+    'No pubkeys found from {url}': 'ไม่พบ pubkeys จาก {{url}}',
+    'Translating...': 'กำลังแปล...',
+    Translate: 'แปล',
+    'Show original': 'แสดงต้นฉบับ'
   }
 }

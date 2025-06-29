@@ -275,6 +275,9 @@ export default {
       'المستخدمون الموثوقون هم الأشخاص الذين تتابعهم والأشخاص الذين يتابعونهم.',
     Continue: 'متابعة',
     'Successfully updated mute list': 'تم تحديث قائمة الكتم بنجاح',
-    'No pubkeys found from {url}': 'لم يتم العثور على مفاتيح عامة من {{url}}'
+    'No pubkeys found from {url}': 'لم يتم العثور على مفاتيح عامة من {{url}}',
+    'Translating...': 'جارٍ الترجمة...',
+    Translate: 'ترجمة',
+    'Show original': 'عرض الأصل'
   }
 }

@@ -278,6 +278,9 @@ export default {
       'Usuários confiáveis incluem pessoas que você segue e pessoas que elas seguem.',
     Continue: 'Continuar',
     'Successfully updated mute list': 'Lista de silenciados atualizada com sucesso',
-    'No pubkeys found from {url}': 'Nenhum pubkey encontrado em {{url}}'
+    'No pubkeys found from {url}': 'Nenhum pubkey encontrado em {{url}}',
+    'Translating...': 'Traduzindo...',
+    Translate: 'Traduzir',
+    'Show original': 'Mostrar original'
   }
 }

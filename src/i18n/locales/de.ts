@@ -282,6 +282,9 @@ export default {
       'Vertrauenswürdige Benutzer sind Personen, denen du folgst, und Personen, denen sie folgen.',
     Continue: 'Weiter',
     'Successfully updated mute list': 'Stummschalteliste erfolgreich aktualisiert',
-    'No pubkeys found from {url}': 'Keine Pubkeys von {{url}} gefunden'
+    'No pubkeys found from {url}': 'Keine Pubkeys von {{url}} gefunden',
+    'Translating...': 'Übersetze...',
+    Translate: 'Übersetzen',
+    'Show original': 'Original anzeigen'
   }
 }

@@ -60,14 +60,21 @@ class TranslationService {
     }
   }
 
-  async translate(text: string, target: string): Promise<string | undefined> {
+  async translate(text: string, target: string): Promise<string> {
+    if (!text) {
+      return text
+    }
     try {
       const data = await this._fetch({
         path: '/v1/translation/translate',
         method: 'POST',
         body: JSON.stringify({ q: text, target })
       })
-      return data.translatedText
+      const translatedText = data.translatedText
+      if (!translatedText) {
+        throw new Error('Translation failed')
+      }
+      return translatedText
     } catch (error) {
       const errMsg = error instanceof Error ? error.message : ''
       throw new Error(errMsg || 'Failed to translate')

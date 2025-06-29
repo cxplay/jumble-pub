@@ -7,12 +7,14 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNostr } from './NostrProvider'
 
-const translatedEventCache: Record<string, Event> = {}
+const translatedEventCache: Map<string, Event> = new Map()
+const translatedTextCache: Map<string, string> = new Map()
 
 type TTranslationServiceContext = {
   config: TTranslationServiceConfig
   translatedEventIdSet: Set<string>
-  translate: (event: Event) => Promise<Event | void>
+  translateText: (text: string) => Promise<string>
+  translateEvent: (event: Event) => Promise<Event | void>
   getTranslatedEvent: (eventId: string) => Event | null
   showOriginalEvent: (eventId: string) => void
   getAccount: () => Promise<TTranslationAccount | void>
@@ -62,61 +64,85 @@ export function TranslationServiceProvider({ children }: { children: React.React
 
   const getTranslatedEvent = (eventId: string): Event | null => {
     const target = i18n.language
-    const cacheKey = eventId + '_' + target
-    return translatedEventCache[cacheKey] ?? null
+    const cacheKey = target + '_' + eventId
+    return translatedEventCache.get(cacheKey) ?? null
   }
 
-  const translate = async (event: Event): Promise<Event | void> => {
+  const translate = async (text: string, target: string): Promise<string> => {
+    if (config.service === 'jumble') {
+      return await translation.translate(text, target)
+    } else {
+      return await libreTranslate.translate(text, target, config.server, config.api_key)
+    }
+  }
+
+  const translateText = async (text: string): Promise<string> => {
+    if (!text) {
+      return text
+    }
+
+    const target = i18n.language
+    const cacheKey = target + '_' + text
+    const cache = translatedTextCache.get(cacheKey)
+    if (cache) {
+      return cache
+    }
+
+    const translatedText = await translate(text, target)
+    translatedTextCache.set(cacheKey, translatedText)
+    return translatedText
+  }
+
+  const translateHighlightEvent = async (event: Event): Promise<Event> => {
+    const target = i18n.language
+    const comment = event.tags.find((tag) => tag[0] === 'comment')?.[1]
+    if (!event.content && !comment) {
+      return event
+    }
+    const [translatedContent, translatedComment] = await Promise.all([
+      translate(event.content, target),
+      !!comment && translate(comment, target)
+    ])
+
+    const translatedEvent: Event = {
+      ...event,
+      content: translatedContent
+    }
+    if (translatedComment) {
+      translatedEvent.tags = event.tags.map((tag) =>
+        tag[0] === 'comment' ? ['comment', translatedComment] : tag
+      )
+    }
+    setTranslatedEventIdSet((prev) => new Set(prev.add(event.id)))
+    return translatedEvent
+  }
+
+  const translateEvent = async (event: Event): Promise<Event | void> => {
     if (config.service === 'jumble' && !pubkey) {
       startLogin()
       return
     }
 
     const target = i18n.language
-    const cacheKey = event.id + '_' + target
-    if (translatedEventCache[cacheKey]) {
+    const cacheKey = target + '_' + event.id
+    const cache = translatedEventCache.get(cacheKey)
+    if (cache) {
       setTranslatedEventIdSet((prev) => new Set(prev.add(event.id)))
-      return translatedEventCache[cacheKey]
+      return cache
     }
 
+    let translatedEvent: Event | undefined
     if (event.kind === kinds.Highlights) {
-      const comment = event.tags.find((tag) => tag[0] === 'comment')?.[1]
-      const [translatedContent, translatedComment] = await Promise.all([
-        config.service === 'jumble'
-          ? await translation.translate(event.content, target)
-          : await libreTranslate.translate(event.content, target, config.server, config.api_key),
-        !!comment &&
-          (config.service === 'jumble'
-            ? await translation.translate(comment, target)
-            : await libreTranslate.translate(comment, target, config.server, config.api_key))
-      ])
-
-      if (!translatedContent) {
+      translatedEvent = await translateHighlightEvent(event)
+    } else {
+      const translatedText = await translate(event.content, target)
+      if (!translatedText) {
         return
       }
-      const translatedEvent: Event = {
-        ...event,
-        content: translatedContent
-      }
-      if (translatedComment) {
-        translatedEvent.tags = event.tags.map((tag) =>
-          tag[0] === 'comment' ? ['comment', translatedComment] : tag
-        )
-      }
-      translatedEventCache[cacheKey] = translatedEvent
-      setTranslatedEventIdSet((prev) => new Set(prev.add(event.id)))
-      return translatedEvent
+      translatedEvent = { ...event, content: translatedText }
     }
 
-    const translatedText =
-      config.service === 'jumble'
-        ? await translation.translate(event.content, target)
-        : await libreTranslate.translate(event.content, target, config.server, config.api_key)
-    if (!translatedText) {
-      return
-    }
-    const translatedEvent: Event = { ...event, content: translatedText }
-    translatedEventCache[cacheKey] = translatedEvent
+    translatedEventCache.set(cacheKey, translatedEvent)
     setTranslatedEventIdSet((prev) => new Set(prev.add(event.id)))
     return translatedEvent
   }
@@ -141,7 +167,8 @@ export function TranslationServiceProvider({ children }: { children: React.React
         translatedEventIdSet,
         getAccount,
         regenerateApiKey,
-        translate,
+        translateText,
+        translateEvent,
         getTranslatedEvent,
         showOriginalEvent,
         updateConfig

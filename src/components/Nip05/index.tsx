@@ -42,7 +42,7 @@ export default function Nip05({ pubkey, append }: { pubkey: string; append?: str
       )}
       <SecondaryPageLink
         to={toNoteList({ domain: nip05Domain })}
-        className={`hover:underline truncate ${nip05IsVerified ? 'text-primary' : 'text-muted-foreground'}`}
+        className={`hover:underline truncate text-sm ${nip05IsVerified ? 'text-primary' : 'text-muted-foreground'}`}
       >
         {nip05Domain}
       </SecondaryPageLink>

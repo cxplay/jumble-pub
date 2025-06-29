@@ -13,7 +13,10 @@ class LibreTranslateService {
     target: string,
     server?: string,
     api_key?: string
-  ): Promise<string | undefined> {
+  ): Promise<string> {
+    if (!text) {
+      return text
+    }
     if (!server) {
       throw new Error('LibreTranslate server address is not configured')
     }
@@ -27,7 +30,11 @@ class LibreTranslateService {
     if (!response.ok) {
       throw new Error(data.error ?? 'Failed to translate')
     }
-    return data.translatedText
+    const translatedText = data.translatedText
+    if (!translatedText) {
+      throw new Error('Translation failed')
+    }
+    return translatedText
   }
 }
 

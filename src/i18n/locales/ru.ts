@@ -280,6 +280,9 @@ export default {
       'Доверенные пользователи включают людей, на которых вы подписаны, и людей, на которых они подписаны.',
     Continue: 'Продолжить',
     'Successfully updated mute list': 'Успешно обновлен список заглушенных пользователей',
-    'No pubkeys found from {url}': 'Не найдено pubkeys из {{url}}'
+    'No pubkeys found from {url}': 'Не найдено pubkeys из {{url}}',
+    'Translating...': 'Перевод...',
+    Translate: 'Перевести',
+    'Show original': 'Показать оригинал'
   }
 }

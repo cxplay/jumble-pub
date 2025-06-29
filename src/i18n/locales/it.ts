@@ -279,6 +279,9 @@ export default {
       'Gli utenti fidati includono le persone che segui e le persone che seguono loro.',
     Continue: 'Continua',
     'Successfully updated mute list': 'Lista di silenziamento aggiornata con successo',
-    'No pubkeys found from {url}': 'Nessun pubkey trovato da {{url}}'
+    'No pubkeys found from {url}': 'Nessun pubkey trovato da {{url}}',
+    'Translating...': 'Traduzione in corso...',
+    Translate: 'Traduci',
+    'Show original': 'Mostra originale'
   }
 }
