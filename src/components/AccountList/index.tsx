@@ -37,10 +37,10 @@ export default function AccountList({
           }}
         >
           <div className="flex justify-between items-center p-2">
-            <div className="flex items-center gap-2 relative">
+            <div className="flex-1 flex items-center gap-2 relative">
               <SimpleUserAvatar userId={act.pubkey} />
-              <div>
-                <SimpleUsername userId={act.pubkey} className="font-semibold" />
+              <div className="flex-1 w-0">
+                <SimpleUsername userId={act.pubkey} className="font-semibold truncate" />
                 <div className="text-sm rounded-full bg-muted px-2 w-fit">
                   {formatPubkey(act.pubkey)}
                 </div>

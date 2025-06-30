@@ -45,9 +45,9 @@ const MePage = forwardRef((_, ref) => {
     <PrimaryPageLayout ref={ref} pageName="home" titlebar={<MePageTitlebar />}>
       <div className="flex gap-4 items-center p-4">
         <SimpleUserAvatar userId={pubkey} size="big" />
-        <div className="space-y-1">
+        <div className="space-y-1 flex-1 w-0">
           <SimpleUsername
-            className="text-xl font-semibold truncate"
+            className="text-xl font-semibold text-wrap"
             userId={pubkey}
             skeletonClassName="h-6 w-32"
           />
