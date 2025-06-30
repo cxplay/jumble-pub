@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useNostr } from '@/providers/NostrProvider'
 import { useState } from 'react'
@@ -51,39 +52,49 @@ function NsecLogin({ back, onLoginSuccess }: { back: () => void; onLoginSuccess:
   }
 
   return (
-    <div className="space-y-4">
+    <form
+      className="space-y-4"
+      onSubmit={(e) => {
+        e.preventDefault()
+        handleLogin()
+      }}
+    >
       <div className="text-orange-400">
         {t(
-          'Using private key login is insecure. It is recommended to use a browser extension for login, such as alby, nostr-keyx or nos2x.'
+          'Using private key login is insecure. It is recommended to use a browser extension for login, such as alby, nostr-keyx or nos2x. If you must use a private key, please set a password for encryption at minimum.'
         )}
       </div>
       <div className="space-y-1">
-        <div className="text-muted-foreground text-sm font-semibold">nsec or hex</div>
+        <Label htmlFor="nsec-input">nsec or hex</Label>
         <Input
+          id="nsec-input"
           type="password"
           placeholder="nsec1.. or hex"
           value={nsecOrHex}
           onChange={handleInputChange}
           className={errMsg ? 'border-destructive' : ''}
         />
-        {errMsg && <div className="text-xs text-destructive pl-3">{errMsg}</div>}
+        {errMsg && <div className="text-xs text-destructive">{errMsg}</div>}
       </div>
       <div className="space-y-1">
-        <div className="text-muted-foreground text-sm font-semibold">{t('password')}</div>
+        <Label htmlFor="password-input">{t('password')}</Label>
         <Input
+          id="password-input"
           type="password"
           placeholder={t('optional: encrypt nsec')}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
-      <Button className="w-full" onClick={handleLogin}>
-        {t('Login')}
-      </Button>
-      <Button className="w-full" variant="secondary" onClick={back}>
-        {t('Back')}
-      </Button>
-    </div>
+      <div className="flex gap-2">
+        <Button className="w-fit px-8" variant="secondary" onClick={back}>
+          {t('Back')}
+        </Button>
+        <Button className="flex-1" type="submit">
+          {t('Login')}
+        </Button>
+      </div>
+    </form>
   )
 }
 
@@ -115,28 +126,33 @@ function NcryptsecLogin({
   }
 
   return (
-    <div className="space-y-4">
-      <div className="text-orange-400">
-        {t(
-          'Using private key login is insecure. It is recommended to use a browser extension for login, such as alby, nostr-keyx or nos2x.'
-        )}
-      </div>
+    <form
+      className="space-y-4"
+      onSubmit={(e) => {
+        e.preventDefault()
+        handleLogin()
+      }}
+    >
       <div className="space-y-1">
+        <Label htmlFor="ncryptsec-input">ncryptsec</Label>
         <Input
+          id="ncryptsec-input"
           type="password"
           placeholder="ncryptsec1.."
           value={ncryptsec}
           onChange={handleInputChange}
           className={errMsg ? 'border-destructive' : ''}
         />
-        {errMsg && <div className="text-xs text-destructive pl-3">{errMsg}</div>}
+        {errMsg && <div className="text-xs text-destructive">{errMsg}</div>}
       </div>
-      <Button className="w-full" onClick={handleLogin}>
-        {t('Login')}
-      </Button>
-      <Button className="w-full" variant="secondary" onClick={back}>
-        {t('Back')}
-      </Button>
-    </div>
+      <div className="flex gap-2">
+        <Button className="w-fit px-8" variant="secondary" onClick={back}>
+          {t('Back')}
+        </Button>
+        <Button className="flex-1" type="submit">
+          {t('Login')}
+        </Button>
+      </div>
+    </form>
   )
 }

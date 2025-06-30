@@ -80,8 +80,8 @@ export default {
     Replies: '回复',
     Notifications: '通知',
     'no more notifications': '到底了',
-    'Using private key login is insecure. It is recommended to use a browser extension for login, such as alby, nostr-keyx or nos2x.':
-      '使用私钥登录是不安全的。建议使用浏览器插件进行登录，例如 alby、nostr-keyx 或 nos2x',
+    'Using private key login is insecure. It is recommended to use a browser extension for login, such as alby, nostr-keyx or nos2x. If you must use a private key, please set a password for encryption at minimum.':
+      '使用私钥登录不安全。建议使用浏览器插件登录，如 alby、nostr-keyx 或 nos2x。如果必须使用私钥，请至少设置一个密码进行加密。',
     'Login with Browser Extension': '浏览器插件登录',
     'Login with Bunker': 'Bunker 登录',
     'Login with Private Key': '私钥登录',

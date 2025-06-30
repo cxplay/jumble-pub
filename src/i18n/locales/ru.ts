@@ -82,8 +82,8 @@ export default {
     Replies: 'Ответы',
     Notifications: 'Уведомления',
     'no more notifications': 'нет новых уведомлений',
-    'Using private key login is insecure. It is recommended to use a browser extension for login, such as alby, nostr-keyx or nos2x.':
-      'Вход с использованием приватного ключа небезопасен. Рекомендуется использовать расширение браузера для входа, например alby, nostr-keyx или nos2x.',
+    'Using private key login is insecure. It is recommended to use a browser extension for login, such as alby, nostr-keyx or nos2x. If you must use a private key, please set a password for encryption at minimum.':
+      'Использование входа с приватным ключом небезопасно. Рекомендуется использовать расширение браузера для входа, такое как alby, nostr-keyx или nos2x. Если вы всё же хотите использовать приватный ключ, установите хотя бы пароль для шифрования.',
     'Login with Browser Extension': 'Войти через расширение браузера',
     'Login with Bunker': 'Войти через Bunker',
     'Login with Private Key': 'Войти с приватным ключом',

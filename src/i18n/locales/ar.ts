@@ -81,8 +81,8 @@ export default {
     Replies: 'الردود',
     Notifications: 'الإشعارات',
     'no more notifications': 'لا توجد إشعارات إضافية',
-    'Using private key login is insecure. It is recommended to use a browser extension for login, such as alby, nostr-keyx or nos2x.':
-      'استخدام تسجيل الدخول بالمفتاح الخاص غير آمن. يُنصح باستخدام إضافة المتصفح مثل alby أو nostr-keyx أو nos2x.',
+    'Using private key login is insecure. It is recommended to use a browser extension for login, such as alby, nostr-keyx or nos2x. If you must use a private key, please set a password for encryption at minimum.':
+      'استخدام تسجيل الدخول بالمفتاح الخاص غير آمن. يُوصى باستخدام إضافة متصفح لتسجيل الدخول، مثل alby أو nostr-keyx أو nos2x. إذا كان يجب عليك استخدام مفتاح خاص، يرجى تعيين كلمة مرور للتشفير على الأقل.',
     'Login with Browser Extension': 'تسجيل الدخول باستخدام إضافة المتصفح',
     'Login with Bunker': 'تسجيل الدخول باستخدام Bunker',
     'Login with Private Key': 'تسجيل الدخول باستخدام المفتاح الخاص',

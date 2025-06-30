@@ -82,8 +82,8 @@ export default {
     Replies: '返信',
     Notifications: '通知',
     'no more notifications': 'これ以上通知はありません',
-    'Using private key login is insecure. It is recommended to use a browser extension for login, such as alby, nostr-keyx or nos2x.':
-      '秘密鍵によるログインは安全ではありません。alby、nostr-keyx、nos2xなどのブラウザ拡張の利用を推奨します。',
+    'Using private key login is insecure. It is recommended to use a browser extension for login, such as alby, nostr-keyx or nos2x. If you must use a private key, please set a password for encryption at minimum.':
+      '秘密鍵でのログインは安全ではありません。alby、nostr-keyx、nos2xなどのブラウザ拡張機能を使用してログインすることをお勧めします。秘密鍵を使用する場合は、少なくとも暗号化のためにパスワードを設定してください。',
     'Login with Browser Extension': 'ブラウザ拡張でログイン',
     'Login with Bunker': 'Bunkerでログイン',
     'Login with Private Key': '秘密鍵でログイン',

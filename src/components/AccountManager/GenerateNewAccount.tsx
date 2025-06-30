@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import { useNostr } from '@/providers/NostrProvider'
 import { Check, Copy, RefreshCcw } from 'lucide-react'
 import { generateSecretKey } from 'nostr-tools'
@@ -18,38 +19,62 @@ export default function GenerateNewAccount({
   const { nsecLogin } = useNostr()
   const [nsec, setNsec] = useState(generateNsec())
   const [copied, setCopied] = useState(false)
+  const [password, setPassword] = useState('')
 
   const handleLogin = () => {
-    nsecLogin(nsec).then(() => onLoginSuccess())
+    nsecLogin(nsec, password).then(() => onLoginSuccess())
   }
 
   return (
-    <>
+    <form
+      className="space-y-4"
+      onSubmit={(e) => {
+        e.preventDefault()
+        handleLogin()
+      }}
+    >
       <div className="text-orange-400">
         {t(
           'This is a private key. Do not share it with anyone. Keep it safe and secure. You will not be able to recover it if you lose it.'
         )}
       </div>
+      <div className="space-y-1">
+        <Label>nsec</Label>
+        <div className="flex gap-2">
+          <Input value={nsec} />
+          <Button variant="secondary" onClick={() => setNsec(generateNsec())}>
+            <RefreshCcw />
+          </Button>
+          <Button
+            onClick={() => {
+              navigator.clipboard.writeText(nsec)
+              setCopied(true)
+              setTimeout(() => setCopied(false), 2000)
+            }}
+          >
+            {copied ? <Check /> : <Copy />}
+          </Button>
+        </div>
+      </div>
+      <div className="space-y-1">
+        <Label htmlFor="password-input">{t('password')}</Label>
+        <Input
+          id="password-input"
+          type="password"
+          placeholder={t('optional: encrypt nsec')}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </div>
       <div className="flex gap-2">
-        <Input value={nsec} />
-        <Button variant="secondary" onClick={() => setNsec(generateNsec())}>
-          <RefreshCcw />
+        <Button className="w-fit px-8" variant="secondary" onClick={back}>
+          {t('Back')}
         </Button>
-        <Button
-          onClick={() => {
-            navigator.clipboard.writeText(nsec)
-            setCopied(true)
-            setTimeout(() => setCopied(false), 2000)
-          }}
-        >
-          {copied ? <Check /> : <Copy />}
+        <Button className="flex-1" type="submit">
+          {t('Login')}
         </Button>
       </div>
-      <Button onClick={handleLogin}>{t('Login')}</Button>
-      <Button variant="secondary" onClick={back}>
-        {t('Back')}
-      </Button>
-    </>
+    </form>
   )
 }
 

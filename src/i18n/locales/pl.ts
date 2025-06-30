@@ -81,8 +81,8 @@ export default {
     Replies: 'Komentarze',
     Notifications: 'Powiadomienia',
     'no more notifications': 'Koniec powiadomień',
-    'Using private key login is insecure. It is recommended to use a browser extension for login, such as alby, nostr-keyx or nos2x.':
-      'Korzystanie z logowania za pomocą klucza prywatnego może nie być bezpieczne. Zaleca się używanie rozszerzenia przeglądarki do logowania, takiego jak Alby, Keys.Band lub Nos2x.',
+    'Using private key login is insecure. It is recommended to use a browser extension for login, such as alby, nostr-keyx or nos2x. If you must use a private key, please set a password for encryption at minimum.':
+      'Logowanie za pomocą prywatnego klucza jest niebezpieczne. Zaleca się korzystanie z rozszerzenia przeglądarki, takiego jak alby, nostr-keyx lub nos2x. Jeśli musisz użyć prywatnego klucza, ustaw co najmniej hasło do szyfrowania.',
     'Login with Browser Extension': 'Logowanie z rozszerzeniem przeglądarki',
     'Login with Bunker': 'Logowanie z bunkrem',
     'Login with Private Key': 'Logowanie z prywatnym kluczem (nsec)',

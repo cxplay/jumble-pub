@@ -81,8 +81,8 @@ export default {
     Replies: 'การตอบกลับ',
     Notifications: 'การแจ้งเตือน',
     'no more notifications': 'ไม่มีการแจ้งเตือนเพิ่มเติม',
-    'Using private key login is insecure. It is recommended to use a browser extension for login, such as alby, nostr-keyx or nos2x.':
-      'การเข้าสู่ระบบด้วยคีย์ส่วนตัวไม่ปลอดภัย แนะนำให้ใช้ส่วนขยายเบราว์เซอร์ เช่น alby, nostr-keyx หรือ nos2x',
+    'Using private key login is insecure. It is recommended to use a browser extension for login, such as alby, nostr-keyx or nos2x. If you must use a private key, please set a password for encryption at minimum.':
+      'การเข้าสู่ระบบด้วยคีย์ส่วนตัวไม่ปลอดภัย แนะนำให้ใช้ส่วนขยายเบราว์เซอร์สำหรับการเข้าสู่ระบบ เช่น alby, nostr-keyx หรือ nos2x หากคุณต้องใช้คีย์ส่วนตัว โปรดตั้งรหัสผ่านเพื่อเข้ารหัสอย่างน้อย',
     'Login with Browser Extension': 'เข้าสู่ระบบด้วยส่วนขยายเบราว์เซอร์',
     'Login with Bunker': 'เข้าสู่ระบบด้วย Bunker',
     'Login with Private Key': 'เข้าสู่ระบบด้วยคีย์ส่วนตัว',
