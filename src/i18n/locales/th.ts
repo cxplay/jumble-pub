@@ -277,6 +277,7 @@ export default {
     'No pubkeys found from {url}': 'ไม่พบ pubkeys จาก {{url}}',
     'Translating...': 'กำลังแปล...',
     Translate: 'แปล',
-    'Show original': 'แสดงต้นฉบับ'
+    'Show original': 'แสดงต้นฉบับ',
+    Website: 'เว็บไซต์'
   }
 }

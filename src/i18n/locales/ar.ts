@@ -278,6 +278,7 @@ export default {
     'No pubkeys found from {url}': 'لم يتم العثور على مفاتيح عامة من {{url}}',
     'Translating...': 'جارٍ الترجمة...',
     Translate: 'ترجمة',
-    'Show original': 'عرض الأصل'
+    'Show original': 'عرض الأصل',
+    Website: 'الموقع الإلكتروني'
   }
 }

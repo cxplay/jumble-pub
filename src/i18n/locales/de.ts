@@ -285,6 +285,7 @@ export default {
     'No pubkeys found from {url}': 'Keine Pubkeys von {{url}} gefunden',
     'Translating...': 'Übersetze...',
     Translate: 'Übersetzen',
-    'Show original': 'Original anzeigen'
+    'Show original': 'Original anzeigen',
+    Website: 'Website'
   }
 }

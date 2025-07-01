@@ -280,6 +280,7 @@ export default {
     'No pubkeys found from {url}': 'URL {{url}} からのpubkeyは見つかりませんでした',
     'Translating...': '翻訳中...',
     Translate: '翻訳',
-    'Show original': '原文を表示'
+    'Show original': '原文を表示',
+    Website: 'ウェブサイト'
   }
 }

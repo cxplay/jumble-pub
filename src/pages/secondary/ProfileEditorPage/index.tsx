@@ -3,6 +3,7 @@ import ProfileBanner from '@/components/ProfileBanner'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import SecondaryPageLayout from '@/layouts/SecondaryPageLayout'
 import { isEmail } from '@/lib/common'
@@ -22,6 +23,7 @@ const ProfileEditorPage = forwardRef(({ index }: { index?: number }, ref) => {
   const [avatar, setAvatar] = useState<string>('')
   const [username, setUsername] = useState<string>('')
   const [about, setAbout] = useState<string>('')
+  const [website, setWebsite] = useState<string>('')
   const [nip05, setNip05] = useState<string>('')
   const [nip05Error, setNip05Error] = useState<string>('')
   const [lightningAddress, setLightningAddress] = useState<string>('')
@@ -41,6 +43,7 @@ const ProfileEditorPage = forwardRef(({ index }: { index?: number }, ref) => {
       setAvatar(profile.avatar ?? '')
       setUsername(profile.original_username ?? '')
       setAbout(profile.about ?? '')
+      setWebsite(profile.website ?? '')
       setNip05(profile.nip05 ?? '')
       setLightningAddress(profile.lightningAddress || '')
     } else {
@@ -48,6 +51,7 @@ const ProfileEditorPage = forwardRef(({ index }: { index?: number }, ref) => {
       setAvatar('')
       setUsername('')
       setAbout('')
+      setWebsite('')
       setNip05('')
       setLightningAddress('')
     }
@@ -83,6 +87,7 @@ const ProfileEditorPage = forwardRef(({ index }: { index?: number }, ref) => {
       displayName: username,
       name: oldProfileContent.name ?? username,
       about,
+      website,
       nip05,
       banner,
       picture: avatar,
@@ -129,7 +134,7 @@ const ProfileEditorPage = forwardRef(({ index }: { index?: number }, ref) => {
             <ProfileBanner
               banner={banner}
               pubkey={account.pubkey}
-              className="w-full aspect-video object-cover rounded-lg"
+              className="w-full aspect-[3/1] object-cover rounded-lg"
             />
             <div className="absolute top-0 bg-muted/30 w-full h-full rounded-lg flex flex-col justify-center items-center">
               {uploadingBanner ? (
@@ -155,10 +160,11 @@ const ProfileEditorPage = forwardRef(({ index }: { index?: number }, ref) => {
             </div>
           </Uploader>
         </div>
-        <div className="pt-14 space-y-4">
+        <div className="pt-14 flex flex-col gap-4">
           <Item>
-            <ItemTitle>{t('Display Name')}</ItemTitle>
+            <Label htmlFor="profile-username-input">{t('Display Name')}</Label>
             <Input
+              id="profile-username-input"
               value={username}
               onChange={(e) => {
                 setUsername(e.target.value)
@@ -167,8 +173,9 @@ const ProfileEditorPage = forwardRef(({ index }: { index?: number }, ref) => {
             />
           </Item>
           <Item>
-            <ItemTitle>{t('Bio')}</ItemTitle>
+            <Label htmlFor="profile-about-textarea">{t('Bio')}</Label>
             <Textarea
+              id="profile-about-textarea"
               className="h-44"
               value={about}
               onChange={(e) => {
@@ -178,8 +185,20 @@ const ProfileEditorPage = forwardRef(({ index }: { index?: number }, ref) => {
             />
           </Item>
           <Item>
-            <ItemTitle>{t('Nostr Address (NIP-05)')}</ItemTitle>
+            <Label htmlFor="profile-website-input">{t('Website')}</Label>
             <Input
+              id="profile-website-input"
+              value={website}
+              onChange={(e) => {
+                setWebsite(e.target.value)
+                setHasChanged(true)
+              }}
+            />
+          </Item>
+          <Item>
+            <Label htmlFor="profile-nip05-input">{t('Nostr Address (NIP-05)')}</Label>
+            <Input
+              id="profile-nip05-input"
               value={nip05}
               onChange={(e) => {
                 setNip05Error('')
@@ -191,8 +210,11 @@ const ProfileEditorPage = forwardRef(({ index }: { index?: number }, ref) => {
             {nip05Error && <div className="text-xs text-destructive pl-3">{nip05Error}</div>}
           </Item>
           <Item>
-            <ItemTitle>{t('Lightning Address (or LNURL)')}</ItemTitle>
+            <Label htmlFor="profile-lightning-address-input">
+              {t('Lightning Address (or LNURL)')}
+            </Label>
             <Input
+              id="profile-lightning-address-input"
               value={lightningAddress}
               onChange={(e) => {
                 setLightningAddressError('')
@@ -213,10 +235,6 @@ const ProfileEditorPage = forwardRef(({ index }: { index?: number }, ref) => {
 ProfileEditorPage.displayName = 'ProfileEditorPage'
 export default ProfileEditorPage
 
-function ItemTitle({ children }: { children: React.ReactNode }) {
-  return <div className="text-sm font-semibold text-muted-foreground">{children}</div>
-}
-
 function Item({ children }: { children: React.ReactNode }) {
-  return <div className="space-y-1">{children}</div>
+  return <div className="grid gap-2">{children}</div>
 }

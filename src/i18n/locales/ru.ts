@@ -283,6 +283,7 @@ export default {
     'No pubkeys found from {url}': 'Не найдено pubkeys из {{url}}',
     'Translating...': 'Перевод...',
     Translate: 'Перевести',
-    'Show original': 'Показать оригинал'
+    'Show original': 'Показать оригинал',
+    Website: 'Веб-сайт'
   }
 }

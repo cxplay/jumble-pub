@@ -281,6 +281,7 @@ export default {
     'No pubkeys found from {url}': 'Nie znaleziono kluczy publicznych z {{url}}',
     'Translating...': 'Tłumaczenie...',
     Translate: 'Przetłumacz',
-    'Show original': 'Pokaż oryginał'
+    'Show original': 'Pokaż oryginał',
+    Website: 'Strona internetowa'
   }
 }

@@ -282,6 +282,7 @@ export default {
     'No pubkeys found from {url}': 'Nessun pubkey trovato da {{url}}',
     'Translating...': 'Traduzione in corso...',
     Translate: 'Traduci',
-    'Show original': 'Mostra originale'
+    'Show original': 'Mostra originale',
+    Website: 'Sito web'
   }
 }

@@ -278,6 +278,7 @@ export default {
     'No pubkeys found from {url}': '在 {{url}} 中未找到 pubkeys',
     'Translating...': '翻译中...',
     Translate: '翻译',
-    'Show original': '显示原文'
+    'Show original': '显示原文',
+    Website: '网站'
   }
 }
