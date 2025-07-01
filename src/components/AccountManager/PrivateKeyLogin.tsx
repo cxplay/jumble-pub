@@ -64,7 +64,7 @@ function NsecLogin({ back, onLoginSuccess }: { back: () => void; onLoginSuccess:
           'Using private key login is insecure. It is recommended to use a browser extension for login, such as alby, nostr-keyx or nos2x. If you must use a private key, please set a password for encryption at minimum.'
         )}
       </div>
-      <div className="space-y-1">
+      <div className="grid gap-2">
         <Label htmlFor="nsec-input">nsec or hex</Label>
         <Input
           id="nsec-input"
@@ -76,7 +76,7 @@ function NsecLogin({ back, onLoginSuccess }: { back: () => void; onLoginSuccess:
         />
         {errMsg && <div className="text-xs text-destructive">{errMsg}</div>}
       </div>
-      <div className="space-y-1">
+      <div className="grid gap-2">
         <Label htmlFor="password-input">{t('password')}</Label>
         <Input
           id="password-input"
@@ -87,7 +87,7 @@ function NsecLogin({ back, onLoginSuccess }: { back: () => void; onLoginSuccess:
         />
       </div>
       <div className="flex gap-2">
-        <Button className="w-fit px-8" variant="secondary" onClick={back}>
+        <Button className="w-fit px-8" variant="secondary" type="button" onClick={back}>
           {t('Back')}
         </Button>
         <Button className="flex-1" type="submit">
@@ -133,7 +133,7 @@ function NcryptsecLogin({
         handleLogin()
       }}
     >
-      <div className="space-y-1">
+      <div className="grid gap-2">
         <Label htmlFor="ncryptsec-input">ncryptsec</Label>
         <Input
           id="ncryptsec-input"
@@ -146,7 +146,7 @@ function NcryptsecLogin({
         {errMsg && <div className="text-xs text-destructive">{errMsg}</div>}
       </div>
       <div className="flex gap-2">
-        <Button className="w-fit px-8" variant="secondary" onClick={back}>
+        <Button className="w-fit px-8" variant="secondary" type="button" onClick={back}>
           {t('Back')}
         </Button>
         <Button className="flex-1" type="submit">

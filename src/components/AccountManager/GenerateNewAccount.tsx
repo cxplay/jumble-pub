@@ -38,7 +38,7 @@ export default function GenerateNewAccount({
           'This is a private key. Do not share it with anyone. Keep it safe and secure. You will not be able to recover it if you lose it.'
         )}
       </div>
-      <div className="space-y-1">
+      <div className="grid gap-2">
         <Label>nsec</Label>
         <div className="flex gap-2">
           <Input value={nsec} />
@@ -56,7 +56,7 @@ export default function GenerateNewAccount({
           </Button>
         </div>
       </div>
-      <div className="space-y-1">
+      <div className="grid gap-2">
         <Label htmlFor="password-input">{t('password')}</Label>
         <Input
           id="password-input"
@@ -67,7 +67,7 @@ export default function GenerateNewAccount({
         />
       </div>
       <div className="flex gap-2">
-        <Button className="w-fit px-8" variant="secondary" onClick={back}>
+        <Button className="w-fit px-8" variant="secondary" type="button" onClick={back}>
           {t('Back')}
         </Button>
         <Button className="flex-1" type="submit">
