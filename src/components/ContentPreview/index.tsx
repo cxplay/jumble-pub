@@ -27,7 +27,7 @@ export default function ContentPreview({
   const { t } = useTranslation()
   const translatedEvent = useTranslatedEvent(event?.id)
   const nodes = useMemo(() => {
-    if (!event) return [{ type: 'text', data: `[${t('Not found the note')}]` }]
+    if (!event) return [{ type: 'text', data: `[${t('Note not found')}]` }]
 
     if (event.kind === kinds.Highlights) return []
 

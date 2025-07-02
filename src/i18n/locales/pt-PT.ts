@@ -205,7 +205,7 @@ export default {
     'Recent Supporters': 'Apoiadores Recentes',
     'Seen on': 'Visto em',
     'Temporarily display this reply': 'Exibir temporariamente esta resposta',
-    'Not found the note': 'Nota não encontrada',
+    'Note not found': 'Nota não encontrada',
     'no more replies': 'não há mais respostas',
     'Relay sets': 'Conjuntos de Relé',
     'Favorite Relays': 'Relés Favoritos',

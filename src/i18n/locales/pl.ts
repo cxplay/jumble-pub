@@ -204,7 +204,7 @@ export default {
     'Recent Supporters': 'Ostatni wspierający',
     'Seen on': 'Widziany na',
     'Temporarily display this reply': 'Tymczasowo wyświetl tę odpowiedź',
-    'Not found the note': 'Nie znaleziono wpisu',
+    'Note not found': 'Nie znaleziono wpisu',
     'no more replies': 'brak kolejnych odpowiedzi',
     'Relay sets': 'Zestawy transmiterów',
     'Favorite Relays': 'Ulubione transmitery',

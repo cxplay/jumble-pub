@@ -205,7 +205,7 @@ export default {
     'Recent Supporters': 'Derniers soutiens',
     'Seen on': 'Vu sur',
     'Temporarily display this reply': 'Afficher temporairement cette réponse',
-    'Not found the note': 'Note introuvable',
+    'Note not found': 'Note introuvable',
     'no more replies': 'aucune autre réponse',
     'Relay sets': 'Groupes de relais',
     'Favorite Relays': 'Relais favoris',

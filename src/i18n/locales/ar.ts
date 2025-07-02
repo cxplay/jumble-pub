@@ -202,7 +202,7 @@ export default {
     'Recent Supporters': 'الداعمين الجدد',
     'Seen on': 'شوهد على',
     'Temporarily display this reply': 'عرض هذا الرد مؤقتاً',
-    'Not found the note': 'لم يتم العثور على الملاحظة',
+    'Note not found': 'لم يتم العثور على الملاحظة',
     'no more replies': 'لا توجد مزيد من الردود',
     'Relay sets': 'مجموعات الريلاي',
     'Favorite Relays': 'الريلايات المفضلة',

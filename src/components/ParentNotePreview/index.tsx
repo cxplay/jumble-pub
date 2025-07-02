@@ -52,7 +52,7 @@ export default function ParentNotePreview({
         )}
       >
         <div className="shrink-0">{t('reply to')}</div>
-        <div>{`[${t('Not found the note')}]`}</div>
+        <div>{`[${t('Note not found')}]`}</div>
       </div>
     )
   }

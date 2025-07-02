@@ -136,7 +136,7 @@ function ParentNote({ eventId }: { eventId?: string }) {
     return (
       <div>
         <Card className="flex p-1 items-center justify-center text-sm text-muted-foreground">
-          [{t('Not found the note')}]
+          [{t('Note not found')}]
         </Card>
         <div className="ml-5 w-px h-2 bg-border" />
       </div>

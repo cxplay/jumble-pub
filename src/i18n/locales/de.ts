@@ -206,7 +206,7 @@ export default {
     'Recent Supporters': 'Neueste Unterstützer',
     'Seen on': 'Gesehen auf',
     'Temporarily display this reply': 'Antwort vorübergehend anzeigen',
-    'Not found the note': 'Die Notiz wurde nicht gefunden',
+    'Note not found': 'Die Notiz wurde nicht gefunden',
     'no more replies': 'keine weiteren Antworten',
     'Relay sets': 'Relay-Sets',
     'Favorite Relays': 'Lieblings-Relays',

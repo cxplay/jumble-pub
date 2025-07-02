@@ -202,7 +202,7 @@ export default {
     'Recent Supporters': 'Recent Supporters',
     'Seen on': 'Seen on',
     'Temporarily display this reply': 'Temporarily display this reply',
-    'Not found the note': 'Not found the note',
+    'Note not found': 'Note not found',
     'no more replies': 'no more replies',
     'Relay sets': 'Relay sets',
     'Favorite Relays': 'Favorite Relays',

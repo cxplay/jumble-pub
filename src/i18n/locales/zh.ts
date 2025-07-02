@@ -203,7 +203,7 @@ export default {
     'Recent Supporters': '最近的支持者',
     'Seen on': '来自',
     'Temporarily display this reply': '临时显示此回复',
-    'Not found the note': '未找到该笔记',
+    'Note not found': '未找到该笔记',
     'no more replies': '没有更多回复了',
     'Relay sets': '服务器组',
     'Favorite Relays': '收藏的服务器',

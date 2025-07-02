@@ -201,7 +201,7 @@ export default {
     'Recent Supporters': 'ผู้สนับสนุนล่าสุด',
     'Seen on': 'เห็นเมื่อ',
     'Temporarily display this reply': 'แสดงการตอบกลับนี้ชั่วคราว',
-    'Not found the note': 'ไม่พบโน้ต',
+    'Note not found': 'ไม่พบโน้ต',
     'no more replies': 'ไม่มีการตอบกลับเพิ่มเติม',
     'Relay sets': 'ชุดรีเลย์',
     'Favorite Relays': 'รีเลย์โปรด',
