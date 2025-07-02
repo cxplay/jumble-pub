@@ -30,7 +30,7 @@ export default function Tabs({
       if (activeIndex >= 0 && tabRefs.current[activeIndex]) {
         const activeTab = tabRefs.current[activeIndex]
         const { offsetWidth, offsetLeft } = activeTab
-        const padding = 32 // 16px padding on each side
+        const padding = 24 // 12px padding on each side
         setIndicatorStyle({
           width: offsetWidth - padding,
           left: offsetLeft + padding / 2
