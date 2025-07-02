@@ -18,7 +18,7 @@ import { useTranslation } from 'react-i18next'
 import PullToRefresh from 'react-simple-pull-to-refresh'
 import NoteCard, { NoteCardLoadingSkeleton } from '../NoteCard'
 import { PictureNoteCardMasonry } from '../PictureNoteCardMasonry'
-import TabSwitcher from '../TabSwitch'
+import Tabs from '../Tabs'
 
 const LIMIT = 100
 const ALGO_LIMIT = 500
@@ -291,7 +291,7 @@ export default function NoteList({
 
   return (
     <div className={className}>
-      <TabSwitcher
+      <Tabs
         value={listMode}
         tabs={
           pubkey && author && pubkey !== author

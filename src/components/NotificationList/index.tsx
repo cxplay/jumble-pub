@@ -13,7 +13,7 @@ import { Event, kinds } from 'nostr-tools'
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import PullToRefresh from 'react-simple-pull-to-refresh'
-import TabSwitcher from '../TabSwitch'
+import Tabs from '../Tabs'
 import { NotificationItem } from './NotificationItem'
 
 const LIMIT = 100
@@ -195,7 +195,7 @@ const NotificationList = forwardRef((_, ref) => {
 
   return (
     <div>
-      <TabSwitcher
+      <Tabs
         value={notificationType}
         tabs={[
           { value: 'all', label: 'All' },

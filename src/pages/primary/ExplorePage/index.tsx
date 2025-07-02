@@ -1,6 +1,6 @@
 import FollowingFavoriteRelayList from '@/components/FollowingFavoriteRelayList'
 import RelayList from '@/components/RelayList'
-import TabSwitcher from '@/components/TabSwitch'
+import Tabs from '@/components/Tabs'
 import PrimaryPageLayout from '@/layouts/PrimaryPageLayout'
 import { Compass } from 'lucide-react'
 import { forwardRef, useState } from 'react'
@@ -18,7 +18,7 @@ const ExplorePage = forwardRef((_, ref) => {
       titlebar={<ExplorePageTitlebar />}
       displayScrollToTopButton
     >
-      <TabSwitcher
+      <Tabs
         value={tab}
         tabs={[
           { value: 'following', label: "Following's Favorites" },
