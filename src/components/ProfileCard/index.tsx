@@ -19,12 +19,10 @@ export default function ProfileCard({ pubkey }: { pubkey: string }) {
         <Nip05 pubkey={pubkey} />
       </div>
       {about && (
-        <div
-          className="text-sm text-wrap break-words w-full overflow-hidden text-ellipsis"
-          style={{ display: '-webkit-box', WebkitLineClamp: 6, WebkitBoxOrient: 'vertical' }}
-        >
-          <ProfileAbout about={about} />
-        </div>
+        <ProfileAbout
+          about={about}
+          className="text-sm text-wrap break-words w-full overflow-hidden text-ellipsis line-clamp-6"
+        />
       )}
     </div>
   )
