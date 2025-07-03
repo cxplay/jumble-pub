@@ -187,12 +187,13 @@ class LocalStorageService {
       this.accounts.push(account)
     }
     window.localStorage.setItem(StorageKey.ACCOUNTS, JSON.stringify(this.accounts))
-    return account
+    return this.accounts
   }
 
   removeAccount(account: TAccount) {
     this.accounts = this.accounts.filter((act) => !isSameAccount(act, account))
     window.localStorage.setItem(StorageKey.ACCOUNTS, JSON.stringify(this.accounts))
+    return this.accounts
   }
 
   switchAccount(account: TAccount | null) {

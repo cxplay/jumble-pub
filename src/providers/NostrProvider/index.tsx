@@ -80,6 +80,9 @@ export const useNostr = () => {
 
 export function NostrProvider({ children }: { children: React.ReactNode }) {
   const { t } = useTranslation()
+  const [accounts, setAccounts] = useState<TAccountPointer[]>(
+    storage.getAccounts().map((act) => ({ pubkey: act.pubkey, signerType: act.signerType }))
+  )
   const [account, setAccount] = useState<TAccountPointer | null>(null)
   const [nsec, setNsec] = useState<string | null>(null)
   const [ncryptsec, setNcryptsec] = useState<string | null>(null)
@@ -300,7 +303,8 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
   }
 
   const login = (signer: ISigner, act: TAccount) => {
-    storage.addAccount(act)
+    const newAccounts = storage.addAccount(act)
+    setAccounts(newAccounts)
     storage.switchAccount(act)
     setAccount({ pubkey: act.pubkey, signerType: act.signerType })
     setSigner(signer)
@@ -308,7 +312,8 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
   }
 
   const removeAccount = (act: TAccountPointer) => {
-    storage.removeAccount(act)
+    const newAccounts = storage.removeAccount(act)
+    setAccounts(newAccounts)
     if (account?.pubkey === act.pubkey) {
       setAccount(null)
       setSigner(null)
@@ -652,9 +657,7 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
         favoriteRelaysEvent,
         notificationsSeenAt,
         account,
-        accounts: storage
-          .getAccounts()
-          .map((act) => ({ pubkey: act.pubkey, signerType: act.signerType })),
+        accounts,
         nsec,
         ncryptsec,
         switchAccount,
