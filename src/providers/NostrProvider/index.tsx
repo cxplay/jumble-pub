@@ -11,6 +11,7 @@ import { formatPubkey, isValidPubkey, pubkeyToNpub } from '@/lib/pubkey'
 import client from '@/services/client.service'
 import indexedDb from '@/services/indexed-db.service'
 import storage from '@/services/local-storage.service'
+import noteStatsService from '@/services/note-stats.service'
 import { ISigner, TAccount, TAccountPointer, TDraftEvent, TProfile, TRelayList } from '@/types'
 import { hexToBytes } from '@noble/hashes/utils'
 import dayjs from 'dayjs'
@@ -274,6 +275,29 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
         controller?.abort()
       })
     }
+  }, [account])
+
+  useEffect(() => {
+    if (!account) return
+
+    const initInteractions = async () => {
+      const pubkey = account.pubkey
+      const relayList = await client.fetchRelayList(pubkey)
+      const events = await client.fetchEvents(relayList.write.slice(0, 4), [
+        {
+          authors: [pubkey],
+          kinds: [kinds.Reaction, kinds.Repost],
+          limit: 100
+        },
+        {
+          '#P': [pubkey],
+          kinds: [kinds.Zap],
+          limit: 100
+        }
+      ])
+      noteStatsService.updateNoteStatsByEvents(events)
+    }
+    initInteractions()
   }, [account])
 
   useEffect(() => {

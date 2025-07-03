@@ -1,6 +1,7 @@
 import { cn } from '@/lib/utils'
-import { useNoteStats } from '@/providers/NoteStatsProvider'
+import { useNostr } from '@/providers/NostrProvider'
 import { useScreenSize } from '@/providers/ScreenSizeProvider'
+import noteStatsService from '@/services/note-stats.service'
 import { Event } from 'nostr-tools'
 import { useEffect, useState } from 'react'
 import BookmarkButton from '../BookmarkButton'
@@ -28,13 +29,13 @@ export default function NoteStats({
   displayTopZapsAndLikes?: boolean
 }) {
   const { isSmallScreen } = useScreenSize()
-  const { fetchNoteStats } = useNoteStats()
+  const { pubkey } = useNostr()
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     if (!fetchIfNotExisting) return
     setLoading(true)
-    fetchNoteStats(event).finally(() => setLoading(false))
+    noteStatsService.fetchNoteStats(event, pubkey).finally(() => setLoading(false))
   }, [event, fetchIfNotExisting])
 
   if (isSmallScreen) {

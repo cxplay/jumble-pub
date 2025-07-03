@@ -12,7 +12,6 @@ import { FollowListProvider } from './providers/FollowListProvider'
 import { MediaUploadServiceProvider } from './providers/MediaUploadServiceProvider'
 import { MuteListProvider } from './providers/MuteListProvider'
 import { NostrProvider } from './providers/NostrProvider'
-import { NoteStatsProvider } from './providers/NoteStatsProvider'
 import { ReplyProvider } from './providers/ReplyProvider'
 import { ScreenSizeProvider } from './providers/ScreenSizeProvider'
 import { TranslationServiceProvider } from './providers/TranslationServiceProvider'
@@ -34,12 +33,10 @@ export default function App(): JSX.Element {
                         <BookmarksProvider>
                           <FeedProvider>
                             <ReplyProvider>
-                              <NoteStatsProvider>
-                                <MediaUploadServiceProvider>
-                                  <PageManager />
-                                  <Toaster />
-                                </MediaUploadServiceProvider>
-                              </NoteStatsProvider>
+                              <MediaUploadServiceProvider>
+                                <PageManager />
+                                <Toaster />
+                              </MediaUploadServiceProvider>
                             </ReplyProvider>
                           </FeedProvider>
                         </BookmarksProvider>
