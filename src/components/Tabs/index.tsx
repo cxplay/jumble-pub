@@ -21,12 +21,12 @@ export default function Tabs({
 }) {
   const { t } = useTranslation()
   const { deepBrowsing, lastScrollTop } = useDeepBrowsing()
-  const activeIndex = tabs.findIndex((tab) => tab.value === value)
   const tabRefs = useRef<(HTMLDivElement | null)[]>([])
   const [indicatorStyle, setIndicatorStyle] = useState({ width: 0, left: 0 })
 
   useEffect(() => {
     const handleResize = () => {
+      const activeIndex = tabs.findIndex((tab) => tab.value === value)
       if (activeIndex >= 0 && tabRefs.current[activeIndex]) {
         const activeTab = tabRefs.current[activeIndex]
         const { offsetWidth, offsetLeft } = activeTab
@@ -42,7 +42,7 @@ export default function Tabs({
     return () => {
       window.removeEventListener('resize', handleResize)
     }
-  }, [activeIndex])
+  }, [value])
 
   return (
     <div

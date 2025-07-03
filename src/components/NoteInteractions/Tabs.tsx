@@ -16,11 +16,11 @@ export function Tabs({
   onTabChange: (tab: TTabValue) => void
 }) {
   const { t } = useTranslation()
-  const activeIndex = TABS.findIndex((tab) => tab.value === selectedTab)
   const tabRefs = useRef<(HTMLDivElement | null)[]>([])
   const [indicatorStyle, setIndicatorStyle] = useState({ width: 0, left: 0 })
 
   useEffect(() => {
+    const activeIndex = TABS.findIndex((tab) => tab.value === selectedTab)
     if (activeIndex >= 0 && tabRefs.current[activeIndex]) {
       const activeTab = tabRefs.current[activeIndex]
       const { offsetWidth, offsetLeft } = activeTab
@@ -30,7 +30,7 @@ export function Tabs({
         left: offsetLeft + padding / 2
       })
     }
-  }, [activeIndex])
+  }, [selectedTab])
 
   return (
     <div className="w-fit">
