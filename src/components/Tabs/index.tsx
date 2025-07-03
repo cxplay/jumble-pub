@@ -27,10 +27,16 @@ export default function Tabs({
   useEffect(() => {
     const handleResize = () => {
       const activeIndex = tabs.findIndex((tab) => tab.value === value)
+      if (tabs.length === 4) {
+        console.log('notification tabs', activeIndex, value)
+      }
       if (activeIndex >= 0 && tabRefs.current[activeIndex]) {
         const activeTab = tabRefs.current[activeIndex]
         const { offsetWidth, offsetLeft } = activeTab
         const padding = 24 // 12px padding on each side
+        if (tabs.length === 4) {
+          console.log('notification tabs', offsetWidth, offsetLeft, padding)
+        }
         setIndicatorStyle({
           width: offsetWidth - padding,
           left: offsetLeft + padding / 2
@@ -38,7 +44,7 @@ export default function Tabs({
       }
     }
     window.addEventListener('resize', handleResize)
-    handleResize() // Initial call to set the indicator style
+    setTimeout(() => handleResize(), 20) // ensure tabs are rendered before calculating
     return () => {
       window.removeEventListener('resize', handleResize)
     }
