@@ -116,14 +116,26 @@ class NoteStatsService {
     return this.noteStatsMap.get(id)
   }
 
-  addZap(pubkey: string, eventId: string, pr: string, amount: number, comment?: string) {
-    const old = this.noteStatsMap.get(eventId)
-    const zaps = old?.zaps || []
-    this.noteStatsMap.set(eventId, {
-      ...old,
-      zaps: [...zaps, { pr, pubkey, amount, comment }].sort((a, b) => b.amount - a.amount)
-    })
-    return this.noteStatsMap
+  addZap(
+    pubkey: string,
+    eventId: string,
+    pr: string,
+    amount: number,
+    comment?: string,
+    notify: boolean = true
+  ) {
+    const old = this.noteStatsMap.get(eventId) || {}
+    const zapPrSet = old.zapPrSet || new Set()
+    const zaps = old.zaps || []
+    if (zapPrSet.has(pr)) return
+
+    zapPrSet.add(pr)
+    zaps.push({ pr, pubkey, amount, comment })
+    this.noteStatsMap.set(eventId, { ...old, zapPrSet, zaps })
+    if (notify) {
+      this.notifyNoteStats(eventId)
+    }
+    return eventId
   }
 
   updateNoteStatsByEvents(events: Event[]) {
@@ -192,15 +204,7 @@ class NoteStatsService {
     const { originalEventId, senderPubkey, invoice, amount, comment } = info
     if (!originalEventId || !senderPubkey) return
 
-    const old = this.noteStatsMap.get(originalEventId) || {}
-    const zapPrSet = old.zapPrSet || new Set()
-    const zaps = old.zaps || []
-    if (zapPrSet.has(invoice)) return
-
-    zapPrSet.add(invoice)
-    zaps.push({ pr: invoice, pubkey: senderPubkey, amount, comment })
-    this.noteStatsMap.set(originalEventId, { ...old, zapPrSet, zaps })
-    return originalEventId
+    return this.addZap(senderPubkey, originalEventId, invoice, amount, comment, false)
   }
 }
 
