@@ -6,8 +6,10 @@ import dayjs from 'dayjs'
 import { Event, Filter, kinds } from 'nostr-tools'
 
 export type TNoteStats = {
+  likeIdSet: Set<string>
   likes: { id: string; pubkey: string; created_at: number; emoji: TEmoji | string }[]
-  reposts: Set<string>
+  repostPubkeySet: Set<string>
+  zapPrSet: Set<string>
   zaps: { pr: string; pubkey: string; amount: number; comment?: string }[]
   updatedAt?: number
 }
@@ -149,9 +151,9 @@ class NoteStatsService {
     if (!targetEventId) return
 
     const old = this.noteStatsMap.get(targetEventId) || {}
+    const likeIdSet = old.likeIdSet || new Set()
     const likes = old.likes || []
-    const exists = likes.find((l) => l.id === evt.id)
-    if (exists) return
+    if (likeIdSet.has(evt.id)) return
 
     let emoji: TEmoji | string = evt.content.trim()
     if (!emoji) return
@@ -167,8 +169,9 @@ class NoteStatsService {
       }
     }
 
+    likeIdSet.add(evt.id)
     likes.push({ id: evt.id, pubkey: evt.pubkey, created_at: evt.created_at, emoji })
-    this.noteStatsMap.set(targetEventId, { ...old, likes })
+    this.noteStatsMap.set(targetEventId, { ...old, likeIdSet, likes })
     return targetEventId
   }
 
@@ -177,9 +180,9 @@ class NoteStatsService {
     if (!eventId) return
 
     const old = this.noteStatsMap.get(eventId) || {}
-    const reposts = old.reposts || new Set()
-    reposts.add(evt.id)
-    this.noteStatsMap.set(eventId, { ...old, reposts })
+    const repostPubkeySet = old.repostPubkeySet || new Set()
+    repostPubkeySet.add(evt.pubkey)
+    this.noteStatsMap.set(eventId, { ...old, repostPubkeySet })
     return eventId
   }
 
@@ -190,12 +193,13 @@ class NoteStatsService {
     if (!originalEventId || !senderPubkey) return
 
     const old = this.noteStatsMap.get(originalEventId) || {}
+    const zapPrSet = old.zapPrSet || new Set()
     const zaps = old.zaps || []
-    const exists = zaps.find((zap) => zap.pr === invoice)
-    if (exists) return
+    if (zapPrSet.has(invoice)) return
 
+    zapPrSet.add(invoice)
     zaps.push({ pr: invoice, pubkey: senderPubkey, amount, comment })
-    this.noteStatsMap.set(originalEventId, { ...old, zaps })
+    this.noteStatsMap.set(originalEventId, { ...old, zapPrSet, zaps })
     return originalEventId
   }
 }

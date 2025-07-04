@@ -30,8 +30,8 @@ export default function RepostButton({ event }: { event: Event }) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const { repostCount, hasReposted } = useMemo(() => {
     return {
-      repostCount: noteStats?.reposts?.size,
-      hasReposted: pubkey ? noteStats?.reposts?.has(pubkey) : false
+      repostCount: noteStats?.repostPubkeySet?.size,
+      hasReposted: pubkey ? noteStats?.repostPubkeySet?.has(pubkey) : false
     }
   }, [noteStats, event.id])
   const canRepost = !hasReposted && !reposting
@@ -44,7 +44,7 @@ export default function RepostButton({ event }: { event: Event }) {
       const timer = setTimeout(() => setReposting(false), 5000)
 
       try {
-        const hasReposted = noteStats?.reposts?.has(pubkey)
+        const hasReposted = noteStats?.repostPubkeySet?.has(pubkey)
         if (hasReposted) return
         if (!noteStats?.updatedAt) {
           const events = await noteStatsService.fetchNoteStats(event, pubkey)
