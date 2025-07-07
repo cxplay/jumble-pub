@@ -11,12 +11,14 @@ export default function MainNoteCard({
   event,
   className,
   reposter,
-  embedded
+  embedded,
+  originalNoteId
 }: {
   event: Event
   className?: string
   reposter?: string
   embedded?: boolean
+  originalNoteId?: string
 }) {
   const { push } = useSecondaryPage()
 
@@ -25,7 +27,7 @@ export default function MainNoteCard({
       className={className}
       onClick={(e) => {
         e.stopPropagation()
-        push(toNote(event))
+        push(toNote(originalNoteId ?? event))
       }}
     >
       <div className={`clickable ${embedded ? 'p-2 sm:p-3 border rounded-lg' : 'py-3'}`}>
@@ -35,6 +37,7 @@ export default function MainNoteCard({
             className={embedded ? '' : 'px-4'}
             size={embedded ? 'small' : 'normal'}
             event={event}
+            originalNoteId={originalNoteId}
           />
         </Collapsible>
         {!embedded && <NoteStats className="mt-3 px-4" event={event} />}

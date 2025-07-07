@@ -67,15 +67,6 @@ export function isProtectedEvent(event: Event) {
   return event.tags.some(([tagName]) => tagName === '-')
 }
 
-export function isSupportedKind(kind: number) {
-  return [
-    kinds.ShortTextNote,
-    kinds.Highlights,
-    ExtendedKind.PICTURE,
-    ExtendedKind.COMMENT
-  ].includes(kind)
-}
-
 export function getParentEventTag(event?: Event) {
   if (!event || ![kinds.ShortTextNote, ExtendedKind.COMMENT].includes(event.kind)) return undefined
 
@@ -608,4 +599,107 @@ export function createFakeEvent(event: Partial<Event>): Event {
     sig: '',
     ...event
   }
+}
+
+export function getLongFormArticleMetadata(event: Event) {
+  let title: string | undefined
+  let summary: string | undefined
+  let image: string | undefined
+  const tags = new Set<string>()
+
+  event.tags.forEach(([tagName, tagValue]) => {
+    if (tagName === 'title') {
+      title = tagValue
+    } else if (tagName === 'summary') {
+      summary = tagValue
+    } else if (tagName === 'image') {
+      image = tagValue
+    } else if (tagName === 't' && tagValue && tags.size < 6) {
+      tags.add(tagValue.toLocaleLowerCase())
+    }
+  })
+
+  if (!title) {
+    title = event.tags.find(tagNameEquals('d'))?.[1] ?? 'no title'
+  }
+
+  return { title, summary, image, tags: Array.from(tags) }
+}
+
+export function getLiveEventMetadata(event: Event) {
+  let title: string | undefined
+  let summary: string | undefined
+  let image: string | undefined
+  let status: string | undefined
+  const tags = new Set<string>()
+
+  event.tags.forEach(([tagName, tagValue]) => {
+    if (tagName === 'title') {
+      title = tagValue
+    } else if (tagName === 'summary') {
+      summary = tagValue
+    } else if (tagName === 'image') {
+      image = tagValue
+    } else if (tagName === 'status') {
+      status = tagValue
+    } else if (tagName === 't' && tagValue && tags.size < 6) {
+      tags.add(tagValue.toLocaleLowerCase())
+    }
+  })
+
+  if (!title) {
+    title = event.tags.find(tagNameEquals('d'))?.[1] ?? 'no title'
+  }
+
+  return { title, summary, image, status, tags: Array.from(tags) }
+}
+
+export function getGroupMetadata(event: Event) {
+  let d: string | undefined
+  let name: string | undefined
+  let about: string | undefined
+  let picture: string | undefined
+  const tags = new Set<string>()
+
+  event.tags.forEach(([tagName, tagValue]) => {
+    if (tagName === 'name') {
+      name = tagValue
+    } else if (tagName === 'about') {
+      about = tagValue
+    } else if (tagName === 'picture') {
+      picture = tagValue
+    } else if (tagName === 't' && tagValue) {
+      tags.add(tagValue.toLocaleLowerCase())
+    } else if (tagName === 'd') {
+      d = tagValue
+    }
+  })
+
+  if (!name) {
+    name = d ?? 'no name'
+  }
+
+  return { d, name, about, picture, tags: Array.from(tags) }
+}
+
+export function getCommunityDefinition(event: Event) {
+  let name: string | undefined
+  let description: string | undefined
+  let image: string | undefined
+
+  event.tags.forEach(([tagName, tagValue]) => {
+    if (tagName === 'name') {
+      name = tagValue
+    } else if (tagName === 'description') {
+      description = tagValue
+    } else if (tagName === 'image') {
+      image = tagValue
+    }
+  })
+
+  if (!name) {
+    name = event.tags.find(tagNameEquals('d'))?.[1] ?? 'no name'
+  }
+
+  return { name, description, image }
 }

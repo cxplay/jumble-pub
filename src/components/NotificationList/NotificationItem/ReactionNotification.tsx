@@ -1,6 +1,5 @@
 import Image from '@/components/Image'
 import { useFetchEvent } from '@/hooks'
-import { isSupportedKind } from '@/lib/event'
 import { toNote } from '@/lib/link'
 import { tagNameEquals } from '@/lib/tag'
 import { cn } from '@/lib/utils'
@@ -54,7 +53,7 @@ export function ReactionNotification({
     return notification.content
   }, [notification])
 
-  if (!event || !eventId || !isSupportedKind(event.kind)) {
+  if (!event || !eventId) {
     return null
   }
 
