@@ -285,6 +285,7 @@ export default {
     Community: '社区',
     Group: '群组',
     'Live event': '直播',
-    Article: '文章'
+    Article: '文章',
+    Unfavorite: '取消收藏'
   }
 }

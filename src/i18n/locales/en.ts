@@ -285,6 +285,7 @@ export default {
     Community: 'Community',
     Group: 'Group',
     'Live event': 'Live event',
-    Article: 'Article'
+    Article: 'Article',
+    Unfavorite: 'Unfavorite'
   }
 }

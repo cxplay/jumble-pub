@@ -290,6 +290,7 @@ export default {
     Community: 'Сообщество',
     Group: 'Группа',
     'Live event': 'Живое событие',
-    Article: 'Статья'
+    Article: 'Статья',
+    Unfavorite: 'Убрать из избранного'
   }
 }

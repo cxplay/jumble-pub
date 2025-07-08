@@ -284,6 +284,7 @@ export default {
     Community: 'ชุมชน',
     Group: 'กลุ่ม',
     'Live event': 'เหตุการณ์สด',
-    Article: 'บทความ'
+    Article: 'บทความ',
+    Unfavorite: 'เลิกชื่นชอบ'
   }
 }

@@ -290,6 +290,7 @@ export default {
     Community: 'Communauté',
     Group: 'Groupe',
     'Live event': 'Événement en direct',
-    Article: 'Article'
+    Article: 'Article',
+    Unfavorite: 'Ne plus aimer'
   }
 }

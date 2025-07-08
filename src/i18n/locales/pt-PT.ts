@@ -289,6 +289,7 @@ export default {
     Community: 'Comunidade',
     Group: 'Grupo',
     'Live event': 'Evento ao vivo',
-    Article: 'Artigo'
+    Article: 'Artigo',
+    Unfavorite: 'Desfavoritar'
   }
 }

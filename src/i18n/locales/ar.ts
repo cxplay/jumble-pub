@@ -285,6 +285,7 @@ export default {
     Community: 'المجتمع',
     Group: 'المجموعة',
     'Live event': 'حدث مباشر',
-    Article: 'مقالة'
+    Article: 'مقالة',
+    Unfavorite: 'إلغاء المفضلة'
   }
 }

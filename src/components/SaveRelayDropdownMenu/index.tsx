@@ -123,7 +123,7 @@ function RelayItem({ urls }: { urls: string[] }) {
     return (
       <DrawerMenuItem onClick={handleClick}>
         {saved ? <Check /> : <Plus />}
-        {t('Favorite')}
+        {saved ? t('Unfavorite') : t('Favorite')}
       </DrawerMenuItem>
     )
   }
@@ -131,7 +131,7 @@ function RelayItem({ urls }: { urls: string[] }) {
   return (
     <DropdownMenuItem className="flex gap-2" onClick={handleClick}>
       {saved ? <Check /> : <Plus />}
-      {t('Favorite')}
+      {saved ? t('Unfavorite') : t('Favorite')}
     </DropdownMenuItem>
   )
 }

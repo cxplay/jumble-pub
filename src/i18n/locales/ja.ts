@@ -287,6 +287,7 @@ export default {
     Community: 'コミュニティ',
     Group: 'グループ',
     'Live event': 'ライブイベント',
-    Article: '記事'
+    Article: '記事',
+    Unfavorite: 'お気に入り解除'
   }
 }

@@ -287,6 +287,7 @@ export default {
     Community: '커뮤니티',
     Group: '그룹',
     'Live event': '라이브 이벤트',
-    Article: '기사'
+    Article: '기사',
+    Unfavorite: '즐겨찾기 취소'
   }
 }
