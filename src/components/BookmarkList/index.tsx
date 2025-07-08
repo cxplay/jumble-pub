@@ -1,7 +1,6 @@
 import { useFetchEvent } from '@/hooks'
 import { generateEventIdFromETag } from '@/lib/tag'
 import { useNostr } from '@/providers/NostrProvider'
-import { kinds } from 'nostr-tools'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import NoteCard, { NoteCardLoadingSkeleton } from '../NoteCard'
@@ -89,7 +88,7 @@ function BookmarkedNote({ eventId }: { eventId: string }) {
     return <NoteCardLoadingSkeleton isPictures={false} />
   }
 
-  if (!event || event.kind !== kinds.ShortTextNote) {
+  if (!event) {
     return null
   }
 
