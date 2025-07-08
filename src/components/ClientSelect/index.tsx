@@ -1,6 +1,6 @@
 import { Button, ButtonProps } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
-import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer'
+import { Drawer, DrawerContent, DrawerOverlay, DrawerTrigger } from '@/components/ui/drawer'
 import { Separator } from '@/components/ui/separator'
 import { ExtendedKind } from '@/constants'
 import { getReplaceableEventIdentifier, getSharableEventId } from '@/lib/event'
@@ -168,7 +168,13 @@ export default function ClientSelect({
               <ExternalLink /> {t('Open in another client')}
             </Button>
           </DrawerTrigger>
-          <DrawerContent>{content}</DrawerContent>
+          <DrawerOverlay
+            onClick={(e) => {
+              e.stopPropagation()
+              setOpen(false)
+            }}
+          />
+          <DrawerContent hideOverlay>{content}</DrawerContent>
         </Drawer>
       </div>
     )
