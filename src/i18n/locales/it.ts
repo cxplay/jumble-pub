@@ -290,6 +290,7 @@ export default {
     Group: 'Gruppo',
     'Live event': 'Evento dal vivo',
     Article: 'Articolo',
-    Unfavorite: 'Rimuovi dai preferiti'
+    Unfavorite: 'Rimuovi dai preferiti',
+    'Recommended relays': 'Relay consigliati'
   }
 }

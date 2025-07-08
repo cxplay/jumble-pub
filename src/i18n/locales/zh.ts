@@ -286,6 +286,7 @@ export default {
     Group: '群组',
     'Live event': '直播',
     Article: '文章',
-    Unfavorite: '取消收藏'
+    Unfavorite: '取消收藏',
+    'Recommended relays': '推荐服务器'
   }
 }

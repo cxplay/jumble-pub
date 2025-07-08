@@ -286,6 +286,7 @@ export default {
     Group: 'المجموعة',
     'Live event': 'حدث مباشر',
     Article: 'مقالة',
-    Unfavorite: 'إلغاء المفضلة'
+    Unfavorite: 'إلغاء المفضلة',
+    'Recommended relays': 'الريلايات الموصى بها'
   }
 }

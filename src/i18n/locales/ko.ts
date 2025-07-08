@@ -288,6 +288,7 @@ export default {
     Group: '그룹',
     'Live event': '라이브 이벤트',
     Article: '기사',
-    Unfavorite: '즐겨찾기 취소'
+    Unfavorite: '즐겨찾기 취소',
+    'Recommended relays': '추천 릴레이'
   }
 }

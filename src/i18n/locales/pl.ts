@@ -289,6 +289,7 @@ export default {
     Group: 'Grupa',
     'Live event': 'Wydarzenie na żywo',
     Article: 'Artykuł',
-    Unfavorite: 'Usuń z ulubionych'
+    Unfavorite: 'Usuń z ulubionych',
+    'Recommended relays': 'Rekomendowane transmitery'
   }
 }

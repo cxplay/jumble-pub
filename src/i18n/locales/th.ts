@@ -285,6 +285,7 @@ export default {
     Group: 'กลุ่ม',
     'Live event': 'เหตุการณ์สด',
     Article: 'บทความ',
-    Unfavorite: 'เลิกชื่นชอบ'
+    Unfavorite: 'เลิกชื่นชอบ',
+    'Recommended relays': 'รีเลย์ที่แนะนำ'
   }
 }

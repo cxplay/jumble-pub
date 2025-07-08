@@ -291,6 +291,7 @@ export default {
     Group: 'Группа',
     'Live event': 'Живое событие',
     Article: 'Статья',
-    Unfavorite: 'Убрать из избранного'
+    Unfavorite: 'Убрать из избранного',
+    'Recommended relays': 'Рекомендуемые ретрансляторы'
   }
 }

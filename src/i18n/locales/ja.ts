@@ -288,6 +288,7 @@ export default {
     Group: 'グループ',
     'Live event': 'ライブイベント',
     Article: '記事',
-    Unfavorite: 'お気に入り解除'
+    Unfavorite: 'お気に入り解除',
+    'Recommended relays': 'おすすめのリレイ'
   }
 }

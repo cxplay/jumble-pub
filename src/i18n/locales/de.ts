@@ -293,6 +293,7 @@ export default {
     Group: 'Gruppe',
     'Live event': 'Live-Event',
     Article: 'Artikel',
-    Unfavorite: 'Nicht mehr favorisieren'
+    Unfavorite: 'Nicht mehr favorisieren',
+    'Recommended relays': 'Empfohlene Relays'
   }
 }

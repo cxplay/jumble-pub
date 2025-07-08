@@ -286,6 +286,7 @@ export default {
     Group: 'Group',
     'Live event': 'Live event',
     Article: 'Article',
-    Unfavorite: 'Unfavorite'
+    Unfavorite: 'Unfavorite',
+    'Recommended relays': 'Recommended relays'
   }
 }

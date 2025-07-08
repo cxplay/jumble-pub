@@ -291,6 +291,7 @@ export default {
     Group: 'Groupe',
     'Live event': 'Événement en direct',
     Article: 'Article',
-    Unfavorite: 'Ne plus aimer'
+    Unfavorite: 'Ne plus aimer',
+    'Recommended relays': 'Relais recommandés'
   }
 }
