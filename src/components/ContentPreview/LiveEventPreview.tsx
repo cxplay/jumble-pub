@@ -18,7 +18,7 @@ export default function LiveEventPreview({
 
   return (
     <div className={cn('pointer-events-none', className)} onClick={onClick}>
-      [{t('Live event')}] <span className="italic">{metadata.title}</span>
+      [{t('Live event')}] <span className="italic pr-0.5">{metadata.title}</span>
     </div>
   )
 }

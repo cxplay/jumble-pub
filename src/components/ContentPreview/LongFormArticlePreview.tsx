@@ -18,7 +18,7 @@ export default function LongFormArticlePreview({
 
   return (
     <div className={cn('pointer-events-none', className)} onClick={onClick}>
-      [{t('Article')}] <span className="italic">{metadata.title}</span>
+      [{t('Article')}] <span className="italic pr-0.5">{metadata.title}</span>
     </div>
   )
 }

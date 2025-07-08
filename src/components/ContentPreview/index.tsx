@@ -43,7 +43,7 @@ export default function ContentPreview({
   if (event.kind === kinds.Highlights) {
     return (
       <div className={cn('pointer-events-none', className)}>
-        [{t('Highlight')}] <span className="italic">{event.content}</span>
+        [{t('Highlight')}] <span className="italic pr-0.5">{event.content}</span>
       </div>
     )
   }
