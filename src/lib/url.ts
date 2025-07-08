@@ -9,8 +9,14 @@ export function normalizeUrl(url: string): string {
     const p = new URL(url)
     p.pathname = p.pathname.replace(/\/+/g, '/')
     if (p.pathname.endsWith('/')) p.pathname = p.pathname.slice(0, -1)
-    if ((p.port === '80' && p.protocol === 'ws:') || (p.port === '443' && p.protocol === 'wss:'))
+    if (p.protocol === 'https:') {
+      p.protocol = 'wss:'
+    } else if (p.protocol === 'http:') {
+      p.protocol = 'ws:'
+    }
+    if ((p.port === '80' && p.protocol === 'ws:') || (p.port === '443' && p.protocol === 'wss:')) {
       p.port = ''
+    }
     p.searchParams.sort()
     p.hash = ''
     return p.toString()
@@ -26,11 +32,17 @@ export function normalizeHttpUrl(url: string): string {
     const p = new URL(url)
     p.pathname = p.pathname.replace(/\/+/g, '/')
     if (p.pathname.endsWith('/')) p.pathname = p.pathname.slice(0, -1)
+    if (p.protocol === 'wss:') {
+      p.protocol = 'https:'
+    } else if (p.protocol === 'ws:') {
+      p.protocol = 'http:'
+    }
     if (
       (p.port === '80' && p.protocol === 'http:') ||
       (p.port === '443' && p.protocol === 'https:')
-    )
+    ) {
       p.port = ''
+    }
     p.searchParams.sort()
     p.hash = ''
     return p.toString()
