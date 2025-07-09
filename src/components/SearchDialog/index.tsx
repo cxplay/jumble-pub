@@ -1,15 +1,16 @@
 import { SecondaryPageLink } from '@/PageManager'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { CommandDialog, CommandInput, CommandItem, CommandList } from '@/components/ui/command'
 import { useSearchProfiles } from '@/hooks'
 import { toNote, toNoteList, toProfile, toProfileList, toRelay } from '@/lib/link'
-import { generateImageByPubkey } from '@/lib/pubkey'
 import { normalizeUrl } from '@/lib/url'
 import { TProfile } from '@/types'
 import { Hash, Notebook, Server, UserRound } from 'lucide-react'
 import { nip19 } from 'nostr-tools'
 import { Dispatch, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import Nip05 from '../Nip05'
+import UserAvatar from '../UserAvatar'
+import Username from '../Username'
 
 export function SearchDialog({ open, setOpen }: { open: boolean; setOpen: Dispatch<boolean> }) {
   const { t } = useTranslation()
@@ -142,16 +143,15 @@ function ProfileItem({ profile, onClick }: { profile: TProfile; onClick?: () => 
   return (
     <SecondaryPageLink to={toProfile(profile.pubkey)} onClick={onClick}>
       <CommandItem value={`profile-${profile.pubkey}`}>
-        <div className="flex gap-2">
-          <Avatar>
-            <AvatarImage src={profile.avatar} alt={profile.username} />
-            <AvatarFallback>
-              <img src={generateImageByPubkey(profile.pubkey)} alt={profile.username} />
-            </AvatarFallback>
-          </Avatar>
-          <div>
-            <div className="font-semibold">{profile.username}</div>
-            <div className="line-clamp-1 text-muted-foreground">{profile.about}</div>
+        <div className="flex gap-2 items-center pointer-events-none">
+          <UserAvatar userId={profile.pubkey} className="shrink-0" />
+          <div className="w-full overflow-hidden">
+            <Username
+              userId={profile.pubkey}
+              className="font-semibold truncate max-w-full w-fit"
+              skeletonClassName="h-4"
+            />
+            <Nip05 pubkey={profile.pubkey} />
           </div>
         </div>
       </CommandItem>
