@@ -43,7 +43,7 @@ export default function ImageGallery({
     imageContent = (
       <Image
         key={0}
-        className="rounded-lg max-h-[80vh] sm:max-h-[50vh] border"
+        className="rounded-lg max-h-[80vh] sm:max-h-[50vh] border cursor-zoom-in"
         classNames={{
           errorPlaceholder: 'aspect-square h-[30vh]'
         }}
@@ -57,7 +57,7 @@ export default function ImageGallery({
         {displayImages.map((image, i) => (
           <Image
             key={i}
-            className="aspect-square w-full rounded-lg border"
+            className="aspect-square w-full rounded-lg border cursor-zoom-in"
             image={image}
             onClick={(e) => handlePhotoClick(e, i)}
           />
@@ -70,7 +70,7 @@ export default function ImageGallery({
         {displayImages.map((image, i) => (
           <Image
             key={i}
-            className="aspect-square w-full rounded-lg border"
+            className="aspect-square w-full rounded-lg border cursor-zoom-in"
             image={image}
             onClick={(e) => handlePhotoClick(e, i)}
           />
