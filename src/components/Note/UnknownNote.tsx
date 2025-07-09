@@ -14,7 +14,7 @@ export function UnknownNote({ event, className }: { event: Event; className?: st
       )}
     >
       <div>{t('Cannot handle event of kind k', { k: event.kind })}</div>
-      <ClientSelect event={event} variant="secondary" />
+      <ClientSelect event={event} />
     </div>
   )
 }

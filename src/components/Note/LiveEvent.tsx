@@ -51,7 +51,7 @@ export default function LiveEvent({ event, className }: { event: Event; classNam
           {liveStatusComponent}
           {summaryComponent}
           {tagsComponent}
-          <ClientSelect variant="secondary" className="w-full mt-2" event={event} />
+          <ClientSelect className="w-full mt-2" event={event} />
         </div>
       </div>
     )
@@ -74,7 +74,7 @@ export default function LiveEvent({ event, className }: { event: Event; classNam
           {tagsComponent}
         </div>
       </div>
-      <ClientSelect variant="secondary" className="w-full mt-2" event={event} />
+      <ClientSelect className="w-full mt-2" event={event} />
     </div>
   )
 }

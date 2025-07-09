@@ -36,7 +36,7 @@ export default function CommunityDefinition({
           {communityDescriptionComponent}
         </div>
       </div>
-      <ClientSelect variant="secondary" className="w-full mt-2" event={event} />
+      <ClientSelect className="w-full mt-2" event={event} />
     </div>
   )
 }

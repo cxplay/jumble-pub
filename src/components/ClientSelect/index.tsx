@@ -159,15 +159,17 @@ export default function ClientSelect({
     </div>
   )
 
+  const trigger = (
+    <Button variant="outline" {...props}>
+      <ExternalLink /> {t('Open in another client')}
+    </Button>
+  )
+
   if (isSmallScreen) {
     return (
       <div onClick={(e) => e.stopPropagation()}>
         <Drawer open={open} onOpenChange={setOpen}>
-          <DrawerTrigger asChild>
-            <Button {...props}>
-              <ExternalLink /> {t('Open in another client')}
-            </Button>
-          </DrawerTrigger>
+          <DrawerTrigger asChild>{trigger}</DrawerTrigger>
           <DrawerOverlay
             onClick={(e) => {
               e.stopPropagation()
@@ -183,11 +185,7 @@ export default function ClientSelect({
   return (
     <div onClick={(e) => e.stopPropagation()}>
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          <Button {...props}>
-            <ExternalLink /> {t('Open in another client')}
-          </Button>
-        </DialogTrigger>
+        <DialogTrigger asChild>{trigger}</DialogTrigger>
         <DialogContent className="px-8" onOpenAutoFocus={(e) => e.preventDefault()}>
           {content}
         </DialogContent>

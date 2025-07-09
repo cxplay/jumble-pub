@@ -38,12 +38,7 @@ export default function GroupMetadata({
           {groupAboutComponent}
         </div>
       </div>
-      <ClientSelect
-        variant="secondary"
-        className="w-full mt-2"
-        event={event}
-        originalNoteId={originalNoteId}
-      />
+      <ClientSelect className="w-full mt-2" event={event} originalNoteId={originalNoteId} />
     </div>
   )
 }
