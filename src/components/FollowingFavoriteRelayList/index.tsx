@@ -1,9 +1,8 @@
+import { useFetchRelayInfo } from '@/hooks'
 import { toRelay } from '@/lib/link'
 import { useSecondaryPage } from '@/PageManager'
 import { useNostr } from '@/providers/NostrProvider'
 import client from '@/services/client.service'
-import relayInfoService from '@/services/relay-info.service'
-import { TNip66RelayInfo } from '@/types'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import RelaySimpleInfo, { RelaySimpleInfoSkeleton } from '../RelaySimpleInfo'
@@ -12,10 +11,9 @@ const SHOW_COUNT = 10
 
 export default function FollowingFavoriteRelayList() {
   const { t } = useTranslation()
-  const { push } = useSecondaryPage()
   const { pubkey } = useNostr()
   const [loading, setLoading] = useState(true)
-  const [relays, setRelays] = useState<(TNip66RelayInfo & { users: string[] })[]>([])
+  const [relays, setRelays] = useState<[string, string[]][]>([])
   const [showCount, setShowCount] = useState(SHOW_COUNT)
   const bottomRef = useRef<HTMLDivElement>(null)
 
@@ -25,21 +23,8 @@ export default function FollowingFavoriteRelayList() {
     const init = async () => {
       if (!pubkey) return
 
-      const relayMap =
-        (await client.fetchFollowingFavoriteRelays(pubkey)) ?? new Map<string, Set<string>>()
-      const relayUrls = Array.from(relayMap.keys())
-      const relayInfos = await relayInfoService.getRelayInfos(relayUrls ?? [])
-      setRelays(
-        (relayInfos.filter(Boolean) as TNip66RelayInfo[])
-          .map((relayInfo) => {
-            const users = Array.from(relayMap.get(relayInfo.url) ?? [])
-            return {
-              ...relayInfo,
-              users
-            }
-          })
-          .sort((a, b) => b.users.length - a.users.length)
-      )
+      const relays = (await client.fetchFollowingFavoriteRelays(pubkey)) ?? []
+      setRelays(relays)
     }
     init().finally(() => {
       setLoading(false)
@@ -73,16 +58,8 @@ export default function FollowingFavoriteRelayList() {
 
   return (
     <div>
-      {relays.slice(0, showCount).map((relay) => (
-        <RelaySimpleInfo
-          key={relay.url}
-          relayInfo={relay}
-          className="clickable p-4 border-b"
-          onClick={(e) => {
-            e.stopPropagation()
-            push(toRelay(relay.url))
-          }}
-        />
+      {relays.slice(0, showCount).map(([url, users]) => (
+        <RelayItem key={url} url={url} users={users} />
       ))}
       {showCount < relays.length && <div ref={bottomRef} />}
       {loading && <RelaySimpleInfoSkeleton />}
@@ -92,5 +69,23 @@ export default function FollowingFavoriteRelayList() {
         </div>
       )}
     </div>
+  )
+}
+
+function RelayItem({ url, users }: { url: string; users: string[] }) {
+  const { push } = useSecondaryPage()
+  const { relayInfo } = useFetchRelayInfo(url)
+
+  return (
+    <RelaySimpleInfo
+      key={url}
+      relayInfo={relayInfo}
+      users={users}
+      className="clickable p-4 border-b"
+      onClick={(e) => {
+        e.stopPropagation()
+        push(toRelay(url))
+      }}
+    />
   )
 }

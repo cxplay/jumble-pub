@@ -17,7 +17,8 @@ const StoreNames = {
   MUTE_DECRYPTED_TAGS: 'muteDecryptedTags',
   RELAY_INFO_EVENTS: 'relayInfoEvents',
   FAVORITE_RELAYS: 'favoriteRelays',
-  RELAY_SETS: 'relaySets'
+  RELAY_SETS: 'relaySets',
+  FOLLOWING_FAVORITE_RELAYS: 'followingFavoriteRelays'
 }
 
 class IndexedDbService {
@@ -36,7 +37,7 @@ class IndexedDbService {
   init(): Promise<void> {
     if (!this.initPromise) {
       this.initPromise = new Promise((resolve, reject) => {
-        const request = window.indexedDB.open('jumble', 4)
+        const request = window.indexedDB.open('jumble', 5)
 
         request.onerror = (event) => {
           reject(event)
@@ -75,6 +76,9 @@ class IndexedDbService {
           }
           if (!db.objectStoreNames.contains(StoreNames.RELAY_SETS)) {
             db.createObjectStore(StoreNames.RELAY_SETS, { keyPath: 'key' })
+          }
+          if (!db.objectStoreNames.contains(StoreNames.FOLLOWING_FAVORITE_RELAYS)) {
+            db.createObjectStore(StoreNames.FOLLOWING_FAVORITE_RELAYS, { keyPath: 'key' })
           }
           this.db = db
         }
@@ -354,6 +358,50 @@ class IndexedDbService {
           transaction.commit()
           resolve()
         }
+      }
+
+      request.onerror = (event) => {
+        transaction.commit()
+        reject(event)
+      }
+    })
+  }
+
+  async putFollowingFavoriteRelays(pubkey: string, relays: [string, string[]][]): Promise<void> {
+    await this.initPromise
+    return new Promise((resolve, reject) => {
+      if (!this.db) {
+        return reject('database not initialized')
+      }
+      const transaction = this.db.transaction(StoreNames.FOLLOWING_FAVORITE_RELAYS, 'readwrite')
+      const store = transaction.objectStore(StoreNames.FOLLOWING_FAVORITE_RELAYS)
+
+      const putRequest = store.put(this.formatValue(pubkey, relays))
+      putRequest.onsuccess = () => {
+        transaction.commit()
+        resolve()
+      }
+
+      putRequest.onerror = (event) => {
+        transaction.commit()
+        reject(event)
+      }
+    })
+  }
+
+  async getFollowingFavoriteRelays(pubkey: string): Promise<[string, string[]][] | null> {
+    await this.initPromise
+    return new Promise((resolve, reject) => {
+      if (!this.db) {
+        return reject('database not initialized')
+      }
+      const transaction = this.db.transaction(StoreNames.FOLLOWING_FAVORITE_RELAYS, 'readonly')
+      const store = transaction.objectStore(StoreNames.FOLLOWING_FAVORITE_RELAYS)
+      const request = store.get(pubkey)
+
+      request.onsuccess = () => {
+        transaction.commit()
+        resolve((request.result as TValue<[string, string[]][]>)?.value)
       }
 
       request.onerror = (event) => {

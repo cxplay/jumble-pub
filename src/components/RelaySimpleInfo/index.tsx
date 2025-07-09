@@ -10,11 +10,13 @@ import { SimpleUserAvatar } from '../UserAvatar'
 
 export default function RelaySimpleInfo({
   relayInfo,
+  users,
   hideBadge = false,
   className,
   ...props
 }: HTMLProps<HTMLDivElement> & {
-  relayInfo?: TNip66RelayInfo & { users?: string[] }
+  relayInfo?: TNip66RelayInfo
+  users?: string[]
   hideBadge?: boolean
 }) {
   const { t } = useTranslation()
@@ -35,16 +37,16 @@ export default function RelaySimpleInfo({
       </div>
       {!hideBadge && relayInfo && <RelayBadges relayInfo={relayInfo} />}
       {!!relayInfo?.description && <div className="line-clamp-4">{relayInfo.description}</div>}
-      {!!relayInfo?.users?.length && (
+      {!!users?.length && (
         <div className="flex items-center gap-2">
           <div className="text-muted-foreground">{t('Favorited by')} </div>
           <div className="flex items-center gap-1">
-            {relayInfo.users.slice(0, 10).map((user) => (
+            {users.slice(0, 10).map((user) => (
               <SimpleUserAvatar key={user} userId={user} size="xSmall" />
             ))}
-            {relayInfo.users.length > 10 && (
+            {users.length > 10 && (
               <div className="text-muted-foreground text-xs rounded-full bg-muted w-5 h-5 flex items-center justify-center">
-                +{relayInfo.users.length - 10}
+                +{users.length - 10}
               </div>
             )}
           </div>
