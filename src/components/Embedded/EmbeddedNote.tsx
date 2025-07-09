@@ -33,8 +33,11 @@ function EmbeddedNoteSkeleton({ className }: { className?: string }) {
       onClick={(e) => e.stopPropagation()}
     >
       <div className="flex items-center space-x-2">
-        <Skeleton className="w-7 h-7 rounded-full" />
-        <Skeleton className="h-3 w-16 my-1" />
+        <Skeleton className="w-9 h-9 rounded-full" />
+        <div>
+          <Skeleton className="h-3 w-16 my-1" />
+          <Skeleton className="h-3 w-16 my-1" />
+        </div>
       </div>
       <Skeleton className="w-full h-4 my-1 mt-2" />
       <Skeleton className="w-2/3 h-4 my-1" />

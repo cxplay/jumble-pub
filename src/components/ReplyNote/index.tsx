@@ -48,7 +48,7 @@ export default function ReplyNote({
     >
       <Collapsible>
         <div className="flex space-x-2 items-start px-4 pt-3">
-          <UserAvatar userId={event.pubkey} size="medium" className="shrink-0 mt-1" />
+          <UserAvatar userId={event.pubkey} size="medium" className="shrink-0 mt-0.5" />
           <div className="w-full overflow-hidden">
             <div className="flex items-start justify-between gap-2">
               <div className="flex-1 w-0">
@@ -113,7 +113,7 @@ export default function ReplyNote({
 export function ReplyNoteSkeleton() {
   return (
     <div className="px-4 py-3 flex items-start space-x-2 w-full">
-      <Skeleton className="w-8 h-8 rounded-full shrink-0" />
+      <Skeleton className="w-9 h-9 rounded-full shrink-0 mt-0.5" />
       <div className="w-full">
         <div className="py-1">
           <Skeleton className="h-3 w-16" />

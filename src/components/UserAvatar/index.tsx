@@ -2,19 +2,19 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useFetchProfile } from '@/hooks'
-import { generateImageByPubkey } from '@/lib/pubkey'
 import { toProfile } from '@/lib/link'
+import { generateImageByPubkey } from '@/lib/pubkey'
 import { cn } from '@/lib/utils'
 import { SecondaryPageLink } from '@/PageManager'
-import ProfileCard from '../ProfileCard'
 import { useMemo } from 'react'
+import ProfileCard from '../ProfileCard'
 
 const UserAvatarSizeCnMap = {
   large: 'w-24 h-24',
   big: 'w-16 h-16',
   semiBig: 'w-12 h-12',
   normal: 'w-10 h-10',
-  medium: 'w-8 h-8',
+  medium: 'w-9 h-9',
   small: 'w-7 h-7',
   xSmall: 'w-5 h-5',
   tiny: 'w-4 h-4'
