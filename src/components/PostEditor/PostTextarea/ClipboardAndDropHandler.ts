@@ -11,14 +11,14 @@ const DRAGOVER_CLASS_LIST = [
   'rounded-md'
 ]
 
-export interface FileHandlerOptions {
+export interface ClipboardAndDropHandlerOptions {
   onUploadStart?: (file: File) => void
   onUploadSuccess?: (file: File, result: any) => void
   onUploadError?: (file: File, error: any) => void
 }
 
-export const FileHandler = Extension.create<FileHandlerOptions>({
-  name: 'fileHandler',
+export const ClipboardAndDropHandler = Extension.create<ClipboardAndDropHandlerOptions>({
+  name: 'clipboardAndDropHandler',
 
   addOptions() {
     return {
@@ -61,17 +61,38 @@ export const FileHandler = Extension.create<FileHandlerOptions>({
           },
           handlePaste(view, event) {
             const items = Array.from(event.clipboardData?.items ?? [])
-            const mediaItem = items.find(
-              (item) => item.type.includes('image') || item.type.includes('video')
-            )
-            if (!mediaItem) return false
+            let handled = false
 
-            const file = mediaItem.getAsFile()
-            if (!file) return false
+            for (const item of items) {
+              if (
+                item.kind === 'file' &&
+                (item.type.includes('image') || item.type.includes('video'))
+              ) {
+                const file = item.getAsFile()
+                if (file) {
+                  uploadFile(view, file, options)
+                  handled = true
+                }
+              } else if (item.kind === 'string' && item.type === 'text/plain') {
+                item.getAsString((text) => {
+                  const { schema } = view.state
+                  const parts = text.split('\n')
+                  const nodes = []
+                  for (let i = 0; i < parts.length; i++) {
+                    if (i > 0) nodes.push(schema.nodes.hardBreak.create())
+                    if (parts[i]) nodes.push(schema.text(parts[i]))
+                  }
+                  const fragment = schema.nodes.paragraph.create(null, nodes)
+                  const tr = view.state.tr.replaceSelectionWith(fragment)
+                  view.dispatch(tr)
+                })
+                handled = true
+              }
 
-            uploadFile(view, file, options)
-
-            return true
+              // Only handle the first file/string item
+              if (handled) break
+            }
+            return handled
           }
         }
       })
@@ -79,7 +100,7 @@ export const FileHandler = Extension.create<FileHandlerOptions>({
   }
 })
 
-async function uploadFile(view: EditorView, file: File, options: FileHandlerOptions) {
+async function uploadFile(view: EditorView, file: File, options: ClipboardAndDropHandlerOptions) {
   const name = file.name
 
   options.onUploadStart?.(file)

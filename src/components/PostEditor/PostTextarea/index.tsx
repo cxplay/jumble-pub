@@ -2,6 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { parseEditorJsonToText } from '@/lib/tiptap'
 import postContentCache from '@/services/post-content-cache.service'
 import Document from '@tiptap/extension-document'
+import { HardBreak } from '@tiptap/extension-hard-break'
 import History from '@tiptap/extension-history'
 import Paragraph from '@tiptap/extension-paragraph'
 import Placeholder from '@tiptap/extension-placeholder'
@@ -12,8 +13,8 @@ import { Event } from 'nostr-tools'
 import { Dispatch, forwardRef, SetStateAction, useImperativeHandle } from 'react'
 import { useTranslation } from 'react-i18next'
 import { usePostEditor } from '../PostEditorProvider'
+import { ClipboardAndDropHandler } from './ClipboardAndDropHandler'
 import CustomMention from './CustomMention'
-import { FileHandler } from './FileHandler'
 import Preview from './Preview'
 import suggestion from './suggestion'
 
@@ -40,13 +41,14 @@ const PostTextarea = forwardRef<
       Paragraph,
       Text,
       History,
+      HardBreak,
       Placeholder.configure({
         placeholder: t('Write something...') + ' (' + t('Paste or drop media files to upload') + ')'
       }),
       CustomMention.configure({
         suggestion
       }),
-      FileHandler.configure({
+      ClipboardAndDropHandler.configure({
         onUploadStart: () => setUploadingFiles((prev) => prev + 1),
         onUploadSuccess: () => setUploadingFiles((prev) => prev - 1),
         onUploadError: () => setUploadingFiles((prev) => prev - 1)
