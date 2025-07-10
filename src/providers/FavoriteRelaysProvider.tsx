@@ -81,7 +81,10 @@ export function FavoriteRelaysProvider({ children }: { children: React.ReactNode
 
       setFavoriteRelays(relays)
 
-      if (!pubkey) return
+      if (!pubkey || !relaySetIds.length) {
+        setRelaySets([])
+        return
+      }
       const storedRelaySetEvents = await Promise.all(
         relaySetIds.map((id) => indexedDb.getReplaceableEvent(pubkey, kinds.Relaysets, id))
       )
