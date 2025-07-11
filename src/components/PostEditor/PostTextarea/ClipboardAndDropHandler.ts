@@ -99,10 +99,8 @@ async function uploadFile(view: EditorView, file: File, options: ClipboardAndDro
   options.onUploadStart?.(file)
 
   const placeholder = `[Uploading "${name}"...]`
-  const uploadingNode = view.state.schema.text(placeholder)
-  const paragraph = view.state.schema.nodes.paragraph.create()
-  let tr = view.state.tr.replaceSelectionWith(uploadingNode)
-  tr = tr.insert(tr.selection.to, paragraph)
+  const uploadingNode = view.state.schema.text(placeholder + '\n')
+  const tr = view.state.tr.replaceSelectionWith(uploadingNode)
   view.dispatch(tr)
 
   mediaUpload
