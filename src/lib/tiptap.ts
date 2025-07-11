@@ -23,6 +23,10 @@ function _parseEditorJsonToText(node?: JSONContent): string {
     return node.text || ''
   }
 
+  if (node.type === 'hardBreak') {
+    return '\n'
+  }
+
   if (Array.isArray(node.content)) {
     return (
       node.content.map(_parseEditorJsonToText).join('') + (node.type === 'paragraph' ? '\n' : '')

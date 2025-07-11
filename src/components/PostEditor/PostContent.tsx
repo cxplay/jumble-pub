@@ -104,7 +104,7 @@ export default function PostContent({
         <div className="flex gap-2 items-center">
           <Uploader
             onUploadSuccess={({ url }) => {
-              textareaRef.current?.appendText(url + '\n')
+              textareaRef.current?.appendText(url, true)
             }}
             onUploadingChange={(uploading) =>
               setUploadingFiles((prev) => (uploading ? prev + 1 : prev - 1))

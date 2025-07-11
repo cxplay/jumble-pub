@@ -19,7 +19,7 @@ import Preview from './Preview'
 import suggestion from './suggestion'
 
 export type TPostTextareaHandle = {
-  appendText: (text: string) => void
+  appendText: (text: string, addNewline?: boolean) => void
   insertText: (text: string) => void
 }
 
@@ -80,9 +80,9 @@ const PostTextarea = forwardRef<
   })
 
   useImperativeHandle(ref, () => ({
-    appendText: (text: string) => {
+    appendText: (text: string, addNewline = false) => {
       if (editor) {
-        editor
+        let chain = editor
           .chain()
           .focus()
           .command(({ tr, dispatch }) => {
@@ -95,7 +95,10 @@ const PostTextarea = forwardRef<
             return true
           })
           .insertContent(text)
-          .run()
+        if (addNewline) {
+          chain = chain.setHardBreak()
+        }
+        chain.run()
       }
     },
     insertText: (text: string) => {
