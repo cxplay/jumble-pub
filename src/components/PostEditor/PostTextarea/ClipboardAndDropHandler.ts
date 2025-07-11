@@ -75,15 +75,8 @@ export const ClipboardAndDropHandler = Extension.create<ClipboardAndDropHandlerO
                 }
               } else if (item.kind === 'string' && item.type === 'text/plain') {
                 item.getAsString((text) => {
-                  const { schema } = view.state
-                  const parts = text.split('\n')
-                  const nodes = []
-                  for (let i = 0; i < parts.length; i++) {
-                    if (i > 0) nodes.push(schema.nodes.hardBreak.create())
-                    if (parts[i]) nodes.push(schema.text(parts[i]))
-                  }
-                  const fragment = schema.nodes.paragraph.create(null, nodes)
-                  const tr = view.state.tr.replaceSelectionWith(fragment)
+                  const textNode = view.state.schema.text(text)
+                  const tr = view.state.tr.replaceSelectionWith(textNode)
                   view.dispatch(tr)
                 })
                 handled = true
@@ -107,7 +100,9 @@ async function uploadFile(view: EditorView, file: File, options: ClipboardAndDro
 
   const placeholder = `[Uploading "${name}"...]`
   const uploadingNode = view.state.schema.text(placeholder)
-  const tr = view.state.tr.replaceSelectionWith(uploadingNode)
+  const paragraph = view.state.schema.nodes.paragraph.create()
+  let tr = view.state.tr.replaceSelectionWith(uploadingNode)
+  tr = tr.insert(tr.selection.to, paragraph)
   view.dispatch(tr)
 
   mediaUpload

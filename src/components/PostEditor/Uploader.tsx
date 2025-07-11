@@ -53,7 +53,6 @@ export default function Uploader({
         style={{ display: 'none' }}
         onChange={handleFileChange}
         accept={accept}
-        multiple
       />
     </div>
   )
