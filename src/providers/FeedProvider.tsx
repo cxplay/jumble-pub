@@ -142,7 +142,7 @@ export function FeedProvider({ children }: { children: React.ReactNode }) {
       let relaySet =
         relaySets.find((set) => set.id === relaySetId) ??
         (relaySets.length > 0 ? relaySets[0] : null)
-      if (!relaySet) {
+      if (!relaySet && pubkey) {
         const storedRelaySetEvent = await indexedDb.getReplaceableEvent(
           pubkey,
           kinds.Relaysets,
