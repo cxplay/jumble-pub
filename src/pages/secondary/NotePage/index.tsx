@@ -112,7 +112,7 @@ function ExternalRoot({ value }: { value: string }) {
   return (
     <div>
       <Card
-        className="flex space-x-1 p-1 items-center clickable text-sm text-muted-foreground hover:text-foreground"
+        className="flex space-x-1 px-1.5 py-1 items-center clickable text-sm text-muted-foreground hover:text-foreground"
         onClick={() => push(toNoteList({ externalContentId: value }))}
       >
         <div className="truncate">{value}</div>
@@ -136,7 +136,7 @@ function ParentNote({
   if (isFetching) {
     return (
       <div>
-        <Card className="flex space-x-1 px-2 py-1 items-center clickable text-sm text-muted-foreground">
+        <Card className="flex space-x-1 px-1.5 py-1 items-center clickable text-sm text-muted-foreground">
           <Skeleton className="shrink w-4 h-4 rounded-full" />
           <div className="py-1 flex-1">
             <Skeleton className="h-3" />
