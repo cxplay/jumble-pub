@@ -451,7 +451,7 @@ export function extractHashtags(content: string) {
 export function extractImageInfosFromEventTags(event: Event) {
   const images: TImageInfo[] = []
   event.tags.forEach((tag) => {
-    const imageInfo = extractImageInfoFromTag(tag)
+    const imageInfo = extractImageInfoFromTag(tag, event.pubkey)
     if (imageInfo) {
       images.push(imageInfo)
     }
@@ -586,6 +586,13 @@ export function extractEmojiInfosFromTags(tags: string[][] = []) {
       return { shortcode: tag[1], url: tag[2] }
     })
     .filter(Boolean) as TEmoji[]
+}
+
+export function extractServersFromTags(tags: string[][] = []) {
+  return tags
+    .filter(tagNameEquals('server'))
+    .map(([, url]) => (url ? normalizeHttpUrl(url) : ''))
+    .filter(Boolean)
 }
 
 export function createFakeEvent(event: Partial<Event>): Event {
