@@ -1,8 +1,6 @@
 import { simplifyUrl } from '@/lib/url'
 import { TDraftEvent, TMediaUploadServiceConfig } from '@/types'
 import { BlossomClient } from 'blossom-client-sdk'
-import dayjs from 'dayjs'
-import { kinds } from 'nostr-tools'
 import { z } from 'zod'
 import client from './client.service'
 import storage from './local-storage.service'
@@ -58,7 +56,7 @@ class MediaUploadService {
     const [mainServer, ...mirrorServers] = servers
 
     const auth = await BlossomClient.createUploadAuth(signer, file, {
-      message: `Uploading ${file.name}`
+      message: 'Uploading media file'
     })
 
     // first upload blob to main server
@@ -101,7 +99,7 @@ class MediaUploadService {
     const formData = new FormData()
     formData.append('file', file)
 
-    const auth = await this.signHttpAuth(uploadUrl, 'POST')
+    const auth = await client.signHttpAuth(uploadUrl, 'POST', 'Uploading media file')
     const response = await fetch(uploadUrl, {
       method: 'POST',
       body: formData,
@@ -126,22 +124,6 @@ class MediaUploadService {
 
   getImetaTagByUrl(url: string) {
     return this.imetaTagMap.get(url)
-  }
-
-  async signHttpAuth(url: string, method: string) {
-    if (!client.signer) {
-      throw new Error('No signer found')
-    }
-    const event = await client.signer.signEvent({
-      content: '',
-      kind: kinds.HTTPAuth,
-      created_at: dayjs().unix(),
-      tags: [
-        ['u', url],
-        ['method', method]
-      ]
-    })
-    return 'Nostr ' + btoa(JSON.stringify(event))
   }
 }
 
