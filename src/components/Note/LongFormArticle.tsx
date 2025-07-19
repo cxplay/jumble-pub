@@ -1,5 +1,5 @@
 import { Badge } from '@/components/ui/badge'
-import { getLongFormArticleMetadata } from '@/lib/event'
+import { getLongFormArticleMetadataFromEvent } from '@/lib/event-metadata'
 import { useScreenSize } from '@/providers/ScreenSizeProvider'
 import { Event } from 'nostr-tools'
 import { useMemo } from 'react'
@@ -14,7 +14,7 @@ export default function LongFormArticle({
   className?: string
 }) {
   const { isSmallScreen } = useScreenSize()
-  const metadata = useMemo(() => getLongFormArticleMetadata(event), [event])
+  const metadata = useMemo(() => getLongFormArticleMetadataFromEvent(event), [event])
 
   const titleComponent = <div className="text-xl font-semibold line-clamp-2">{metadata.title}</div>
 

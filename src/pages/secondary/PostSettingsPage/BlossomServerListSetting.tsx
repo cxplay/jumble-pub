@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
 import { RECOMMENDED_BLOSSOM_SERVERS } from '@/constants'
 import { createBlossomServerListDraftEvent } from '@/lib/draft-event'
-import { extractServersFromTags } from '@/lib/event'
+import { getServersFromServerTags } from '@/lib/tag'
 import { cn } from '@/lib/utils'
 import { useNostr } from '@/providers/NostrProvider'
 import client from '@/services/client.service'
@@ -18,7 +18,7 @@ export default function BlossomServerListSetting() {
   const { pubkey, publish } = useNostr()
   const [blossomServerListEvent, setBlossomServerListEvent] = useState<Event | null>(null)
   const serverUrls = useMemo(() => {
-    return extractServersFromTags(blossomServerListEvent ? blossomServerListEvent.tags : [])
+    return getServersFromServerTags(blossomServerListEvent ? blossomServerListEvent.tags : [])
   }, [blossomServerListEvent])
   const [url, setUrl] = useState('')
   const [removingIndex, setRemovingIndex] = useState(-1)

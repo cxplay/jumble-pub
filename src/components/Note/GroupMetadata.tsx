@@ -1,4 +1,4 @@
-import { getGroupMetadata } from '@/lib/event'
+import { getGroupMetadataFromEvent } from '@/lib/event-metadata'
 import { Event } from 'nostr-tools'
 import { useMemo } from 'react'
 import ClientSelect from '../ClientSelect'
@@ -13,7 +13,7 @@ export default function GroupMetadata({
   originalNoteId?: string
   className?: string
 }) {
-  const metadata = useMemo(() => getGroupMetadata(event), [event])
+  const metadata = useMemo(() => getGroupMetadataFromEvent(event), [event])
 
   const groupNameComponent = (
     <div className="text-xl font-semibold line-clamp-1">{metadata.name}</div>

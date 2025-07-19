@@ -1,12 +1,8 @@
 import LoginDialog from '@/components/LoginDialog'
 import { ApplicationDataKey, BIG_RELAY_URLS, ExtendedKind } from '@/constants'
 import { createSeenNotificationsAtDraftEvent } from '@/lib/draft-event'
-import {
-  getLatestEvent,
-  getProfileFromProfileEvent,
-  getRelayListFromRelayListEvent,
-  getReplaceableEventIdentifier
-} from '@/lib/event'
+import { getLatestEvent, getReplaceableEventIdentifier } from '@/lib/event'
+import { getProfileFromEvent, getRelayListFromEvent } from '@/lib/event-metadata'
 import { formatPubkey, isValidPubkey, pubkeyToNpub } from '@/lib/pubkey'
 import client from '@/services/client.service'
 import indexedDb from '@/services/indexed-db.service'
@@ -172,11 +168,11 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
         indexedDb.getReplaceableEvent(account.pubkey, ExtendedKind.FAVORITE_RELAYS)
       ])
       if (storedRelayListEvent) {
-        setRelayList(getRelayListFromRelayListEvent(storedRelayListEvent))
+        setRelayList(getRelayListFromEvent(storedRelayListEvent))
       }
       if (storedProfileEvent) {
         setProfileEvent(storedProfileEvent)
-        setProfile(getProfileFromProfileEvent(storedProfileEvent))
+        setProfile(getProfileFromEvent(storedProfileEvent))
       }
       if (storedFollowListEvent) {
         setFollowListEvent(storedFollowListEvent)
@@ -196,7 +192,7 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
         authors: [account.pubkey]
       })
       const relayListEvent = getLatestEvent(relayListEvents) ?? storedRelayListEvent
-      const relayList = getRelayListFromRelayListEvent(relayListEvent)
+      const relayList = getRelayListFromEvent(relayListEvent)
       if (relayListEvent) {
         client.updateRelayListCache(relayListEvent)
         await indexedDb.putReplaceableEvent(relayListEvent)
@@ -237,7 +233,7 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
       )
       if (profileEvent) {
         setProfileEvent(profileEvent)
-        setProfile(getProfileFromProfileEvent(profileEvent))
+        setProfile(getProfileFromEvent(profileEvent))
         await indexedDb.putReplaceableEvent(profileEvent)
       } else if (!storedProfileEvent) {
         setProfile({
@@ -639,13 +635,13 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
 
   const updateRelayListEvent = async (relayListEvent: Event) => {
     const newRelayList = await indexedDb.putReplaceableEvent(relayListEvent)
-    setRelayList(getRelayListFromRelayListEvent(newRelayList))
+    setRelayList(getRelayListFromEvent(newRelayList))
   }
 
   const updateProfileEvent = async (profileEvent: Event) => {
     const newProfileEvent = await indexedDb.putReplaceableEvent(profileEvent)
     setProfileEvent(newProfileEvent)
-    setProfile(getProfileFromProfileEvent(newProfileEvent))
+    setProfile(getProfileFromEvent(newProfileEvent))
   }
 
   const updateFollowListEvent = async (followListEvent: Event) => {

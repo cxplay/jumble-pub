@@ -11,8 +11,8 @@ import {
   EmbeddedWebsocketUrlParser,
   parseContent
 } from '@/lib/content-parser'
-import { extractEmojiInfosFromTags } from '@/lib/event'
-import { extractImageInfoFromTag } from '@/lib/tag'
+import { getImageInfosFromEvent } from '@/lib/event'
+import { getEmojiInfosFromEmojiTags, getImageInfoFromImetaTag } from '@/lib/tag'
 import { cn } from '@/lib/utils'
 import mediaUpload from '@/services/media-upload.service'
 import { TImageInfo } from '@/types'
@@ -45,9 +45,7 @@ const Content = memo(({ event, className }: { event: Event; className?: string }
     EmbeddedEmojiParser
   ])
 
-  const imageInfos = event.tags
-    .map((tag) => extractImageInfoFromTag(tag, event.pubkey))
-    .filter(Boolean) as TImageInfo[]
+  const imageInfos = getImageInfosFromEvent(event)
   const allImages = nodes
     .map((node) => {
       if (node.type === 'image') {
@@ -57,7 +55,7 @@ const Content = memo(({ event, className }: { event: Event; className?: string }
         }
         const tag = mediaUpload.getImetaTagByUrl(node.data)
         return tag
-          ? extractImageInfoFromTag(tag, event.pubkey)
+          ? getImageInfoFromImetaTag(tag, event.pubkey)
           : { url: node.data, pubkey: event.pubkey }
       }
       if (node.type === 'images') {
@@ -73,7 +71,7 @@ const Content = memo(({ event, className }: { event: Event; className?: string }
     .flat() as TImageInfo[]
   let imageIndex = 0
 
-  const emojiInfos = extractEmojiInfosFromTags(event.tags)
+  const emojiInfos = getEmojiInfosFromEmojiTags(event.tags)
 
   const lastNormalUrlNode = nodes.findLast((node) => node.type === 'url')
   const lastNormalUrl =
