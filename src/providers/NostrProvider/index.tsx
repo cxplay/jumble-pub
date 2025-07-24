@@ -67,6 +67,8 @@ type TNostrContext = {
 
 const NostrContext = createContext<TNostrContext | undefined>(undefined)
 
+let lastPublishedSeenNotificationsAtEventAt = -1
+
 export const useNostr = () => {
   const context = useContext(NostrContext)
   if (!context) {
@@ -682,7 +684,15 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
     setTimeout(() => {
       setNotificationsSeenAt(now)
     }, 5_000)
-    await publish(createSeenNotificationsAtDraftEvent())
+
+    // Prevent too frequent requests for signing seen notifications events
+    if (
+      lastPublishedSeenNotificationsAtEventAt < 0 ||
+      now - lastPublishedSeenNotificationsAtEventAt > 10 * 60 // 10 minutes
+    ) {
+      await publish(createSeenNotificationsAtDraftEvent())
+      lastPublishedSeenNotificationsAtEventAt = now
+    }
   }
 
   return (
