@@ -119,11 +119,7 @@ class PollResultsService {
       }
     }
 
-    const responseEvents = await client.fetchEvents(relays, {
-      kinds: [ExtendedKind.POLL_RESPONSE],
-      '#e': [pollEventId],
-      limit: 1000
-    })
+    const responseEvents = await client.fetchEvents(relays, filter)
 
     results.updatedAt = dayjs().unix()
 
