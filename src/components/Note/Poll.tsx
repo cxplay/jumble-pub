@@ -150,7 +150,7 @@ export default function Poll({ event, className }: { event: Event; className?: s
             const totalVotes = pollResults?.totalVotes ?? 0
             const percentage = !canVote && totalVotes > 0 ? (votes / totalVotes) * 100 : 0
             const isMax =
-              pollResults && pollResults.totalVotes > 0
+              pollResults && pollResults.totalVotes > 0 && !canVote
                 ? Object.values(pollResults.results).every((res) => res.size <= votes)
                 : false
 
