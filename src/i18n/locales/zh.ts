@@ -312,6 +312,7 @@ export default {
     'Clear end date': '清除结束日期',
     'Relay URLs (optional, comma-separated)': '中继服务器 URL（可选，逗号分隔）',
     'Remove poll': '移除投票',
-    'Refresh results': '刷新结果'
+    'Refresh results': '刷新结果',
+    Poll: '投票'
   }
 }

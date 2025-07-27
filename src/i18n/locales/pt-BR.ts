@@ -315,6 +315,7 @@ export default {
     'Clear end date': 'Limpar data de término',
     'Relay URLs (optional, comma-separated)': 'URLs de relay (opcional, separadas por vírgulas)',
     'Remove poll': 'Remover enquete',
-    'Refresh results': 'Atualizar resultados'
+    'Refresh results': 'Atualizar resultados',
+    Poll: 'Enquete'
   }
 }

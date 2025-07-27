@@ -317,6 +317,7 @@ export default {
     'Clear end date': 'Очистить дату окончания',
     'Relay URLs (optional, comma-separated)': 'URL релеев (необязательно, через запятую)',
     'Remove poll': 'Удалить опрос',
-    'Refresh results': 'Обновить результаты'
+    'Refresh results': 'Обновить результаты',
+    Poll: 'Опрос'
   }
 }

@@ -48,6 +48,14 @@ export default function ContentPreview({
     )
   }
 
+  if (event.kind === ExtendedKind.POLL) {
+    return (
+      <div className={cn('pointer-events-none', className)}>
+        [{t('Poll')}] <span className="italic pr-0.5">{event.content}</span>
+      </div>
+    )
+  }
+
   if (event.kind === kinds.LongFormArticle) {
     return <LongFormArticlePreview event={event} className={className} onClick={onClick} />
   }

@@ -316,6 +316,7 @@ export default {
     'Relay URLs (optional, comma-separated)':
       'Adresy URL przekaźników (opcjonalne, oddzielone przecinkami)',
     'Remove poll': 'Usuń ankietę',
-    'Refresh results': 'Odśwież wyniki'
+    'Refresh results': 'Odśwież wyniki',
+    Poll: 'Ankieta'
   }
 }

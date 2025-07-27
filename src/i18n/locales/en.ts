@@ -312,6 +312,7 @@ export default {
     'Clear end date': 'Clear end date',
     'Relay URLs (optional, comma-separated)': 'Relay URLs (optional, comma-separated)',
     'Remove poll': 'Remove poll',
-    'Refresh results': 'Refresh results'
+    'Refresh results': 'Refresh results',
+    Poll: 'Poll'
   }
 }

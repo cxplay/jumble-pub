@@ -316,6 +316,7 @@ export default {
     'Clear end date': 'Cancella data di fine',
     'Relay URLs (optional, comma-separated)': 'URL relay (opzionale, separati da virgole)',
     'Remove poll': 'Rimuovi sondaggio',
-    'Refresh results': 'Aggiorna risultati'
+    'Refresh results': 'Aggiorna risultati',
+    Poll: 'Sondaggio'
   }
 }

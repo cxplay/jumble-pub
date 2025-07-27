@@ -311,6 +311,7 @@ export default {
     'Clear end date': 'ล้างวันที่สิ้นสุด',
     'Relay URLs (optional, comma-separated)': 'URL รีเลย์ (ไม่บังคับ, คั่นด้วยจุลภาค)',
     'Remove poll': 'ลบโพลล์',
-    'Refresh results': 'รีเฟรชผลลัพธ์'
+    'Refresh results': 'รีเฟรชผลลัพธ์',
+    Poll: 'โพลล์'
   }
 }

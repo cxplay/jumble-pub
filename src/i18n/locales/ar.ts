@@ -312,6 +312,7 @@ export default {
     'Clear end date': 'مسح تاريخ الانتهاء',
     'Relay URLs (optional, comma-separated)': 'عناوين المرحلات (اختياري، مفصولة بفواصل)',
     'Remove poll': 'إزالة الاستطلاع',
-    'Refresh results': 'تحديث النتائج'
+    'Refresh results': 'تحديث النتائج',
+    Poll: 'استطلاع'
   }
 }
