@@ -28,6 +28,7 @@ export default {
     'Unfollow failed': 'لغو دنبال کردن ناموفق',
     'show new notes': 'نمایش یادداشت‌های جدید',
     'loading...': 'در حال بارگذاری...',
+    'Loading...': 'در حال بارگذاری...',
     'no more notes': 'یادداشت بیشتری وجود ندارد',
     'reply to': 'پاسخ به',
     reply: 'پاسخ',
@@ -312,6 +313,7 @@ export default {
     'End Date (optional)': 'تاریخ پایان (اختیاری)',
     'Clear end date': 'پاک کردن تاریخ پایان',
     'Relay URLs (optional, comma-separated)': 'آدرس‌های رله (اختیاری، جدا شده با کاما)',
-    'Remove poll': 'حذف نظرسنجی'
+    'Remove poll': 'حذف نظرسنجی',
+    'Refresh results': 'بارگیری مجدد نتایج'
   }
 }

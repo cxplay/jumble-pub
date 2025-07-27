@@ -28,6 +28,7 @@ export default {
     'Unfollow failed': '언팔로우 실패',
     'show new notes': '새 노트 보기',
     'loading...': '로딩 중...',
+    'Loading...': '로딩 중...',
     'no more notes': '더 이상 노트 없음',
     'reply to': '답글',
     reply: '답글',
@@ -312,6 +313,7 @@ export default {
     'End Date (optional)': '종료 날짜 (선택사항)',
     'Clear end date': '종료 날짜 지우기',
     'Relay URLs (optional, comma-separated)': '릴레이 URL (선택사항, 쉼표로 구분)',
-    'Remove poll': '투표 제거'
+    'Remove poll': '투표 제거',
+    'Refresh results': '결과 새로 고침'
   }
 }

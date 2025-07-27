@@ -28,6 +28,7 @@ export default {
     'Unfollow failed': '取消关注失败',
     'show new notes': '显示新笔记',
     'loading...': '加载中...',
+    'Loading...': '加载中...',
     'no more notes': '到底了',
     'reply to': '回复',
     reply: '回复',
@@ -310,6 +311,7 @@ export default {
     'End Date (optional)': '结束日期（可选）',
     'Clear end date': '清除结束日期',
     'Relay URLs (optional, comma-separated)': '中继服务器 URL（可选，逗号分隔）',
-    'Remove poll': '移除投票'
+    'Remove poll': '移除投票',
+    'Refresh results': '刷新结果'
   }
 }

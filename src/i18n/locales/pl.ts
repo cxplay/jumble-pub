@@ -28,6 +28,7 @@ export default {
     'Unfollow failed': 'Porzucenie obserwacji nieudane',
     'show new notes': 'Pokaż nowe wpisy',
     'loading...': 'ładowanie...',
+    'Loading...': 'Ładowanie...',
     'no more notes': 'Koniec wpisów',
     'reply to': 'Odpowiedź na',
     reply: 'odpowiedz',
@@ -314,6 +315,7 @@ export default {
     'Clear end date': 'Wyczyść datę zakończenia',
     'Relay URLs (optional, comma-separated)':
       'Adresy URL przekaźników (opcjonalne, oddzielone przecinkami)',
-    'Remove poll': 'Usuń ankietę'
+    'Remove poll': 'Usuń ankietę',
+    'Refresh results': 'Odśwież wyniki'
   }
 }

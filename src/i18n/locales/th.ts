@@ -28,6 +28,7 @@ export default {
     'Unfollow failed': 'เลิกติดตามไม่สำเร็จ',
     'show new notes': 'แสดงโน้ตใหม่',
     'loading...': 'กำลังโหลด...',
+    'Loading...': 'กำลังโหลด...',
     'no more notes': 'ไม่มีโน้ตเพิ่มเติม',
     'reply to': 'ตอบกลับถึง',
     reply: 'ตอบกลับ',
@@ -309,6 +310,7 @@ export default {
     'End Date (optional)': 'วันที่สิ้นสุด (ไม่บังคับ)',
     'Clear end date': 'ล้างวันที่สิ้นสุด',
     'Relay URLs (optional, comma-separated)': 'URL รีเลย์ (ไม่บังคับ, คั่นด้วยจุลภาค)',
-    'Remove poll': 'ลบโพลล์'
+    'Remove poll': 'ลบโพลล์',
+    'Refresh results': 'รีเฟรชผลลัพธ์'
   }
 }

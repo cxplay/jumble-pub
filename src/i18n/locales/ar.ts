@@ -29,6 +29,7 @@ export default {
     'Unfollow failed': 'فشل إلغاء المتابعة',
     'show new notes': 'إظهار الملاحظات الجديدة',
     'loading...': 'جار التحميل...',
+    'Loading...': 'جار التحميل...',
     'no more notes': 'لا توجد ملاحظات إضافية',
     'reply to': 'الرد على',
     reply: 'رد',
@@ -310,6 +311,7 @@ export default {
     'End Date (optional)': 'تاريخ الانتهاء (اختياري)',
     'Clear end date': 'مسح تاريخ الانتهاء',
     'Relay URLs (optional, comma-separated)': 'عناوين المرحلات (اختياري، مفصولة بفواصل)',
-    'Remove poll': 'إزالة الاستطلاع'
+    'Remove poll': 'إزالة الاستطلاع',
+    'Refresh results': 'تحديث النتائج'
   }
 }

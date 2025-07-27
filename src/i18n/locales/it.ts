@@ -28,6 +28,7 @@ export default {
     'Unfollow failed': 'Disiscrizione non riuscita',
     'show new notes': 'mostra nuove note',
     'loading...': 'caricando...',
+    'Loading...': 'Caricamento in corso...',
     'no more notes': 'basta note',
     'reply to': 'replica a',
     reply: 'replica',
@@ -314,6 +315,7 @@ export default {
     'End Date (optional)': 'Data di fine (opzionale)',
     'Clear end date': 'Cancella data di fine',
     'Relay URLs (optional, comma-separated)': 'URL relay (opzionale, separati da virgole)',
-    'Remove poll': 'Rimuovi sondaggio'
+    'Remove poll': 'Rimuovi sondaggio',
+    'Refresh results': 'Aggiorna risultati'
   }
 }

@@ -1,5 +1,6 @@
 import { ExtendedKind } from '@/constants'
 import { getPollResponseFromEvent } from '@/lib/event-metadata'
+import DataLoader from 'dataloader'
 import dayjs from 'dayjs'
 import { Filter } from 'nostr-tools'
 import client from './client.service'
@@ -15,6 +16,56 @@ class PollResultsService {
   static instance: PollResultsService
   private pollResultsMap: Map<string, TPollResults> = new Map()
   private pollResultsSubscribers = new Map<string, Set<() => void>>()
+  private loader = new DataLoader<
+    {
+      pollEventId: string
+      relays: string[]
+      validPollOptionIds: string[]
+      isMultipleChoice: boolean
+      endsAt?: number
+    },
+    TPollResults | undefined
+  >(
+    async (params) => {
+      const pollMap = new Map<
+        string,
+        {
+          relays: string[]
+          validPollOptionIds: string[]
+          isMultipleChoice: boolean
+          endsAt?: number
+        }
+      >()
+
+      params.forEach(({ pollEventId, relays, validPollOptionIds, isMultipleChoice, endsAt }) => {
+        if (!pollMap.has(pollEventId)) {
+          pollMap.set(pollEventId, { relays, validPollOptionIds, isMultipleChoice, endsAt })
+        }
+      })
+
+      const pollResults = await Promise.allSettled(
+        Array.from(pollMap).map(async ([pollEventId, pollParams]) => {
+          const result = await this._fetchResults(
+            pollEventId,
+            pollParams.relays,
+            pollParams.validPollOptionIds,
+            pollParams.isMultipleChoice,
+            pollParams.endsAt
+          )
+          return { pollEventId, result }
+        })
+      )
+
+      const resultMap = new Map<string, TPollResults>()
+      pollResults.forEach((promiseResult) => {
+        if (promiseResult.status === 'fulfilled' && promiseResult.value.result) {
+          resultMap.set(promiseResult.value.pollEventId, promiseResult.value.result)
+        }
+      })
+      return params.map(({ pollEventId }) => resultMap.get(pollEventId))
+    },
+    { cache: false }
+  )
 
   constructor() {
     if (!PollResultsService.instance) {
@@ -30,6 +81,23 @@ class PollResultsService {
     isMultipleChoice: boolean,
     endsAt?: number
   ) {
+    return this.loader.load({
+      pollEventId,
+      relays,
+      validPollOptionIds,
+      isMultipleChoice,
+      endsAt
+    })
+  }
+
+  private async _fetchResults(
+    pollEventId: string,
+    relays: string[],
+    validPollOptionIds: string[],
+    isMultipleChoice: boolean,
+    endsAt?: number
+  ) {
+    console.log('Fetching poll results for:', pollEventId)
     const filter: Filter = {
       kinds: [ExtendedKind.POLL_RESPONSE],
       '#e': [pollEventId],

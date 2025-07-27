@@ -29,6 +29,7 @@ export default {
     'Unfollow failed': 'Ошибка отписки',
     'show new notes': 'показать новые заметки',
     'loading...': 'загрузка...',
+    'Loading...': 'Загрузка...',
     'no more notes': 'больше нет заметок',
     'reply to': 'ответить',
     reply: 'ответить',
@@ -315,6 +316,7 @@ export default {
     'End Date (optional)': 'Дата окончания (необязательно)',
     'Clear end date': 'Очистить дату окончания',
     'Relay URLs (optional, comma-separated)': 'URL релеев (необязательно, через запятую)',
-    'Remove poll': 'Удалить опрос'
+    'Remove poll': 'Удалить опрос',
+    'Refresh results': 'Обновить результаты'
   }
 }

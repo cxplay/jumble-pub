@@ -3,14 +3,14 @@ import { POLL_TYPE } from '@/constants'
 import { useFetchPollResults } from '@/hooks/useFetchPollResults'
 import { createPollResponseDraftEvent } from '@/lib/draft-event'
 import { getPollMetadataFromEvent } from '@/lib/event-metadata'
-import { cn } from '@/lib/utils'
+import { cn, isPartiallyInViewport } from '@/lib/utils'
 import { useNostr } from '@/providers/NostrProvider'
 import client from '@/services/client.service'
 import pollResultsService from '@/services/poll-results.service'
 import dayjs from 'dayjs'
 import { CheckCircle2, Loader2 } from 'lucide-react'
 import { Event } from 'nostr-tools'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 
@@ -32,6 +32,30 @@ export default function Poll({ event, className }: { event: Event; className?: s
   const isExpired = useMemo(() => poll?.endsAt && dayjs().unix() > poll.endsAt, [poll])
   const isMultipleChoice = useMemo(() => poll?.pollType === POLL_TYPE.MULTIPLE_CHOICE, [poll])
   const canVote = useMemo(() => !isExpired && !votedOptionIds.length, [isExpired, votedOptionIds])
+  const [containerElement, setContainerElement] = useState<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    if (pollResults || isLoadingResults || !containerElement) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            if (isPartiallyInViewport(containerElement)) {
+              fetchResults()
+            }
+          }, 200)
+        }
+      },
+      { threshold: 0.1 }
+    )
+
+    observer.observe(containerElement)
+
+    return () => {
+      observer.unobserve(containerElement)
+    }
+  }, [pollResults, isLoadingResults, containerElement])
 
   if (!poll) {
     return null
@@ -102,12 +126,21 @@ export default function Poll({ event, className }: { event: Event; className?: s
   }
 
   return (
-    <div className={className}>
+    <div className={className} ref={setContainerElement}>
       <div className="space-y-2">
         <div className="text-sm text-muted-foreground">
-          {poll.pollType === POLL_TYPE.MULTIPLE_CHOICE && (
-            <p>{t('Multiple choice (select one or more)')}</p>
-          )}
+          <p>
+            {poll.pollType === POLL_TYPE.MULTIPLE_CHOICE &&
+              t('Multiple choice (select one or more)')}
+          </p>
+          <p>
+            {!!poll.endsAt &&
+              (isExpired
+                ? t('Poll has ended')
+                : t('Poll ends at {{time}}', {
+                    time: new Date(poll.endsAt * 1000).toLocaleString()
+                  }))}
+          </p>
         </div>
 
         {/* Poll Options */}
@@ -115,7 +148,7 @@ export default function Poll({ event, className }: { event: Event; className?: s
           {poll.options.map((option) => {
             const votes = pollResults?.results?.[option.id]?.size ?? 0
             const totalVotes = pollResults?.totalVotes ?? 0
-            const percentage = totalVotes > 0 ? (votes / totalVotes) * 100 : 0
+            const percentage = !canVote && totalVotes > 0 ? (votes / totalVotes) * 100 : 0
             const isMax =
               pollResults && pollResults.totalVotes > 0
                 ? Object.values(pollResults.results).every((res) => res.size <= votes)
@@ -148,7 +181,7 @@ export default function Poll({ event, className }: { event: Event; className?: s
                     <CheckCircle2 className="size-4 shrink-0" />
                   )}
                 </div>
-                {!!pollResults && (
+                {!canVote && (
                   <div
                     className={cn(
                       'text-muted-foreground shrink-0 z-10',
@@ -173,49 +206,37 @@ export default function Poll({ event, className }: { event: Event; className?: s
         </div>
 
         {/* Results Summary */}
-        <div className="text-sm text-muted-foreground">
-          {!!pollResults && t('{{number}} votes', { number: pollResults.totalVotes ?? 0 })}
-          {!!pollResults && !!poll.endsAt && ' · '}
-          {!!poll.endsAt &&
-            (isExpired
-              ? t('Poll has ended')
-              : t('Poll ends at {{time}}', {
-                  time: new Date(poll.endsAt * 1000).toLocaleString()
-                }))}
+        <div className="flex justify-between items-center text-sm text-muted-foreground">
+          <div>{t('{{number}} votes', { number: pollResults?.totalVotes ?? 0 })}</div>
+
+          {isLoadingResults && t('Loading...')}
+          {!isLoadingResults && !canVote && (
+            <div
+              className="hover:underline cursor-pointer"
+              onClick={(e) => {
+                e.stopPropagation()
+                fetchResults()
+              }}
+            >
+              {!pollResults ? t('Load results') : t('Refresh results')}
+            </div>
+          )}
         </div>
 
-        {(canVote || !pollResults) && (
-          <div className="flex items-center justify-between gap-2">
-            {/* Vote Button */}
-            {canVote && (
-              <Button
-                onClick={(e) => {
-                  e.stopPropagation()
-                  if (selectedOptionIds.length === 0) return
-                  handleVote()
-                }}
-                disabled={!selectedOptionIds.length || isVoting}
-                className="flex-1"
-              >
-                {isVoting && <Loader2 className="animate-spin" />}
-                {t('Vote')}
-              </Button>
-            )}
-
-            {!pollResults && (
-              <Button
-                variant="secondary"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  fetchResults()
-                }}
-                disabled={isLoadingResults}
-              >
-                {isLoadingResults && <Loader2 className="animate-spin" />}
-                {t('Load results')}
-              </Button>
-            )}
-          </div>
+        {/* Vote Button */}
+        {canVote && !!selectedOptionIds.length && (
+          <Button
+            onClick={(e) => {
+              e.stopPropagation()
+              if (selectedOptionIds.length === 0) return
+              handleVote()
+            }}
+            disabled={!selectedOptionIds.length || isVoting}
+            className="w-full"
+          >
+            {isVoting && <Loader2 className="animate-spin" />}
+            {t('Vote')}
+          </Button>
         )}
       </div>
     </div>

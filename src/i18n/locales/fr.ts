@@ -29,6 +29,7 @@ export default {
     'Unfollow failed': "Échec de l'arrêt du suivi",
     'show new notes': 'afficher les nouvelles notes',
     'loading...': 'chargement...',
+    'Loading...': 'Chargement...',
     'no more notes': 'plus de notes',
     'reply to': 'répondre à',
     reply: 'répondre',
@@ -316,6 +317,7 @@ export default {
     'Clear end date': 'Effacer la date de fin',
     'Relay URLs (optional, comma-separated)':
       'URLs de relais (optionnel, séparées par des virgules)',
-    'Remove poll': 'Supprimer le sondage'
+    'Remove poll': 'Supprimer le sondage',
+    'Refresh results': 'Rafraîchir les résultats'
   }
 }

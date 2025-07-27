@@ -29,6 +29,7 @@ export default {
     'Unfollow failed': 'Nicht mehr folgen fehlgeschlagen',
     'show new notes': 'zeige neue Notizen',
     'loading...': 'lädt...',
+    'Loading...': 'Lade...',
     'no more notes': 'keine weiteren Notizen',
     'reply to': 'antworten an',
     reply: 'antworten',
@@ -317,6 +318,7 @@ export default {
     'End Date (optional)': 'Enddatum (optional)',
     'Clear end date': 'Enddatum löschen',
     'Relay URLs (optional, comma-separated)': 'Relay-URLs (optional, durch Kommas getrennt)',
-    'Remove poll': 'Umfrage entfernen'
+    'Remove poll': 'Umfrage entfernen',
+    'Refresh results': 'Ergebnisse aktualisieren'
   }
 }

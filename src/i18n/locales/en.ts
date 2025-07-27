@@ -28,6 +28,7 @@ export default {
     'Unfollow failed': 'Unfollow failed',
     'show new notes': 'show new notes',
     'loading...': 'loading...',
+    'Loading...': 'Loading...',
     'no more notes': 'no more notes',
     'reply to': 'reply to',
     reply: 'reply',
@@ -310,6 +311,7 @@ export default {
     'End Date (optional)': 'End Date (optional)',
     'Clear end date': 'Clear end date',
     'Relay URLs (optional, comma-separated)': 'Relay URLs (optional, comma-separated)',
-    'Remove poll': 'Remove poll'
+    'Remove poll': 'Remove poll',
+    'Refresh results': 'Refresh results'
   }
 }

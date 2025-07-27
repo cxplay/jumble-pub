@@ -29,6 +29,7 @@ export default {
     'Unfollow failed': 'フォロー解除に失敗しました',
     'show new notes': '新しいノートを表示',
     'loading...': '読み込み中...',
+    'Loading...': '読み込み中...',
     'no more notes': 'これ以上ノートはありません',
     'reply to': '返信先',
     reply: '返信',
@@ -312,6 +313,7 @@ export default {
     'End Date (optional)': '終了日（任意）',
     'Clear end date': '終了日をクリア',
     'Relay URLs (optional, comma-separated)': 'リレーURL（任意、カンマ区切り）',
-    'Remove poll': '投票を削除'
+    'Remove poll': '投票を削除',
+    'Refresh results': '結果を更新'
   }
 }
