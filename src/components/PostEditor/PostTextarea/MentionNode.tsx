@@ -8,10 +8,7 @@ export default function MentionNode(props: NodeViewRendererProps & { selected: b
 
   return (
     <NodeViewWrapper
-      className={cn(
-        'inline text-primary bg-primary/10 rounded-md px-1 transition-colors',
-        props.selected ? 'bg-primary/20' : ''
-      )}
+      className={cn('inline text-primary', props.selected ? 'bg-primary/20 rounded-sm' : '')}
     >
       {'@'}
       {profile ? profile.username : formatUserId(props.node.attrs.id)}
