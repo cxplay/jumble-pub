@@ -12,30 +12,21 @@ export type TPollResults = {
   updatedAt: number
 }
 
+type TFetchPollResultsParams = {
+  pollEventId: string
+  relays: string[]
+  validPollOptionIds: string[]
+  isMultipleChoice: boolean
+  endsAt?: number
+}
+
 class PollResultsService {
   static instance: PollResultsService
   private pollResultsMap: Map<string, TPollResults> = new Map()
   private pollResultsSubscribers = new Map<string, Set<() => void>>()
-  private loader = new DataLoader<
-    {
-      pollEventId: string
-      relays: string[]
-      validPollOptionIds: string[]
-      isMultipleChoice: boolean
-      endsAt?: number
-    },
-    TPollResults | undefined
-  >(
+  private loader = new DataLoader<TFetchPollResultsParams, TPollResults | undefined>(
     async (params) => {
-      const pollMap = new Map<
-        string,
-        {
-          relays: string[]
-          validPollOptionIds: string[]
-          isMultipleChoice: boolean
-          endsAt?: number
-        }
-      >()
+      const pollMap = new Map<string, Omit<TFetchPollResultsParams, 'pollEventId'>>()
 
       params.forEach(({ pollEventId, relays, validPollOptionIds, isMultipleChoice, endsAt }) => {
         if (!pollMap.has(pollEventId)) {
@@ -97,7 +88,6 @@ class PollResultsService {
     isMultipleChoice: boolean,
     endsAt?: number
   ) {
-    console.log('Fetching poll results for:', pollEventId)
     const filter: Filter = {
       kinds: [ExtendedKind.POLL_RESPONSE],
       '#e': [pollEventId],

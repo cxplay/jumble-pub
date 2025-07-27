@@ -72,7 +72,7 @@ type TNostrContext = {
 
 const NostrContext = createContext<TNostrContext | undefined>(undefined)
 
-let lastPublishedSeenNotificationsAtEventAt = -1
+const lastPublishedSeenNotificationsAtEventAtMap = new Map<string, number>()
 
 export const useNostr = () => {
   const context = useContext(NostrContext)
@@ -691,12 +691,14 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
     }, 5_000)
 
     // Prevent too frequent requests for signing seen notifications events
+    const lastPublishedSeenNotificationsAtEventAt =
+      lastPublishedSeenNotificationsAtEventAtMap.get(account.pubkey) ?? -1
     if (
       lastPublishedSeenNotificationsAtEventAt < 0 ||
       now - lastPublishedSeenNotificationsAtEventAt > 10 * 60 // 10 minutes
     ) {
       await publish(createSeenNotificationsAtDraftEvent())
-      lastPublishedSeenNotificationsAtEventAt = now
+      lastPublishedSeenNotificationsAtEventAtMap.set(account.pubkey, now)
     }
   }
 
