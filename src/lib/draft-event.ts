@@ -424,6 +424,7 @@ export function createPollResponseDraftEvent(
     kind: ExtendedKind.POLL_RESPONSE,
     tags: [
       buildETag(pollEvent.id, pollEvent.pubkey),
+      buildPTag(pollEvent.pubkey),
       ...selectedOptionIds.map((optionId) => buildResponseTag(optionId))
     ],
     created_at: dayjs().unix()
