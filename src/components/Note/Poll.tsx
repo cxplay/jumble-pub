@@ -37,6 +37,9 @@ export default function Poll({ event, className }: { event: Event; className?: s
   const isExpired = useMemo(() => poll?.endsAt && dayjs().unix() > poll.endsAt, [poll])
   const isMultipleChoice = useMemo(() => poll?.pollType === POLL_TYPE.MULTIPLE_CHOICE, [poll])
   const canVote = useMemo(() => !isExpired && !votedOptionIds.length, [isExpired, votedOptionIds])
+  const showResults = useMemo(() => {
+    return event.pubkey === pubkey || !canVote
+  }, [event, pubkey, canVote])
   const [containerElement, setContainerElement] = useState<HTMLDivElement | null>(null)
 
   useEffect(() => {
@@ -153,9 +156,9 @@ export default function Poll({ event, className }: { event: Event; className?: s
           {poll.options.map((option) => {
             const votes = pollResults?.results?.[option.id]?.size ?? 0
             const totalVotes = pollResults?.totalVotes ?? 0
-            const percentage = !canVote && totalVotes > 0 ? (votes / totalVotes) * 100 : 0
+            const percentage = showResults && totalVotes > 0 ? (votes / totalVotes) * 100 : 0
             const isMax =
-              pollResults && pollResults.totalVotes > 0 && !canVote
+              pollResults && pollResults.totalVotes > 0 && showResults
                 ? Object.values(pollResults.results).every((res) => res.size <= votes)
                 : false
 
@@ -186,7 +189,7 @@ export default function Poll({ event, className }: { event: Event; className?: s
                     <CheckCircle2 className="size-4 shrink-0" />
                   )}
                 </div>
-                {!canVote && (
+                {showResults && (
                   <div
                     className={cn(
                       'text-muted-foreground shrink-0 z-10',
@@ -215,7 +218,7 @@ export default function Poll({ event, className }: { event: Event; className?: s
           <div>{t('{{number}} votes', { number: pollResults?.totalVotes ?? 0 })}</div>
 
           {isLoadingResults && t('Loading...')}
-          {!isLoadingResults && !canVote && (
+          {!isLoadingResults && showResults && (
             <div
               className="hover:underline cursor-pointer"
               onClick={(e) => {
