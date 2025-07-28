@@ -171,7 +171,7 @@ export default function PostContent({
         defaultContent={defaultContent}
         parentEvent={parentEvent}
         onSubmit={() => post()}
-        className={isPoll ? 'h-20' : 'min-h-52'}
+        className={isPoll ? 'min-h-20' : 'min-h-52'}
       />
       {isPoll && (
         <PollEditor
