@@ -6,18 +6,16 @@ import { useTranslation } from 'react-i18next'
 
 export default function GroupMetadataPreview({
   event,
-  className,
-  onClick
+  className
 }: {
   event: Event
   className?: string
-  onClick?: React.MouseEventHandler<HTMLDivElement> | undefined
 }) {
   const { t } = useTranslation()
   const metadata = useMemo(() => getGroupMetadataFromEvent(event), [event])
 
   return (
-    <div className={cn('pointer-events-none', className)} onClick={onClick}>
+    <div className={cn('pointer-events-none', className)}>
       [{t('Group')}] <span className="italic pr-0.5">{metadata.name}</span>
     </div>
   )

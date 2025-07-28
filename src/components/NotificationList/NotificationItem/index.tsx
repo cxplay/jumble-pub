@@ -2,6 +2,7 @@ import { ExtendedKind } from '@/constants'
 import { useMuteList } from '@/providers/MuteListProvider'
 import { Event, kinds } from 'nostr-tools'
 import { CommentNotification } from './CommentNotification'
+import { PollResponseNotification } from './PollResponseNotification'
 import { ReactionNotification } from './ReactionNotification'
 import { ReplyNotification } from './ReplyNotification'
 import { RepostNotification } from './RepostNotification'
@@ -32,6 +33,9 @@ export function NotificationItem({
   }
   if (notification.kind === ExtendedKind.COMMENT) {
     return <CommentNotification notification={notification} isNew={isNew} />
+  }
+  if (notification.kind === ExtendedKind.POLL_RESPONSE) {
+    return <PollResponseNotification notification={notification} isNew={isNew} />
   }
   return null
 }

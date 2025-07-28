@@ -6,18 +6,16 @@ import { useTranslation } from 'react-i18next'
 
 export default function LongFormArticlePreview({
   event,
-  className,
-  onClick
+  className
 }: {
   event: Event
   className?: string
-  onClick?: React.MouseEventHandler<HTMLDivElement> | undefined
 }) {
   const { t } = useTranslation()
   const metadata = useMemo(() => getLongFormArticleMetadataFromEvent(event), [event])
 
   return (
-    <div className={cn('pointer-events-none', className)} onClick={onClick}>
+    <div className={cn('pointer-events-none', className)}>
       [{t('Article')}] <span className="italic pr-0.5">{metadata.title}</span>
     </div>
   )

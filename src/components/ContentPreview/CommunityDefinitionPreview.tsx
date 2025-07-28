@@ -6,18 +6,16 @@ import { useTranslation } from 'react-i18next'
 
 export default function CommunityDefinitionPreview({
   event,
-  className,
-  onClick
+  className
 }: {
   event: Event
   className?: string
-  onClick?: React.MouseEventHandler<HTMLDivElement> | undefined
 }) {
   const { t } = useTranslation()
   const metadata = useMemo(() => getCommunityDefinitionFromEvent(event), [event])
 
   return (
-    <div className={cn('pointer-events-none', className)} onClick={onClick}>
+    <div className={cn('pointer-events-none', className)}>
       [{t('Community')}] <span className="italic pr-0.5">{metadata.name}</span>
     </div>
   )

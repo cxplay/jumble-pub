@@ -6,18 +6,18 @@ import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import CommunityDefinitionPreview from './CommunityDefinitionPreview'
 import GroupMetadataPreview from './GroupMetadataPreview'
+import HighlightPreview from './HighlightPreview'
 import LiveEventPreview from './LiveEventPreview'
 import LongFormArticlePreview from './LongFormArticlePreview'
 import NormalContentPreview from './NormalContentPreview'
+import PollPreview from './PollPreview'
 
 export default function ContentPreview({
   event,
-  className,
-  onClick
+  className
 }: {
   event?: Event
   className?: string
-  onClick?: React.MouseEventHandler<HTMLDivElement> | undefined
 }) {
   const { t } = useTranslation()
   const { mutePubkeys } = useMuteList()
@@ -37,39 +37,31 @@ export default function ContentPreview({
   }
 
   if ([kinds.ShortTextNote, ExtendedKind.COMMENT, ExtendedKind.PICTURE].includes(event.kind)) {
-    return <NormalContentPreview event={event} className={className} onClick={onClick} />
+    return <NormalContentPreview event={event} className={className} />
   }
 
   if (event.kind === kinds.Highlights) {
-    return (
-      <div className={cn('pointer-events-none', className)}>
-        [{t('Highlight')}] <span className="italic pr-0.5">{event.content}</span>
-      </div>
-    )
+    return <HighlightPreview event={event} className={className} />
   }
 
   if (event.kind === ExtendedKind.POLL) {
-    return (
-      <div className={cn('pointer-events-none', className)}>
-        [{t('Poll')}] <span className="italic pr-0.5">{event.content}</span>
-      </div>
-    )
+    return <PollPreview event={event} className={className} />
   }
 
   if (event.kind === kinds.LongFormArticle) {
-    return <LongFormArticlePreview event={event} className={className} onClick={onClick} />
+    return <LongFormArticlePreview event={event} className={className} />
   }
 
   if (event.kind === ExtendedKind.GROUP_METADATA) {
-    return <GroupMetadataPreview event={event} className={className} onClick={onClick} />
+    return <GroupMetadataPreview event={event} className={className} />
   }
 
   if (event.kind === kinds.CommunityDefinition) {
-    return <CommunityDefinitionPreview event={event} className={className} onClick={onClick} />
+    return <CommunityDefinitionPreview event={event} className={className} />
   }
 
   if (event.kind === kinds.LiveEvent) {
-    return <LiveEventPreview event={event} className={className} onClick={onClick} />
+    return <LiveEventPreview event={event} className={className} />
   }
 
   return <div className={className}>[{t('Cannot handle event of kind k', { k: event.kind })}]</div>

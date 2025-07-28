@@ -111,14 +111,15 @@ function HighlightSource({ event }: { event: Event }) {
       <div className="shrink-0">{t('From')}</div>
       {pubkey && <UserAvatar userId={pubkey} size="xSmall" className="cursor-pointer" />}
       {referenceEvent ? (
-        <ContentPreview
+        <div
           className="truncate underline pointer-events-auto cursor-pointer hover:text-foreground"
-          event={referenceEvent}
           onClick={(e) => {
             e.stopPropagation()
             push(toNote(referenceEvent))
           }}
-        />
+        >
+          <ContentPreview event={referenceEvent} />
+        </div>
       ) : referenceEventId ? (
         <div className="truncate text-muted-foreground">
           <a

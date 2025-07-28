@@ -1,7 +1,7 @@
 import Image from '@/components/Image'
 import { useFetchEvent } from '@/hooks'
 import { toNote } from '@/lib/link'
-import { tagNameEquals } from '@/lib/tag'
+import { generateBech32IdFromETag, tagNameEquals } from '@/lib/tag'
 import { cn } from '@/lib/utils'
 import { useSecondaryPage } from '@/PageManager'
 import { useNostr } from '@/providers/NostrProvider'
@@ -26,7 +26,7 @@ export function ReactionNotification({
     if (targetPubkey !== pubkey) return undefined
 
     const eTag = notification.tags.findLast(tagNameEquals('e'))
-    return eTag?.[1]
+    return eTag ? generateBech32IdFromETag(eTag) : undefined
   }, [notification, pubkey])
   const { event } = useFetchEvent(eventId)
   const reaction = useMemo(() => {
