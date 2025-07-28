@@ -49,12 +49,12 @@ export const ClipboardAndDropHandler = Extension.create<ClipboardAndDropHandlerO
               view.dom.classList.remove(...DRAGOVER_CLASS_LIST)
 
               const items = Array.from(event.dataTransfer?.files ?? [])
-              const mediaFile = items.find(
+              const mediaFiles = items.filter(
                 (item) => item.type.includes('image') || item.type.includes('video')
               )
-              if (!mediaFile) return false
+              if (!mediaFiles.length) return false
 
-              uploadFile(view, mediaFile, options)
+              uploadFile(view, mediaFiles, options)
 
               return true
             }
@@ -70,7 +70,7 @@ export const ClipboardAndDropHandler = Extension.create<ClipboardAndDropHandlerO
               ) {
                 const file = item.getAsFile()
                 if (file) {
-                  uploadFile(view, file, options)
+                  uploadFile(view, [file], options)
                   handled = true
                 }
               } else if (item.kind === 'string' && item.type === 'text/plain') {
@@ -104,79 +104,85 @@ export const ClipboardAndDropHandler = Extension.create<ClipboardAndDropHandlerO
   }
 })
 
-async function uploadFile(view: EditorView, file: File, options: ClipboardAndDropHandlerOptions) {
-  const name = file.name
+async function uploadFile(
+  view: EditorView,
+  files: File[],
+  options: ClipboardAndDropHandlerOptions
+) {
+  for (const file of files) {
+    const name = file.name
 
-  options.onUploadStart?.(file)
+    options.onUploadStart?.(file)
 
-  const placeholder = `[Uploading "${name}"...]`
-  const uploadingNode = view.state.schema.text(placeholder)
-  const hardBreakNode = view.state.schema.nodes.hardBreak.create()
-  let tr = view.state.tr.replaceSelectionWith(uploadingNode)
-  tr = tr.insert(tr.selection.from, hardBreakNode)
-  view.dispatch(tr)
+    const placeholder = `[Uploading "${name}"...]`
+    const uploadingNode = view.state.schema.text(placeholder)
+    const hardBreakNode = view.state.schema.nodes.hardBreak.create()
+    let tr = view.state.tr.replaceSelectionWith(uploadingNode)
+    tr = tr.insert(tr.selection.from, hardBreakNode)
+    view.dispatch(tr)
 
-  mediaUpload
-    .upload(file)
-    .then((result) => {
-      options.onUploadSuccess?.(file, result)
-      const urlNode = view.state.schema.text(result.url)
+    mediaUpload
+      .upload(file)
+      .then((result) => {
+        options.onUploadSuccess?.(file, result)
+        const urlNode = view.state.schema.text(result.url)
 
-      const tr = view.state.tr
-      let didReplace = false
+        const tr = view.state.tr
+        let didReplace = false
 
-      view.state.doc.descendants((node, pos) => {
-        if (node.isText && node.text && node.text.includes(placeholder) && !didReplace) {
-          const startPos = node.text.indexOf(placeholder)
-          const from = pos + startPos
-          const to = from + placeholder.length
-          tr.replaceWith(from, to, urlNode)
-          didReplace = true
-          return false
+        view.state.doc.descendants((node, pos) => {
+          if (node.isText && node.text && node.text.includes(placeholder) && !didReplace) {
+            const startPos = node.text.indexOf(placeholder)
+            const from = pos + startPos
+            const to = from + placeholder.length
+            tr.replaceWith(from, to, urlNode)
+            didReplace = true
+            return false
+          }
+          return true
+        })
+
+        if (didReplace) {
+          view.dispatch(tr)
+        } else {
+          const endPos = view.state.doc.content.size
+
+          const paragraphNode = view.state.schema.nodes.paragraph.create(
+            null,
+            view.state.schema.text(result.url)
+          )
+
+          const insertTr = view.state.tr.insert(endPos, paragraphNode)
+          const newPos = endPos + 1 + result.url.length
+          insertTr.setSelection(TextSelection.near(insertTr.doc.resolve(newPos)))
+          view.dispatch(insertTr)
         }
-        return true
       })
+      .catch((error) => {
+        console.error('Upload failed:', error)
+        options.onUploadError?.(file, error)
 
-      if (didReplace) {
-        view.dispatch(tr)
-      } else {
-        const endPos = view.state.doc.content.size
+        const tr = view.state.tr
+        let didReplace = false
 
-        const paragraphNode = view.state.schema.nodes.paragraph.create(
-          null,
-          view.state.schema.text(result.url)
-        )
+        view.state.doc.descendants((node, pos) => {
+          if (node.isText && node.text && node.text.includes(placeholder) && !didReplace) {
+            const startPos = node.text.indexOf(placeholder)
+            const from = pos + startPos
+            const to = from + placeholder.length
+            const errorNode = view.state.schema.text(`[Error uploading "${name}"]`)
+            tr.replaceWith(from, to, errorNode)
+            didReplace = true
+            return false
+          }
+          return true
+        })
 
-        const insertTr = view.state.tr.insert(endPos, paragraphNode)
-        const newPos = endPos + 1 + result.url.length
-        insertTr.setSelection(TextSelection.near(insertTr.doc.resolve(newPos)))
-        view.dispatch(insertTr)
-      }
-    })
-    .catch((error) => {
-      console.error('Upload failed:', error)
-      options.onUploadError?.(file, error)
-
-      const tr = view.state.tr
-      let didReplace = false
-
-      view.state.doc.descendants((node, pos) => {
-        if (node.isText && node.text && node.text.includes(placeholder) && !didReplace) {
-          const startPos = node.text.indexOf(placeholder)
-          const from = pos + startPos
-          const to = from + placeholder.length
-          const errorNode = view.state.schema.text(`[Error uploading "${name}"]`)
-          tr.replaceWith(from, to, errorNode)
-          didReplace = true
-          return false
+        if (didReplace) {
+          view.dispatch(tr)
         }
-        return true
+
+        throw error
       })
-
-      if (didReplace) {
-        view.dispatch(tr)
-      }
-
-      throw error
-    })
+  }
 }
