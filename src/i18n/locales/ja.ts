@@ -315,6 +315,7 @@ export default {
     'Relay URLs (optional, comma-separated)': 'リレーURL（任意、カンマ区切り）',
     'Remove poll': '投票を削除',
     'Refresh results': '結果を更新',
-    Poll: '投票'
+    Poll: '投票',
+    media: 'メディア'
   }
 }

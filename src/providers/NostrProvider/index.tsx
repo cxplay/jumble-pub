@@ -557,13 +557,7 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
     const _additionalRelayUrls: string[] = additionalRelayUrls ?? []
     if (
       !specifiedRelayUrls?.length &&
-      [
-        kinds.ShortTextNote,
-        kinds.Reaction,
-        kinds.Repost,
-        ExtendedKind.COMMENT,
-        ExtendedKind.PICTURE
-      ].includes(draftEvent.kind)
+      ![kinds.Contacts, kinds.Mutelist].includes(draftEvent.kind)
     ) {
       const mentions: string[] = []
       draftEvent.tags.forEach(([tagName, tagValue]) => {

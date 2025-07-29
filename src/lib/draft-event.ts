@@ -494,28 +494,16 @@ async function extractRelatedEventIds(content: string, parentEvent?: Event) {
 
 async function extractCommentMentions(content: string, parentEvent: Event) {
   const quoteEventIds: string[] = []
-  const rootCoordinateTag =
-    parentEvent.kind === ExtendedKind.COMMENT
-      ? parentEvent.tags.find(tagNameEquals('A'))
-      : isReplaceableEvent(parentEvent.kind)
-        ? buildATag(parentEvent, true)
-        : undefined
-  const rootEventId =
-    parentEvent.kind === ExtendedKind.COMMENT
-      ? parentEvent.tags.find(tagNameEquals('E'))?.[1]
-      : parentEvent.id
-  const rootKind =
-    parentEvent.kind === ExtendedKind.COMMENT
-      ? parentEvent.tags.find(tagNameEquals('K'))?.[1]
-      : parentEvent.kind
-  const rootPubkey =
-    parentEvent.kind === ExtendedKind.COMMENT
-      ? parentEvent.tags.find(tagNameEquals('P'))?.[1]
-      : parentEvent.pubkey
-  const rootUrl =
-    parentEvent.kind === ExtendedKind.COMMENT
-      ? parentEvent.tags.find(tagNameEquals('I'))?.[1]
+  const isComment = [ExtendedKind.COMMENT, ExtendedKind.VOICE_COMMENT].includes(parentEvent.kind)
+  const rootCoordinateTag = isComment
+    ? parentEvent.tags.find(tagNameEquals('A'))
+    : isReplaceableEvent(parentEvent.kind)
+      ? buildATag(parentEvent, true)
       : undefined
+  const rootEventId = isComment ? parentEvent.tags.find(tagNameEquals('E'))?.[1] : parentEvent.id
+  const rootKind = isComment ? parentEvent.tags.find(tagNameEquals('K'))?.[1] : parentEvent.kind
+  const rootPubkey = isComment ? parentEvent.tags.find(tagNameEquals('P'))?.[1] : parentEvent.pubkey
+  const rootUrl = isComment ? parentEvent.tags.find(tagNameEquals('I'))?.[1] : undefined
 
   const addToSet = (arr: string[], item: string) => {
     if (!arr.includes(item)) arr.push(item)

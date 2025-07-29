@@ -21,7 +21,10 @@ export function isNsfwEvent(event: Event) {
 }
 
 export function isReplyNoteEvent(event: Event) {
-  if (![kinds.ShortTextNote, ExtendedKind.COMMENT].includes(event.kind)) return false
+  if ([ExtendedKind.COMMENT, ExtendedKind.VOICE_COMMENT].includes(event.kind)) {
+    return true
+  }
+  if (event.kind !== kinds.ShortTextNote) return false
 
   const cache = EVENT_IS_REPLY_NOTE_CACHE.get(event.id)
   if (cache !== undefined) return cache
@@ -44,11 +47,13 @@ export function isProtectedEvent(event: Event) {
 }
 
 export function getParentETag(event?: Event) {
-  if (!event || ![kinds.ShortTextNote, ExtendedKind.COMMENT].includes(event.kind)) return undefined
+  if (!event) return undefined
 
-  if (event.kind === ExtendedKind.COMMENT) {
+  if (event.kind === ExtendedKind.COMMENT || event.kind === ExtendedKind.VOICE_COMMENT) {
     return event.tags.find(tagNameEquals('e')) ?? event.tags.find(tagNameEquals('E'))
   }
+
+  if (event.kind !== kinds.ShortTextNote) return undefined
 
   let tag = event.tags.find(([tagName, , , marker]) => {
     return tagName === 'e' && marker === 'reply'
@@ -63,7 +68,12 @@ export function getParentETag(event?: Event) {
 }
 
 export function getParentATag(event?: Event) {
-  if (!event || ![kinds.ShortTextNote, ExtendedKind.COMMENT].includes(event.kind)) return undefined
+  if (
+    !event ||
+    ![kinds.ShortTextNote, ExtendedKind.COMMENT, ExtendedKind.VOICE_COMMENT].includes(event.kind)
+  ) {
+    return undefined
+  }
 
   return event.tags.find(tagNameEquals('a')) ?? event.tags.find(tagNameEquals('A'))
 }
@@ -86,11 +96,13 @@ export function getParentBech32Id(event?: Event) {
 }
 
 export function getRootETag(event?: Event) {
-  if (!event || ![kinds.ShortTextNote, ExtendedKind.COMMENT].includes(event.kind)) return undefined
+  if (!event) return undefined
 
-  if (event.kind === ExtendedKind.COMMENT) {
+  if (event.kind === ExtendedKind.COMMENT || ExtendedKind.VOICE_COMMENT) {
     return event.tags.find(tagNameEquals('E'))
   }
+
+  if (event.kind !== kinds.ShortTextNote) return undefined
 
   let tag = event.tags.find(([tagName, , , marker]) => {
     return tagName === 'e' && marker === 'root'
@@ -105,7 +117,12 @@ export function getRootETag(event?: Event) {
 }
 
 export function getRootATag(event?: Event) {
-  if (!event || event.kind !== ExtendedKind.COMMENT) return undefined
+  if (
+    !event ||
+    ![kinds.ShortTextNote, ExtendedKind.COMMENT, ExtendedKind.VOICE_COMMENT].includes(event.kind)
+  ) {
+    return undefined
+  }
 
   return event.tags.find(tagNameEquals('A'))
 }

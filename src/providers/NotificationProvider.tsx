@@ -50,10 +50,12 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
             {
               kinds: [
                 kinds.ShortTextNote,
-                ExtendedKind.COMMENT,
                 kinds.Reaction,
                 kinds.Repost,
-                kinds.Zap
+                kinds.Zap,
+                ExtendedKind.COMMENT,
+                ExtendedKind.POLL_RESPONSE,
+                ExtendedKind.VOICE_COMMENT
               ],
               '#p': [pubkey],
               since: notificationsSeenAt,

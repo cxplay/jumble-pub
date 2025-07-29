@@ -313,6 +313,7 @@ export default {
     'Relay URLs (optional, comma-separated)': 'Relay URLs (optional, comma-separated)',
     'Remove poll': 'Remove poll',
     'Refresh results': 'Refresh results',
-    Poll: 'Poll'
+    Poll: 'Poll',
+    media: 'media'
   }
 }

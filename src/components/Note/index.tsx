@@ -12,6 +12,7 @@ import { useMuteList } from '@/providers/MuteListProvider'
 import { useScreenSize } from '@/providers/ScreenSizeProvider'
 import { Event, kinds } from 'nostr-tools'
 import { useMemo, useState } from 'react'
+import AudioPlayer from '../AudioPlayer'
 import Content from '../Content'
 import { FormattedTimestamp } from '../FormattedTimestamp'
 import ImageGallery from '../ImageGallery'
@@ -71,7 +72,9 @@ export default function Note({
       ExtendedKind.GROUP_METADATA,
       ExtendedKind.PICTURE,
       ExtendedKind.COMMENT,
-      ExtendedKind.POLL
+      ExtendedKind.POLL,
+      ExtendedKind.VOICE,
+      ExtendedKind.VOICE_COMMENT
     ].includes(event.kind)
   ) {
     content = <UnknownNote className="mt-2" event={event} />
@@ -96,6 +99,8 @@ export default function Note({
         <Poll className="mt-2" event={event} />
       </>
     )
+  } else if (event.kind === ExtendedKind.VOICE || event.kind === ExtendedKind.VOICE_COMMENT) {
+    content = <AudioPlayer className="mt-2" src={event.content} />
   } else {
     content = <Content className="mt-2" event={event} />
   }

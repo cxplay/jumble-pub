@@ -313,6 +313,7 @@ export default {
     'Relay URLs (optional, comma-separated)': '中继服务器 URL（可选，逗号分隔）',
     'Remove poll': '移除投票',
     'Refresh results': '刷新结果',
-    Poll: '投票'
+    Poll: '投票',
+    media: '媒体'
   }
 }

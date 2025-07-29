@@ -318,6 +318,7 @@ export default {
     'Relay URLs (optional, comma-separated)': 'URL релеев (необязательно, через запятую)',
     'Remove poll': 'Удалить опрос',
     'Refresh results': 'Обновить результаты',
-    Poll: 'Опрос'
+    Poll: 'Опрос',
+    media: 'медиа'
   }
 }

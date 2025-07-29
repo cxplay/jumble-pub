@@ -315,6 +315,7 @@ export default {
     'Relay URLs (optional, comma-separated)': '릴레이 URL (선택사항, 쉼표로 구분)',
     'Remove poll': '투표 제거',
     'Refresh results': '결과 새로 고침',
-    Poll: '투표'
+    Poll: '투표',
+    media: '미디어'
   }
 }

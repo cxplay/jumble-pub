@@ -315,6 +315,7 @@ export default {
     'Relay URLs (optional, comma-separated)': 'آدرس‌های رله (اختیاری، جدا شده با کاما)',
     'Remove poll': 'حذف نظرسنجی',
     'Refresh results': 'بارگیری مجدد نتایج',
-    Poll: 'نظرسنجی'
+    Poll: 'نظرسنجی',
+    media: 'رسانه'
   }
 }

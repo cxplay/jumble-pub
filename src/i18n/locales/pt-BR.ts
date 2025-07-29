@@ -316,6 +316,7 @@ export default {
     'Relay URLs (optional, comma-separated)': 'URLs de relay (opcional, separadas por vírgulas)',
     'Remove poll': 'Remover enquete',
     'Refresh results': 'Atualizar resultados',
-    Poll: 'Enquete'
+    Poll: 'Enquete',
+    media: 'Mídia'
   }
 }

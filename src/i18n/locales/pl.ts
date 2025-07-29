@@ -317,6 +317,7 @@ export default {
       'Adresy URL przekaźników (opcjonalne, oddzielone przecinkami)',
     'Remove poll': 'Usuń ankietę',
     'Refresh results': 'Odśwież wyniki',
-    Poll: 'Ankieta'
+    Poll: 'Ankieta',
+    media: 'media'
   }
 }

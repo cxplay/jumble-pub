@@ -313,6 +313,7 @@ export default {
     'Relay URLs (optional, comma-separated)': 'عناوين المرحلات (اختياري، مفصولة بفواصل)',
     'Remove poll': 'إزالة الاستطلاع',
     'Refresh results': 'تحديث النتائج',
-    Poll: 'استطلاع'
+    Poll: 'استطلاع',
+    media: 'الوسائط'
   }
 }
