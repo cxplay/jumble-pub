@@ -6,7 +6,6 @@ import { checkAlgoRelay } from '@/lib/relay'
 import { isSafari } from '@/lib/utils'
 import { useMuteList } from '@/providers/MuteListProvider'
 import { useNostr } from '@/providers/NostrProvider'
-import { useScreenSize } from '@/providers/ScreenSizeProvider'
 import { useUserTrust } from '@/providers/UserTrustProvider'
 import client from '@/services/client.service'
 import storage from '@/services/local-storage.service'
@@ -18,7 +17,6 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import PullToRefresh from 'react-simple-pull-to-refresh'
 import NoteCard, { NoteCardLoadingSkeleton } from '../NoteCard'
-import { PictureNoteCardMasonry } from '../PictureNoteCardMasonry'
 import Tabs from '../Tabs'
 
 const LIMIT = 100
@@ -32,7 +30,8 @@ const KINDS = [
   ExtendedKind.COMMENT,
   ExtendedKind.POLL,
   ExtendedKind.VOICE,
-  ExtendedKind.VOICE_COMMENT
+  ExtendedKind.VOICE_COMMENT,
+  ExtendedKind.PICTURE
 ]
 
 export default function NoteList({
@@ -57,7 +56,6 @@ export default function NoteList({
   skipTrustCheck?: boolean
 }) {
   const { t } = useTranslation()
-  const { isLargeScreen } = useScreenSize()
   const { pubkey, startLogin } = useNostr()
   const { mutePubkeys } = useMuteList()
   const [refreshCount, setRefreshCount] = useState(0)
@@ -89,9 +87,6 @@ export default function NoteList({
       case 'posts':
       case 'postsAndReplies':
         setFilterType('posts')
-        break
-      case 'pictures':
-        setFilterType('pictures')
         break
       case 'you':
         if (!pubkey || pubkey === author) {
@@ -147,7 +142,7 @@ export default function NoteList({
         }
         const _filter = {
           ...filter,
-          kinds: filterType === 'pictures' ? [ExtendedKind.PICTURE] : KINDS,
+          kinds: KINDS,
           limit: areAlgoRelays ? ALGO_LIMIT : LIMIT
         }
         if (relayUrls.length === 0 && (_filter.authors?.length || author)) {
@@ -310,13 +305,11 @@ export default function NoteList({
             ? [
                 { value: 'posts', label: 'Notes' },
                 { value: 'postsAndReplies', label: 'Replies' },
-                { value: 'pictures', label: 'Pictures' },
                 { value: 'you', label: 'YouTabName' }
               ]
             : [
                 { value: 'posts', label: 'Notes' },
-                { value: 'postsAndReplies', label: 'Replies' },
-                { value: 'pictures', label: 'Pictures' }
+                { value: 'postsAndReplies', label: 'Replies' }
               ]
         }
         onTabChange={(listMode) => {
@@ -343,34 +336,24 @@ export default function NoteList({
         pullingContent=""
       >
         <div className="min-h-screen">
-          {listMode === 'pictures' ? (
-            <PictureNoteCardMasonry
-              className="px-2 sm:px-4 mt-2"
-              columnCount={isLargeScreen ? 3 : 2}
-              events={events.slice(0, showCount)}
-            />
-          ) : (
-            <div>
-              {events
-                .slice(0, showCount)
-                .filter(
-                  (event: Event) =>
-                    (listMode !== 'posts' || !isReplyNoteEvent(event)) &&
-                    (skipTrustCheck || !hideUntrustedNotes || isUserTrusted(event.pubkey))
-                )
-                .map((event) => (
-                  <NoteCard
-                    key={event.id}
-                    className="w-full"
-                    event={event}
-                    filterMutedNotes={filterMutedNotes}
-                  />
-                ))}
-            </div>
-          )}
+          {events
+            .slice(0, showCount)
+            .filter(
+              (event: Event) =>
+                (listMode !== 'posts' || !isReplyNoteEvent(event)) &&
+                (skipTrustCheck || !hideUntrustedNotes || isUserTrusted(event.pubkey))
+            )
+            .map((event) => (
+              <NoteCard
+                key={event.id}
+                className="w-full"
+                event={event}
+                filterMutedNotes={filterMutedNotes}
+              />
+            ))}
           {hasMore || loading ? (
             <div ref={bottomRef}>
-              <NoteCardLoadingSkeleton isPictures={listMode === 'pictures'} />
+              <NoteCardLoadingSkeleton />
             </div>
           ) : events.length ? (
             <div className="text-center text-sm text-muted-foreground mt-2">

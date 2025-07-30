@@ -70,7 +70,7 @@ export default function BookmarkList() {
 
       {showCount < eventIds.length ? (
         <div ref={bottomRef}>
-          <NoteCardLoadingSkeleton isPictures={false} />
+          <NoteCardLoadingSkeleton />
         </div>
       ) : (
         <div className="text-center text-sm text-muted-foreground mt-2">
@@ -85,7 +85,7 @@ function BookmarkedNote({ eventId }: { eventId: string }) {
   const { event, isFetching } = useFetchEvent(eventId)
 
   if (isFetching) {
-    return <NoteCardLoadingSkeleton isPictures={false} />
+    return <NoteCardLoadingSkeleton />
   }
 
   if (!event) {

@@ -3,7 +3,6 @@ import ContentPreview from '@/components/ContentPreview'
 import Note from '@/components/Note'
 import NoteInteractions from '@/components/NoteInteractions'
 import NoteStats from '@/components/NoteStats'
-import PictureNote from '@/components/PictureNote'
 import UserAvatar from '@/components/UserAvatar'
 import { Card } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
@@ -11,7 +10,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { ExtendedKind } from '@/constants'
 import { useFetchEvent } from '@/hooks'
 import SecondaryPageLayout from '@/layouts/SecondaryPageLayout'
-import { getParentBech32Id, getParentETag, getRootBech32Id, isPictureEvent } from '@/lib/event'
+import { getParentBech32Id, getParentETag, getRootBech32Id } from '@/lib/event'
 import { toNote, toNoteList } from '@/lib/link'
 import { tagNameEquals } from '@/lib/tag'
 import { cn } from '@/lib/utils'
@@ -61,16 +60,6 @@ const NotePage = forwardRef(({ id, index }: { id?: string; index?: number }, ref
     )
   }
   if (!event) return <NotFoundPage />
-
-  if (isPictureEvent(event)) {
-    return (
-      <SecondaryPageLayout ref={ref} index={index} title={t('Note')} displayScrollToTopButton>
-        <PictureNote key={`note-${event.id}`} event={event} fetchNoteStats />
-        <Separator className="mt-4" />
-        <NoteInteractions key={`note-interactions-${event.id}`} pageIndex={index} event={event} />
-      </SecondaryPageLayout>
-    )
-  }
 
   return (
     <SecondaryPageLayout ref={ref} index={index} title={t('Note')} displayScrollToTopButton>

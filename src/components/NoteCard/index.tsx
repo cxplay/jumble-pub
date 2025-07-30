@@ -1,7 +1,6 @@
 import { Skeleton } from '@/components/ui/skeleton'
 import { useMuteList } from '@/providers/MuteListProvider'
 import { Event, kinds } from 'nostr-tools'
-import { useTranslation } from 'react-i18next'
 import MainNoteCard from './MainNoteCard'
 import RepostNoteCard from './RepostNoteCard'
 
@@ -27,13 +26,7 @@ export default function NoteCard({
   return <MainNoteCard event={event} className={className} />
 }
 
-export function NoteCardLoadingSkeleton({ isPictures }: { isPictures: boolean }) {
-  const { t } = useTranslation()
-
-  if (isPictures) {
-    return <div className="text-center text-sm text-muted-foreground">{t('loading...')}</div>
-  }
-
+export function NoteCardLoadingSkeleton() {
   return (
     <div className="px-4 py-3">
       <div className="flex items-center space-x-2">

@@ -135,7 +135,7 @@ export default function QuoteList({ event, className }: { event: Event; classNam
         </div>
         {hasMore || loading ? (
           <div ref={bottomRef}>
-            <NoteCardLoadingSkeleton isPictures={false} />
+            <NoteCardLoadingSkeleton />
           </div>
         ) : (
           <div className="text-center text-sm text-muted-foreground mt-2">{t('no more notes')}</div>

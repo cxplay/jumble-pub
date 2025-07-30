@@ -108,7 +108,7 @@ export type TImageInfo = {
   pubkey?: string
 }
 
-export type TNoteListMode = 'posts' | 'postsAndReplies' | 'pictures' | 'you'
+export type TNoteListMode = 'posts' | 'postsAndReplies' | 'you'
 
 export type TNotificationType = 'all' | 'mentions' | 'reactions' | 'zaps'
 
