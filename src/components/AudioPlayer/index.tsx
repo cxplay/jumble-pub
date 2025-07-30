@@ -98,7 +98,9 @@ export default function AudioPlayer({ src, className }: AudioPlayerProps) {
         <Slider value={[currentTime]} max={duration || 100} step={1} onValueChange={handleSeek} />
       </div>
 
-      <div className="text-sm font-mono text-muted-foreground">{formatTime(duration)}</div>
+      <div className="text-sm font-mono text-muted-foreground">
+        {formatTime(Math.max(duration - currentTime, 0))}
+      </div>
     </div>
   )
 }
