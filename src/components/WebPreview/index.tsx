@@ -7,6 +7,7 @@ import Image from '../Image'
 export default function WebPreview({ url, className }: { url: string; className?: string }) {
   const { isSmallScreen } = useScreenSize()
   const { title, description, image } = useFetchWebMetadata(url)
+
   const hostname = useMemo(() => {
     try {
       return new URL(url).hostname
