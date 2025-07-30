@@ -102,7 +102,7 @@ export function getParentBech32Id(event?: Event) {
 export function getRootETag(event?: Event) {
   if (!event) return undefined
 
-  if (event.kind === ExtendedKind.COMMENT || ExtendedKind.VOICE_COMMENT) {
+  if (event.kind === ExtendedKind.COMMENT || event.kind === ExtendedKind.VOICE_COMMENT) {
     return event.tags.find(tagNameEquals('E'))
   }
 

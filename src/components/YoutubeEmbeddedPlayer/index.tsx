@@ -30,19 +30,24 @@ export default function YoutubeEmbeddedPlayer({
     }
 
     function initPlayer() {
-      if (!videoId || !containerRef.current) return
-      playerRef.current = new window.YT.Player(containerRef.current, {
-        videoId: videoId,
-        events: {
-          onStateChange: (event: any) => {
-            if (event.data === window.YT.PlayerState.PLAYING) {
-              mediaManager.play(playerRef.current)
-            } else if (event.data === window.YT.PlayerState.PAUSED) {
-              mediaManager.pause(playerRef.current)
+      try {
+        if (!videoId || !containerRef.current || !window.YT.Player) return
+        playerRef.current = new window.YT.Player(containerRef.current, {
+          videoId: videoId,
+          events: {
+            onStateChange: (event: any) => {
+              if (event.data === window.YT.PlayerState.PLAYING) {
+                mediaManager.play(playerRef.current)
+              } else if (event.data === window.YT.PlayerState.PAUSED) {
+                mediaManager.pause(playerRef.current)
+              }
             }
           }
-        }
-      })
+        })
+      } catch (error) {
+        console.error('Failed to initialize YouTube player:', error)
+        return
+      }
     }
 
     return () => {
