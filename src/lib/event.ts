@@ -61,7 +61,11 @@ export function getParentETag(event?: Event) {
   if (!tag) {
     const embeddedEventIds = getEmbeddedNoteBech32Ids(event)
     tag = event.tags.findLast(
-      ([tagName, tagValue]) => tagName === 'e' && !!tagValue && !embeddedEventIds.includes(tagValue)
+      ([tagName, tagValue, , marker]) =>
+        tagName === 'e' &&
+        !!tagValue &&
+        marker !== 'mention' &&
+        !embeddedEventIds.includes(tagValue)
     )
   }
   return tag
