@@ -167,7 +167,7 @@ export default function Poll({ event, className }: { event: Event; className?: s
                 key={option.id}
                 title={option.label}
                 className={cn(
-                  'relative w-full px-4 py-3 rounded-lg border transition-all flex items-center gap-2',
+                  'relative w-full px-4 py-3 rounded-lg border transition-all flex items-center gap-2 overflow-hidden',
                   canVote ? 'cursor-pointer' : 'cursor-not-allowed',
                   canVote &&
                     (selectedOptionIds.includes(option.id)
@@ -203,7 +203,7 @@ export default function Poll({ event, className }: { event: Event; className?: s
                 {/* Progress Bar Background */}
                 <div
                   className={cn(
-                    'absolute inset-0 rounded-md transition-all duration-700 ease-out',
+                    'absolute inset-0 rounded-r-sm transition-all duration-700 ease-out',
                     isMax ? 'bg-primary/60' : 'bg-muted/90'
                   )}
                   style={{ width: `${percentage}%` }}

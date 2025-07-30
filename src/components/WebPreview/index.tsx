@@ -23,14 +23,14 @@ export default function WebPreview({ url, className }: { url: string; className?
   if (isSmallScreen && image) {
     return (
       <div
-        className="rounded-lg border mt-2"
+        className="rounded-lg border mt-2 overflow-hidden"
         onClick={(e) => {
           e.stopPropagation()
           window.open(url, '_blank')
         }}
       >
-        <Image image={{ url: image }} className="w-full h-44 rounded-t-lg" hideIfError />
-        <div className="bg-muted p-2 w-full rounded-b-lg">
+        <Image image={{ url: image }} className="w-full h-44 rounded-none" hideIfError />
+        <div className="bg-muted p-2 w-full">
           <div className="text-xs text-muted-foreground">{hostname}</div>
           <div className="font-semibold line-clamp-1">{title}</div>
         </div>
@@ -40,7 +40,7 @@ export default function WebPreview({ url, className }: { url: string; className?
 
   return (
     <div
-      className={cn('p-0 clickable flex w-full border rounded-lg', className)}
+      className={cn('p-0 clickable flex w-full border rounded-lg overflow-hidden', className)}
       onClick={(e) => {
         e.stopPropagation()
         window.open(url, '_blank')
@@ -49,7 +49,7 @@ export default function WebPreview({ url, className }: { url: string; className?
       {image && (
         <Image
           image={{ url: image }}
-          className="rounded-lg aspect-[4/3] xl:aspect-video object-cover bg-foreground h-44"
+          className="aspect-[4/3] xl:aspect-video object-cover bg-foreground h-44 rounded-none"
           hideIfError
         />
       )}

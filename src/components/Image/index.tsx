@@ -95,7 +95,7 @@ export default function Image({
 
   return (
     <div className={cn('relative', classNames.wrapper)} {...props}>
-      {isLoading && <Skeleton className={cn('absolute inset-0 rounded-lg', className)} />}
+      {isLoading && <Skeleton className={cn('absolute inset-0', className)} />}
       {!hasError ? (
         <img
           src={imageUrl}
