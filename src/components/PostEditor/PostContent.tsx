@@ -8,6 +8,7 @@ import {
 } from '@/lib/draft-event'
 import { isTouchDevice } from '@/lib/utils'
 import { useNostr } from '@/providers/NostrProvider'
+import { useReply } from '@/providers/ReplyProvider'
 import postEditorCache from '@/services/post-editor-cache.service'
 import { TPollCreateData } from '@/types'
 import { ImageUp, ListTodo, LoaderCircle, Settings, Smile } from 'lucide-react'
@@ -35,6 +36,7 @@ export default function PostContent({
 }) {
   const { t } = useTranslation()
   const { pubkey, publish, checkLogin } = useNostr()
+  const { addReplies } = useReply()
   const { uploadingFiles, setUploadingFiles } = usePostEditor()
   const [text, setText] = useState('')
   const textareaRef = useRef<TPostTextareaHandle>(null)
@@ -128,10 +130,11 @@ export default function PostContent({
                   isNsfw
                 })
 
-        await publish(draftEvent, {
+        const newEvent = await publish(draftEvent, {
           specifiedRelayUrls,
           additionalRelayUrls: isPoll ? pollCreateData.relays : []
         })
+        addReplies([newEvent])
         postEditorCache.clearPostCache({ defaultContent, parentEvent })
         close()
       } catch (error) {
