@@ -55,7 +55,7 @@ export function UserTrustProvider({ children }: { children: React.ReactNode }) {
 
   const isUserTrusted = useCallback(
     (pubkey: string) => {
-      if (!currentPubkey) return true
+      if (!currentPubkey || pubkey === currentPubkey) return true
       return wotSet.has(pubkey)
     },
     [currentPubkey]
