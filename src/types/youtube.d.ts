@@ -24,6 +24,7 @@ interface YouTubePlayerConfig {
     controls?: 0 | 1
     start?: number
     end?: number
+    mute?: 0 | 1
   }
   events?: {
     onReady?: (event: { target: YouTubePlayer }) => void

@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils'
 import mediaManager from '@/services/media-manager.service'
 import { YouTubePlayer } from '@/types/youtube'
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 export default function YoutubeEmbeddedPlayer({
   url,
@@ -11,6 +11,7 @@ export default function YoutubeEmbeddedPlayer({
   className?: string
 }) {
   const videoId = useMemo(() => extractVideoId(url), [url])
+  const [initSuccess, setInitSuccess] = useState(false)
   const playerRef = useRef<YouTubePlayer | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -34,6 +35,9 @@ export default function YoutubeEmbeddedPlayer({
         if (!videoId || !containerRef.current || !window.YT.Player) return
         playerRef.current = new window.YT.Player(containerRef.current, {
           videoId: videoId,
+          playerVars: {
+            mute: 1
+          },
           events: {
             onStateChange: (event: any) => {
               if (event.data === window.YT.PlayerState.PLAYING) {
@@ -41,6 +45,9 @@ export default function YoutubeEmbeddedPlayer({
               } else if (event.data === window.YT.PlayerState.PAUSED) {
                 mediaManager.pause(playerRef.current)
               }
+            },
+            onReady: () => {
+              setInitSuccess(true)
             }
           }
         })
@@ -57,7 +64,7 @@ export default function YoutubeEmbeddedPlayer({
     }
   }, [videoId])
 
-  if (!videoId) {
+  if (!videoId && !initSuccess) {
     return (
       <a
         href={url}
