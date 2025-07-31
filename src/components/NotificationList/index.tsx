@@ -39,7 +39,12 @@ const NotificationList = forwardRef((_, ref) => {
   const filterKinds = useMemo(() => {
     switch (notificationType) {
       case 'mentions':
-        return [kinds.ShortTextNote, ExtendedKind.COMMENT, ExtendedKind.VOICE_COMMENT]
+        return [
+          kinds.ShortTextNote,
+          ExtendedKind.COMMENT,
+          ExtendedKind.VOICE_COMMENT,
+          ExtendedKind.POLL
+        ]
       case 'reactions':
         return [kinds.Reaction, kinds.Repost, ExtendedKind.POLL_RESPONSE]
       case 'zaps':
@@ -52,7 +57,8 @@ const NotificationList = forwardRef((_, ref) => {
           kinds.Zap,
           ExtendedKind.COMMENT,
           ExtendedKind.POLL_RESPONSE,
-          ExtendedKind.VOICE_COMMENT
+          ExtendedKind.VOICE_COMMENT,
+          ExtendedKind.POLL
         ]
     }
   }, [notificationType])

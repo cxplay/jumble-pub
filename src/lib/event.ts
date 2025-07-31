@@ -1,4 +1,4 @@
-import { ExtendedKind } from '@/constants'
+import { EMBEDDED_MENTION_REGEX, ExtendedKind } from '@/constants'
 import client from '@/services/client.service'
 import { TImageInfo } from '@/types'
 import { LRUCache } from 'lru-cache'
@@ -11,6 +11,7 @@ import {
 } from './tag'
 
 const EVENT_EMBEDDED_NOTES_CACHE = new LRUCache<string, string[]>({ max: 10000 })
+const EVENT_EMBEDDED_PUBKEYS_CACHE = new LRUCache<string, string[]>({ max: 10000 })
 const EVENT_IS_REPLY_NOTE_CACHE = new LRUCache<string, boolean>({ max: 10000 })
 
 export function isNsfwEvent(event: Event) {
@@ -197,6 +198,28 @@ export function getEmbeddedNoteBech32Ids(event: Event) {
   })
   EVENT_EMBEDDED_NOTES_CACHE.set(event.id, embeddedNoteBech32Ids)
   return embeddedNoteBech32Ids
+}
+
+export function getEmbeddedPubkeys(event: Event) {
+  const cache = EVENT_EMBEDDED_PUBKEYS_CACHE.get(event.id)
+  if (cache) return cache
+
+  const embeddedPubkeySet = new Set<string>()
+  ;(event.content.match(EMBEDDED_MENTION_REGEX) || []).forEach((mention) => {
+    try {
+      const { type, data } = nip19.decode(mention.split(':')[1])
+      if (type === 'npub') {
+        embeddedPubkeySet.add(data)
+      } else if (type === 'nprofile') {
+        embeddedPubkeySet.add(data.pubkey)
+      }
+    } catch {
+      // ignore
+    }
+  })
+  const embeddedPubkeys = Array.from(embeddedPubkeySet)
+  EVENT_EMBEDDED_PUBKEYS_CACHE.set(event.id, embeddedPubkeys)
+  return embeddedPubkeys
 }
 
 export function getLatestEvent(events: Event[]) {
