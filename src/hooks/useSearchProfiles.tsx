@@ -43,7 +43,7 @@ export function useSearchProfiles(search: string, limit: number) {
             existingPubkeys.add(profile.pubkey)
             profiles.push(profile)
           })
-          setProfiles(profiles)
+          setProfiles([...profiles])
         }
       } catch (err) {
         setError(err as Error)

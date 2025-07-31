@@ -730,7 +730,8 @@ class ClientService extends EventTarget {
     })
 
     const profileEvents = events.sort((a, b) => b.created_at - a.created_at)
-    await Promise.all(profileEvents.map((profile) => this.addUsernameToIndex(profile)))
+    await Promise.allSettled(profileEvents.map((profile) => this.addUsernameToIndex(profile)))
+    profileEvents.forEach((profile) => this.updateProfileEventCache(profile))
     return profileEvents.map((profileEvent) => getProfileFromEvent(profileEvent))
   }
 
@@ -925,6 +926,11 @@ class ClientService extends EventTarget {
     this.relayListEventDataLoader.clear(event.pubkey)
     this.relayListEventDataLoader.prime(event.pubkey, Promise.resolve(event))
     indexedDb.putReplaceableEvent(event)
+  }
+
+  updateProfileEventCache(event: NEvent) {
+    this.fetchProfileEventFromBigRelaysDataloader.clear(event.pubkey)
+    this.fetchProfileEventFromBigRelaysDataloader.prime(event.pubkey, Promise.resolve(event))
   }
 
   async searchNpubsFromCache(query: string, limit: number = 100) {
