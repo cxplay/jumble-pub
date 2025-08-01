@@ -10,7 +10,7 @@ export default function YoutubeEmbeddedPlayer({
   url: string
   className?: string
 }) {
-  const videoId = useMemo(() => extractVideoId(url), [url])
+  const { videoId, isShort } = useMemo(() => parseYoutubeUrl(url), [url])
   const [initSuccess, setInitSuccess] = useState(false)
   const playerRef = useRef<YouTubePlayer | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -78,22 +78,34 @@ export default function YoutubeEmbeddedPlayer({
   }
 
   return (
-    <div className={cn('rounded-lg border overflow-hidden w-full aspect-video', className)}>
+    <div
+      className={cn(
+        'rounded-lg border overflow-hidden max-h-[50vh]',
+        isShort ? 'aspect-[9/16]' : 'aspect-video',
+        className
+      )}
+    >
       <div ref={containerRef} className="w-full h-full" />
     </div>
   )
 }
 
-function extractVideoId(url: string) {
+function parseYoutubeUrl(url: string) {
   const patterns = [
     /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
     /youtube\.com\/watch\?.*v=([^&\n?#]+)/,
     /youtube\.com\/shorts\/([^&\n?#]+)/
   ]
 
-  for (const pattern of patterns) {
+  let videoId: string | null = null
+  let isShort = false
+  for (const [index, pattern] of patterns.entries()) {
     const match = url.match(pattern)
-    if (match) return match[1]
+    if (match) {
+      videoId = match[1].trim()
+      isShort = index === 2 // Check if it's a short video
+      break
+    }
   }
-  return null
+  return { videoId, isShort }
 }
