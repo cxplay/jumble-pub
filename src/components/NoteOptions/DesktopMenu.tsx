@@ -34,16 +34,15 @@ export function DesktopMenu({ menuActions, trigger }: DesktopMenuProps) {
                   </DropdownMenuSubTrigger>
                   <DropdownMenuSubContent className="max-h-screen overflow-y-auto">
                     {action.subMenu.map((subAction, subIndex) => (
-                      <>
+                      <div key={subIndex}>
                         {subAction.separator && subIndex > 0 && <DropdownMenuSeparator />}
                         <DropdownMenuItem
-                          key={subIndex}
                           onClick={subAction.onClick}
                           className={cn('w-64', subAction.className)}
                         >
                           {subAction.label}
                         </DropdownMenuItem>
-                      </>
+                      </div>
                     ))}
                   </DropdownMenuSubContent>
                 </DropdownMenuSub>
