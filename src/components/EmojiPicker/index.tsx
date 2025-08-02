@@ -19,7 +19,6 @@ export default function EmojiPicker({ onEmojiClick }: { onEmojiClick: MouseDownE
       }
       width={isSmallScreen ? '100%' : 350}
       autoFocusSearch={false}
-      searchDisabled
       emojiStyle={EmojiStyle.NATIVE}
       skinTonePickerLocation={SkinTonePickerLocation.PREVIEW}
       style={
