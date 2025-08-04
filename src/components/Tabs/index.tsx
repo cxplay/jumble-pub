@@ -26,7 +26,7 @@ export default function Tabs({
   return (
     <div
       className={cn(
-        'sticky flex top-12 p-1 bg-background z-30 w-full transition-transform',
+        'sticky flex top-12 bg-background z-30 w-full transition-transform',
         deepBrowsing && lastScrollTop > threshold ? '-translate-y-[calc(100%+12rem)]' : ''
       )}
     >
@@ -45,13 +45,15 @@ export default function Tabs({
         </div>
       ))}
       <div
-        className="absolute bottom-0 px-4 transition-all duration-500"
+        className="absolute bottom-0 left-0 transition-all duration-500"
         style={{
           width: `${100 / tabs.length}%`,
           left: `${activeIndex >= 0 ? activeIndex * (100 / tabs.length) : 0}%`
         }}
       >
-        <div className="w-full h-1 bg-primary rounded-full" />
+        <div className="px-4">
+          <div className="w-full h-1 bg-primary rounded-full" />
+        </div>
       </div>
     </div>
   )
