@@ -1,3 +1,4 @@
+import { BIG_RELAY_URLS } from '@/constants'
 import { getZapInfoFromEvent } from '@/lib/event-metadata'
 import { getEmojiInfosFromEmojiTags, tagNameEquals } from '@/lib/tag'
 import client from '@/services/client.service'
@@ -79,7 +80,7 @@ class NoteStatsService {
       })
     }
     const events: Event[] = []
-    await client.fetchEvents(relayList.read.slice(0, 5), filters, {
+    await client.fetchEvents(relayList.read.concat(BIG_RELAY_URLS).slice(0, 5), filters, {
       onevent: (evt) => {
         this.updateNoteStatsByEvents([evt])
         events.push(evt)
