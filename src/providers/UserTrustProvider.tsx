@@ -42,13 +42,21 @@ export function UserTrustProvider({ children }: { children: React.ReactNode }) {
 
     const initWoT = async () => {
       const followings = await client.fetchFollowings(currentPubkey)
-      await Promise.allSettled(
-        followings.map(async (pubkey) => {
-          wotSet.add(pubkey)
-          const _followings = await client.fetchFollowings(pubkey)
-          _followings.forEach((following) => wotSet.add(following))
-        })
-      )
+      followings.forEach((pubkey) => wotSet.add(pubkey))
+
+      const batchSize = 20
+      for (let i = 0; i < followings.length; i += batchSize) {
+        const batch = followings.slice(i, i + batchSize)
+        await Promise.allSettled(
+          batch.map(async (pubkey) => {
+            const _followings = await client.fetchFollowings(pubkey)
+            _followings.forEach((following) => {
+              wotSet.add(following)
+            })
+          })
+        )
+        await new Promise((resolve) => setTimeout(resolve, 200))
+      }
     }
     initWoT()
   }, [currentPubkey])
