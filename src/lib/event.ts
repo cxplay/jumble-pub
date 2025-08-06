@@ -151,7 +151,7 @@ export function getRootBech32Id(event?: Event) {
 
 export function getReplaceableEventCoordinate(event: Event) {
   const d = event.tags.find(tagNameEquals('d'))?.[1]
-  return d ? `${event.kind}:${event.pubkey}:${d}` : `${event.kind}:${event.pubkey}`
+  return `${event.kind}:${event.pubkey}:${d ?? ''}`
 }
 
 export function getNoteBech32Id(event: Event) {
