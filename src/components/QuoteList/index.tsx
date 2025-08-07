@@ -1,4 +1,4 @@
-import { BIG_RELAY_URLS } from '@/constants'
+import { BIG_RELAY_URLS, ExtendedKind } from '@/constants'
 import { useNostr } from '@/providers/NostrProvider'
 import { useUserTrust } from '@/providers/UserTrustProvider'
 import client from '@/services/client.service'
@@ -39,7 +39,13 @@ export default function QuoteList({ event, className }: { event: Event; classNam
             urls: relayUrls,
             filter: {
               '#q': [event.id],
-              kinds: [kinds.ShortTextNote],
+              kinds: [
+                kinds.ShortTextNote,
+                kinds.Highlights,
+                kinds.LongFormArticle,
+                ExtendedKind.COMMENT,
+                ExtendedKind.POLL
+              ],
               limit: LIMIT
             }
           }
