@@ -3,10 +3,9 @@ import { getLongFormArticleMetadataFromEvent } from '@/lib/event-metadata'
 import { useScreenSize } from '@/providers/ScreenSizeProvider'
 import { Event } from 'nostr-tools'
 import { useMemo } from 'react'
-import ClientSelect from '../ClientSelect'
 import Image from '../Image'
 
-export default function LongFormArticle({
+export default function LongFormArticlePreview({
   event,
   className
 }: {
@@ -46,7 +45,6 @@ export default function LongFormArticle({
           {titleComponent}
           {summaryComponent}
           {tagsComponent}
-          <ClientSelect className="w-full mt-2" event={event} />
         </div>
       </div>
     )
@@ -68,7 +66,6 @@ export default function LongFormArticle({
           {tagsComponent}
         </div>
       </div>
-      <ClientSelect className="w-full mt-2" event={event} />
     </div>
   )
 }
