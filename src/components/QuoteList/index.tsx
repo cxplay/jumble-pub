@@ -1,4 +1,5 @@
 import { BIG_RELAY_URLS, ExtendedKind } from '@/constants'
+import { getReplaceableCoordinateFromEvent, isReplaceableEvent } from '@/lib/event'
 import { useNostr } from '@/providers/NostrProvider'
 import { useUserTrust } from '@/providers/UserTrustProvider'
 import client from '@/services/client.service'
@@ -38,7 +39,9 @@ export default function QuoteList({ event, className }: { event: Event; classNam
           {
             urls: relayUrls,
             filter: {
-              '#q': [event.id],
+              '#q': [
+                isReplaceableEvent(event.kind) ? getReplaceableCoordinateFromEvent(event) : event.id
+              ],
               kinds: [
                 kinds.ShortTextNote,
                 kinds.Highlights,
@@ -130,7 +133,7 @@ export default function QuoteList({ event, className }: { event: Event; classNam
 
   return (
     <div className={className}>
-      <div className="min-h-screen">
+      <div className="min-h-[80vh]">
         <div>
           {events.slice(0, showCount).map((event) => {
             if (hideUntrustedInteractions && !isUserTrusted(event.pubkey)) {
