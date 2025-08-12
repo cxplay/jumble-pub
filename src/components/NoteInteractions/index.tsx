@@ -44,7 +44,7 @@ export default function NoteInteractions({
       <div className="flex items-center justify-between">
         <ScrollArea className="flex-1 w-0">
           <Tabs selectedTab={type} onTabChange={setType} />
-          <ScrollBar orientation="horizontal" className="opacity-0" />
+          <ScrollBar orientation="horizontal" className="opacity-0 pointer-events-none" />
         </ScrollArea>
         <Separator orientation="vertical" className="h-6" />
         <div className="size-10 flex items-center justify-center">
