@@ -1,7 +1,6 @@
 import mediaUpload from '@/services/media-upload.service'
 import { Extension } from '@tiptap/core'
 import { EditorView } from '@tiptap/pm/view'
-import { Slice } from '@tiptap/pm/model'
 import { Plugin, TextSelection } from 'prosemirror-state'
 
 const DRAGOVER_CLASS_LIST = [
@@ -13,12 +12,9 @@ const DRAGOVER_CLASS_LIST = [
 ]
 
 export interface ClipboardAndDropHandlerOptions {
-  onUploadStart?: (file: File) => void
-  onUploadSuccess?: (file: File, result: any) => void
-  onUploadError?: (file: File, error: any) => void
-  onUploadEnd?: () => void
+  onUploadStart?: (file: File, cancel: () => void) => void
+  onUploadEnd?: (file: File) => void
   onUploadProgress?: (file: File, progress: number) => void
-  onProvideCancel?: (cancel: () => void) => void
 }
 
 export const ClipboardAndDropHandler = Extension.create<ClipboardAndDropHandlerOptions>({
@@ -57,7 +53,7 @@ export const ClipboardAndDropHandler = Extension.create<ClipboardAndDropHandlerO
               return true
             }
           },
-          handleDrop(view: EditorView, event: DragEvent, _slice: Slice, _moved: boolean) {
+          handleDrop(view: EditorView, event: DragEvent) {
             event.preventDefault()
             event.stopPropagation()
             view.dom.classList.remove(...DRAGOVER_CLASS_LIST)
@@ -68,7 +64,7 @@ export const ClipboardAndDropHandler = Extension.create<ClipboardAndDropHandlerO
             )
             if (!mediaFiles.length) return false
 
-            uploadFile(view, mediaFiles, options)
+            uploadFiles(view, mediaFiles, options)
             return true
           },
           handlePaste(view, event) {
@@ -82,7 +78,7 @@ export const ClipboardAndDropHandler = Extension.create<ClipboardAndDropHandlerO
               ) {
                 const file = item.getAsFile()
                 if (file) {
-                  uploadFile(view, [file], options)
+                  uploadFiles(view, [file], options)
                   handled = true
                 }
               } else if (item.kind === 'string' && item.type === 'text/plain') {
@@ -116,15 +112,21 @@ export const ClipboardAndDropHandler = Extension.create<ClipboardAndDropHandlerO
   }
 })
 
-async function uploadFile(
+async function uploadFiles(
   view: EditorView,
   files: File[],
   options: ClipboardAndDropHandlerOptions
 ) {
+  const abortControllers = new Map<File, AbortController>()
+  files.forEach((file) => {
+    const abortController = new AbortController()
+    abortControllers.set(file, abortController)
+    options.onUploadStart?.(file, () => abortController.abort())
+  })
+  await new Promise((resolve) => setTimeout(resolve, 10000))
+
   for (const file of files) {
     const name = file.name
-
-    options.onUploadStart?.(file)
 
     const placeholder = `[Uploading "${name}"...]`
     const uploadingNode = view.state.schema.text(placeholder)
@@ -133,16 +135,15 @@ async function uploadFile(
     tr = tr.insert(tr.selection.from, hardBreakNode)
     view.dispatch(tr)
 
-    const abortController = new AbortController()
-    options.onProvideCancel?.(() => abortController.abort())
+    const abortController = abortControllers.get(file)
 
     mediaUpload
       .upload(file, {
         onProgress: (p) => options.onUploadProgress?.(file, p),
-        signal: abortController.signal
+        signal: abortController?.signal
       })
       .then((result) => {
-        options.onUploadSuccess?.(file, result)
+        options.onUploadEnd?.(file)
         const urlNode = view.state.schema.text(result.url)
 
         const tr = view.state.tr
@@ -175,11 +176,10 @@ async function uploadFile(
           insertTr.setSelection(TextSelection.near(insertTr.doc.resolve(newPos)))
           view.dispatch(insertTr)
         }
-        options.onUploadEnd?.()
       })
       .catch((error) => {
         console.error('Upload failed:', error)
-        options.onUploadError?.(file, error)
+        options.onUploadEnd?.(file)
 
         const tr = view.state.tr
         let didReplace = false
@@ -200,7 +200,6 @@ async function uploadFile(
         if (didReplace) {
           view.dispatch(tr)
         }
-        options.onUploadEnd?.()
         throw error
       })
   }

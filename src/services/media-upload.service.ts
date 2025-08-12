@@ -10,6 +10,8 @@ type UploadOptions = {
   signal?: AbortSignal
 }
 
+export const UPLOAD_ABORTED_ERROR_MSG = 'Upload aborted'
+
 class MediaUploadService {
   static instance: MediaUploadService
 
@@ -55,7 +57,7 @@ class MediaUploadService {
     }
 
     if (options?.signal?.aborted) {
-      throw new Error('Upload aborted')
+      throw new Error(UPLOAD_ABORTED_ERROR_MSG)
     }
 
     options?.onProgress?.(0)
@@ -115,6 +117,9 @@ class MediaUploadService {
   }
 
   private async uploadByNip96(service: string, file: File, options?: UploadOptions) {
+    if (options?.signal?.aborted) {
+      throw new Error(UPLOAD_ABORTED_ERROR_MSG)
+    }
     let uploadUrl = this.nip96ServiceUploadUrlMap.get(service)
     if (!uploadUrl) {
       const response = await fetch(`${service}/.well-known/nostr/nip96.json`)
@@ -133,6 +138,9 @@ class MediaUploadService {
       this.nip96ServiceUploadUrlMap.set(service, uploadUrl)
     }
 
+    if (options?.signal?.aborted) {
+      throw new Error(UPLOAD_ABORTED_ERROR_MSG)
+    }
     const formData = new FormData()
     formData.append('file', file)
 
@@ -148,10 +156,10 @@ class MediaUploadService {
       const handleAbort = () => {
         try {
           xhr.abort()
-        } catch (_) {
+        } catch {
           // ignore
         }
-        reject(new Error('Upload aborted'))
+        reject(new Error(UPLOAD_ABORTED_ERROR_MSG))
       }
       if (options?.signal) {
         if (options.signal.aborted) {

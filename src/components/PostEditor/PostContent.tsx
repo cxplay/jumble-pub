@@ -19,7 +19,6 @@ import { toast } from 'sonner'
 import EmojiPickerDialog from '../EmojiPickerDialog'
 import Mentions from './Mentions'
 import PollEditor from './PollEditor'
-import { usePostEditor } from './PostEditorProvider'
 import PostOptions from './PostOptions'
 import PostTextarea, { TPostTextareaHandle } from './PostTextarea'
 import SendOnlyToSwitch from './SendOnlyToSwitch'
@@ -37,13 +36,12 @@ export default function PostContent({
   const { t } = useTranslation()
   const { pubkey, publish, checkLogin } = useNostr()
   const { addReplies } = useReply()
-  const { uploadingFiles, setUploadingFiles } = usePostEditor()
   const [text, setText] = useState('')
   const textareaRef = useRef<TPostTextareaHandle>(null)
   const [posting, setPosting] = useState(false)
-  const [uploadProgress, setUploadProgress] = useState<number | null>(null)
-  const [uploadFileName, setUploadFileName] = useState<string | null>(null)
-  const cancelRef = useRef<(() => void) | null>(null)
+  const [uploadProgresses, setUploadProgresses] = useState<
+    { file: File; progress: number; cancel: () => void }[]
+  >([])
   const [showMoreOptions, setShowMoreOptions] = useState(false)
   const [addClientTag, setAddClientTag] = useState(false)
   const [specifiedRelayUrls, setSpecifiedRelayUrls] = useState<string[] | undefined>(undefined)
@@ -61,7 +59,7 @@ export default function PostContent({
     !!pubkey &&
     !!text &&
     !posting &&
-    !uploadingFiles &&
+    !uploadProgresses.length &&
     (!isPoll || pollCreateData.options.filter((option) => !!option.trim()).length >= 2)
 
   useEffect(() => {
@@ -161,6 +159,20 @@ export default function PostContent({
     setIsPoll((prev) => !prev)
   }
 
+  const handleUploadStart = (file: File, cancel: () => void) => {
+    setUploadProgresses((prev) => [...prev, { file, progress: 0, cancel }])
+  }
+
+  const handleUploadProgress = (file: File, progress: number) => {
+    setUploadProgresses((prev) =>
+      prev.map((item) => (item.file === file ? { ...item, progress } : item))
+    )
+  }
+
+  const handleUploadEnd = (file: File) => {
+    setUploadProgresses((prev) => prev.filter((item) => item.file !== file))
+  }
+
   return (
     <div className="space-y-2">
       {parentEvent && (
@@ -178,17 +190,9 @@ export default function PostContent({
         parentEvent={parentEvent}
         onSubmit={() => post()}
         className={isPoll ? 'min-h-20' : 'min-h-52'}
-        onUploadStart={(file) => {
-          setUploadFileName(file.name)
-          setUploadProgress(0)
-        }}
-        onUploadProgress={(p) => setUploadProgress(p)}
-        onUploadEnd={() => {
-          setUploadProgress(null)
-          setUploadFileName(null)
-          cancelRef.current = null
-        }}
-        onProvideCancel={(cancel) => (cancelRef.current = cancel)}
+        onUploadStart={handleUploadStart}
+        onUploadProgress={handleUploadProgress}
+        onUploadEnd={handleUploadEnd}
       />
       {isPoll && (
         <PollEditor
@@ -197,6 +201,33 @@ export default function PostContent({
           setIsPoll={setIsPoll}
         />
       )}
+      {uploadProgresses.length > 0 &&
+        uploadProgresses.map(({ file, progress, cancel }, index) => (
+          <div key={`${file.name}-${index}`} className="mt-2 flex items-end gap-2">
+            <div className="min-w-0 flex-1">
+              <div className="truncate text-xs text-muted-foreground mb-1">
+                {file.name ?? t('Uploading...')}
+              </div>
+              <div className="h-0.5 w-full rounded-full bg-muted overflow-hidden">
+                <div
+                  className="h-full bg-primary transition-[width] duration-200 ease-out"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                cancel?.()
+                handleUploadEnd(file)
+              }}
+              className="text-muted-foreground hover:text-foreground"
+              title={t('Cancel')}
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+        ))}
       {!isPoll && (
         <SendOnlyToSwitch
           parentEvent={parentEvent}
@@ -204,52 +235,18 @@ export default function PostContent({
           setSpecifiedRelayUrls={setSpecifiedRelayUrls}
         />
       )}
-      {uploadProgress !== null && (
-        <div className="mt-2 flex items-center gap-2">
-          <div className="min-w-0 flex-1">
-            <div className="truncate text-xs text-muted-foreground mb-1">
-              {uploadFileName ?? t('Uploading...')}
-            </div>
-            <div className="h-0.5 w-full rounded-full bg-muted overflow-hidden">
-              <div
-                className="h-full bg-primary transition-[width] duration-200 ease-out"
-                style={{ width: `${uploadProgress}%` }}
-              />
-            </div>
-          </div>
-          <button
-            type="button"
-            onClick={() => cancelRef.current?.()}
-            className="p-1 text-muted-foreground hover:text-foreground"
-            title={t('Cancel')}
-          >
-            <X className="h-4 w-4" />
-          </button>
-        </div>
-      )}
       <div className="flex items-center justify-between">
         <div className="flex gap-2 items-center">
           <Uploader
             onUploadSuccess={({ url }) => {
               textareaRef.current?.appendText(url, true)
             }}
-            onUploadingChange={(uploading) =>
-              setUploadingFiles((prev) => (uploading ? prev + 1 : prev - 1))
-            }
-            onUploadStart={(file) => {
-              setUploadFileName(file.name)
-              setUploadProgress(0)
-            }}
-            onUploadEnd={() => {
-              setUploadProgress(null)
-              setUploadFileName(null)
-              cancelRef.current = null
-            }}
-            onProgress={(p) => setUploadProgress(p)}
-            onProvideCancel={(cancel) => (cancelRef.current = cancel)}
+            onUploadStart={handleUploadStart}
+            onUploadEnd={handleUploadEnd}
+            onProgress={handleUploadProgress}
             accept="image/*,video/*,audio/*"
           >
-            <Button variant="ghost" size="icon" disabled={uploadingFiles > 0}>
+            <Button variant="ghost" size="icon">
               <ImageUp />
             </Button>
           </Uploader>
