@@ -33,8 +33,23 @@ const PostTextarea = forwardRef<
     parentEvent?: Event
     onSubmit?: () => void
     className?: string
+    onUploadStart?: (file: File) => void
+    onUploadProgress?: (progress: number, file: File) => void
+    onUploadEnd?: () => void
+    onProvideCancel?: (cancel: () => void) => void
   }
->(({ text = '', setText, defaultContent, parentEvent, onSubmit, className }, ref) => {
+>(({
+  text = '',
+  setText,
+  defaultContent,
+  parentEvent,
+  onSubmit,
+  className,
+  onUploadStart,
+  onUploadProgress,
+  onUploadEnd,
+  onProvideCancel
+}, ref) => {
   const { t } = useTranslation()
   const { setUploadingFiles } = usePostEditor()
   const editor = useEditor({
@@ -51,9 +66,15 @@ const PostTextarea = forwardRef<
         suggestion
       }),
       ClipboardAndDropHandler.configure({
-        onUploadStart: () => setUploadingFiles((prev) => prev + 1),
+        onUploadStart: (file) => {
+          setUploadingFiles((prev) => prev + 1)
+          onUploadStart?.(file)
+        },
         onUploadSuccess: () => setUploadingFiles((prev) => prev - 1),
-        onUploadError: () => setUploadingFiles((prev) => prev - 1)
+        onUploadError: () => setUploadingFiles((prev) => prev - 1),
+        onUploadEnd: () => onUploadEnd?.(),
+        onUploadProgress: (file, p) => onUploadProgress?.(p, file),
+        onProvideCancel: (cancel) => onProvideCancel?.(cancel)
       })
     ],
     editorProps: {

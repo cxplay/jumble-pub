@@ -1,6 +1,7 @@
 import mediaUpload from '@/services/media-upload.service'
 import { Extension } from '@tiptap/core'
 import { EditorView } from '@tiptap/pm/view'
+import { Slice } from '@tiptap/pm/model'
 import { Plugin, TextSelection } from 'prosemirror-state'
 
 const DRAGOVER_CLASS_LIST = [
@@ -15,6 +16,9 @@ export interface ClipboardAndDropHandlerOptions {
   onUploadStart?: (file: File) => void
   onUploadSuccess?: (file: File, result: any) => void
   onUploadError?: (file: File, error: any) => void
+  onUploadEnd?: () => void
+  onUploadProgress?: (file: File, progress: number) => void
+  onProvideCancel?: (cancel: () => void) => void
 }
 
 export const ClipboardAndDropHandler = Extension.create<ClipboardAndDropHandlerOptions>({
@@ -24,7 +28,10 @@ export const ClipboardAndDropHandler = Extension.create<ClipboardAndDropHandlerO
     return {
       onUploadStart: undefined,
       onUploadSuccess: undefined,
-      onUploadError: undefined
+      onUploadError: undefined,
+      onUploadEnd: undefined,
+      onUploadProgress: undefined,
+      onProvideCancel: undefined
     }
   },
 
@@ -35,29 +42,34 @@ export const ClipboardAndDropHandler = Extension.create<ClipboardAndDropHandlerO
       new Plugin({
         props: {
           handleDOMEvents: {
+            dragenter(view, event) {
+              event.preventDefault()
+              view.dom.classList.add(...DRAGOVER_CLASS_LIST)
+              return true
+            },
             dragover(view, event) {
               event.preventDefault()
               view.dom.classList.add(...DRAGOVER_CLASS_LIST)
-              return false
+              return true
             },
             dragleave(view) {
               view.dom.classList.remove(...DRAGOVER_CLASS_LIST)
-              return false
-            },
-            drop(view, event) {
-              event.preventDefault()
-              view.dom.classList.remove(...DRAGOVER_CLASS_LIST)
-
-              const items = Array.from(event.dataTransfer?.files ?? [])
-              const mediaFiles = items.filter(
-                (item) => item.type.includes('image') || item.type.includes('video')
-              )
-              if (!mediaFiles.length) return false
-
-              uploadFile(view, mediaFiles, options)
-
               return true
             }
+          },
+          handleDrop(view: EditorView, event: DragEvent, _slice: Slice, _moved: boolean) {
+            event.preventDefault()
+            event.stopPropagation()
+            view.dom.classList.remove(...DRAGOVER_CLASS_LIST)
+
+            const items = Array.from(event.dataTransfer?.files ?? [])
+            const mediaFiles = items.filter(
+              (item) => item.type.includes('image') || item.type.includes('video')
+            )
+            if (!mediaFiles.length) return false
+
+            uploadFile(view, mediaFiles, options)
+            return true
           },
           handlePaste(view, event) {
             const items = Array.from(event.clipboardData?.items ?? [])
@@ -121,8 +133,14 @@ async function uploadFile(
     tr = tr.insert(tr.selection.from, hardBreakNode)
     view.dispatch(tr)
 
+    const abortController = new AbortController()
+    options.onProvideCancel?.(() => abortController.abort())
+
     mediaUpload
-      .upload(file)
+      .upload(file, {
+        onProgress: (p) => options.onUploadProgress?.(file, p),
+        signal: abortController.signal
+      })
       .then((result) => {
         options.onUploadSuccess?.(file, result)
         const urlNode = view.state.schema.text(result.url)
@@ -157,6 +175,7 @@ async function uploadFile(
           insertTr.setSelection(TextSelection.near(insertTr.doc.resolve(newPos)))
           view.dispatch(insertTr)
         }
+        options.onUploadEnd?.()
       })
       .catch((error) => {
         console.error('Upload failed:', error)
@@ -181,7 +200,7 @@ async function uploadFile(
         if (didReplace) {
           view.dispatch(tr)
         }
-
+        options.onUploadEnd?.()
         throw error
       })
   }

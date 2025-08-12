@@ -11,7 +11,7 @@ import { useNostr } from '@/providers/NostrProvider'
 import { useReply } from '@/providers/ReplyProvider'
 import postEditorCache from '@/services/post-editor-cache.service'
 import { TPollCreateData } from '@/types'
-import { ImageUp, ListTodo, LoaderCircle, Settings, Smile } from 'lucide-react'
+import { ImageUp, ListTodo, LoaderCircle, Settings, Smile, X } from 'lucide-react'
 import { Event, kinds } from 'nostr-tools'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -41,6 +41,9 @@ export default function PostContent({
   const [text, setText] = useState('')
   const textareaRef = useRef<TPostTextareaHandle>(null)
   const [posting, setPosting] = useState(false)
+  const [uploadProgress, setUploadProgress] = useState<number | null>(null)
+  const [uploadFileName, setUploadFileName] = useState<string | null>(null)
+  const cancelRef = useRef<(() => void) | null>(null)
   const [showMoreOptions, setShowMoreOptions] = useState(false)
   const [addClientTag, setAddClientTag] = useState(false)
   const [specifiedRelayUrls, setSpecifiedRelayUrls] = useState<string[] | undefined>(undefined)
@@ -175,6 +178,17 @@ export default function PostContent({
         parentEvent={parentEvent}
         onSubmit={() => post()}
         className={isPoll ? 'min-h-20' : 'min-h-52'}
+        onUploadStart={(file) => {
+          setUploadFileName(file.name)
+          setUploadProgress(0)
+        }}
+        onUploadProgress={(p) => setUploadProgress(p)}
+        onUploadEnd={() => {
+          setUploadProgress(null)
+          setUploadFileName(null)
+          cancelRef.current = null
+        }}
+        onProvideCancel={(cancel) => (cancelRef.current = cancel)}
       />
       {isPoll && (
         <PollEditor
@@ -190,6 +204,29 @@ export default function PostContent({
           setSpecifiedRelayUrls={setSpecifiedRelayUrls}
         />
       )}
+      {uploadProgress !== null && (
+        <div className="mt-2 flex items-center gap-2">
+          <div className="min-w-0 flex-1">
+            <div className="truncate text-xs text-muted-foreground mb-1">
+              {uploadFileName ?? t('Uploading...')}
+            </div>
+            <div className="h-0.5 w-full rounded-full bg-muted overflow-hidden">
+              <div
+                className="h-full bg-primary transition-[width] duration-200 ease-out"
+                style={{ width: `${uploadProgress}%` }}
+              />
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => cancelRef.current?.()}
+            className="p-1 text-muted-foreground hover:text-foreground"
+            title={t('Cancel')}
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+      )}
       <div className="flex items-center justify-between">
         <div className="flex gap-2 items-center">
           <Uploader
@@ -199,10 +236,21 @@ export default function PostContent({
             onUploadingChange={(uploading) =>
               setUploadingFiles((prev) => (uploading ? prev + 1 : prev - 1))
             }
+            onUploadStart={(file) => {
+              setUploadFileName(file.name)
+              setUploadProgress(0)
+            }}
+            onUploadEnd={() => {
+              setUploadProgress(null)
+              setUploadFileName(null)
+              cancelRef.current = null
+            }}
+            onProgress={(p) => setUploadProgress(p)}
+            onProvideCancel={(cancel) => (cancelRef.current = cancel)}
             accept="image/*,video/*,audio/*"
           >
             <Button variant="ghost" size="icon" disabled={uploadingFiles > 0}>
-              {uploadingFiles > 0 ? <LoaderCircle className="animate-spin" /> : <ImageUp />}
+              <ImageUp />
             </Button>
           </Uploader>
           {/* I'm not sure why, but after triggering the virtual keyboard,
