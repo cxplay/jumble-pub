@@ -338,6 +338,10 @@ export default {
     'No zaps yet': 'Brak zapów',
     'No more reposts': 'Brak kolejnych repostów',
     'No reposts yet': 'Brak repostów',
-    Reposts: 'Reposty'
+    Reposts: 'Reposty',
+    FollowListNotFoundConfirmation:
+      'Lista obserwowanych nie została znaleziona. Czy chcesz utworzyć nową? Jeśli wcześniej obserwowałeś użytkowników, proszę NIE potwierdzaj, ponieważ ta operacja spowoduje utratę poprzedniej listy obserwowanych.',
+    MuteListNotFoundConfirmation:
+      'Lista wyciszonych nie została znaleziona. Czy chcesz utworzyć nową? Jeśli wcześniej wyciszałeś użytkowników, proszę NIE potwierdzaj, ponieważ ta operacja spowoduje utratę poprzedniej listy wyciszonych.'
   }
 }

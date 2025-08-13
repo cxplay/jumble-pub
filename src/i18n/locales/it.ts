@@ -338,6 +338,10 @@ export default {
     'No zaps yet': 'Ancora nessuno zap',
     'No more reposts': 'Non ci sono più repost',
     'No reposts yet': 'Ancora nessun repost',
-    Reposts: 'Repost'
+    Reposts: 'Repost',
+    FollowListNotFoundConfirmation:
+      'Elenco seguiti non trovato. Vuoi crearne uno nuovo? Se hai già seguito degli utenti in precedenza, per favore NON confermare poiché questa operazione causerà la perdita del tuo elenco seguiti precedente.',
+    MuteListNotFoundConfirmation:
+      'Elenco utenti silenziati non trovato. Vuoi crearne uno nuovo? Se hai già silenziato degli utenti in precedenza, per favore NON confermare poiché questa operazione causerà la perdita del tuo elenco utenti silenziati precedente.'
   }
 }

@@ -337,6 +337,10 @@ export default {
     'No zaps yet': 'Ainda sem zaps',
     'No more reposts': 'Sem mais reposts',
     'No reposts yet': 'Ainda sem reposts',
-    Reposts: 'Reposts'
+    Reposts: 'Reposts',
+    FollowListNotFoundConfirmation:
+      'Lista de seguindo não encontrada. Deseja criar uma nova? Se você seguiu usuários antes, por favor NÃO confirme, pois esta operação fará você perder sua lista de seguindo anterior.',
+    MuteListNotFoundConfirmation:
+      'Lista de silenciados não encontrada. Deseja criar uma nova? Se você silenciou usuários antes, por favor NÃO confirme, pois esta operação fará você perder sua lista de silenciados anterior.'
   }
 }

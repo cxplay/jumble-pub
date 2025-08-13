@@ -331,6 +331,10 @@ export default {
     'No zaps yet': '暂无打闪',
     'No more reposts': '没有更多转发了',
     'No reposts yet': '暂无转发',
-    Reposts: '转发'
+    Reposts: '转发',
+    FollowListNotFoundConfirmation:
+      '未找到关注列表。你想创建一个新的吗？如果你之前已经关注了用户，请不要确认，因为此操作会导致你丢失之前的关注列表。',
+    MuteListNotFoundConfirmation:
+      '未找到屏蔽列表。你想创建一个新的吗？如果你之前已经屏蔽了用户，请不要确认，因为此操作会导致你丢失之前的屏蔽列表。'
   }
 }

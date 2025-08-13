@@ -335,6 +335,10 @@ export default {
     'No zaps yet': '아직 즙이 없습니다',
     'No more reposts': '더 이상 리포스트가 없습니다',
     'No reposts yet': '아직 리포스트가 없습니다',
-    Reposts: '리포스트'
+    Reposts: '리포스트',
+    FollowListNotFoundConfirmation:
+      '팔로우 목록을 찾을 수 없습니다. 새로 만드시겠습니까? 이전에 사용자를 팔로우한 적이 있다면 이 작업으로 인해 이전 팔로우 목록을 잃게 되므로 확인하지 마시기 바랍니다.',
+    MuteListNotFoundConfirmation:
+      '음소거 목록을 찾을 수 없습니다. 새로 만드시겠습니까? 이전에 사용자를 음소거한 적이 있다면 이 작업으로 인해 이전 음소거 목록을 잃게 되므로 확인하지 마시기 바랍니다.'
   }
 }

@@ -334,6 +334,10 @@ export default {
     'No zaps yet': 'No zaps yet',
     'No more reposts': 'No more reposts',
     'No reposts yet': 'No reposts yet',
-    Reposts: 'Reposts'
+    Reposts: 'Reposts',
+    FollowListNotFoundConfirmation:
+      'Follow list not found. Do you want to create a new one? If you have followed users before, please DO NOT confirm as this operation will cause you to lose your previous follow list.',
+    MuteListNotFoundConfirmation:
+      'Mute list not found. Do you want to create a new one? If you have muted users before, please DO NOT confirm as this operation will cause you to lose your previous mute list.'
   }
 }

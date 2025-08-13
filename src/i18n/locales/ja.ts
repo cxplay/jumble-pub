@@ -336,6 +336,10 @@ export default {
     'No zaps yet': 'まだZapはありません',
     'No more reposts': 'これ以上のリポストはありません',
     'No reposts yet': 'まだリポストはありません',
-    Reposts: 'リポスト'
+    Reposts: 'リポスト',
+    FollowListNotFoundConfirmation:
+      'フォローリストが見つかりません。新しいものを作成しますか？以前にユーザーをフォローしたことがある場合は、この操作により前のフォローリストが失われるため、確認しないでください。',
+    MuteListNotFoundConfirmation:
+      'ミュートリストが見つかりません。新しいものを作成しますか？以前にユーザーをミュートしたことがある場合は、この操作により前のミュートリストが失われるため、確認しないでください。'
   }
 }
