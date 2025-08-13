@@ -89,6 +89,9 @@ const PostTextarea = forwardRef<
             return true
           }
           return false
+        },
+        clipboardTextSerializer(content) {
+          return parseEditorJsonToText(content.toJSON())
         }
       },
       content: postEditorCache.getPostContentCache({ defaultContent, parentEvent }),
