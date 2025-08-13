@@ -34,9 +34,9 @@ type TNostrContext = {
   profile: TProfile | null
   profileEvent: Event | null
   relayList: TRelayList | null
-  followListEvent?: Event
-  muteListEvent?: Event
-  bookmarkListEvent?: Event
+  followListEvent: Event | null
+  muteListEvent: Event | null
+  bookmarkListEvent: Event | null
   favoriteRelaysEvent: Event | null
   notificationsSeenAt: number
   account: TAccountPointer | null
@@ -95,9 +95,9 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
   const [profile, setProfile] = useState<TProfile | null>(null)
   const [profileEvent, setProfileEvent] = useState<Event | null>(null)
   const [relayList, setRelayList] = useState<TRelayList | null>(null)
-  const [followListEvent, setFollowListEvent] = useState<Event | undefined>(undefined)
-  const [muteListEvent, setMuteListEvent] = useState<Event | undefined>(undefined)
-  const [bookmarkListEvent, setBookmarkListEvent] = useState<Event | undefined>(undefined)
+  const [followListEvent, setFollowListEvent] = useState<Event | null>(null)
+  const [muteListEvent, setMuteListEvent] = useState<Event | null>(null)
+  const [bookmarkListEvent, setBookmarkListEvent] = useState<Event | null>(null)
   const [favoriteRelaysEvent, setFavoriteRelaysEvent] = useState<Event | null>(null)
   const [notificationsSeenAt, setNotificationsSeenAt] = useState(-1)
   const [isInitialized, setIsInitialized] = useState(false)
@@ -138,6 +138,9 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
       setProfileEvent(null)
       setNsec(null)
       setFavoriteRelaysEvent(null)
+      setFollowListEvent(null)
+      setMuteListEvent(null)
+      setBookmarkListEvent(null)
       setNotificationsSeenAt(-1)
       if (!account) {
         return
