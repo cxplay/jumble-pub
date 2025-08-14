@@ -2,6 +2,7 @@ import LoginDialog from '@/components/LoginDialog'
 import { ApplicationDataKey, BIG_RELAY_URLS, ExtendedKind } from '@/constants'
 import {
   createFollowListDraftEvent,
+  createMuteListDraftEvent,
   createRelayListDraftEvent,
   createSeenNotificationsAtDraftEvent
 } from '@/lib/draft-event'
@@ -538,6 +539,7 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
   const setupNewUser = async (signer: ISigner) => {
     await Promise.allSettled([
       client.publishEvent(BIG_RELAY_URLS, await signer.signEvent(createFollowListDraftEvent([]))),
+      client.publishEvent(BIG_RELAY_URLS, await signer.signEvent(createMuteListDraftEvent([]))),
       client.publishEvent(
         BIG_RELAY_URLS,
         await signer.signEvent(
