@@ -344,6 +344,7 @@ export default {
     FollowListNotFoundConfirmation:
       'Folgeliste nicht gefunden. Möchten Sie eine neue erstellen? Wenn Sie zuvor Benutzer gefolgt haben, bestätigen Sie bitte NICHT, da diese Operation dazu führt, dass Sie Ihre vorherige Folgeliste verlieren.',
     MuteListNotFoundConfirmation:
-      'Stummschaltungsliste nicht gefunden. Möchten Sie eine neue erstellen? Wenn Sie zuvor Benutzer stummgeschaltet haben, bestätigen Sie bitte NICHT, da diese Operation dazu führt, dass Sie Ihre vorherige Stummschaltungsliste verlieren.'
+      'Stummschaltungsliste nicht gefunden. Möchten Sie eine neue erstellen? Wenn Sie zuvor Benutzer stummgeschaltet haben, bestätigen Sie bitte NICHT, da diese Operation dazu führt, dass Sie Ihre vorherige Stummschaltungsliste verlieren.',
+    'Show NSFW content by default': 'NSFW-Inhalte standardmäßig anzeigen'
   }
 }

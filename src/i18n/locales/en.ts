@@ -338,6 +338,7 @@ export default {
     FollowListNotFoundConfirmation:
       'Follow list not found. Do you want to create a new one? If you have followed users before, please DO NOT confirm as this operation will cause you to lose your previous follow list.',
     MuteListNotFoundConfirmation:
-      'Mute list not found. Do you want to create a new one? If you have muted users before, please DO NOT confirm as this operation will cause you to lose your previous mute list.'
+      'Mute list not found. Do you want to create a new one? If you have muted users before, please DO NOT confirm as this operation will cause you to lose your previous mute list.',
+    'Show NSFW content by default': 'Show NSFW content by default'
   }
 }

@@ -342,6 +342,7 @@ export default {
     FollowListNotFoundConfirmation:
       'Lista obserwowanych nie została znaleziona. Czy chcesz utworzyć nową? Jeśli wcześniej obserwowałeś użytkowników, proszę NIE potwierdzaj, ponieważ ta operacja spowoduje utratę poprzedniej listy obserwowanych.',
     MuteListNotFoundConfirmation:
-      'Lista wyciszonych nie została znaleziona. Czy chcesz utworzyć nową? Jeśli wcześniej wyciszałeś użytkowników, proszę NIE potwierdzaj, ponieważ ta operacja spowoduje utratę poprzedniej listy wyciszonych.'
+      'Lista wyciszonych nie została znaleziona. Czy chcesz utworzyć nową? Jeśli wcześniej wyciszałeś użytkowników, proszę NIE potwierdzaj, ponieważ ta operacja spowoduje utratę poprzedniej listy wyciszonych.',
+    'Show NSFW content by default': 'Domyślnie pokazuj treści NSFW'
   }
 }

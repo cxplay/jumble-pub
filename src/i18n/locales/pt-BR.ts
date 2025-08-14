@@ -341,6 +341,7 @@ export default {
     FollowListNotFoundConfirmation:
       'Lista de seguindo não encontrada. Deseja criar uma nova? Se você seguiu usuários antes, por favor NÃO confirme, pois esta operação fará você perder sua lista de seguindo anterior.',
     MuteListNotFoundConfirmation:
-      'Lista de silenciados não encontrada. Deseja criar uma nova? Se você silenciou usuários antes, por favor NÃO confirme, pois esta operação fará você perder sua lista de silenciados anterior.'
+      'Lista de silenciados não encontrada. Deseja criar uma nova? Se você silenciou usuários antes, por favor NÃO confirme, pois esta operação fará você perder sua lista de silenciados anterior.',
+    'Show NSFW content by default': 'Mostrar conteúdo NSFW por padrão'
   }
 }

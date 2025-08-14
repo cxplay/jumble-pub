@@ -8,6 +8,7 @@ import {
   isPictureEvent
 } from '@/lib/event'
 import { toNote } from '@/lib/link'
+import { useContentPolicy } from '@/providers/ContentPolicyProvider'
 import { useMuteList } from '@/providers/MuteListProvider'
 import { useScreenSize } from '@/providers/ScreenSizeProvider'
 import { Event, kinds } from 'nostr-tools'
@@ -60,6 +61,7 @@ export default function Note({
     [event]
   )
   const usingClient = useMemo(() => getUsingClient(event), [event])
+  const { defaultShowNsfw } = useContentPolicy()
   const [showNsfw, setShowNsfw] = useState(false)
   const { mutePubkeys } = useMuteList()
   const [showMuted, setShowMuted] = useState(false)
@@ -83,7 +85,7 @@ export default function Note({
     content = <UnknownNote className="mt-2" event={event} />
   } else if (mutePubkeys.includes(event.pubkey) && !showMuted) {
     content = <MutedNote show={() => setShowMuted(true)} />
-  } else if (isNsfwEvent(event) && !showNsfw) {
+  } else if (!defaultShowNsfw && isNsfwEvent(event) && !showNsfw) {
     content = <NsfwNote show={() => setShowNsfw(true)} />
   } else if (event.kind === kinds.Highlights) {
     content = <Highlight className="mt-2" event={event} />

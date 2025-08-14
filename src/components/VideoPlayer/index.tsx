@@ -1,10 +1,10 @@
 import { cn, isInViewport } from '@/lib/utils'
-import { useAutoplay } from '@/providers/AutoplayProvider'
+import { useContentPolicy } from '@/providers/ContentPolicyProvider'
 import mediaManager from '@/services/media-manager.service'
 import { useEffect, useRef } from 'react'
 
 export default function VideoPlayer({ src, className }: { src: string; className?: string }) {
-  const { autoplay } = useAutoplay()
+  const { autoplay } = useContentPolicy()
   const videoRef = useRef<HTMLVideoElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 

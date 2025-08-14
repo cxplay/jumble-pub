@@ -343,6 +343,7 @@ export default {
     FollowListNotFoundConfirmation:
       'Liste de suivi non trouvée. Voulez-vous en créer une nouvelle ? Si vous avez suivi des utilisateurs auparavant, veuillez NE PAS confirmer car cette opération vous fera perdre votre liste de suivi précédente.',
     MuteListNotFoundConfirmation:
-      'Liste de mise en sourdine non trouvée. Voulez-vous en créer une nouvelle ? Si vous avez mis en sourdine des utilisateurs auparavant, veuillez NE PAS confirmer car cette opération vous fera perdre votre liste de mise en sourdine précédente.'
+      'Liste de mise en sourdine non trouvée. Voulez-vous en créer une nouvelle ? Si vous avez mis en sourdine des utilisateurs auparavant, veuillez NE PAS confirmer car cette opération vous fera perdre votre liste de mise en sourdine précédente.',
+    'Show NSFW content by default': 'Afficher le contenu NSFW par défaut'
   }
 }

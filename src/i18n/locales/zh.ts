@@ -335,6 +335,7 @@ export default {
     FollowListNotFoundConfirmation:
       '未找到关注列表。你想创建一个新的吗？如果你之前已经关注了用户，请不要确认，因为此操作会导致你丢失之前的关注列表。',
     MuteListNotFoundConfirmation:
-      '未找到屏蔽列表。你想创建一个新的吗？如果你之前已经屏蔽了用户，请不要确认，因为此操作会导致你丢失之前的屏蔽列表。'
+      '未找到屏蔽列表。你想创建一个新的吗？如果你之前已经屏蔽了用户，请不要确认，因为此操作会导致你丢失之前的屏蔽列表。',
+    'Show NSFW content by default': '默认显示 NSFW 内容'
   }
 }

@@ -32,6 +32,7 @@ class LocalStorageService {
   private hideUntrustedNotes: boolean = false
   private translationServiceConfigMap: Record<string, TTranslationServiceConfig> = {}
   private mediaUploadServiceConfigMap: Record<string, TMediaUploadServiceConfig> = {}
+  private defaultShowNsfw: boolean = false
 
   constructor() {
     if (!LocalStorageService.instance) {
@@ -132,6 +133,9 @@ class LocalStorageService {
     if (mediaUploadServiceConfigMapStr) {
       this.mediaUploadServiceConfigMap = JSON.parse(mediaUploadServiceConfigMapStr)
     }
+
+    const defaultShowNsfwStr = window.localStorage.getItem(StorageKey.DEFAULT_SHOW_NSFW)
+    this.defaultShowNsfw = defaultShowNsfwStr === 'true'
 
     // Clean up deprecated data
     window.localStorage.removeItem(StorageKey.ACCOUNT_PROFILE_EVENT_MAP)
@@ -346,6 +350,15 @@ class LocalStorageService {
       JSON.stringify(this.mediaUploadServiceConfigMap)
     )
     return config
+  }
+
+  getDefaultShowNsfw() {
+    return this.defaultShowNsfw
+  }
+
+  setDefaultShowNsfw(defaultShowNsfw: boolean) {
+    this.defaultShowNsfw = defaultShowNsfw
+    window.localStorage.setItem(StorageKey.DEFAULT_SHOW_NSFW, defaultShowNsfw.toString())
   }
 }
 
