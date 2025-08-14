@@ -634,7 +634,7 @@ function buildReplaceableQTag(coordinate: string) {
 }
 
 function buildRTag(url: string, scope: TMailboxRelayScope) {
-  return scope === 'both' ? ['r', url, scope] : ['r', url]
+  return scope !== 'both' ? ['r', url, scope] : ['r', url]
 }
 
 function buildTTag(hashtag: string) {
