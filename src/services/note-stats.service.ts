@@ -136,7 +136,7 @@ class NoteStatsService {
       ...(this.noteStatsMap.get(event.id) ?? {}),
       updatedAt: dayjs().unix()
     })
-    return events
+    return this.noteStatsMap.get(event.id) ?? {}
   }
 
   subscribeNoteStats(noteId: string, callback: () => void) {

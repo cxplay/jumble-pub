@@ -15,7 +15,7 @@ import { useScreenSize } from '@/providers/ScreenSizeProvider'
 import { useUserTrust } from '@/providers/UserTrustProvider'
 import noteStatsService from '@/services/note-stats.service'
 import { Loader, PencilLine, Repeat } from 'lucide-react'
-import { Event, kinds } from 'nostr-tools'
+import { Event } from 'nostr-tools'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import PostEditor from '../PostEditor'
@@ -51,8 +51,8 @@ export default function RepostButton({ event }: { event: Event }) {
         const hasReposted = noteStats?.repostPubkeySet?.has(pubkey)
         if (hasReposted) return
         if (!noteStats?.updatedAt) {
-          const events = await noteStatsService.fetchNoteStats(event, pubkey)
-          if (events.some((e) => e.kind === kinds.Repost && e.pubkey === pubkey)) {
+          const noteStats = await noteStatsService.fetchNoteStats(event, pubkey)
+          if (noteStats.repostPubkeySet?.has(pubkey)) {
             return
           }
         }
