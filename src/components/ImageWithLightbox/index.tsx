@@ -34,10 +34,10 @@ export default function ImageWithLightbox({
   }
 
   return (
-    <div className="w-fit max-w-full">
+    <div className="w-full">
       <Image
         key={0}
-        className={cn('rounded-lg max-h-[80vh] sm:max-h-[50vh] border cursor-zoom-in', className)}
+        className={cn('rounded-lg border cursor-zoom-in', className)}
         classNames={{
           errorPlaceholder: 'aspect-square h-[30vh]'
         }}

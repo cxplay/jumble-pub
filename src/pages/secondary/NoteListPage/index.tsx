@@ -22,10 +22,12 @@ const NoteListPage = forwardRef(({ index }: { index?: number }, ref) => {
   const [data, setData] = useState<
     | {
         type: 'hashtag' | 'search' | 'externalContent'
+        kinds?: number[]
       }
     | {
         type: 'domain'
         domain: string
+        kinds?: number[]
       }
     | null
   >(null)
@@ -34,13 +36,17 @@ const NoteListPage = forwardRef(({ index }: { index?: number }, ref) => {
   useEffect(() => {
     const init = async () => {
       const searchParams = new URLSearchParams(window.location.search)
+      const kinds = searchParams
+        .getAll('k')
+        .map((k) => parseInt(k))
+        .filter((k) => !isNaN(k))
       const hashtag = searchParams.get('t')
       if (hashtag) {
         setData({ type: 'hashtag' })
         setTitle(`# ${hashtag}`)
         setSubRequests([
           {
-            filter: { '#t': [hashtag] },
+            filter: { '#t': [hashtag], ...(kinds.length > 0 ? { kinds } : {}) },
             urls: BIG_RELAY_URLS
           }
         ])
@@ -52,7 +58,7 @@ const NoteListPage = forwardRef(({ index }: { index?: number }, ref) => {
         setTitle(`${t('Search')}: ${search}`)
         setSubRequests([
           {
-            filter: { search },
+            filter: { search, ...(kinds.length > 0 ? { kinds } : {}) },
             urls: SEARCHABLE_RELAY_URLS
           }
         ])
@@ -64,7 +70,7 @@ const NoteListPage = forwardRef(({ index }: { index?: number }, ref) => {
         setTitle(externalContentId)
         setSubRequests([
           {
-            filter: { '#I': [externalContentId] },
+            filter: { '#I': [externalContentId], ...(kinds.length > 0 ? { kinds } : {}) },
             urls: BIG_RELAY_URLS.concat(relayList?.write || [])
           }
         ])

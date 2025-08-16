@@ -5,7 +5,7 @@ export type TSubRequestFilter = Omit<Filter, 'since' | 'until'> & { limit: numbe
 
 export type TFeedSubRequest = {
   urls: string[]
-  filter: Omit<Filter, 'since' | 'until' | 'kinds'>
+  filter: Omit<Filter, 'since' | 'until'>
 }
 
 export type TProfile = {

@@ -1,7 +1,9 @@
+import { SecondaryPageLink, useSecondaryPage } from '@/PageManager'
 import ImageWithLightbox from '@/components/ImageWithLightbox'
-import { Badge } from '@/components/ui/badge'
 import { getLongFormArticleMetadataFromEvent } from '@/lib/event-metadata'
-import { Event } from 'nostr-tools'
+import { toNote, toNoteList, toProfile } from '@/lib/link'
+import { ExternalLink } from 'lucide-react'
+import { Event, kinds } from 'nostr-tools'
 import { useMemo } from 'react'
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
@@ -16,6 +18,7 @@ export default function LongFormArticle({
   event: Event
   className?: string
 }) {
+  const { push } = useSecondaryPage()
   const metadata = useMemo(() => getLongFormArticleMetadataFromEvent(event), [event])
 
   return (
@@ -28,15 +31,6 @@ export default function LongFormArticle({
           <p className="break-words">{metadata.summary}</p>
         </blockquote>
       )}
-      {metadata.tags.length > 0 && (
-        <div className="flex gap-1 flex-wrap">
-          {metadata.tags.map((tag) => (
-            <Badge key={tag} variant="secondary" className="break-words">
-              {tag}
-            </Badge>
-          ))}
-        </div>
-      )}
       {metadata.image && (
         <ImageWithLightbox
           image={{ url: metadata.image, pubkey: event.pubkey }}
@@ -45,12 +39,55 @@ export default function LongFormArticle({
       )}
       <Markdown
         remarkPlugins={[remarkGfm, remarkNostr]}
+        urlTransform={(url) => {
+          if (url.startsWith('nostr:')) {
+            return url.slice(6) // Remove 'nostr:' prefix for rendering
+          }
+          return url
+        }}
         components={
           {
             nostr: (props) => <NostrNode {...props} />,
-            a: (props) => (
-              <a {...props} target="_blank" rel="noreferrer noopener" className="break-words" />
-            ),
+            a: ({ href, children, ...props }) => {
+              if (!href) {
+                return <span {...props} className="break-words" />
+              }
+              if (
+                href.startsWith('note1') ||
+                href.startsWith('nevent1') ||
+                href.startsWith('naddr1')
+              ) {
+                return (
+                  <SecondaryPageLink
+                    to={toNote(href)}
+                    className="break-words underline text-foreground"
+                  >
+                    {children}
+                  </SecondaryPageLink>
+                )
+              }
+              if (href.startsWith('npub1') || href.startsWith('nprofile1')) {
+                return (
+                  <SecondaryPageLink
+                    to={toProfile(href)}
+                    className="break-words underline text-foreground"
+                  >
+                    {children}
+                  </SecondaryPageLink>
+                )
+              }
+              return (
+                <a
+                  {...props}
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="break-words inline-flex items-baseline gap-1"
+                >
+                  {children} <ExternalLink className="size-3" />
+                </a>
+              )
+            },
             p: (props) => <p {...props} className="break-words" />,
             div: (props) => <div {...props} className="break-words" />,
             code: (props) => <code {...props} className="break-words whitespace-pre-wrap" />
@@ -59,6 +96,23 @@ export default function LongFormArticle({
       >
         {event.content}
       </Markdown>
+      {metadata.tags.length > 0 && (
+        <div className="flex gap-2 flex-wrap pb-2">
+          {metadata.tags.map((tag) => (
+            <div
+              key={tag}
+              title={tag}
+              className="flex items-center rounded-full px-3 bg-muted text-muted-foreground max-w-44 cursor-pointer hover:bg-accent hover:text-accent-foreground"
+              onClick={(e) => {
+                e.stopPropagation()
+                push(toNoteList({ hashtag: tag, kinds: [kinds.LongFormArticle] }))
+              }}
+            >
+              #<span className="truncate">{tag}</span>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

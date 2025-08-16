@@ -1,7 +1,8 @@
-import { Badge } from '@/components/ui/badge'
 import { getLongFormArticleMetadataFromEvent } from '@/lib/event-metadata'
+import { toNoteList } from '@/lib/link'
+import { useSecondaryPage } from '@/PageManager'
 import { useScreenSize } from '@/providers/ScreenSizeProvider'
-import { Event } from 'nostr-tools'
+import { Event, kinds } from 'nostr-tools'
 import { useMemo } from 'react'
 import Image from '../Image'
 
@@ -13,6 +14,7 @@ export default function LongFormArticlePreview({
   className?: string
 }) {
   const { isSmallScreen } = useScreenSize()
+  const { push } = useSecondaryPage()
   const metadata = useMemo(() => getLongFormArticleMetadataFromEvent(event), [event])
 
   const titleComponent = <div className="text-xl font-semibold line-clamp-2">{metadata.title}</div>
@@ -20,9 +22,16 @@ export default function LongFormArticlePreview({
   const tagsComponent = metadata.tags.length > 0 && (
     <div className="flex gap-1 flex-wrap">
       {metadata.tags.map((tag) => (
-        <Badge key={tag} variant="secondary">
-          {tag}
-        </Badge>
+        <div
+          key={tag}
+          className="flex items-center rounded-full text-xs px-2.5 py-0.5 bg-muted text-muted-foreground max-w-32 cursor-pointer hover:bg-accent hover:text-accent-foreground"
+          onClick={(e) => {
+            e.stopPropagation()
+            push(toNoteList({ hashtag: tag, kinds: [kinds.LongFormArticle] }))
+          }}
+        >
+          #<span className="truncate">{tag}</span>
+        </div>
       ))}
     </div>
   )
