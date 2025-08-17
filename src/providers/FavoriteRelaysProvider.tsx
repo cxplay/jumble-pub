@@ -16,6 +16,7 @@ type TFavoriteRelaysContext = {
   favoriteRelays: string[]
   addFavoriteRelays: (relayUrls: string[]) => Promise<void>
   deleteFavoriteRelays: (relayUrls: string[]) => Promise<void>
+  reorderFavoriteRelays: (reorderedRelays: string[]) => Promise<void>
   relaySets: TRelaySet[]
   createRelaySet: (relaySetName: string, relayUrls?: string[]) => Promise<void>
   addRelaySets: (newRelaySetEvents: Event[]) => Promise<void>
@@ -219,6 +220,13 @@ export function FavoriteRelaysProvider({ children }: { children: React.ReactNode
     })
   }
 
+  const reorderFavoriteRelays = async (reorderedRelays: string[]) => {
+    setFavoriteRelays(reorderedRelays)
+    const draftEvent = createFavoriteRelaysDraftEvent(reorderedRelays, relaySetEvents)
+    const newFavoriteRelaysEvent = await publish(draftEvent)
+    updateFavoriteRelaysEvent(newFavoriteRelaysEvent)
+  }
+
   const reorderRelaySets = async (reorderedSets: TRelaySet[]) => {
     setRelaySets(reorderedSets)
     const draftEvent = createFavoriteRelaysDraftEvent(
@@ -239,15 +247,18 @@ export function FavoriteRelaysProvider({ children }: { children: React.ReactNode
           {
             id: 'nostr.moe',
             name: 'Nostr!moe',
-            relayUrls: ['wss://relay.nostr.moe/', 'wss://relay.cxplay.org/']
+            relayUrls: ['wss://relay.nostr.moe/', 'wss://relay.cxplay.org/'],
+            aTag: []
           },
           {
             id: 'news-zh.relay.stream',
             name: '新闻资讯',
-            relayUrls: [  'wss://relay.stream/', 'wss://news-zh-node2.relay.stream/']
+            relayUrls: ['wss://relay.stream/', 'wss://news-zh-node2.relay.stream/'],
+            aTag: []
           },
           ...relaySets
         ],
+        reorderFavoriteRelays,
         createRelaySet,
         addRelaySets,
         deleteRelaySet,
