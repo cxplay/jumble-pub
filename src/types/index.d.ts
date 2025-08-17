@@ -59,6 +59,7 @@ export type TWebMetadata = {
 
 export type TRelaySet = {
   id: string
+  aTag: string[]
   name: string
   relayUrls: string[]
 }

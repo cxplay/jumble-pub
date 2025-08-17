@@ -135,7 +135,7 @@ export async function createShortTextNoteDraftEvent(
 }
 
 // https://github.com/nostr-protocol/nips/blob/master/51.md
-export function createRelaySetDraftEvent(relaySet: TRelaySet): TDraftEvent {
+export function createRelaySetDraftEvent(relaySet: Omit<TRelaySet, 'aTag'>): TDraftEvent {
   return {
     kind: kinds.Relaysets,
     content: '',
@@ -312,14 +312,18 @@ export function createProfileDraftEvent(content: string, tags: string[][] = []):
 
 export function createFavoriteRelaysDraftEvent(
   favoriteRelays: string[],
-  relaySetEvents: Event[]
+  relaySetEventsOrATags: Event[] | string[][]
 ): TDraftEvent {
   const tags: string[][] = []
   favoriteRelays.forEach((url) => {
     tags.push(buildRelayTag(url))
   })
-  relaySetEvents.forEach((event) => {
-    tags.push(buildATag(event))
+  relaySetEventsOrATags.forEach((eventOrATag) => {
+    if (Array.isArray(eventOrATag)) {
+      tags.push(eventOrATag)
+    } else {
+      tags.push(buildATag(eventOrATag))
+    }
   })
   return {
     kind: ExtendedKind.FAVORITE_RELAYS,
@@ -579,7 +583,7 @@ function extractImagesFromContent(content: string) {
   return content.match(/https?:\/\/[^\s"']+\.(jpg|jpeg|png|gif|webp|heic)/gi)
 }
 
-function buildATag(event: Event, upperCase: boolean = false) {
+export function buildATag(event: Event, upperCase: boolean = false) {
   const coordinate = getReplaceableCoordinateFromEvent(event)
   const hint = client.getEventHint(event.id)
   return trimTagEnd([upperCase ? 'A' : 'a', coordinate, hint])

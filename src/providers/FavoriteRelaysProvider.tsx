@@ -21,6 +21,7 @@ type TFavoriteRelaysContext = {
   addRelaySets: (newRelaySetEvents: Event[]) => Promise<void>
   deleteRelaySet: (id: string) => Promise<void>
   updateRelaySet: (newSet: TRelaySet) => Promise<void>
+  reorderRelaySets: (reorderedSets: TRelaySet[]) => Promise<void>
 }
 
 const FavoriteRelaysContext = createContext<TFavoriteRelaysContext | undefined>(undefined)
@@ -109,7 +110,15 @@ export function FavoriteRelaysProvider({ children }: { children: React.ReactNode
           relaySetEventMap.set(d, event)
         }
       })
-      const uniqueNewRelaySetEvents = Array.from(relaySetEventMap.values())
+      const uniqueNewRelaySetEvents = relaySetIds
+        .map((id, index) => {
+          const event = relaySetEventMap.get(id)
+          if (event) {
+            return event
+          }
+          return storedRelaySetEvents[index] || null
+        })
+        .filter(Boolean) as Event[]
       setRelaySetEvents(uniqueNewRelaySetEvents)
       await Promise.all(
         uniqueNewRelaySetEvents.map((event) => {
@@ -210,6 +219,16 @@ export function FavoriteRelaysProvider({ children }: { children: React.ReactNode
     })
   }
 
+  const reorderRelaySets = async (reorderedSets: TRelaySet[]) => {
+    setRelaySets(reorderedSets)
+    const draftEvent = createFavoriteRelaysDraftEvent(
+      favoriteRelays,
+      reorderedSets.map((set) => set.aTag)
+    )
+    const newFavoriteRelaysEvent = await publish(draftEvent)
+    updateFavoriteRelaysEvent(newFavoriteRelaysEvent)
+  }
+
   return (
     <FavoriteRelaysContext.Provider
       value={{
@@ -232,7 +251,8 @@ export function FavoriteRelaysProvider({ children }: { children: React.ReactNode
         createRelaySet,
         addRelaySets,
         deleteRelaySet,
-        updateRelaySet
+        updateRelaySet,
+        reorderRelaySets
       }}
     >
       {children}
