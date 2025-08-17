@@ -337,6 +337,18 @@ export default {
       'ไม่พบรายการติดตาม คุณต้องการสร้างรายการใหม่หรือไม่? หากคุณเคยติดตามผู้ใช้มาก่อน กรุณาอย่ายืนยัน เพราะการดำเนินการนี้จะทำให้คุณสูญเสียรายการติดตามก่อนหน้านี้',
     MuteListNotFoundConfirmation:
       'ไม่พบรายการปิดเสียง คุณต้องการสร้างรายการใหม่หรือไม่? หากคุณเคยปิดเสียงผู้ใช้มาก่อน กรุณาอย่ายืนยัน เพราะการดำเนินการนี้จะทำให้คุณสูญเสียรายการปิดเสียงก่อนหน้านี้',
-    'Show NSFW content by default': 'แสดงเนื้อหา NSFW โดยค่าเริ่มต้น'
+    'Show NSFW content by default': 'แสดงเนื้อหา NSFW โดยค่าเริ่มต้น',
+    'Too many read relays': 'Too many read relays',
+    'Too many write relays': 'Too many write relays',
+    'You have {{count}} read relays. Most clients only use 2-4 relays, setting more is unnecessary.':
+      'You have {{count}} read relays. Most clients only use 2-4 relays, setting more is unnecessary.',
+    'You have {{count}} write relays. Most clients only use 2-4 relays, setting more is unnecessary.':
+      'You have {{count}} write relays. Most clients only use 2-4 relays, setting more is unnecessary.',
+    'Optimize Relay Settings': 'ปรับแต่งการตั้งค่า Relay ให้เหมาะสม',
+    'Your current relay configuration may not be optimal. This could make it difficult for others to find your posts and may result in incomplete notifications.':
+      'การตั้งค่า relay ปัจจุบันของคุณอาจไม่เหมาะสม อาจทำให้คนอื่นหาโพสต์ของคุณได้ยากและอาจส่งผลให้การแจ้งเตือนไม่สมบูรณ์',
+    'Optimize Now': 'ปรับแต่งตอนนี้',
+    'Maybe Later': 'ทีหลังค่อยว่า',
+    "Don't remind me again": 'ไม่ต้องเตือนอีก'
   }
 }

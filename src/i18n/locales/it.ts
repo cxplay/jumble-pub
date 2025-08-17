@@ -343,6 +343,18 @@ export default {
       'Elenco seguiti non trovato. Vuoi crearne uno nuovo? Se hai già seguito degli utenti in precedenza, per favore NON confermare poiché questa operazione causerà la perdita del tuo elenco seguiti precedente.',
     MuteListNotFoundConfirmation:
       'Elenco utenti silenziati non trovato. Vuoi crearne uno nuovo? Se hai già silenziato degli utenti in precedenza, per favore NON confermare poiché questa operazione causerà la perdita del tuo elenco utenti silenziati precedente.',
-    'Show NSFW content by default': 'Mostra contenuti NSFW per impostazione predefinita'
+    'Show NSFW content by default': 'Mostra contenuti NSFW per impostazione predefinita',
+    'Too many read relays': 'Troppi relay di lettura',
+    'Too many write relays': 'Troppi relay di scrittura',
+    'You have {{count}} read relays. Most clients only use 2-4 relays, setting more is unnecessary.':
+      'Hai {{count}} relay di lettura. La maggior parte dei client usa solo 2-4 relay, impostarne di più è inutile.',
+    'You have {{count}} write relays. Most clients only use 2-4 relays, setting more is unnecessary.':
+      'Hai {{count}} relay di scrittura. La maggior parte dei client usa solo 2-4 relay, impostarne di più è inutile.',
+    'Optimize Relay Settings': 'Ottimizza impostazioni relay',
+    'Your current relay configuration may not be optimal. This could make it difficult for others to find your posts and may result in incomplete notifications.':
+      'La tua configurazione relay attuale potrebbe non essere ottimale. Questo potrebbe rendere difficile per gli altri trovare i tuoi post e potrebbe portare a notifiche incomplete.',
+    'Optimize Now': 'Ottimizza ora',
+    'Maybe Later': 'Forse più tardi',
+    "Don't remind me again": 'Non ricordarmelo più'
   }
 }

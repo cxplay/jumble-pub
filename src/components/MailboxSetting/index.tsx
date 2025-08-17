@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import MailboxRelay from './MailboxRelay'
 import NewMailboxRelayInput from './NewMailboxRelayInput'
+import RelayCountWarning from './RelayCountWarning'
 import SaveButton from './SaveButton'
 
 export default function MailboxSetting() {
@@ -65,6 +66,7 @@ export default function MailboxSetting() {
         <div>{t('write relays description')}</div>
         <div>{t('read & write relays notice')}</div>
       </div>
+      <RelayCountWarning relays={relays} />
       <SaveButton mailboxRelays={relays} hasChange={hasChange} setHasChange={setHasChange} />
       <div className="space-y-2">
         {relays.map((relay) => (

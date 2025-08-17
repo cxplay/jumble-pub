@@ -339,6 +339,18 @@ export default {
       'فهرست دنبال‌کنندگان پیدا نشد. آیا می‌خواهید یکی جدید ایجاد کنید؟ اگر قبلاً کاربرانی را دنبال کرده‌اید، لطفاً تأیید نکنید زیرا این عملیات باعث از دست رفتن فهرست دنبال‌کنندگان قبلی شما خواهد شد.',
     MuteListNotFoundConfirmation:
       'فهرست بی‌صدا شده‌ها پیدا نشد. آیا می‌خواهید یکی جدید ایجاد کنید؟ اگر قبلاً کاربرانی را بی‌صدا کرده‌اید، لطفاً تأیید نکنید زیرا این عملیات باعث از دست رفتن فهرست بی‌صدا شده‌های قبلی شما خواهد شد.',
-    'Show NSFW content by default': 'نمایش محتوای NSFW به صورت پیش‌فرض'
+    'Show NSFW content by default': 'نمایش محتوای NSFW به صورت پیش‌فرض',
+    'Too many read relays': 'Too many read relays',
+    'Too many write relays': 'Too many write relays',
+    'You have {{count}} read relays. Most clients only use 2-4 relays, setting more is unnecessary.':
+      'You have {{count}} read relays. Most clients only use 2-4 relays, setting more is unnecessary.',
+    'You have {{count}} write relays. Most clients only use 2-4 relays, setting more is unnecessary.':
+      'You have {{count}} write relays. Most clients only use 2-4 relays, setting more is unnecessary.',
+    'Optimize Relay Settings': 'بهینه‌سازی تنظیمات رله',
+    'Your current relay configuration may not be optimal. This could make it difficult for others to find your posts and may result in incomplete notifications.':
+      'پیکربندی فعلی رله شما ممکن است بهینه نباشد. این ممکن است برای دیگران پیدا کردن پست‌های شما را دشوار کند و ممکن است منجر به اعلان‌های ناقص شود.',
+    'Optimize Now': 'اکنون بهینه‌سازی کن',
+    'Maybe Later': 'شاید بعداً',
+    "Don't remind me again": 'دیگر به من یادآوری نکن'
   }
 }

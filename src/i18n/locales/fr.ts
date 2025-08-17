@@ -344,6 +344,18 @@ export default {
       'Liste de suivi non trouvée. Voulez-vous en créer une nouvelle ? Si vous avez suivi des utilisateurs auparavant, veuillez NE PAS confirmer car cette opération vous fera perdre votre liste de suivi précédente.',
     MuteListNotFoundConfirmation:
       'Liste de mise en sourdine non trouvée. Voulez-vous en créer une nouvelle ? Si vous avez mis en sourdine des utilisateurs auparavant, veuillez NE PAS confirmer car cette opération vous fera perdre votre liste de mise en sourdine précédente.',
-    'Show NSFW content by default': 'Afficher le contenu NSFW par défaut'
+    'Show NSFW content by default': 'Afficher le contenu NSFW par défaut',
+    'Too many read relays': 'Trop de relais de lecture',
+    'Too many write relays': "Trop de relais d'écriture",
+    'You have {{count}} read relays. Most clients only use 2-4 relays, setting more is unnecessary.':
+      "Vous avez {{count}} relais de lecture. La plupart des clients n'utilisent que 2 à 4 relais, en configurer plus est inutile.",
+    'You have {{count}} write relays. Most clients only use 2-4 relays, setting more is unnecessary.':
+      "Vous avez {{count}} relais d'écriture. La plupart des clients n'utilisent que 2 à 4 relais, en configurer plus est inutile.",
+    'Optimize Relay Settings': 'Optimiser les paramètres de relais',
+    'Your current relay configuration may not be optimal. This could make it difficult for others to find your posts and may result in incomplete notifications.':
+      'Votre configuration de relais actuelle pourrait ne pas être optimale. Cela pourrait rendre difficile pour les autres de trouver vos publications et pourrait entraîner des notifications incomplètes.',
+    'Optimize Now': 'Optimiser maintenant',
+    'Maybe Later': 'Peut-être plus tard',
+    "Don't remind me again": 'Ne plus me rappeler'
   }
 }

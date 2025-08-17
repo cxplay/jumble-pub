@@ -338,6 +338,18 @@ export default {
       'لم يتم العثور على قائمة المتابعة. هل تريد إنشاء واحدة جديدة؟ إذا كنت قد تابعت مستخدمين من قبل، يرجى عدم التأكيد لأن هذه العملية ستؤدي إلى فقدان قائمة المتابعة السابقة.',
     MuteListNotFoundConfirmation:
       'لم يتم العثور على قائمة الكتم. هل تريد إنشاء واحدة جديدة؟ إذا كنت قد كتمت مستخدمين من قبل، يرجى عدم التأكيد لأن هذه العملية ستؤدي إلى فقدان قائمة الكتم السابقة.',
-    'Show NSFW content by default': 'إظهار محتوى NSFW افتراضياً'
+    'Show NSFW content by default': 'إظهار محتوى NSFW افتراضياً',
+    'Too many read relays': 'Too many read relays',
+    'Too many write relays': 'Too many write relays',
+    'You have {{count}} read relays. Most clients only use 2-4 relays, setting more is unnecessary.':
+      'You have {{count}} read relays. Most clients only use 2-4 relays, setting more is unnecessary.',
+    'You have {{count}} write relays. Most clients only use 2-4 relays, setting more is unnecessary.':
+      'You have {{count}} write relays. Most clients only use 2-4 relays, setting more is unnecessary.',
+    'Optimize Relay Settings': 'تحسين إعدادات الترحيل',
+    'Your current relay configuration may not be optimal. This could make it difficult for others to find your posts and may result in incomplete notifications.':
+      'قد لا تكون تكوينات الترحيل الحالية مثلى. هذا قد يجعل من الصعب على الآخرين العثور على منشوراتك وقد يؤدي إلى إشعارات غير مكتملة.',
+    'Optimize Now': 'تحسين الآن',
+    'Maybe Later': 'ربما لاحقاً',
+    "Don't remind me again": 'لا تذكرني مرة أخرى'
   }
 }

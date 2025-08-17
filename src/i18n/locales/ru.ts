@@ -343,6 +343,18 @@ export default {
       'Список подписок не найден. Хотите создать новый? Если вы уже подписывались на пользователей ранее, пожалуйста, НЕ подтверждайте, так как эта операция приведет к потере вашего предыдущего списка подписок.',
     MuteListNotFoundConfirmation:
       'Список заблокированных не найден. Хотите создать новый? Если вы уже блокировали пользователей ранее, пожалуйста, НЕ подтверждайте, так как эта операция приведет к потере вашего предыдущего списка заблокированных.',
-    'Show NSFW content by default': 'Показывать контент NSFW по умолчанию'
+    'Show NSFW content by default': 'Показывать контент NSFW по умолчанию',
+    'Too many read relays': 'Слишком много релеев для чтения',
+    'Too many write relays': 'Слишком много релеев для записи',
+    'You have {{count}} read relays. Most clients only use 2-4 relays, setting more is unnecessary.':
+      'У вас {{count}} релеев для чтения. Большинство клиентов используют только 2-4 релея, устанавливать больше не нужно.',
+    'You have {{count}} write relays. Most clients only use 2-4 relays, setting more is unnecessary.':
+      'У вас {{count}} релеев для записи. Большинство клиентов используют только 2-4 релея, устанавливать больше не нужно.',
+    'Optimize Relay Settings': 'Оптимизировать настройки релеев',
+    'Your current relay configuration may not be optimal. This could make it difficult for others to find your posts and may result in incomplete notifications.':
+      'Ваша текущая конфигурация релеев может быть не оптимальной. Это может затруднить поиск ваших сообщений другими пользователями и привести к неполным уведомлениям.',
+    'Optimize Now': 'Оптимизировать сейчас',
+    'Maybe Later': 'Возможно, позже',
+    "Don't remind me again": 'Больше не напоминать'
   }
 }

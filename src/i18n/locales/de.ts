@@ -345,6 +345,18 @@ export default {
       'Folgeliste nicht gefunden. Möchten Sie eine neue erstellen? Wenn Sie zuvor Benutzer gefolgt haben, bestätigen Sie bitte NICHT, da diese Operation dazu führt, dass Sie Ihre vorherige Folgeliste verlieren.',
     MuteListNotFoundConfirmation:
       'Stummschaltungsliste nicht gefunden. Möchten Sie eine neue erstellen? Wenn Sie zuvor Benutzer stummgeschaltet haben, bestätigen Sie bitte NICHT, da diese Operation dazu führt, dass Sie Ihre vorherige Stummschaltungsliste verlieren.',
-    'Show NSFW content by default': 'NSFW-Inhalte standardmäßig anzeigen'
+    'Show NSFW content by default': 'NSFW-Inhalte standardmäßig anzeigen',
+    'Too many read relays': 'Zu viele Lese-Relays',
+    'Too many write relays': 'Zu viele Schreib-Relays',
+    'You have {{count}} read relays. Most clients only use 2-4 relays, setting more is unnecessary.':
+      'Sie haben {{count}} Lese-Relays. Die meisten Clients verwenden nur 2-4 Relays, mehr einzustellen ist unnötig.',
+    'You have {{count}} write relays. Most clients only use 2-4 relays, setting more is unnecessary.':
+      'Sie haben {{count}} Schreib-Relays. Die meisten Clients verwenden nur 2-4 Relays, mehr einzustellen ist unnötig.',
+    'Optimize Relay Settings': 'Relay-Einstellungen optimieren',
+    'Your current relay configuration may not be optimal. This could make it difficult for others to find your posts and may result in incomplete notifications.':
+      'Ihre aktuelle Relay-Konfiguration ist möglicherweise nicht optimal. Dies könnte es anderen erschweren, Ihre Beiträge zu finden und zu unvollständigen Benachrichtigungen führen.',
+    'Optimize Now': 'Jetzt optimieren',
+    'Maybe Later': 'Vielleicht später',
+    "Don't remind me again": 'Nicht mehr erinnern'
   }
 }

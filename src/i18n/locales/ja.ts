@@ -341,6 +341,18 @@ export default {
       'フォローリストが見つかりません。新しいものを作成しますか？以前にユーザーをフォローしたことがある場合は、この操作により前のフォローリストが失われるため、確認しないでください。',
     MuteListNotFoundConfirmation:
       'ミュートリストが見つかりません。新しいものを作成しますか？以前にユーザーをミュートしたことがある場合は、この操作により前のミュートリストが失われるため、確認しないでください。',
-    'Show NSFW content by default': 'デフォルトでNSFWコンテンツを表示'
+    'Show NSFW content by default': 'デフォルトでNSFWコンテンツを表示',
+    'Too many read relays': '読み取りリレイが多すぎます',
+    'Too many write relays': '書き込みリレイが多すぎます',
+    'You have {{count}} read relays. Most clients only use 2-4 relays, setting more is unnecessary.':
+      '{{count}} 個の読み取りリレイがあります。ほとんどのクライアントは2〜4個のリレイのみを使用するため、それ以上設定する必要はありません。',
+    'You have {{count}} write relays. Most clients only use 2-4 relays, setting more is unnecessary.':
+      '{{count}} 個の書き込みリレイがあります。ほとんどのクライアントは2〜4個のリレイのみを使用するため、それ以上設定する必要はありません。',
+    'Optimize Relay Settings': 'リレイ設定を最適化',
+    'Your current relay configuration may not be optimal. This could make it difficult for others to find your posts and may result in incomplete notifications.':
+      '現在のリレイ設定は最適ではない可能性があります。これにより、他の人があなたの投稿を見つけにくくなり、通知が不完全になる可能性があります。',
+    'Optimize Now': '今すぐ最適化',
+    'Maybe Later': '後で',
+    "Don't remind me again": '今後表示しない'
   }
 }

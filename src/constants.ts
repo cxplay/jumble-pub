@@ -25,6 +25,7 @@ export const StorageKey = {
   MEDIA_UPLOAD_SERVICE_CONFIG_MAP: 'mediaUploadServiceConfigMap',
   HIDE_UNTRUSTED_NOTES: 'hideUntrustedNotes',
   DEFAULT_SHOW_NSFW: 'defaultShowNsfw',
+  DISMISSED_TOO_MANY_RELAYS_ALERT: 'dismissedTooManyRelaysAlert',
   MEDIA_UPLOAD_SERVICE: 'mediaUploadService', // deprecated
   HIDE_UNTRUSTED_EVENTS: 'hideUntrustedEvents', // deprecated
   ACCOUNT_RELAY_LIST_EVENT_MAP: 'accountRelayListEventMap', // deprecated
