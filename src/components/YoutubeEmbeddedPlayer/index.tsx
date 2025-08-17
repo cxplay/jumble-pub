@@ -80,8 +80,8 @@ export default function YoutubeEmbeddedPlayer({
   return (
     <div
       className={cn(
-        'rounded-lg border overflow-hidden max-h-[50vh]',
-        isShort ? 'aspect-[9/16]' : 'aspect-video',
+        'rounded-lg border overflow-hidden',
+        isShort ? 'aspect-[9/16] max-h-[80vh] sm:max-h-[60vh]' : 'aspect-video max-h-[60vh]',
         className
       )}
     >
