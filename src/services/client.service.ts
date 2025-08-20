@@ -445,14 +445,7 @@ class ClientService extends EventTarget {
     const subCloser = this.subscribe(relays, since ? { ...filter, since } : filter, {
       startLogin,
       onevent: (evt: NEvent) => {
-        that.eventDataLoader.prime(evt.id, Promise.resolve(evt))
-        if (isReplaceableEvent(evt.kind)) {
-          const coordinate = getReplaceableCoordinateFromEvent(evt)
-          const cachedEvent = that.replaceableEventCacheMap.get(coordinate)
-          if (!cachedEvent || compareEvents(evt, cachedEvent) > 0) {
-            that.replaceableEventCacheMap.set(coordinate, evt)
-          }
-        }
+        that.addEventToCache(evt)
         // not eosed yet, push to events
         if (!eosedAt) {
           return events.push(evt)
@@ -560,7 +553,7 @@ class ClientService extends EventTarget {
     limit = limit - cachedEvents.length
     let events = await this.query(urls, { ...filter, until, limit })
     events.forEach((evt) => {
-      this.eventDataLoader.prime(evt.id, Promise.resolve(evt))
+      this.addEventToCache(evt)
     })
     events = events.sort((a, b) => b.created_at - a.created_at).slice(0, limit)
 
@@ -641,7 +634,7 @@ class ClientService extends EventTarget {
     )
     if (cache) {
       events.forEach((evt) => {
-        this.eventDataLoader.prime(evt.id, Promise.resolve(evt))
+        this.addEventToCache(evt)
       })
     }
     return events
@@ -680,6 +673,13 @@ class ClientService extends EventTarget {
 
   addEventToCache(event: NEvent) {
     this.eventDataLoader.prime(event.id, Promise.resolve(event))
+    if (isReplaceableEvent(event.kind)) {
+      const coordinate = getReplaceableCoordinateFromEvent(event)
+      const cachedEvent = this.replaceableEventCacheMap.get(coordinate)
+      if (!cachedEvent || compareEvents(event, cachedEvent) > 0) {
+        this.replaceableEventCacheMap.set(coordinate, event)
+      }
+    }
   }
 
   private async fetchEventById(relayUrls: string[], id: string): Promise<NEvent | undefined> {
@@ -737,7 +737,7 @@ class ClientService extends EventTarget {
     }
 
     if (event && event.id !== id) {
-      this.eventDataLoader.prime(event.id, Promise.resolve(event))
+      this.addEventToCache(event)
     }
 
     return event
