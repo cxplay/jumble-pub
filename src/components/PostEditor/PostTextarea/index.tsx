@@ -1,7 +1,9 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { parseEditorJsonToText } from '@/lib/tiptap'
 import { cn } from '@/lib/utils'
+import customEmojiService from '@/services/custom-emoji.service'
 import postEditorCache from '@/services/post-editor-cache.service'
+import { TEmoji } from '@/types'
 import Document from '@tiptap/extension-document'
 import { HardBreak } from '@tiptap/extension-hard-break'
 import History from '@tiptap/extension-history'
@@ -14,13 +16,16 @@ import { Event } from 'nostr-tools'
 import { Dispatch, forwardRef, SetStateAction, useImperativeHandle } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ClipboardAndDropHandler } from './ClipboardAndDropHandler'
-import CustomMention from './CustomMention'
+import Emoji from './Emoji'
+import emojiSuggestion from './Emoji/suggestion'
+import Mention from './Mention'
+import mentionSuggestion from './Mention/suggestion'
 import Preview from './Preview'
-import suggestion from './suggestion'
 
 export type TPostTextareaHandle = {
   appendText: (text: string, addNewline?: boolean) => void
   insertText: (text: string) => void
+  insertEmoji: (emoji: string | TEmoji) => void
 }
 
 const PostTextarea = forwardRef<
@@ -63,8 +68,11 @@ const PostTextarea = forwardRef<
           placeholder:
             t('Write something...') + ' (' + t('Paste or drop media files to upload') + ')'
         }),
-        CustomMention.configure({
-          suggestion
+        Emoji.configure({
+          suggestion: emojiSuggestion
+        }),
+        Mention.configure({
+          suggestion: mentionSuggestion
         }),
         ClipboardAndDropHandler.configure({
           onUploadStart: (file, cancel) => {
@@ -129,6 +137,18 @@ const PostTextarea = forwardRef<
       insertText: (text: string) => {
         if (editor) {
           editor.chain().focus().insertContent(text).run()
+        }
+      },
+      insertEmoji: (emoji: string | TEmoji) => {
+        if (editor) {
+          if (typeof emoji === 'string') {
+            editor.chain().insertContent(emoji).run()
+          } else {
+            const emojiNode = editor.schema.nodes.emoji.create({
+              name: customEmojiService.getEmojiId(emoji)
+            })
+            editor.chain().insertContent(emojiNode).insertContent(' ').run()
+          }
         }
       }
     }))

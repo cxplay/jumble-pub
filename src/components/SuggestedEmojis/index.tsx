@@ -1,33 +1,31 @@
 import { Button } from '@/components/ui/button'
-import { parseNativeEmoji } from 'emoji-picker-react/src/dataUtils/parseNativeEmoji'
+import { parseEmojiPickerUnified } from '@/lib/utils'
+import { TEmoji } from '@/types'
 import { getSuggested } from 'emoji-picker-react/src/dataUtils/suggested'
 import { MoreHorizontal } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import Emoji from '../Emoji'
+
+const DEFAULT_SUGGESTED_EMOJIS = ['👍', '❤️', '😂', '🥲', '👀', '🫡', '🫂']
 
 export default function SuggestedEmojis({
   onEmojiClick,
   onMoreButtonClick
 }: {
-  onEmojiClick: (emoji: string) => void
+  onEmojiClick: (emoji: string | TEmoji) => void
   onMoreButtonClick: () => void
 }) {
-  const [suggestedEmojis, setSuggestedEmojis] = useState<string[]>([
-    '1f44d',
-    '2764-fe0f',
-    '1f602',
-    '1f972',
-    '1f440',
-    '1fae1',
-    '1fac2'
-  ]) // 👍 ❤️ 😂 🥲 👀 🫡 🫂
+  const [suggestedEmojis, setSuggestedEmojis] =
+    useState<(string | TEmoji)[]>(DEFAULT_SUGGESTED_EMOJIS)
 
   useEffect(() => {
     try {
       const suggested = getSuggested()
-      const suggestEmojis = suggested.sort((a, b) => b.count - a.count).map((item) => item.unified)
-      setSuggestedEmojis((pre) =>
-        [...suggestEmojis, ...pre.filter((e) => !suggestEmojis.includes(e))].slice(0, 8)
-      )
+      const suggestEmojis = suggested
+        .sort((a, b) => b.count - a.count)
+        .map((item) => parseEmojiPickerUnified(item.unified))
+        .filter(Boolean) as (string | TEmoji)[]
+      setSuggestedEmojis(() => [...suggestEmojis, ...DEFAULT_SUGGESTED_EMOJIS].slice(0, 8))
     } catch {
       // ignore
     }
@@ -35,15 +33,25 @@ export default function SuggestedEmojis({
 
   return (
     <div className="flex gap-2 p-1" onClick={(e) => e.stopPropagation()}>
-      {suggestedEmojis.map((emoji, index) => (
-        <div
-          key={index}
-          className="w-8 h-8 rounded-lg clickable flex justify-center items-center text-xl"
-          onClick={() => onEmojiClick(parseNativeEmoji(emoji))}
-        >
-          {parseNativeEmoji(emoji)}
-        </div>
-      ))}
+      {suggestedEmojis.map((emoji, index) =>
+        typeof emoji === 'string' ? (
+          <div
+            key={index}
+            className="w-8 h-8 rounded-lg clickable flex justify-center items-center text-xl"
+            onClick={() => onEmojiClick(emoji)}
+          >
+            {emoji}
+          </div>
+        ) : (
+          <div
+            className="flex flex-col items-center justify-center p-1 rounded-lg clickable"
+            key={index}
+            onClick={() => onEmojiClick(emoji)}
+          >
+            <Emoji emoji={emoji} classNames={{ img: 'size-6 rounded-md' }} />
+          </div>
+        )
+      )}
       <Button variant="ghost" className="w-8 h-8 text-muted-foreground" onClick={onMoreButtonClick}>
         <MoreHorizontal size={24} />
       </Button>

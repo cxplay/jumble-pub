@@ -1,19 +1,19 @@
-import client from '@/services/client.service'
+import customEmojiService from '@/services/custom-emoji.service'
 import postEditor from '@/services/post-editor.service'
 import type { Editor } from '@tiptap/core'
 import { ReactRenderer } from '@tiptap/react'
 import { SuggestionKeyDownProps } from '@tiptap/suggestion'
 import tippy, { GetReferenceClientRect, Instance, Props } from 'tippy.js'
-import MentionList, { MentionListHandle, MentionListProps } from './MentionList'
+import { EmojiList, EmojiListHandler, EmojiListProps } from './EmojiList'
 
 const suggestion = {
   items: async ({ query }: { query: string }) => {
-    return await client.searchNpubsFromLocal(query, 20)
+    return await customEmojiService.searchEmojis(query)
   },
 
   render: () => {
-    let component: ReactRenderer<MentionListHandle, MentionListProps>
-    let popup: Instance[]
+    let component: ReactRenderer<EmojiListHandler, EmojiListProps> | undefined
+    let popup: Instance[] = []
     let touchListener: (e: TouchEvent) => void
     let closePopup: () => void
 
@@ -30,7 +30,6 @@ const suggestion = {
         document.addEventListener('touchstart', touchListener)
 
         closePopup = () => {
-          console.log('closePopup')
           if (popup && popup[0]) {
             popup[0].hide()
           }
@@ -38,7 +37,7 @@ const suggestion = {
         postEditor.addEventListener('closeSuggestionPopup', closePopup)
       },
       onStart: (props: { editor: Editor; clientRect?: (() => DOMRect | null) | null }) => {
-        component = new ReactRenderer(MentionList, {
+        component = new ReactRenderer(EmojiList, {
           props,
           editor: props.editor
         })
@@ -67,29 +66,29 @@ const suggestion = {
       },
 
       onUpdate(props: { clientRect?: (() => DOMRect | null) | null | undefined }) {
-        component.updateProps(props)
+        component?.updateProps(props)
 
         if (!props.clientRect) {
           return
         }
 
-        popup[0].setProps({
+        popup[0]?.setProps({
           getReferenceClientRect: props.clientRect
         } as Partial<Props>)
       },
 
       onKeyDown(props: SuggestionKeyDownProps) {
         if (props.event.key === 'Escape') {
-          popup[0].hide()
+          popup[0]?.hide()
           return true
         }
-        return component.ref?.onKeyDown(props) ?? false
+        return component?.ref?.onKeyDown(props) ?? false
       },
 
       onExit() {
         postEditor.isSuggestionPopupOpen = false
-        popup[0].destroy()
-        component.destroy()
+        popup[0]?.destroy()
+        component?.destroy()
 
         document.removeEventListener('touchstart', touchListener)
         postEditor.removeEventListener('closeSuggestionPopup', closePopup)

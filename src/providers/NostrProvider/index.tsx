@@ -10,6 +10,7 @@ import { getLatestEvent, getReplaceableEventIdentifier } from '@/lib/event'
 import { getProfileFromEvent, getRelayListFromEvent } from '@/lib/event-metadata'
 import { formatPubkey, isValidPubkey, pubkeyToNpub } from '@/lib/pubkey'
 import client from '@/services/client.service'
+import customEmojiService from '@/services/custom-emoji.service'
 import indexedDb from '@/services/indexed-db.service'
 import storage from '@/services/local-storage.service'
 import noteStatsService from '@/services/note-stats.service'
@@ -43,6 +44,7 @@ type TNostrContext = {
   muteListEvent: Event | null
   bookmarkListEvent: Event | null
   favoriteRelaysEvent: Event | null
+  userEmojiListEvent: Event | null
   notificationsSeenAt: number
   account: TAccountPointer | null
   accounts: TAccountPointer[]
@@ -104,6 +106,7 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
   const [muteListEvent, setMuteListEvent] = useState<Event | null>(null)
   const [bookmarkListEvent, setBookmarkListEvent] = useState<Event | null>(null)
   const [favoriteRelaysEvent, setFavoriteRelaysEvent] = useState<Event | null>(null)
+  const [userEmojiListEvent, setUserEmojiListEvent] = useState<Event | null>(null)
   const [notificationsSeenAt, setNotificationsSeenAt] = useState(-1)
   const [isInitialized, setIsInitialized] = useState(false)
 
@@ -173,14 +176,16 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
         storedFollowListEvent,
         storedMuteListEvent,
         storedBookmarkListEvent,
-        storedFavoriteRelaysEvent
+        storedFavoriteRelaysEvent,
+        storedUserEmojiListEvent
       ] = await Promise.all([
         indexedDb.getReplaceableEvent(account.pubkey, kinds.RelayList),
         indexedDb.getReplaceableEvent(account.pubkey, kinds.Metadata),
         indexedDb.getReplaceableEvent(account.pubkey, kinds.Contacts),
         indexedDb.getReplaceableEvent(account.pubkey, kinds.Mutelist),
         indexedDb.getReplaceableEvent(account.pubkey, kinds.BookmarkList),
-        indexedDb.getReplaceableEvent(account.pubkey, ExtendedKind.FAVORITE_RELAYS)
+        indexedDb.getReplaceableEvent(account.pubkey, ExtendedKind.FAVORITE_RELAYS),
+        indexedDb.getReplaceableEvent(account.pubkey, kinds.UserEmojiList)
       ])
       if (storedRelayListEvent) {
         setRelayList(getRelayListFromEvent(storedRelayListEvent))
@@ -200,6 +205,9 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
       }
       if (storedFavoriteRelaysEvent) {
         setFavoriteRelaysEvent(storedFavoriteRelaysEvent)
+      }
+      if (storedUserEmojiListEvent) {
+        setUserEmojiListEvent(storedUserEmojiListEvent)
       }
 
       const relayListEvents = await client.fetchEvents(BIG_RELAY_URLS, {
@@ -222,7 +230,8 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
             kinds.Mutelist,
             kinds.BookmarkList,
             ExtendedKind.FAVORITE_RELAYS,
-            ExtendedKind.BLOSSOM_SERVER_LIST
+            ExtendedKind.BLOSSOM_SERVER_LIST,
+            kinds.UserEmojiList
           ],
           authors: [account.pubkey]
         },
@@ -241,15 +250,18 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
       const blossomServerListEvent = sortedEvents.find(
         (e) => e.kind === ExtendedKind.BLOSSOM_SERVER_LIST
       )
+      const userEmojiListEvent = sortedEvents.find((e) => e.kind === kinds.UserEmojiList)
       const notificationsSeenAtEvent = sortedEvents.find(
         (e) =>
           e.kind === kinds.Application &&
           getReplaceableEventIdentifier(e) === ApplicationDataKey.NOTIFICATIONS_SEEN_AT
       )
       if (profileEvent) {
-        setProfileEvent(profileEvent)
-        setProfile(getProfileFromEvent(profileEvent))
-        await indexedDb.putReplaceableEvent(profileEvent)
+        const updatedProfileEvent = await indexedDb.putReplaceableEvent(profileEvent)
+        if (updatedProfileEvent.id === profileEvent.id) {
+          setProfileEvent(updatedProfileEvent)
+          setProfile(getProfileFromEvent(updatedProfileEvent))
+        }
       } else if (!storedProfileEvent) {
         setProfile({
           pubkey: account.pubkey,
@@ -258,23 +270,37 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
         })
       }
       if (followListEvent) {
-        setFollowListEvent(followListEvent)
-        await indexedDb.putReplaceableEvent(followListEvent)
+        const updatedFollowListEvent = await indexedDb.putReplaceableEvent(followListEvent)
+        if (updatedFollowListEvent.id === followListEvent.id) {
+          setFollowListEvent(followListEvent)
+        }
       }
       if (muteListEvent) {
-        setMuteListEvent(muteListEvent)
-        await indexedDb.putReplaceableEvent(muteListEvent)
+        const updatedMuteListEvent = await indexedDb.putReplaceableEvent(muteListEvent)
+        if (updatedMuteListEvent.id === muteListEvent.id) {
+          setMuteListEvent(muteListEvent)
+        }
       }
       if (bookmarkListEvent) {
-        setBookmarkListEvent(bookmarkListEvent)
-        await indexedDb.putReplaceableEvent(bookmarkListEvent)
+        const updateBookmarkListEvent = await indexedDb.putReplaceableEvent(bookmarkListEvent)
+        if (updateBookmarkListEvent.id === bookmarkListEvent.id) {
+          setBookmarkListEvent(bookmarkListEvent)
+        }
       }
       if (favoriteRelaysEvent) {
-        setFavoriteRelaysEvent(favoriteRelaysEvent)
-        await indexedDb.putReplaceableEvent(favoriteRelaysEvent)
+        const updatedFavoriteRelaysEvent = await indexedDb.putReplaceableEvent(favoriteRelaysEvent)
+        if (updatedFavoriteRelaysEvent.id === favoriteRelaysEvent.id) {
+          setFavoriteRelaysEvent(updatedFavoriteRelaysEvent)
+        }
       }
       if (blossomServerListEvent) {
         await client.updateBlossomServerListEventCache(blossomServerListEvent)
+      }
+      if (userEmojiListEvent) {
+        const updatedUserEmojiListEvent = await indexedDb.putReplaceableEvent(userEmojiListEvent)
+        if (updatedUserEmojiListEvent.id === userEmojiListEvent.id) {
+          setUserEmojiListEvent(updatedUserEmojiListEvent)
+        }
       }
 
       const notificationsSeenAt = Math.max(
@@ -333,6 +359,10 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
       client.pubkey = undefined
     }
   }, [account])
+
+  useEffect(() => {
+    customEmojiService.init(userEmojiListEvent)
+  }, [userEmojiListEvent])
 
   const hasNostrLoginHash = () => {
     return window.location.hash && window.location.hash.startsWith('#nostr-login')
@@ -734,6 +764,7 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
         muteListEvent,
         bookmarkListEvent,
         favoriteRelaysEvent,
+        userEmojiListEvent,
         notificationsSeenAt,
         account,
         accounts,
