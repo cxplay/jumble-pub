@@ -18,7 +18,7 @@ export default function FollowingFeed() {
       }
 
       const followings = await client.fetchFollowings(pubkey)
-      setSubRequests(await client.generateSubRequestsForPubkeys(followings, pubkey))
+      setSubRequests(await client.generateSubRequestsForPubkeys([pubkey, ...followings], pubkey))
     }
 
     init()
