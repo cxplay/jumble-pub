@@ -1,7 +1,8 @@
 import { cn } from '@/lib/utils'
 import { useDeepBrowsing } from '@/providers/DeepBrowsingProvider'
-import { useMemo } from 'react'
+import { ReactNode, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { ScrollArea, ScrollBar } from '../ui/scroll-area'
 
 type TabDefinition = {
   value: string
@@ -12,49 +13,92 @@ export default function Tabs({
   tabs,
   value,
   onTabChange,
-  threshold = 800
+  threshold = 800,
+  options = null
 }: {
   tabs: TabDefinition[]
   value: string
   onTabChange?: (tab: string) => void
   threshold?: number
+  options?: ReactNode
 }) {
   const { t } = useTranslation()
   const { deepBrowsing, lastScrollTop } = useDeepBrowsing()
-  const activeIndex = useMemo(() => tabs.findIndex((tab) => tab.value === value), [value, tabs])
+  const tabRefs = useRef<(HTMLDivElement | null)[]>([])
+  const [indicatorStyle, setIndicatorStyle] = useState({ width: 0, left: 0 })
+
+  const updateIndicatorPosition = () => {
+    const activeIndex = tabs.findIndex((tab) => tab.value === value)
+    if (activeIndex >= 0 && tabRefs.current[activeIndex]) {
+      const activeTab = tabRefs.current[activeIndex]
+      const { offsetWidth, offsetLeft } = activeTab
+      const padding = 48 // 24px padding on each side
+      setIndicatorStyle({
+        width: offsetWidth - padding,
+        left: offsetLeft + padding / 2
+      })
+    }
+  }
+
+  useEffect(() => {
+    const animationId = requestAnimationFrame(() => {
+      updateIndicatorPosition()
+    })
+
+    return () => {
+      cancelAnimationFrame(animationId)
+    }
+  }, [tabs, value])
+
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver(() => {
+      updateIndicatorPosition()
+    })
+
+    tabRefs.current.forEach((tab) => {
+      if (tab) resizeObserver.observe(tab)
+    })
+
+    return () => {
+      resizeObserver.disconnect()
+    }
+  }, [tabs])
 
   return (
     <div
       className={cn(
-        'sticky flex top-12 py-1 bg-background z-30 w-full transition-transform',
+        'sticky flex justify-between top-12 bg-background z-30 w-full transition-transform',
         deepBrowsing && lastScrollTop > threshold ? '-translate-y-[calc(100%+12rem)]' : ''
       )}
     >
-      {tabs.map((tab) => (
-        <div
-          key={tab.value}
-          className={cn(
-            `flex-1 text-center py-2 font-semibold clickable cursor-pointer rounded-lg`,
-            value === tab.value ? '' : 'text-muted-foreground'
-          )}
-          onClick={() => {
-            onTabChange?.(tab.value)
-          }}
-        >
-          {t(tab.label)}
+      <ScrollArea className="flex-1 w-0">
+        <div className="flex w-fit relative">
+          {tabs.map((tab, index) => (
+            <div
+              key={tab.value}
+              ref={(el) => (tabRefs.current[index] = el)}
+              className={cn(
+                `w-fit text-center py-2 px-6 my-1 font-semibold clickable cursor-pointer rounded-lg`,
+                value === tab.value ? '' : 'text-muted-foreground'
+              )}
+              onClick={() => {
+                onTabChange?.(tab.value)
+              }}
+            >
+              {t(tab.label)}
+            </div>
+          ))}
+          <div
+            className="absolute bottom-0 h-1 bg-primary rounded-full transition-all duration-500"
+            style={{
+              width: `${indicatorStyle.width}px`,
+              left: `${indicatorStyle.left}px`
+            }}
+          />
         </div>
-      ))}
-      <div
-        className="absolute bottom-0 left-0 transition-all duration-500"
-        style={{
-          width: `${100 / tabs.length}%`,
-          left: `${activeIndex >= 0 ? activeIndex * (100 / tabs.length) : 0}%`
-        }}
-      >
-        <div className="px-4">
-          <div className="w-full h-1 bg-primary rounded-full" />
-        </div>
-      </div>
+        <ScrollBar orientation="horizontal" className="opacity-0 pointer-events-none" />
+      </ScrollArea>
+      {options && <div className="py-1 flex items-center">{options}</div>}
     </div>
   )
 }
