@@ -219,7 +219,7 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
     }
     setCurrentPrimaryPage(page)
     if (needScrollToTop) {
-      PRIMARY_PAGE_REF_MAP[page].current?.scrollToTop()
+      PRIMARY_PAGE_REF_MAP[page].current?.scrollToTop('smooth')
     }
     if (isSmallScreen) {
       clearSecondaryPages()
@@ -231,7 +231,7 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
       if (isCurrentPage(prevStack, url)) {
         const currentItem = prevStack[prevStack.length - 1]
         if (currentItem?.ref?.current) {
-          currentItem.ref.current.scrollToTop()
+          currentItem.ref.current.scrollToTop('instant')
         }
         return prevStack
       }

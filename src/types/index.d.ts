@@ -120,7 +120,7 @@ export type TNoteListMode = 'posts' | 'postsAndReplies' | 'you'
 
 export type TNotificationType = 'all' | 'mentions' | 'reactions' | 'zaps'
 
-export type TPageRef = { scrollToTop: () => void }
+export type TPageRef = { scrollToTop: (behavior?: ScrollBehavior) => void }
 
 export type TNip66RelayInfo = TRelayInfo & {
   url: string

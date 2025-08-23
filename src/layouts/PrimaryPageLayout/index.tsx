@@ -31,11 +31,13 @@ const PrimaryPageLayout = forwardRef(
     useImperativeHandle(
       ref,
       () => ({
-        scrollToTop: () => {
-          if (scrollAreaRef.current) {
-            return scrollAreaRef.current.scrollTo({ top: 0, behavior: 'smooth' })
-          }
-          window.scrollTo({ top: 0, behavior: 'smooth' })
+        scrollToTop: (behavior: ScrollBehavior = 'smooth') => {
+          setTimeout(() => {
+            if (scrollAreaRef.current) {
+              return scrollAreaRef.current.scrollTo({ top: 0, behavior })
+            }
+            window.scrollTo({ top: 0, behavior })
+          }, 10)
         }
       }),
       []
