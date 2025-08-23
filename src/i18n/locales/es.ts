@@ -359,6 +359,16 @@ export default {
       'Tu configuración actual de relés puede no ser óptima. Esto podría hacer que sea difícil para otros encontrar tus publicaciones y puede resultar en notificaciones incompletas.',
     'Optimize Now': 'Optimizar ahora',
     'Maybe Later': 'Tal vez más tarde',
-    "Don't remind me again": 'No recordar de nuevo'
+    "Don't remind me again": 'No recordar de nuevo',
+    Posts: 'Publicaciones',
+    Articles: 'Artículos',
+    Highlights: 'Destacados',
+    Polls: 'Encuestas',
+    'Voice Posts': 'Publicaciones de voz',
+    'Photo Posts': 'Publicaciones de fotos',
+    'Select All': 'Seleccionar todo',
+    'Clear All': 'Limpiar todo',
+    'Remember my choice': 'Recordar mi elección',
+    Apply: 'Aplicar'
   }
 }

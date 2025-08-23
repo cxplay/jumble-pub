@@ -360,6 +360,16 @@ export default {
       'Ihre aktuelle Relay-Konfiguration ist möglicherweise nicht optimal. Dies könnte es anderen erschweren, Ihre Beiträge zu finden und zu unvollständigen Benachrichtigungen führen.',
     'Optimize Now': 'Jetzt optimieren',
     'Maybe Later': 'Vielleicht später',
-    "Don't remind me again": 'Nicht mehr erinnern'
+    "Don't remind me again": 'Nicht mehr erinnern',
+    Posts: 'Beiträge',
+    Articles: 'Artikel',
+    Highlights: 'Highlights',
+    Polls: 'Umfragen',
+    'Voice Posts': 'Sprachbeiträge',
+    'Photo Posts': 'Fotobeiträge',
+    'Select All': 'Alle auswählen',
+    'Clear All': 'Alle löschen',
+    'Remember my choice': 'Meine Auswahl merken',
+    Apply: 'Anwenden'
   }
 }

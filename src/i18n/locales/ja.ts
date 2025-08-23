@@ -356,6 +356,16 @@ export default {
       '現在のリレイ設定は最適ではない可能性があります。これにより、他の人があなたの投稿を見つけにくくなり、通知が不完全になる可能性があります。',
     'Optimize Now': '今すぐ最適化',
     'Maybe Later': '後で',
-    "Don't remind me again": '今後表示しない'
+    "Don't remind me again": '今後表示しない',
+    Posts: '投稿',
+    Articles: '記事',
+    Highlights: 'ハイライト',
+    Polls: '投票',
+    'Voice Posts': '音声投稿',
+    'Photo Posts': '写真投稿',
+    'Select All': 'すべて選択',
+    'Clear All': 'すべてクリア',
+    'Remember my choice': '選択を記憶',
+    Apply: '適用'
   }
 }

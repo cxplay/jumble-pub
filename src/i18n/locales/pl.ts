@@ -358,6 +358,16 @@ export default {
       'Twoja obecna konfiguracja przekaźników może nie być optymalna. To może utrudnić innym znalezienie Twoich postów i może skutkować niekompletnymi powiadomieniami.',
     'Optimize Now': 'Optymalizuj teraz',
     'Maybe Later': 'Może później',
-    "Don't remind me again": 'Nie przypominaj mi więcej'
+    "Don't remind me again": 'Nie przypominaj mi więcej',
+    Posts: 'Posty',
+    Articles: 'Artykuły',
+    Highlights: 'Wyróżnienia',
+    Polls: 'Ankiety',
+    'Voice Posts': 'Posty głosowe',
+    'Photo Posts': 'Posty ze zdjęciami',
+    'Select All': 'Zaznacz wszystko',
+    'Clear All': 'Wyczyść wszystko',
+    'Remember my choice': 'Zapamiętaj mój wybór',
+    Apply: 'Zastosuj'
   }
 }

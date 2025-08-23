@@ -350,6 +350,16 @@ export default {
       '您当前的中继配置可能不是最优的。这可能导致其他人难以找到您发布的内容，也可能导致您无法获取完整的通知列表。',
     'Optimize Now': '立即优化',
     'Maybe Later': '稍后处理',
-    "Don't remind me again": '不再提醒'
+    "Don't remind me again": '不再提醒',
+    Posts: '帖子',
+    Articles: '文章',
+    Highlights: '高亮',
+    Polls: '投票',
+    'Voice Posts': '语音帖子',
+    'Photo Posts': '图片帖子',
+    'Select All': '全选',
+    'Clear All': '清空',
+    'Remember my choice': '记住我的选择',
+    Apply: '应用'
   }
 }

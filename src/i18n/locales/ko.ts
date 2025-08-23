@@ -355,6 +355,16 @@ export default {
       '현재 릴레이 설정이 최적이 아닐 수 있습니다. 이로 인해 다른 사람들이 귀하의 게시물을 찾기 어려워지고 알림이 불완전할 수 있습니다.',
     'Optimize Now': '지금 최적화',
     'Maybe Later': '나중에',
-    "Don't remind me again": '다시 알리지 않기'
+    "Don't remind me again": '다시 알리지 않기',
+    Posts: '게시물',
+    Articles: '기사',
+    Highlights: '하이라이트',
+    Polls: '투표',
+    'Voice Posts': '음성 게시물',
+    'Photo Posts': '사진 게시물',
+    'Select All': '모두 선택',
+    'Clear All': '모두 지우기',
+    'Remember my choice': '내 선택 기억하기',
+    Apply: '적용'
   }
 }

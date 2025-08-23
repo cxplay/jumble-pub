@@ -352,6 +352,16 @@ export default {
       'การตั้งค่า relay ปัจจุบันของคุณอาจไม่เหมาะสม อาจทำให้คนอื่นหาโพสต์ของคุณได้ยากและอาจส่งผลให้การแจ้งเตือนไม่สมบูรณ์',
     'Optimize Now': 'ปรับแต่งตอนนี้',
     'Maybe Later': 'ทีหลังค่อยว่า',
-    "Don't remind me again": 'ไม่ต้องเตือนอีก'
+    "Don't remind me again": 'ไม่ต้องเตือนอีก',
+    Posts: 'โพสต์',
+    Articles: 'บทความ',
+    Highlights: 'ไฮไลต์',
+    Polls: 'โพล',
+    'Voice Posts': 'โพสต์เสียง',
+    'Photo Posts': 'โพสต์รูปภาพ',
+    'Select All': 'เลือกทั้งหมด',
+    'Clear All': 'ล้างทั้งหมด',
+    'Remember my choice': 'จำการเลือกของฉัน',
+    Apply: 'ใช้'
   }
 }

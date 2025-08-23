@@ -353,6 +353,16 @@ export default {
       'قد لا تكون تكوينات الترحيل الحالية مثلى. هذا قد يجعل من الصعب على الآخرين العثور على منشوراتك وقد يؤدي إلى إشعارات غير مكتملة.',
     'Optimize Now': 'تحسين الآن',
     'Maybe Later': 'ربما لاحقاً',
-    "Don't remind me again": 'لا تذكرني مرة أخرى'
+    "Don't remind me again": 'لا تذكرني مرة أخرى',
+    Posts: 'المشاركات',
+    Articles: 'المقالات',
+    Highlights: 'التمييز',
+    Polls: 'الاستطلاعات',
+    'Voice Posts': 'المشاركات الصوتية',
+    'Photo Posts': 'مشاركات الصور',
+    'Select All': 'تحديد الكل',
+    'Clear All': 'مسح الكل',
+    'Remember my choice': 'تذكر اختياري',
+    Apply: 'تطبيق'
   }
 }

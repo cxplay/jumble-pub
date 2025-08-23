@@ -106,7 +106,7 @@ export default function KindFilter({
               }}
             />
             <div className="grid gap-1.5">
-              <p className="leading-none font-medium">{label}</p>
+              <p className="leading-none font-medium">{t(label)}</p>
               <p className="text-muted-foreground text-xs">kind {kindGroup.join(', ')}</p>
             </div>
           </Label>

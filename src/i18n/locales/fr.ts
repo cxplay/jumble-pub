@@ -359,6 +359,16 @@ export default {
       'Votre configuration de relais actuelle pourrait ne pas être optimale. Cela pourrait rendre difficile pour les autres de trouver vos publications et pourrait entraîner des notifications incomplètes.',
     'Optimize Now': 'Optimiser maintenant',
     'Maybe Later': 'Peut-être plus tard',
-    "Don't remind me again": 'Ne plus me rappeler'
+    "Don't remind me again": 'Ne plus me rappeler',
+    Posts: 'Publications',
+    Articles: 'Articles',
+    Highlights: 'Surlignages',
+    Polls: 'Sondages',
+    'Voice Posts': 'Publications vocales',
+    'Photo Posts': 'Publications photo',
+    'Select All': 'Tout sélectionner',
+    'Clear All': 'Tout effacer',
+    'Remember my choice': 'Se souvenir de mon choix',
+    Apply: 'Appliquer'
   }
 }

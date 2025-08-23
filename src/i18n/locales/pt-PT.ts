@@ -358,6 +358,16 @@ export default {
       'A sua configuração actual de relay pode não ser ideal. Isto pode tornar difícil para outros encontrarem as suas publicações e pode resultar em notificações incompletas.',
     'Optimize Now': 'Optimizar agora',
     'Maybe Later': 'Talvez mais tarde',
-    "Don't remind me again": 'Não me relembrar novamente'
+    "Don't remind me again": 'Não me relembrar novamente',
+    Posts: 'Publicações',
+    Articles: 'Artigos',
+    Highlights: 'Destaques',
+    Polls: 'Inquéritos',
+    'Voice Posts': 'Publicações de voz',
+    'Photo Posts': 'Publicações de foto',
+    'Select All': 'Seleccionar tudo',
+    'Clear All': 'Limpar tudo',
+    'Remember my choice': 'Lembrar a minha escolha',
+    Apply: 'Aplicar'
   }
 }
