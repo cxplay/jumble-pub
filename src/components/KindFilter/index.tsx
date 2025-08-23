@@ -41,6 +41,7 @@ export default function KindFilter({
 
   useEffect(() => {
     setTemporaryShowKinds(showKinds)
+    setIsPersistent(false)
   }, [open])
 
   const handleApply = () => {
