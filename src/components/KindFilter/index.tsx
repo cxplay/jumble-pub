@@ -88,16 +88,17 @@ export default function KindFilter({
   const content = (
     <div>
       <div className="grid grid-cols-2 gap-2">
-        {SUPPORTED_KINDS.map(({ kindGroup, label }) => (
-          <Label
-            key={label}
-            className="focus:bg-accent/50 cursor-pointer flex items-start gap-3 rounded-lg border px-4 py-3 has-[[aria-checked=true]]:border-primary has-[[aria-checked=true]]:bg-primary/20"
-          >
-            <Checkbox
-              id="toggle-2"
-              checked={kindGroup.every((k) => temporaryShowKinds.includes(k))}
-              onCheckedChange={(checked) => {
-                if (checked) {
+        {SUPPORTED_KINDS.map(({ kindGroup, label }) => {
+          const checked = kindGroup.every((k) => temporaryShowKinds.includes(k))
+          return (
+            <div
+              key={label}
+              className={cn(
+                'cursor-pointer grid gap-1.5 rounded-lg border px-4 py-3',
+                checked ? 'border-primary bg-primary/20' : 'clickable'
+              )}
+              onClick={() => {
+                if (!checked) {
                   // add all kinds in this group
                   setTemporaryShowKinds((prev) => Array.from(new Set([...prev, ...kindGroup])))
                 } else {
@@ -105,13 +106,12 @@ export default function KindFilter({
                   setTemporaryShowKinds((prev) => prev.filter((k) => !kindGroup.includes(k)))
                 }
               }}
-            />
-            <div className="grid gap-1.5">
+            >
               <p className="leading-none font-medium">{t(label)}</p>
               <p className="text-muted-foreground text-xs">kind {kindGroup.join(', ')}</p>
             </div>
-          </Label>
-        ))}
+          )
+        })}
       </div>
 
       <div className="flex gap-2 mt-4">
