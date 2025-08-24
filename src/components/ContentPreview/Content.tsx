@@ -1,9 +1,8 @@
 import {
   EmbeddedEmojiParser,
   EmbeddedEventParser,
-  EmbeddedImageParser,
   EmbeddedMentionParser,
-  EmbeddedMediaParser,
+  EmbeddedUrlParser,
   parseContent
 } from '@/lib/content-parser'
 import { cn } from '@/lib/utils'
@@ -25,8 +24,7 @@ export default function Content({
   const { t } = useTranslation()
   const nodes = useMemo(() => {
     return parseContent(content, [
-      EmbeddedImageParser,
-      EmbeddedMediaParser,
+      EmbeddedUrlParser,
       EmbeddedEventParser,
       EmbeddedMentionParser,
       EmbeddedEmojiParser
@@ -36,9 +34,6 @@ export default function Content({
   return (
     <span className={cn('pointer-events-none', className)}>
       {nodes.map((node, index) => {
-        if (node.type === 'text') {
-          return node.data
-        }
         if (node.type === 'image' || node.type === 'images') {
           return index > 0 ? ` [${t('image')}]` : `[${t('image')}]`
         }
@@ -57,6 +52,7 @@ export default function Content({
           if (!emoji) return node.data
           return <Emoji key={index} emoji={emoji} classNames={{ img: 'mb-1' }} />
         }
+        return node.data
       })}
     </span>
   )

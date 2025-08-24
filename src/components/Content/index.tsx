@@ -3,13 +3,10 @@ import {
   EmbeddedEmojiParser,
   EmbeddedEventParser,
   EmbeddedHashtagParser,
-  EmbeddedImageParser,
   EmbeddedLNInvoiceParser,
-  EmbeddedMediaParser,
   EmbeddedMentionParser,
-  EmbeddedNormalUrlParser,
+  EmbeddedUrlParser,
   EmbeddedWebsocketUrlParser,
-  EmbeddedYoutubeParser,
   parseContent
 } from '@/lib/content-parser'
 import { getImageInfosFromEvent } from '@/lib/event'
@@ -40,10 +37,7 @@ const Content = memo(
     if (!_content) return null
 
     const nodes = parseContent(_content, [
-      EmbeddedYoutubeParser,
-      EmbeddedImageParser,
-      EmbeddedMediaParser,
-      EmbeddedNormalUrlParser,
+      EmbeddedUrlParser,
       EmbeddedLNInvoiceParser,
       EmbeddedWebsocketUrlParser,
       EmbeddedEventParser,

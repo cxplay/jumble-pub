@@ -117,10 +117,22 @@ export function isImage(url: string) {
   }
 }
 
-export function isVideo(url: string) {
+export function isMedia(url: string) {
   try {
-    const videoExtensions = ['.mp4', '.webm', '.ogg', '.mov']
-    return videoExtensions.some((ext) => new URL(url).pathname.toLowerCase().endsWith(ext))
+    const mediaExtensions = [
+      '.mp4',
+      '.webm',
+      '.ogg',
+      '.mov',
+      '.mp3',
+      '.wav',
+      '.flac',
+      '.aac',
+      '.m4a',
+      '.opus',
+      '.wma'
+    ]
+    return mediaExtensions.some((ext) => new URL(url).pathname.toLowerCase().endsWith(ext))
   } catch {
     return false
   }

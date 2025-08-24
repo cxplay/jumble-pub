@@ -70,7 +70,7 @@ export function getProfileFromEvent(event: Event) {
       created_at: event.created_at
     }
   } catch (err) {
-    console.error(err)
+    console.error(event.content, err)
     return {
       pubkey: event.pubkey,
       npub: pubkeyToNpub(event.pubkey) ?? '',

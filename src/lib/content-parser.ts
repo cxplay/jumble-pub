@@ -3,13 +3,12 @@ import {
   EMBEDDED_MENTION_REGEX,
   EMOJI_SHORT_CODE_REGEX,
   HASHTAG_REGEX,
-  IMAGE_REGEX,
   LN_INVOICE_REGEX,
   URL_REGEX,
-  MEDIA_REGEX,
   WS_URL_REGEX,
   YOUTUBE_URL_REGEX
 } from '@/constants'
+import { isImage, isMedia } from './url'
 
 export type TEmbeddedNodeType =
   | 'text'
@@ -36,7 +35,9 @@ export type TEmbeddedNode =
       data: string[]
     }
 
-type TContentParser = { type: Exclude<TEmbeddedNodeType, 'images'>; regex: RegExp }
+type TContentParser =
+  | { type: Exclude<TEmbeddedNodeType, 'images'>; regex: RegExp }
+  | ((content: string) => TEmbeddedNode[])
 
 export const EmbeddedHashtagParser: TContentParser = {
   type: 'hashtag',
@@ -58,29 +59,9 @@ export const EmbeddedEventParser: TContentParser = {
   regex: EMBEDDED_EVENT_REGEX
 }
 
-export const EmbeddedImageParser: TContentParser = {
-  type: 'image',
-  regex: IMAGE_REGEX
-}
-
-export const EmbeddedMediaParser: TContentParser = {
-  type: 'media',
-  regex: MEDIA_REGEX
-}
-
 export const EmbeddedWebsocketUrlParser: TContentParser = {
   type: 'websocket-url',
   regex: WS_URL_REGEX
-}
-
-export const EmbeddedNormalUrlParser: TContentParser = {
-  type: 'url',
-  regex: URL_REGEX
-}
-
-export const EmbeddedYoutubeParser: TContentParser = {
-  type: 'youtube',
-  regex: YOUTUBE_URL_REGEX
 }
 
 export const EmbeddedEmojiParser: TContentParser = {
@@ -93,6 +74,48 @@ export const EmbeddedLNInvoiceParser: TContentParser = {
   regex: LN_INVOICE_REGEX
 }
 
+export const EmbeddedUrlParser: TContentParser = (content: string) => {
+  const matches = content.matchAll(URL_REGEX)
+  const result: TEmbeddedNode[] = []
+  let lastIndex = 0
+  for (const match of matches) {
+    const matchStart = match.index!
+    // Add text before the match
+    if (matchStart > lastIndex) {
+      result.push({
+        type: 'text',
+        data: content.slice(lastIndex, matchStart)
+      })
+    }
+
+    const url = match[0]
+    let type: TEmbeddedNodeType = 'url'
+    if (isImage(url)) {
+      type = 'image'
+    } else if (isMedia(url)) {
+      type = 'media'
+    } else if (YOUTUBE_URL_REGEX.test(url)) {
+      type = 'youtube'
+    }
+
+    // Add the match as specific type
+    result.push({
+      type,
+      data: url
+    })
+
+    lastIndex = matchStart + url.length
+  }
+  // Add text after the last match
+  if (lastIndex < content.length) {
+    result.push({
+      type: 'text',
+      data: content.slice(lastIndex)
+    })
+  }
+  return result
+}
+
 export function parseContent(content: string, parsers: TContentParser[]) {
   let nodes: TEmbeddedNode[] = [{ type: 'text', data: content.trim() }]
 
@@ -100,6 +123,11 @@ export function parseContent(content: string, parsers: TContentParser[]) {
     nodes = nodes
       .flatMap((node) => {
         if (node.type !== 'text') return [node]
+
+        if (typeof parser === 'function') {
+          return parser(node.data)
+        }
+
         const matches = node.data.matchAll(parser.regex)
         const result: TEmbeddedNode[] = []
         let lastIndex = 0

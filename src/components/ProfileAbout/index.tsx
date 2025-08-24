@@ -1,21 +1,21 @@
 import {
   EmbeddedHashtagParser,
   EmbeddedMentionParser,
-  EmbeddedNormalUrlParser,
+  EmbeddedUrlParser,
   EmbeddedWebsocketUrlParser,
   parseContent
 } from '@/lib/content-parser'
 import { detectLanguage } from '@/lib/utils'
+import { useTranslationService } from '@/providers/TranslationServiceProvider'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
 import {
   EmbeddedHashtag,
   EmbeddedMention,
   EmbeddedNormalUrl,
   EmbeddedWebsocketUrl
 } from '../Embedded'
-import { useTranslationService } from '@/providers/TranslationServiceProvider'
-import { toast } from 'sonner'
 
 export default function ProfileAbout({ about, className }: { about?: string; className?: string }) {
   const { t, i18n } = useTranslation()
@@ -33,14 +33,11 @@ export default function ProfileAbout({ about, className }: { about?: string; cla
 
     const nodes = parseContent(translatedAbout ?? about, [
       EmbeddedWebsocketUrlParser,
-      EmbeddedNormalUrlParser,
+      EmbeddedUrlParser,
       EmbeddedHashtagParser,
       EmbeddedMentionParser
     ])
     return nodes.map((node, index) => {
-      if (node.type === 'text') {
-        return node.data
-      }
       if (node.type === 'url') {
         return <EmbeddedNormalUrl key={index} url={node.data} />
       }
@@ -53,6 +50,7 @@ export default function ProfileAbout({ about, className }: { about?: string; cla
       if (node.type === 'mention') {
         return <EmbeddedMention key={index} userId={node.data.split(':')[1]} />
       }
+      return node.data
     })
   }, [about, translatedAbout])
 
