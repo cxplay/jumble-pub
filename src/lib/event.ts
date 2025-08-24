@@ -1,10 +1,10 @@
 import { EMBEDDED_MENTION_REGEX, ExtendedKind } from '@/constants'
 import client from '@/services/client.service'
-import { TImageInfo } from '@/types'
+import { TImetaInfo } from '@/types'
 import { LRUCache } from 'lru-cache'
 import { Event, kinds, nip19 } from 'nostr-tools'
 import {
-  getImageInfoFromImetaTag,
+  getImetaInfoFromImetaTag,
   generateBech32IdFromATag,
   generateBech32IdFromETag,
   tagNameEquals
@@ -171,15 +171,15 @@ export function getUsingClient(event: Event) {
   return event.tags.find(tagNameEquals('client'))?.[1]
 }
 
-export function getImageInfosFromEvent(event: Event) {
-  const images: TImageInfo[] = []
+export function getImetaInfosFromEvent(event: Event) {
+  const imeta: TImetaInfo[] = []
   event.tags.forEach((tag) => {
-    const imageInfo = getImageInfoFromImetaTag(tag, event.pubkey)
+    const imageInfo = getImetaInfoFromImetaTag(tag, event.pubkey)
     if (imageInfo) {
-      images.push(imageInfo)
+      imeta.push(imageInfo)
     }
   })
-  return images
+  return imeta
 }
 
 export function getEmbeddedNoteBech32Ids(event: Event) {

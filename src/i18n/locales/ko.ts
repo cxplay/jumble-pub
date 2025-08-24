@@ -362,6 +362,7 @@ export default {
     Polls: '투표',
     'Voice Posts': '음성 게시물',
     'Photo Posts': '사진 게시물',
+    'Video Posts': '비디오 게시물',
     'Select All': '모두 선택',
     'Clear All': '모두 지우기',
     'Remember my choice': '내 선택 기억하기',

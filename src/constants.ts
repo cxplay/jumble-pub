@@ -29,6 +29,7 @@ export const StorageKey = {
   DEFAULT_SHOW_NSFW: 'defaultShowNsfw',
   DISMISSED_TOO_MANY_RELAYS_ALERT: 'dismissedTooManyRelaysAlert',
   SHOW_KINDS: 'showKinds',
+  SHOW_KINDS_VERSION: 'showKindsVersion',
   MEDIA_UPLOAD_SERVICE: 'mediaUploadService', // deprecated
   HIDE_UNTRUSTED_EVENTS: 'hideUntrustedEvents', // deprecated
   ACCOUNT_RELAY_LIST_EVENT_MAP: 'accountRelayListEventMap', // deprecated
@@ -65,6 +66,8 @@ export const GROUP_METADATA_EVENT_KIND = 39000
 
 export const ExtendedKind = {
   PICTURE: 20,
+  VIDEO: 21,
+  SHORT_VIDEO: 22,
   POLL: 1068,
   POLL_RESPONSE: 1018,
   COMMENT: 1111,
@@ -75,10 +78,12 @@ export const ExtendedKind = {
   GROUP_METADATA: 39000
 }
 
-export const DEFAULT_SHOW_KINDS = [
+export const SUPPORTED_KINDS = [
   kinds.ShortTextNote,
   kinds.Repost,
   ExtendedKind.PICTURE,
+  ExtendedKind.VIDEO,
+  ExtendedKind.SHORT_VIDEO,
   ExtendedKind.POLL,
   ExtendedKind.COMMENT,
   ExtendedKind.VOICE,

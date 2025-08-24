@@ -363,6 +363,7 @@ export default {
     Polls: '投票',
     'Voice Posts': '音声投稿',
     'Photo Posts': '写真投稿',
+    'Video Posts': 'ビデオ投稿',
     'Select All': 'すべて選択',
     'Clear All': 'すべてクリア',
     'Remember my choice': '選択を記憶',

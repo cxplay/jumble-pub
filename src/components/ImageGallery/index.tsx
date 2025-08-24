@@ -1,7 +1,7 @@
 import { randomString } from '@/lib/random'
 import { cn } from '@/lib/utils'
 import modalManager from '@/services/modal-manager.service'
-import { TImageInfo } from '@/types'
+import { TImetaInfo } from '@/types'
 import { ReactNode, useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import Lightbox from 'yet-another-react-lightbox'
@@ -15,7 +15,7 @@ export default function ImageGallery({
   end = images.length
 }: {
   className?: string
-  images: TImageInfo[]
+  images: TImetaInfo[]
   start?: number
   end?: number
 }) {

@@ -109,7 +109,7 @@ export type TFeedInfo = { feedType: TFeedType; id?: string }
 
 export type TLanguage = 'en' | 'zh' | 'pl'
 
-export type TImageInfo = {
+export type TImetaInfo = {
   url: string
   blurHash?: string
   dim?: { width: number; height: number }

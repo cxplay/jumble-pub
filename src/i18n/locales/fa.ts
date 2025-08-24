@@ -361,6 +361,7 @@ export default {
     Polls: 'نظرسنجی‌ها',
     'Voice Posts': 'پست‌های صوتی',
     'Photo Posts': 'پست‌های عکس',
+    'Video Posts': 'پست‌های ویدیو',
     'Select All': 'انتخاب همه',
     'Clear All': 'پاک کردن همه',
     'Remember my choice': 'انتخاب من را به خاطر بسپار',

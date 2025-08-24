@@ -1,7 +1,7 @@
 import { randomString } from '@/lib/random'
 import { cn } from '@/lib/utils'
 import modalManager from '@/services/modal-manager.service'
-import { TImageInfo } from '@/types'
+import { TImetaInfo } from '@/types'
 import { useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import Lightbox from 'yet-another-react-lightbox'
@@ -12,7 +12,7 @@ export default function ImageWithLightbox({
   image,
   className
 }: {
-  image: TImageInfo
+  image: TImetaInfo
   className?: string
 }) {
   const id = useMemo(() => `image-with-lightbox-${randomString()}`, [])

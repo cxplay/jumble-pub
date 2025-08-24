@@ -1,12 +1,6 @@
 import { useSecondaryPage } from '@/PageManager'
-import { ExtendedKind } from '@/constants'
-import {
-  getImageInfosFromEvent,
-  getParentBech32Id,
-  getUsingClient,
-  isNsfwEvent,
-  isPictureEvent
-} from '@/lib/event'
+import { ExtendedKind, SUPPORTED_KINDS } from '@/constants'
+import { getParentBech32Id, getUsingClient, isNsfwEvent } from '@/lib/event'
 import { toNote } from '@/lib/link'
 import { useContentPolicy } from '@/providers/ContentPolicyProvider'
 import { useMuteList } from '@/providers/MuteListProvider'
@@ -16,7 +10,6 @@ import { useMemo, useState } from 'react'
 import AudioPlayer from '../AudioPlayer'
 import Content from '../Content'
 import { FormattedTimestamp } from '../FormattedTimestamp'
-import ImageGallery from '../ImageGallery'
 import Nip05 from '../Nip05'
 import NoteOptions from '../NoteOptions'
 import ParentNotePreview from '../ParentNotePreview'
@@ -32,8 +25,10 @@ import LongFormArticle from './LongFormArticle'
 import LongFormArticlePreview from './LongFormArticlePreview'
 import MutedNote from './MutedNote'
 import NsfwNote from './NsfwNote'
+import PictureNote from './PictureNote'
 import Poll from './Poll'
 import UnknownNote from './UnknownNote'
+import VideoNote from './VideoNote'
 
 export default function Note({
   event,
@@ -56,10 +51,6 @@ export default function Note({
     () => (hideParentNotePreview ? undefined : getParentBech32Id(event)),
     [event, hideParentNotePreview]
   )
-  const imageInfos = useMemo(
-    () => (isPictureEvent(event) ? getImageInfosFromEvent(event) : []),
-    [event]
-  )
   const usingClient = useMemo(() => getUsingClient(event), [event])
   const { defaultShowNsfw } = useContentPolicy()
   const [showNsfw, setShowNsfw] = useState(false)
@@ -67,21 +58,7 @@ export default function Note({
   const [showMuted, setShowMuted] = useState(false)
 
   let content: React.ReactNode
-  if (
-    ![
-      kinds.ShortTextNote,
-      kinds.Highlights,
-      kinds.LongFormArticle,
-      kinds.LiveEvent,
-      kinds.CommunityDefinition,
-      ExtendedKind.GROUP_METADATA,
-      ExtendedKind.PICTURE,
-      ExtendedKind.COMMENT,
-      ExtendedKind.POLL,
-      ExtendedKind.VOICE,
-      ExtendedKind.VOICE_COMMENT
-    ].includes(event.kind)
-  ) {
+  if (!SUPPORTED_KINDS.includes(event.kind)) {
     content = <UnknownNote className="mt-2" event={event} />
   } else if (mutePubkeys.includes(event.pubkey) && !showMuted) {
     content = <MutedNote show={() => setShowMuted(true)} />
@@ -110,6 +87,10 @@ export default function Note({
     )
   } else if (event.kind === ExtendedKind.VOICE || event.kind === ExtendedKind.VOICE_COMMENT) {
     content = <AudioPlayer className="mt-2" src={event.content} />
+  } else if (event.kind === ExtendedKind.PICTURE) {
+    content = <PictureNote className="mt-2" event={event} />
+  } else if (event.kind === ExtendedKind.VIDEO || event.kind === ExtendedKind.SHORT_VIDEO) {
+    content = <VideoNote className="mt-2" event={event} />
   } else {
     content = <Content className="mt-2" event={event} />
   }
@@ -159,7 +140,6 @@ export default function Note({
       )}
       <IValue event={event} className="mt-2" />
       {content}
-      {imageInfos.length > 0 && <ImageGallery images={imageInfos} />}
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import { TEmoji, TImageInfo } from '@/types'
+import { TEmoji, TImetaInfo } from '@/types'
 import { isBlurhashValid } from 'blurhash'
 import { nip19 } from 'nostr-tools'
 import { isValidPubkey } from './pubkey'
@@ -46,19 +46,19 @@ export function generateBech32IdFromATag(tag: string[]) {
   }
 }
 
-export function getImageInfoFromImetaTag(tag: string[], pubkey?: string): TImageInfo | null {
+export function getImetaInfoFromImetaTag(tag: string[], pubkey?: string): TImetaInfo | null {
   if (tag[0] !== 'imeta') return null
   const urlItem = tag.find((item) => item.startsWith('url '))
   const url = urlItem?.slice(4)
   if (!url) return null
 
-  const image: TImageInfo = { url, pubkey }
+  const imeta: TImetaInfo = { url, pubkey }
   const blurHashItem = tag.find((item) => item.startsWith('blurhash '))
   const blurHash = blurHashItem?.slice(9)
   if (blurHash) {
     const validRes = isBlurhashValid(blurHash)
     if (validRes.result) {
-      image.blurHash = blurHash
+      imeta.blurHash = blurHash
     }
   }
   const dimItem = tag.find((item) => item.startsWith('dim '))
@@ -66,10 +66,10 @@ export function getImageInfoFromImetaTag(tag: string[], pubkey?: string): TImage
   if (dim) {
     const [width, height] = dim.split('x').map(Number)
     if (width && height) {
-      image.dim = { width, height }
+      imeta.dim = { width, height }
     }
   }
-  return image
+  return imeta
 }
 
 export function getPubkeysFromPTags(tags: string[][]) {

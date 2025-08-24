@@ -359,6 +359,7 @@ export default {
     Polls: 'โพล',
     'Voice Posts': 'โพสต์เสียง',
     'Photo Posts': 'โพสต์รูปภาพ',
+    'Video Posts': 'โพสต์วิดีโอ',
     'Select All': 'เลือกทั้งหมด',
     'Clear All': 'ล้างทั้งหมด',
     'Remember my choice': 'จำการเลือกของฉัน',

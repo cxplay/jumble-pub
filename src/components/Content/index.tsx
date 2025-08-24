@@ -9,11 +9,11 @@ import {
   EmbeddedWebsocketUrlParser,
   parseContent
 } from '@/lib/content-parser'
-import { getImageInfosFromEvent } from '@/lib/event'
-import { getEmojiInfosFromEmojiTags, getImageInfoFromImetaTag } from '@/lib/tag'
+import { getImetaInfosFromEvent } from '@/lib/event'
+import { getEmojiInfosFromEmojiTags, getImetaInfoFromImetaTag } from '@/lib/tag'
 import { cn } from '@/lib/utils'
 import mediaUpload from '@/services/media-upload.service'
-import { TImageInfo } from '@/types'
+import { TImetaInfo } from '@/types'
 import { Event } from 'nostr-tools'
 import { memo } from 'react'
 import {
@@ -46,30 +46,30 @@ const Content = memo(
       EmbeddedEmojiParser
     ])
 
-    const imageInfos = event ? getImageInfosFromEvent(event) : []
+    const imetaInfos = event ? getImetaInfosFromEvent(event) : []
     const allImages = nodes
       .map((node) => {
         if (node.type === 'image') {
-          const imageInfo = imageInfos.find((image) => image.url === node.data)
+          const imageInfo = imetaInfos.find((image) => image.url === node.data)
           if (imageInfo) {
             return imageInfo
           }
           const tag = mediaUpload.getImetaTagByUrl(node.data)
           return tag
-            ? getImageInfoFromImetaTag(tag, event?.pubkey)
+            ? getImetaInfoFromImetaTag(tag, event?.pubkey)
             : { url: node.data, pubkey: event?.pubkey }
         }
         if (node.type === 'images') {
           const urls = Array.isArray(node.data) ? node.data : [node.data]
           return urls.map((url) => {
-            const imageInfo = imageInfos.find((image) => image.url === url)
+            const imageInfo = imetaInfos.find((image) => image.url === url)
             return imageInfo ?? { url, pubkey: event?.pubkey }
           })
         }
         return null
       })
       .filter(Boolean)
-      .flat() as TImageInfo[]
+      .flat() as TImetaInfo[]
     let imageIndex = 0
 
     const emojiInfos = getEmojiInfosFromEmojiTags(event?.tags)

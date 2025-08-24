@@ -360,6 +360,7 @@ export default {
     Polls: 'الاستطلاعات',
     'Voice Posts': 'المشاركات الصوتية',
     'Photo Posts': 'مشاركات الصور',
+    'Video Posts': 'مشاركات الفيديو',
     'Select All': 'تحديد الكل',
     'Clear All': 'مسح الكل',
     'Remember my choice': 'تذكر اختياري',

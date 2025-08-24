@@ -1,7 +1,7 @@
 import { Skeleton } from '@/components/ui/skeleton'
 import { cn } from '@/lib/utils'
 import client from '@/services/client.service'
-import { TImageInfo } from '@/types'
+import { TImetaInfo } from '@/types'
 import { getHashFromURL } from 'blossom-client-sdk'
 import { decode } from 'blurhash'
 import { ImageOff } from 'lucide-react'
@@ -20,7 +20,7 @@ export default function Image({
     wrapper?: string
     errorPlaceholder?: string
   }
-  image: TImageInfo
+  image: TImetaInfo
   alt?: string
   hideIfError?: boolean
   errorPlaceholder?: React.ReactNode

@@ -361,6 +361,7 @@ export default {
     Polls: 'Polls',
     'Voice Posts': 'Voice Posts',
     'Photo Posts': 'Photo Posts',
+    'Video Posts': 'Video Posts',
     'Select All': 'Select All',
     'Clear All': 'Clear All',
     'Remember my choice': 'Remember my choice',

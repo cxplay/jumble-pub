@@ -3,23 +3,24 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Drawer, DrawerContent, DrawerHeader, DrawerTrigger } from '@/components/ui/drawer'
 import { Label } from '@/components/ui/label'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { DEFAULT_SHOW_KINDS, ExtendedKind } from '@/constants'
+import { ExtendedKind, SUPPORTED_KINDS } from '@/constants'
 import { cn } from '@/lib/utils'
 import { useKindFilter } from '@/providers/KindFilterProvider'
 import { useScreenSize } from '@/providers/ScreenSizeProvider'
 import { ListFilter } from 'lucide-react'
 import { kinds } from 'nostr-tools'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-const SUPPORTED_KINDS = [
+const KIND_FILTER_OPTIONS = [
   { kindGroup: [kinds.ShortTextNote, ExtendedKind.COMMENT], label: 'Posts' },
   { kindGroup: [kinds.Repost], label: 'Reposts' },
   { kindGroup: [kinds.LongFormArticle], label: 'Articles' },
   { kindGroup: [kinds.Highlights], label: 'Highlights' },
   { kindGroup: [ExtendedKind.POLL], label: 'Polls' },
   { kindGroup: [ExtendedKind.VOICE, ExtendedKind.VOICE_COMMENT], label: 'Voice Posts' },
-  { kindGroup: [ExtendedKind.PICTURE], label: 'Photo Posts' }
+  { kindGroup: [ExtendedKind.PICTURE], label: 'Photo Posts' },
+  { kindGroup: [ExtendedKind.VIDEO, ExtendedKind.SHORT_VIDEO], label: 'Video Posts' }
 ]
 
 export default function KindFilter({
@@ -35,9 +36,6 @@ export default function KindFilter({
   const { updateShowKinds } = useKindFilter()
   const [temporaryShowKinds, setTemporaryShowKinds] = useState(showKinds)
   const [isPersistent, setIsPersistent] = useState(false)
-  const isFilterApplied = useMemo(() => {
-    return showKinds.length !== DEFAULT_SHOW_KINDS.length
-  }, [showKinds])
 
   useEffect(() => {
     setTemporaryShowKinds(showKinds)
@@ -74,7 +72,7 @@ export default function KindFilter({
     <Button
       variant="ghost"
       size="titlebar-icon"
-      className={cn('mr-1', !isFilterApplied && 'text-muted-foreground')}
+      className="mr-1"
       onClick={() => {
         if (isSmallScreen) {
           setOpen(true)
@@ -88,7 +86,7 @@ export default function KindFilter({
   const content = (
     <div>
       <div className="grid grid-cols-2 gap-2">
-        {SUPPORTED_KINDS.map(({ kindGroup, label }) => {
+        {KIND_FILTER_OPTIONS.map(({ kindGroup, label }) => {
           const checked = kindGroup.every((k) => temporaryShowKinds.includes(k))
           return (
             <div
@@ -118,7 +116,7 @@ export default function KindFilter({
         <Button
           variant="secondary"
           onClick={() => {
-            setTemporaryShowKinds(DEFAULT_SHOW_KINDS)
+            setTemporaryShowKinds(SUPPORTED_KINDS)
           }}
           className="flex-1"
         >

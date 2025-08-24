@@ -365,6 +365,7 @@ export default {
     Polls: 'Sondaggi',
     'Voice Posts': 'Post vocali',
     'Photo Posts': 'Post foto',
+    'Video Posts': 'Post video',
     'Select All': 'Seleziona tutto',
     'Clear All': 'Cancella tutto',
     'Remember my choice': 'Ricorda la mia scelta',

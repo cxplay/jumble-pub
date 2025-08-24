@@ -365,6 +365,7 @@ export default {
     Polls: 'Опросы',
     'Voice Posts': 'Голосовые посты',
     'Photo Posts': 'Фото посты',
+    'Video Posts': 'Видео посты',
     'Select All': 'Выбрать все',
     'Clear All': 'Очистить все',
     'Remember my choice': 'Запомнить мой выбор',

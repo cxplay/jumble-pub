@@ -1,4 +1,4 @@
-import { DEFAULT_NIP_96_SERVICE, DEFAULT_SHOW_KINDS, StorageKey } from '@/constants'
+import { DEFAULT_NIP_96_SERVICE, ExtendedKind, SUPPORTED_KINDS, StorageKey } from '@/constants'
 import { isSameAccount } from '@/lib/account'
 import { randomString } from '@/lib/random'
 import {
@@ -142,7 +142,19 @@ class LocalStorageService {
       window.localStorage.getItem(StorageKey.DISMISSED_TOO_MANY_RELAYS_ALERT) === 'true'
 
     const showKindsStr = window.localStorage.getItem(StorageKey.SHOW_KINDS)
-    this.showKinds = showKindsStr ? JSON.parse(showKindsStr) : DEFAULT_SHOW_KINDS
+    if (!showKindsStr) {
+      this.showKinds = SUPPORTED_KINDS
+    } else {
+      const showKindsVersionStr = window.localStorage.getItem(StorageKey.SHOW_KINDS_VERSION)
+      const showKindsVersion = showKindsVersionStr ? parseInt(showKindsVersionStr) : 0
+      const showKinds = JSON.parse(showKindsStr) as number[]
+      if (showKindsVersion < 1) {
+        showKinds.push(ExtendedKind.VIDEO, ExtendedKind.SHORT_VIDEO)
+      }
+      this.showKinds = showKinds
+    }
+    window.localStorage.setItem(StorageKey.SHOW_KINDS, JSON.stringify(this.showKinds))
+    window.localStorage.setItem(StorageKey.SHOW_KINDS_VERSION, '1')
 
     // Clean up deprecated data
     window.localStorage.removeItem(StorageKey.ACCOUNT_PROFILE_EVENT_MAP)

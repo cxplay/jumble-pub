@@ -357,6 +357,7 @@ export default {
     Polls: '投票',
     'Voice Posts': '语音帖子',
     'Photo Posts': '图片帖子',
+    'Video Posts': '视频帖子',
     'Select All': '全选',
     'Clear All': '清空',
     'Remember my choice': '记住我的选择',
