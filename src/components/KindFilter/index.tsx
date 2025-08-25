@@ -72,7 +72,6 @@ export default function KindFilter({
     <Button
       variant="ghost"
       size="titlebar-icon"
-      className="mr-1"
       onClick={() => {
         if (isSmallScreen) {
           setOpen(true)

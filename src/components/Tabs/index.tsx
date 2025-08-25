@@ -32,7 +32,7 @@ export default function Tabs({
     if (activeIndex >= 0 && tabRefs.current[activeIndex]) {
       const activeTab = tabRefs.current[activeIndex]
       const { offsetWidth, offsetLeft } = activeTab
-      const padding = 48 // 24px padding on each side
+      const padding = 24 // 12px padding on each side
       setIndicatorStyle({
         width: offsetWidth - padding,
         left: offsetLeft + padding / 2
@@ -67,7 +67,7 @@ export default function Tabs({
   return (
     <div
       className={cn(
-        'sticky flex justify-between top-12 bg-background z-30 w-full transition-transform',
+        'sticky flex justify-between top-12 bg-background z-30 px-1 w-full transition-transform',
         deepBrowsing && lastScrollTop > threshold ? '-translate-y-[calc(100%+12rem)]' : ''
       )}
     >
