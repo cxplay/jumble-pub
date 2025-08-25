@@ -1,4 +1,4 @@
-import { BIG_RELAY_URLS, CODY_PUBKEY } from '@/constants'
+import { BIG_RELAY_URLS, CODY_PUBKEY, JUMBLE_PUBKEY } from '@/constants'
 import { getZapInfoFromEvent } from '@/lib/event-metadata'
 import { TProfile } from '@/types'
 import {
@@ -18,6 +18,8 @@ import { utf8Decoder } from 'nostr-tools/utils'
 import client from './client.service'
 
 export type TRecentSupporter = { pubkey: string; amount: number; comment?: string }
+
+const OFFICIAL_PUBKEYS = [JUMBLE_PUBKEY, CODY_PUBKEY]
 
 class LightningService {
   static instance: LightningService
@@ -186,14 +188,14 @@ class LightningService {
     const events = await client.fetchEvents(relayList.read.slice(0, 4), {
       authors: ['79f00d3f5a19ec806189fcab03c1be4ff81d18ee4f653c88fac41fe03570f432'], // alby
       kinds: [kinds.Zap],
-      '#p': [CODY_PUBKEY],
+      '#p': OFFICIAL_PUBKEYS,
       since: dayjs().subtract(1, 'month').unix()
     })
     events.sort((a, b) => b.created_at - a.created_at)
     const map = new Map<string, { pubkey: string; amount: number; comment?: string }>()
     events.forEach((event) => {
       const info = getZapInfoFromEvent(event)
-      if (!info || info.eventId || !info.senderPubkey || info.senderPubkey === CODY_PUBKEY) return
+      if (!info || !info.senderPubkey || OFFICIAL_PUBKEYS.includes(info.senderPubkey)) return
 
       const { amount, comment, senderPubkey } = info
       const item = map.get(senderPubkey)
