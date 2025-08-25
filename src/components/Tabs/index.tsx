@@ -25,6 +25,7 @@ export default function Tabs({
   const { t } = useTranslation()
   const { deepBrowsing, lastScrollTop } = useDeepBrowsing()
   const tabRefs = useRef<(HTMLDivElement | null)[]>([])
+  const containerRef = useRef<HTMLDivElement | null>(null)
   const [indicatorStyle, setIndicatorStyle] = useState({ width: 0, left: 0 })
 
   const updateIndicatorPosition = () => {
@@ -51,9 +52,26 @@ export default function Tabs({
   }, [tabs, value])
 
   useEffect(() => {
+    if (!containerRef.current) return
+
     const resizeObserver = new ResizeObserver(() => {
       updateIndicatorPosition()
     })
+
+    const intersectionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            requestAnimationFrame(() => {
+              updateIndicatorPosition()
+            })
+          }
+        })
+      },
+      { threshold: 0 }
+    )
+
+    intersectionObserver.observe(containerRef.current)
 
     tabRefs.current.forEach((tab) => {
       if (tab) resizeObserver.observe(tab)
@@ -61,11 +79,13 @@ export default function Tabs({
 
     return () => {
       resizeObserver.disconnect()
+      intersectionObserver.disconnect()
     }
-  }, [tabs])
+  }, [tabs, value])
 
   return (
     <div
+      ref={containerRef}
       className={cn(
         'sticky flex justify-between top-12 bg-background z-30 px-1 w-full transition-transform',
         deepBrowsing && lastScrollTop > threshold ? '-translate-y-[calc(100%+12rem)]' : ''
