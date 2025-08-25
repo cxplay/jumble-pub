@@ -218,14 +218,14 @@ class NoteStatsService {
     let emoji: TEmoji | string = evt.content.trim()
     if (!emoji) return
 
-    if (/^:[a-zA-Z0-9_-]+:$/.test(evt.content)) {
+    if (emoji.startsWith(':') && emoji.endsWith(':')) {
       const emojiInfos = getEmojiInfosFromEmojiTags(evt.tags)
-      const shortcode = evt.content.split(':')[1]
+      const shortcode = emoji.split(':')[1]
       const emojiInfo = emojiInfos.find((info) => info.shortcode === shortcode)
       if (emojiInfo) {
         emoji = emojiInfo
       } else {
-        console.log(`Emoji not found for shortcode: ${shortcode}`, emojiInfos)
+        emoji = '+'
       }
     }
 
