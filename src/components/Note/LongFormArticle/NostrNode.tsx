@@ -6,7 +6,6 @@ import { Components } from './types'
 export default function NostrNode({ rawText, bech32Id }: ComponentProps<Components['nostr']>) {
   const { type, id } = useMemo(() => {
     if (!bech32Id) return { type: 'invalid', id: '' }
-    console.log('NostrLink bech32Id:', bech32Id)
     try {
       const { type } = nip19.decode(bech32Id)
       if (type === 'npub') {

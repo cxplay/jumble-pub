@@ -21,6 +21,53 @@ export default function LongFormArticle({
   const { push } = useSecondaryPage()
   const metadata = useMemo(() => getLongFormArticleMetadataFromEvent(event), [event])
 
+  const components = useMemo(
+    () =>
+      ({
+        nostr: ({ rawText, bech32Id }) => <NostrNode rawText={rawText} bech32Id={bech32Id} />,
+        a: ({ href, children, ...props }) => {
+          if (!href) {
+            return <span {...props} className="break-words" />
+          }
+          if (href.startsWith('note1') || href.startsWith('nevent1') || href.startsWith('naddr1')) {
+            return (
+              <SecondaryPageLink
+                to={toNote(href)}
+                className="break-words underline text-foreground"
+              >
+                {children}
+              </SecondaryPageLink>
+            )
+          }
+          if (href.startsWith('npub1') || href.startsWith('nprofile1')) {
+            return (
+              <SecondaryPageLink
+                to={toProfile(href)}
+                className="break-words underline text-foreground"
+              >
+                {children}
+              </SecondaryPageLink>
+            )
+          }
+          return (
+            <a
+              {...props}
+              href={href}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="break-words inline-flex items-baseline gap-1"
+            >
+              {children} <ExternalLink className="size-3" />
+            </a>
+          )
+        },
+        p: (props) => <p {...props} className="break-words" />,
+        div: (props) => <div {...props} className="break-words" />,
+        code: (props) => <code {...props} className="break-words whitespace-pre-wrap" />
+      }) as Components,
+    []
+  )
+
   return (
     <div
       className={`prose prose-zinc max-w-none dark:prose-invert break-words overflow-wrap-anywhere ${className || ''}`}
@@ -45,54 +92,7 @@ export default function LongFormArticle({
           }
           return url
         }}
-        components={
-          {
-            nostr: (props) => <NostrNode {...props} />,
-            a: ({ href, children, ...props }) => {
-              if (!href) {
-                return <span {...props} className="break-words" />
-              }
-              if (
-                href.startsWith('note1') ||
-                href.startsWith('nevent1') ||
-                href.startsWith('naddr1')
-              ) {
-                return (
-                  <SecondaryPageLink
-                    to={toNote(href)}
-                    className="break-words underline text-foreground"
-                  >
-                    {children}
-                  </SecondaryPageLink>
-                )
-              }
-              if (href.startsWith('npub1') || href.startsWith('nprofile1')) {
-                return (
-                  <SecondaryPageLink
-                    to={toProfile(href)}
-                    className="break-words underline text-foreground"
-                  >
-                    {children}
-                  </SecondaryPageLink>
-                )
-              }
-              return (
-                <a
-                  {...props}
-                  href={href}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="break-words inline-flex items-baseline gap-1"
-                >
-                  {children} <ExternalLink className="size-3" />
-                </a>
-              )
-            },
-            p: (props) => <p {...props} className="break-words" />,
-            div: (props) => <div {...props} className="break-words" />,
-            code: (props) => <code {...props} className="break-words whitespace-pre-wrap" />
-          } as Components
-        }
+        components={components}
       >
         {event.content}
       </Markdown>
