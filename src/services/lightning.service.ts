@@ -45,15 +45,18 @@ class LightningService {
 
   async zap(
     sender: string,
-    recipient: string,
+    recipientOrEvent: string | NostrEvent,
     sats: number,
     comment: string,
-    event?: NostrEvent,
     closeOuterModel?: () => void
   ): Promise<{ preimage: string; invoice: string } | null> {
     if (!client.signer) {
       throw new Error('You need to be logged in to zap')
     }
+    const { recipient, event } =
+      typeof recipientOrEvent === 'string'
+        ? { recipient: recipientOrEvent }
+        : { recipient: recipientOrEvent.pubkey, event: recipientOrEvent }
 
     const [profile, receiptRelayList, senderRelayList] = await Promise.all([
       client.fetchProfile(recipient, true),
@@ -72,8 +75,7 @@ class LightningService {
     const { callback, lnurl } = zapEndpoint
     const amount = sats * 1000
     const zapRequestDraft = makeZapRequest({
-      event: event,
-      pubkey: recipient,
+      ...(event ? { event } : { pubkey: recipient }),
       amount,
       relays: receiptRelayList.read
         .slice(0, 4)

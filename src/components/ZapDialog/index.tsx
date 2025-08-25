@@ -147,7 +147,7 @@ function ZapDialogContent({
         throw new Error('You need to be logged in to zap')
       }
       setZapping(true)
-      const zapResult = await lightning.zap(pubkey, recipient, sats, comment, event, () =>
+      const zapResult = await lightning.zap(pubkey, event ?? recipient, sats, comment, () =>
         setOpen(false)
       )
       // user canceled
@@ -155,7 +155,7 @@ function ZapDialogContent({
         return
       }
       if (event) {
-        noteStatsService.addZap(pubkey, event?.id, zapResult.invoice, sats, comment)
+        noteStatsService.addZap(pubkey, event.id, zapResult.invoice, sats, comment)
       }
     } catch (error) {
       toast.error(`${t('Zap failed')}: ${(error as Error).message}`)
