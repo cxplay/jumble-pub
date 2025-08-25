@@ -107,7 +107,7 @@ export default function Note({
                 className={`font-semibold flex truncate ${size === 'small' ? 'text-sm' : ''}`}
                 skeletonClassName={size === 'small' ? 'h-3' : 'h-4'}
               />
-              {usingClient && size === 'normal' && (
+              {usingClient && (
                 <span className="text-sm text-muted-foreground shrink-0">using {usingClient}</span>
               )}
             </div>
