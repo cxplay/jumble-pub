@@ -35,7 +35,7 @@ export default function ProfileList({ pubkeys }: { pubkeys: string[] }) {
   }, [visiblePubkeys, pubkeys])
 
   return (
-    <div className="px-4">
+    <div className="px-4 pt-2">
       {visiblePubkeys.map((pubkey, index) => (
         <UserItem key={`${index}-${pubkey}`} pubkey={pubkey} />
       ))}

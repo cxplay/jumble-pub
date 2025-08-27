@@ -1,4 +1,3 @@
-import BottomNavigationBar from '@/components/BottomNavigationBar'
 import ScrollToTopButton from '@/components/ScrollToTopButton'
 import { Titlebar } from '@/components/Titlebar'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -13,12 +12,14 @@ const PrimaryPageLayout = forwardRef(
       children,
       titlebar,
       pageName,
-      displayScrollToTopButton = false
+      displayScrollToTopButton = false,
+      hideTitlebarBottomBorder = false
     }: {
       children?: React.ReactNode
       titlebar: React.ReactNode
       pageName: TPrimaryPageName
       displayScrollToTopButton?: boolean
+      hideTitlebarBottomBorder?: boolean
     },
     ref
   ) => {
@@ -69,9 +70,10 @@ const PrimaryPageLayout = forwardRef(
               paddingBottom: 'calc(env(safe-area-inset-bottom) + 3rem)'
             }}
           >
-            <PrimaryPageTitlebar>{titlebar}</PrimaryPageTitlebar>
+            <PrimaryPageTitlebar hideBottomBorder={hideTitlebarBottomBorder}>
+              {titlebar}
+            </PrimaryPageTitlebar>
             {children}
-            <BottomNavigationBar />
           </div>
           {displayScrollToTopButton && <ScrollToTopButton />}
         </DeepBrowsingProvider>
@@ -81,7 +83,7 @@ const PrimaryPageLayout = forwardRef(
     return (
       <DeepBrowsingProvider active={current === pageName && display} scrollAreaRef={scrollAreaRef}>
         <ScrollArea
-          className="h-screen overflow-auto"
+          className="h-full overflow-auto"
           scrollBarClassName="z-50 pt-12"
           ref={scrollAreaRef}
         >
@@ -101,6 +103,16 @@ export type TPrimaryPageLayoutRef = {
   scrollToTop: () => void
 }
 
-function PrimaryPageTitlebar({ children }: { children?: React.ReactNode }) {
-  return <Titlebar className="p-1">{children}</Titlebar>
+function PrimaryPageTitlebar({
+  children,
+  hideBottomBorder = false
+}: {
+  children?: React.ReactNode
+  hideBottomBorder?: boolean
+}) {
+  return (
+    <Titlebar className="p-1" hideBottomBorder={hideBottomBorder}>
+      {children}
+    </Titlebar>
+  )
 }

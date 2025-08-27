@@ -35,7 +35,7 @@ const NotePage = forwardRef(({ id, index }: { id?: string; index?: number }, ref
   if (!event && isFetching) {
     return (
       <SecondaryPageLayout ref={ref} index={index} title={t('Note')}>
-        <div className="px-4">
+        <div className="px-4 pt-3">
           <div className="flex items-center space-x-2">
             <Skeleton className="w-10 h-10 rounded-full" />
             <div className={`flex-1 w-0`}>
@@ -69,7 +69,7 @@ const NotePage = forwardRef(({ id, index }: { id?: string; index?: number }, ref
 
   return (
     <SecondaryPageLayout ref={ref} index={index} title={t('Note')} displayScrollToTopButton>
-      <div className="px-4">
+      <div className="px-4 pt-3">
         {rootITag && <ExternalRoot value={rootITag[1]} />}
         {rootEventId !== parentEventId && (
           <ParentNote
@@ -132,12 +132,12 @@ function ParentNote({
   if (isFetching) {
     return (
       <div>
-        <Card className="flex space-x-1 px-1.5 py-1 items-center clickable text-sm text-muted-foreground">
+        <div className="flex space-x-1 px-[0.4375rem] py-1 items-center rounded-full border clickable text-sm text-muted-foreground">
           <Skeleton className="shrink w-4 h-4 rounded-full" />
           <div className="py-1 flex-1">
             <Skeleton className="h-3" />
           </div>
-        </Card>
+        </div>
         <div className="ml-5 w-px h-3 bg-border" />
       </div>
     )
@@ -146,9 +146,9 @@ function ParentNote({
 
   return (
     <div>
-      <Card
+      <div
         className={cn(
-          'flex space-x-1 px-1.5 py-1 items-center clickable text-sm text-muted-foreground',
+          'flex space-x-1 px-[0.4375rem] py-1 items-center rounded-full border clickable text-sm text-muted-foreground',
           event && 'hover:text-foreground'
         )}
         onClick={() => {
@@ -158,7 +158,7 @@ function ParentNote({
       >
         {event && <UserAvatar userId={event.pubkey} size="tiny" className="shrink-0" />}
         <ContentPreview className="truncate" event={event} />
-      </Card>
+      </div>
       {isConsecutive ? (
         <div className="ml-5 w-px h-3 bg-border" />
       ) : (

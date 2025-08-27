@@ -18,7 +18,7 @@ const RelaySettingsPage = forwardRef(({ id, index }: { id?: string; index?: numb
       index={index}
       title={t("username's used relays", { username: profile.username })}
     >
-      <div className="px-4">
+      <div className="px-4 pt-3">
         <OthersRelayList userId={id} />
       </div>
     </SecondaryPageLayout>

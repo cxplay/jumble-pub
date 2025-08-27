@@ -87,7 +87,7 @@ export default function Tabs({
     <div
       ref={containerRef}
       className={cn(
-        'sticky flex justify-between top-12 bg-background z-30 px-1 w-full transition-transform',
+        'sticky flex justify-between top-12 bg-background z-30 px-1 w-full transition-transform border-b',
         deepBrowsing && lastScrollTop > threshold ? '-translate-y-[calc(100%+12rem)]' : ''
       )}
     >

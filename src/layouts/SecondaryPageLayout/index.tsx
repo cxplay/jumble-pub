@@ -1,5 +1,4 @@
 import BackButton from '@/components/BackButton'
-import BottomNavigationBar from '@/components/BottomNavigationBar'
 import ScrollToTopButton from '@/components/ScrollToTopButton'
 import { Titlebar } from '@/components/Titlebar'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -16,6 +15,7 @@ const SecondaryPageLayout = forwardRef(
       title,
       controls,
       hideBackButton = false,
+      hideTitlebarBottomBorder = false,
       displayScrollToTopButton = false
     }: {
       children?: React.ReactNode
@@ -23,6 +23,7 @@ const SecondaryPageLayout = forwardRef(
       title?: React.ReactNode
       controls?: React.ReactNode
       hideBackButton?: boolean
+      hideTitlebarBottomBorder?: boolean
       displayScrollToTopButton?: boolean
     },
     ref
@@ -65,9 +66,9 @@ const SecondaryPageLayout = forwardRef(
               title={title}
               controls={controls}
               hideBackButton={hideBackButton}
+              hideBottomBorder={hideTitlebarBottomBorder}
             />
             {children}
-            <BottomNavigationBar />
           </div>
           {displayScrollToTopButton && <ScrollToTopButton />}
         </DeepBrowsingProvider>
@@ -77,7 +78,7 @@ const SecondaryPageLayout = forwardRef(
     return (
       <DeepBrowsingProvider active={currentIndex === index} scrollAreaRef={scrollAreaRef}>
         <ScrollArea
-          className="h-screen overflow-auto"
+          className="h-full overflow-auto"
           scrollBarClassName="z-50 pt-12"
           ref={scrollAreaRef}
         >
@@ -85,6 +86,7 @@ const SecondaryPageLayout = forwardRef(
             title={title}
             controls={controls}
             hideBackButton={hideBackButton}
+            hideBottomBorder={hideTitlebarBottomBorder}
           />
           {children}
           <div className="h-4" />
@@ -100,14 +102,19 @@ export default SecondaryPageLayout
 export function SecondaryPageTitlebar({
   title,
   controls,
-  hideBackButton = false
+  hideBackButton = false,
+  hideBottomBorder = false
 }: {
   title?: React.ReactNode
   controls?: React.ReactNode
   hideBackButton?: boolean
+  hideBottomBorder?: boolean
 }): JSX.Element {
   return (
-    <Titlebar className="flex gap-1 p-1 items-center justify-between font-semibold">
+    <Titlebar
+      className="flex gap-1 p-1 items-center justify-between font-semibold"
+      hideBottomBorder={hideBottomBorder}
+    >
       {hideBackButton ? (
         <div className="flex gap-2 items-center pl-3 w-fit truncate text-lg font-semibold">
           {title}

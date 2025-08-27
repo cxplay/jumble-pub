@@ -30,7 +30,7 @@ const HomePage = forwardRef(({ index }: { index?: number }, ref) => {
 
   if (!recommendedRelayInfos.length) {
     return (
-      <SecondaryPageLayout ref={ref} index={index} hideBackButton>
+      <SecondaryPageLayout ref={ref} index={index} hideBackButton hideTitlebarBottomBorder>
         <div className="text-muted-foreground w-full h-screen flex items-center justify-center">
           {t('Welcome! 🥳')}
         </div>
@@ -49,8 +49,9 @@ const HomePage = forwardRef(({ index }: { index?: number }, ref) => {
         </>
       }
       hideBackButton
+      hideTitlebarBottomBorder
     >
-      <div className="px-4">
+      <div className="px-4 pt-2">
         <div className="grid grid-cols-2 gap-3">
           {recommendedRelayInfos.map((relayInfo) => (
             <RelaySimpleInfo

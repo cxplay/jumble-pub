@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button'
 import { SimpleUserAvatar } from '@/components/UserAvatar'
 import { cn } from '@/lib/utils'
 import { useScreenSize } from '@/providers/ScreenSizeProvider'
+import { ArrowUp } from 'lucide-react'
 import { Event } from 'nostr-tools'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -32,34 +33,25 @@ export default function NewNotesButton({
         <div
           className={cn(
             'w-full flex justify-center z-40 pointer-events-none',
-            isSmallScreen ? 'fixed' : 'absolute bottom-4'
+            isSmallScreen ? 'fixed' : 'absolute bottom-6'
           )}
           style={isSmallScreen ? { bottom: 'calc(4rem + env(safe-area-inset-bottom))' } : undefined}
         >
           <Button
             onClick={onClick}
-            className="group rounded-full h-fit pl-2 pr-3 hover:bg-primary-hover pointer-events-auto"
+            className="group rounded-full h-fit py-2 pl-2 pr-3 hover:bg-primary-hover pointer-events-auto"
           >
             {pubkeys.length > 0 && (
-              <div className="flex items-center">
-                {pubkeys.map((pubkey, index) => (
-                  <div
-                    key={pubkey}
-                    className="relative -mr-2.5 last:mr-0"
-                    style={{ zIndex: 3 - index }}
-                  >
-                    <SimpleUserAvatar
-                      userId={pubkey}
-                      size="small"
-                      className="border-primary border-2  group-hover:border-primary-hover"
-                    />
-                  </div>
+              <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale">
+                {pubkeys.map((pubkey) => (
+                  <SimpleUserAvatar userId={pubkey} size="small" />
                 ))}
               </div>
             )}
             <div className="text-md font-medium">
               {t('Show n new notes', { n: newEvents.length > 99 ? '99+' : newEvents.length })}
             </div>
+            <ArrowUp />
           </Button>
         </div>
       )}

@@ -33,7 +33,12 @@ const MePage = forwardRef((_, ref) => {
 
   if (!pubkey) {
     return (
-      <PrimaryPageLayout ref={ref} pageName="home" titlebar={<MePageTitlebar />}>
+      <PrimaryPageLayout
+        ref={ref}
+        pageName="home"
+        titlebar={<MePageTitlebar />}
+        hideTitlebarBottomBorder
+      >
         <div className="flex flex-col p-4 gap-4 overflow-auto">
           <AccountManager />
         </div>
@@ -42,7 +47,12 @@ const MePage = forwardRef((_, ref) => {
   }
 
   return (
-    <PrimaryPageLayout ref={ref} pageName="home" titlebar={<MePageTitlebar />}>
+    <PrimaryPageLayout
+      ref={ref}
+      pageName="home"
+      titlebar={<MePageTitlebar />}
+      hideTitlebarBottomBorder
+    >
       <div className="flex gap-4 items-center p-4">
         <SimpleUserAvatar userId={pubkey} size="big" />
         <div className="space-y-1 flex-1 w-0">

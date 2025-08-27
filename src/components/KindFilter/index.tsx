@@ -88,7 +88,7 @@ export default function KindFilter({
               key={label}
               className={cn(
                 'cursor-pointer grid gap-1.5 rounded-lg border px-4 py-3',
-                checked ? 'border-primary bg-primary/20' : 'clickable'
+                checked ? 'border-primary/60 bg-primary/5' : 'clickable'
               )}
               onClick={() => {
                 console.log(checked)
@@ -166,7 +166,7 @@ export default function KindFilter({
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>{trigger}</PopoverTrigger>
-      <PopoverContent className="w-96" collisionPadding={16}>
+      <PopoverContent className="w-96" collisionPadding={16} sideOffset={0}>
         {content}
       </PopoverContent>
     </Popover>

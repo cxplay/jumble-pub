@@ -34,7 +34,11 @@ export default function FeedButton({ className }: { className?: string }) {
       <PopoverTrigger asChild>
         <FeedSwitcherTrigger className={className} />
       </PopoverTrigger>
-      <PopoverContent side="bottom" className="w-96 p-4 max-h-[80vh] overflow-auto">
+      <PopoverContent
+        sideOffset={0}
+        side="bottom"
+        className="w-96 p-4 max-h-[80vh] overflow-auto scrollbar-hide"
+      >
         <FeedSwitcher close={() => setOpen(false)} />
       </PopoverContent>
     </Popover>

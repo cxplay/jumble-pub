@@ -209,7 +209,7 @@ const NoteList = forwardRef(
       setEvents((oldEvents) => [...newEvents, ...oldEvents])
       setNewEvents([])
       setTimeout(() => {
-        scrollToTop()
+        scrollToTop('smooth')
       }, 0)
     }
 
@@ -218,7 +218,7 @@ const NoteList = forwardRef(
         {filteredNewEvents.length > 0 && (
           <NewNotesButton newEvents={filteredNewEvents} onClick={showNewEvents} />
         )}
-        <div ref={topRef} className="scroll-mt-24" />
+        <div ref={topRef} className="scroll-mt-[calc(6rem+1px)]" />
         <PullToRefresh
           onRefresh={async () => {
             setRefreshCount((count) => count + 1)

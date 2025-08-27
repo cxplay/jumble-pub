@@ -8,7 +8,7 @@ const PostSettingsPage = forwardRef(({ index }: { index?: number }, ref) => {
 
   return (
     <SecondaryPageLayout ref={ref} index={index} title={t('Post settings')}>
-      <div className="px-4 pt-2 space-y-4">
+      <div className="px-4 pt-3 space-y-4">
         <MediaUploadServiceSetting />
       </div>
     </SecondaryPageLayout>

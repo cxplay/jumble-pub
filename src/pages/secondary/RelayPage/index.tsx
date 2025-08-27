@@ -42,6 +42,7 @@ const RelayPage = forwardRef(({ url, index }: { url?: string; index?: number }, 
       controls={<RelayPageControls url={normalizedUrl} />}
       displayScrollToTopButton
     >
+      <div className="h-3 w-full" />
       <RelayInfo url={normalizedUrl} />
       {relayInfo?.supported_nips?.includes(50) && (
         <div className="px-4 py-2">

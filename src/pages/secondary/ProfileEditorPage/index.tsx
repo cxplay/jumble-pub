@@ -124,112 +124,106 @@ const ProfileEditorPage = forwardRef(({ index }: { index?: number }, ref) => {
 
   return (
     <SecondaryPageLayout ref={ref} index={index} title={profile.username} controls={controls}>
-      <div className="px-4">
-        <div className="relative bg-cover bg-center rounded-lg mb-2">
-          <Uploader
-            onUploadSuccess={onBannerUploadSuccess}
-            onUploadStart={() => setUploadingBanner(true)}
-            onUploadEnd={() => setUploadingBanner(false)}
-            className="w-full relative cursor-pointer"
-          >
-            <ProfileBanner
-              banner={banner}
-              pubkey={account.pubkey}
-              className="w-full aspect-[3/1] object-cover rounded-lg"
-            />
-            <div className="absolute top-0 bg-muted/30 w-full h-full rounded-lg flex flex-col justify-center items-center">
-              {uploadingBanner ? (
-                <Loader size={36} className="animate-spin" />
-              ) : (
-                <Upload size={36} />
-              )}
-            </div>
-          </Uploader>
-          <Uploader
-            onUploadSuccess={onAvatarUploadSuccess}
-            onUploadStart={() => setUploadingAvatar(true)}
-            onUploadEnd={() => setUploadingAvatar(false)}
-            className="w-24 h-24 absolute bottom-0 left-4 translate-y-1/2 border-4 border-background cursor-pointer rounded-full"
-          >
-            <Avatar className="w-full h-full">
-              <AvatarImage src={avatar} className="object-cover object-center" />
-              <AvatarFallback>
-                <img src={defaultImage} />
-              </AvatarFallback>
-            </Avatar>
-            <div className="absolute top-0 bg-muted/30 w-full h-full rounded-full flex flex-col justify-center items-center">
-              {uploadingAvatar ? <Loader className="animate-spin" /> : <Upload />}
-            </div>
-          </Uploader>
-        </div>
-        <div className="pt-14 flex flex-col gap-4">
-          <Item>
-            <Label htmlFor="profile-username-input">{t('Display Name')}</Label>
-            <Input
-              id="profile-username-input"
-              value={username}
-              onChange={(e) => {
-                setUsername(e.target.value)
-                setHasChanged(true)
-              }}
-            />
-          </Item>
-          <Item>
-            <Label htmlFor="profile-about-textarea">{t('Bio')}</Label>
-            <Textarea
-              id="profile-about-textarea"
-              className="h-44"
-              value={about}
-              onChange={(e) => {
-                setAbout(e.target.value)
-                setHasChanged(true)
-              }}
-            />
-          </Item>
-          <Item>
-            <Label htmlFor="profile-website-input">{t('Website')}</Label>
-            <Input
-              id="profile-website-input"
-              value={website}
-              onChange={(e) => {
-                setWebsite(e.target.value)
-                setHasChanged(true)
-              }}
-            />
-          </Item>
-          <Item>
-            <Label htmlFor="profile-nip05-input">{t('Nostr Address (NIP-05)')}</Label>
-            <Input
-              id="profile-nip05-input"
-              value={nip05}
-              onChange={(e) => {
-                setNip05Error('')
-                setNip05(e.target.value)
-                setHasChanged(true)
-              }}
-              className={nip05Error ? 'border-destructive' : ''}
-            />
-            {nip05Error && <div className="text-xs text-destructive pl-3">{nip05Error}</div>}
-          </Item>
-          <Item>
-            <Label htmlFor="profile-lightning-address-input">
-              {t('Lightning Address (or LNURL)')}
-            </Label>
-            <Input
-              id="profile-lightning-address-input"
-              value={lightningAddress}
-              onChange={(e) => {
-                setLightningAddressError('')
-                setLightningAddress(e.target.value)
-                setHasChanged(true)
-              }}
-              className={lightningAddressError ? 'border-destructive' : ''}
-            />
-            {lightningAddressError && (
-              <div className="text-xs text-destructive pl-3">{lightningAddressError}</div>
-            )}
-          </Item>
-        </div>
+      <div className="relative bg-cover bg-center mb-2">
+        <Uploader
+          onUploadSuccess={onBannerUploadSuccess}
+          onUploadStart={() => setUploadingBanner(true)}
+          onUploadEnd={() => setUploadingBanner(false)}
+          className="w-full relative cursor-pointer"
+        >
+          <ProfileBanner
+            banner={banner}
+            pubkey={account.pubkey}
+            className="w-full aspect-[3/1] object-cover"
+          />
+          <div className="absolute top-0 bg-muted/30 w-full h-full flex flex-col justify-center items-center">
+            {uploadingBanner ? <Loader size={36} className="animate-spin" /> : <Upload size={36} />}
+          </div>
+        </Uploader>
+        <Uploader
+          onUploadSuccess={onAvatarUploadSuccess}
+          onUploadStart={() => setUploadingAvatar(true)}
+          onUploadEnd={() => setUploadingAvatar(false)}
+          className="w-24 h-24 absolute bottom-0 left-4 translate-y-1/2 border-4 border-background cursor-pointer rounded-full"
+        >
+          <Avatar className="w-full h-full">
+            <AvatarImage src={avatar} className="object-cover object-center" />
+            <AvatarFallback>
+              <img src={defaultImage} />
+            </AvatarFallback>
+          </Avatar>
+          <div className="absolute top-0 bg-muted/30 w-full h-full rounded-full flex flex-col justify-center items-center">
+            {uploadingAvatar ? <Loader className="animate-spin" /> : <Upload />}
+          </div>
+        </Uploader>
+      </div>
+      <div className="pt-14 px-4 flex flex-col gap-4">
+        <Item>
+          <Label htmlFor="profile-username-input">{t('Display Name')}</Label>
+          <Input
+            id="profile-username-input"
+            value={username}
+            onChange={(e) => {
+              setUsername(e.target.value)
+              setHasChanged(true)
+            }}
+          />
+        </Item>
+        <Item>
+          <Label htmlFor="profile-about-textarea">{t('Bio')}</Label>
+          <Textarea
+            id="profile-about-textarea"
+            className="h-44"
+            value={about}
+            onChange={(e) => {
+              setAbout(e.target.value)
+              setHasChanged(true)
+            }}
+          />
+        </Item>
+        <Item>
+          <Label htmlFor="profile-website-input">{t('Website')}</Label>
+          <Input
+            id="profile-website-input"
+            value={website}
+            onChange={(e) => {
+              setWebsite(e.target.value)
+              setHasChanged(true)
+            }}
+          />
+        </Item>
+        <Item>
+          <Label htmlFor="profile-nip05-input">{t('Nostr Address (NIP-05)')}</Label>
+          <Input
+            id="profile-nip05-input"
+            value={nip05}
+            onChange={(e) => {
+              setNip05Error('')
+              setNip05(e.target.value)
+              setHasChanged(true)
+            }}
+            className={nip05Error ? 'border-destructive' : ''}
+          />
+          {nip05Error && <div className="text-xs text-destructive pl-3">{nip05Error}</div>}
+        </Item>
+        <Item>
+          <Label htmlFor="profile-lightning-address-input">
+            {t('Lightning Address (or LNURL)')}
+          </Label>
+          <Input
+            id="profile-lightning-address-input"
+            value={lightningAddress}
+            onChange={(e) => {
+              setLightningAddressError('')
+              setLightningAddress(e.target.value)
+              setHasChanged(true)
+            }}
+            className={lightningAddressError ? 'border-destructive' : ''}
+          />
+          {lightningAddressError && (
+            <div className="text-xs text-destructive pl-3">{lightningAddressError}</div>
+          )}
+        </Item>
       </div>
     </SecondaryPageLayout>
   )

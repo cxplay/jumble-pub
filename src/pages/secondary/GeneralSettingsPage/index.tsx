@@ -26,7 +26,7 @@ const GeneralSettingsPage = forwardRef(({ index }: { index?: number }, ref) => {
 
   return (
     <SecondaryPageLayout ref={ref} index={index} title={t('General')}>
-      <div className="space-y-4 mt-2">
+      <div className="space-y-4 mt-3">
         <SettingItem>
           <Label htmlFor="languages" className="text-base font-normal">
             {t('Languages')}

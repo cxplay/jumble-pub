@@ -24,7 +24,7 @@ const NoteListPage = forwardRef((_, ref) => {
 
   useEffect(() => {
     if (layoutRef.current) {
-      layoutRef.current.scrollToTop()
+      layoutRef.current.scrollToTop('instant')
     }
   }, [JSON.stringify(relayUrls), feedInfo])
 

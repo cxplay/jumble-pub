@@ -1,5 +1,4 @@
 import Sidebar from '@/components/Sidebar'
-import { Separator } from '@/components/ui/separator'
 import { cn } from '@/lib/utils'
 import NoteListPage from '@/pages/primary/NoteListPage'
 import HomePage from '@/pages/secondary/HomePage'
@@ -15,6 +14,7 @@ import {
   useRef,
   useState
 } from 'react'
+import BottomNavigationBar from './components/BottomNavigationBar'
 import TooManyRelaysAlertDialog from './components/TooManyRelaysAlertDialog'
 import ExplorePage from './pages/primary/ExplorePage'
 import MePage from './pages/primary/MePage'
@@ -90,12 +90,10 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
     }
   ])
   const [secondaryStack, setSecondaryStack] = useState<TStackItem[]>([])
-  const [isShared, setIsShared] = useState(false)
   const { isSmallScreen } = useScreenSize()
   const ignorePopStateRef = useRef(false)
 
   useEffect(() => {
-    const hasHistoryState = !!history.state
     if (['/npub1', '/nprofile1'].some((prefix) => window.location.pathname.startsWith(prefix))) {
       window.history.replaceState(
         null,
@@ -115,12 +113,6 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
     }
     window.history.pushState(null, '', window.location.href)
     if (window.location.pathname !== '/') {
-      if (
-        ['/users', '/notes', '/relays'].some((path) => window.location.pathname.startsWith(path)) &&
-        !hasHistoryState
-      ) {
-        setIsShared(true)
-      }
       const url = window.location.pathname + window.location.search + window.location.hash
       setSecondaryStack((prevStack) => {
         if (isCurrentPage(prevStack, url)) return prevStack
@@ -248,7 +240,6 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
     if (secondaryStack.length === 1) {
       // back to home page
       window.history.replaceState(null, '', '/')
-      setIsShared(false)
       setSecondaryStack([])
     } else {
       window.history.go(-1)
@@ -301,40 +292,8 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
                 {element}
               </div>
             ))}
+            <BottomNavigationBar />
             <TooManyRelaysAlertDialog />
-          </NotificationProvider>
-        </SecondaryPageContext.Provider>
-      </PrimaryPageContext.Provider>
-    )
-  }
-
-  if (isShared && secondaryStack.length > 0) {
-    return (
-      <PrimaryPageContext.Provider
-        value={{
-          navigate: navigatePrimaryPage,
-          current: currentPrimaryPage,
-          display: false
-        }}
-      >
-        <SecondaryPageContext.Provider
-          value={{
-            push: pushSecondaryPage,
-            pop: popSecondaryPage,
-            currentIndex: secondaryStack[secondaryStack.length - 1].index
-          }}
-        >
-          <NotificationProvider>
-            <div className="h-screen overflow-hidden max-w-4xl mx-auto border-x">
-              {secondaryStack.map((item, index) => (
-                <div
-                  key={item.index}
-                  style={{ display: index === secondaryStack.length - 1 ? 'block' : 'none' }}
-                >
-                  {item.component}
-                </div>
-              ))}
-            </div>
           </NotificationProvider>
         </SecondaryPageContext.Provider>
       </PrimaryPageContext.Provider>
@@ -357,11 +316,10 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
         }}
       >
         <NotificationProvider>
-          <div className="flex h-screen overflow-hidden">
+          <div className="flex h-screen overflow-hidden bg-surface-background">
             <Sidebar />
-            <Separator orientation="vertical" />
-            <div className="grid grid-cols-2 w-full">
-              <div className="flex border-r">
+            <div className="grid grid-cols-2 gap-2 w-full pr-2">
+              <div className="flex rounded-lg my-2 max-h-screen shadow-md bg-background overflow-hidden">
                 {primaryPages.map(({ name, element }) => (
                   <div
                     key={name}
@@ -374,16 +332,21 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
                   </div>
                 ))}
               </div>
-              <div>
+              <div className="flex rounded-lg my-2 max-h-screen shadow-md bg-background overflow-hidden">
                 {secondaryStack.map((item, index) => (
                   <div
                     key={item.index}
+                    className="w-full"
                     style={{ display: index === secondaryStack.length - 1 ? 'block' : 'none' }}
                   >
                     {item.component}
                   </div>
                 ))}
-                <div key="home" style={{ display: secondaryStack.length === 0 ? 'block' : 'none' }}>
+                <div
+                  key="home"
+                  className="w-full"
+                  style={{ display: secondaryStack.length === 0 ? 'block' : 'none' }}
+                >
                   <HomePage />
                 </div>
               </div>
