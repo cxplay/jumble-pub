@@ -64,7 +64,7 @@ export default function Likes({ event }: { event: Event }) {
     longPressTimerRef.current = setTimeout(() => {
       setIsCompleted(key)
       setIsLongPressing(null)
-    }, 1000)
+    }, 800)
   }
 
   const handleMouseUp = () => {
