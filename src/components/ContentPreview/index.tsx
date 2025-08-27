@@ -10,7 +10,9 @@ import HighlightPreview from './HighlightPreview'
 import LiveEventPreview from './LiveEventPreview'
 import LongFormArticlePreview from './LongFormArticlePreview'
 import NormalContentPreview from './NormalContentPreview'
+import PictureNotePreview from './PictureNotePreview'
 import PollPreview from './PollPreview'
+import VideoNotePreview from './VideoNotePreview'
 
 export default function ContentPreview({
   event,
@@ -40,7 +42,6 @@ export default function ContentPreview({
     [
       kinds.ShortTextNote,
       ExtendedKind.COMMENT,
-      ExtendedKind.PICTURE,
       ExtendedKind.VOICE,
       ExtendedKind.VOICE_COMMENT
     ].includes(event.kind)
@@ -58,6 +59,14 @@ export default function ContentPreview({
 
   if (event.kind === kinds.LongFormArticle) {
     return <LongFormArticlePreview event={event} className={className} />
+  }
+
+  if (event.kind === ExtendedKind.VIDEO || event.kind === ExtendedKind.SHORT_VIDEO) {
+    return <VideoNotePreview event={event} className={className} />
+  }
+
+  if (event.kind === ExtendedKind.PICTURE) {
+    return <PictureNotePreview event={event} className={className} />
   }
 
   if (event.kind === ExtendedKind.GROUP_METADATA) {

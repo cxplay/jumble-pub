@@ -110,7 +110,7 @@ export default {
       'یادداشت ویژه برای کلاینت‌های تصویر محور مانند Olas',
     'Picture note requires images': 'یادداشت تصویری نیاز به تصاویر دارد',
     Relays: 'رله‌ها',
-    image: 'تصویر',
+    Image: 'تصویر',
     'R & W': 'خواندن و نوشتن',
     Read: 'خواندن',
     Write: 'نوشتن',
@@ -316,7 +316,7 @@ export default {
     'Remove poll': 'حذف نظرسنجی',
     'Refresh results': 'بارگیری مجدد نتایج',
     Poll: 'نظرسنجی',
-    media: 'رسانه',
+    Media: 'رسانه',
     'Broadcast to ...': 'پخش به...',
     'Successfully broadcasted to your write relays': 'با موفقیت به رله‌های نوشتن شما پخش شد',
     'Failed to broadcast to your write relays: {{error}}':

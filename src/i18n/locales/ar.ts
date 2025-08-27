@@ -110,7 +110,7 @@ export default {
       'ملاحظة خاصة للعملاء المعتمدين على الصور مثل Olas',
     'Picture note requires images': 'ملاحظة الصورة تتطلب صور',
     Relays: 'الريلايات',
-    image: 'صورة',
+    Image: 'صورة',
     'R & W': 'قراءة وكتابة',
     Read: 'قراءة',
     Write: 'كتابة',
@@ -314,7 +314,7 @@ export default {
     'Remove poll': 'إزالة الاستطلاع',
     'Refresh results': 'تحديث النتائج',
     Poll: 'استطلاع',
-    media: 'الوسائط',
+    Media: 'الوسائط',
     'Broadcast to ...': 'البث إلى...',
     'Successfully broadcasted to your write relays': 'تم البث بنجاح إلى مرحلات الكتابة الخاصة بك',
     'Failed to broadcast to your write relays: {{error}}':

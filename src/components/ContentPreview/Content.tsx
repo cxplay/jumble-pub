@@ -35,13 +35,13 @@ export default function Content({
     <span className={cn('pointer-events-none', className)}>
       {nodes.map((node, index) => {
         if (node.type === 'image' || node.type === 'images') {
-          return index > 0 ? ` [${t('image')}]` : `[${t('image')}]`
+          return index > 0 ? ` [${t('Image')}]` : `[${t('Image')}]`
         }
         if (node.type === 'media') {
-          return index > 0 ? ` [${t('media')}]` : `[${t('media')}]`
+          return index > 0 ? ` [${t('Media')}]` : `[${t('Media')}]`
         }
         if (node.type === 'event') {
-          return index > 0 ? ` [${t('note')}]` : `[${t('note')}]`
+          return index > 0 ? ` [${t('Note')}]` : `[${t('Note')}]`
         }
         if (node.type === 'mention') {
           return <EmbeddedMentionText key={index} userId={node.data.split(':')[1]} />

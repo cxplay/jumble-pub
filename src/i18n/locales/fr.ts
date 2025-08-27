@@ -111,7 +111,7 @@ export default {
       "Une note spéciale pour les clients axés sur l'image comme Olas",
     'Picture note requires images': 'La note image nécessite des images',
     Relays: 'Relais',
-    image: 'image',
+    Image: 'image',
     'R & W': 'R & W',
     Read: 'Lire',
     Write: 'Écrire',
@@ -320,7 +320,7 @@ export default {
     'Remove poll': 'Supprimer le sondage',
     'Refresh results': 'Rafraîchir les résultats',
     Poll: 'Sondage',
-    media: 'média',
+    Media: 'média',
     'Broadcast to ...': 'Diffuser vers...',
     'Successfully broadcasted to your write relays': "Diffusion réussie vers vos relais d'écriture",
     'Failed to broadcast to your write relays: {{error}}':

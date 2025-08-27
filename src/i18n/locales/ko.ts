@@ -110,7 +110,7 @@ export default {
       'Olas와 같은 사진 우선 클라이언트에서 표시되는 특별한 노트',
     'Picture note requires images': '사진 노트에는 이미지가 필요합니다',
     Relays: '릴레이',
-    image: '이미지',
+    Image: '이미지',
     Normal: '일반',
     'R & W': '읽기/쓰기',
     Read: '읽기 전용',
@@ -316,7 +316,7 @@ export default {
     'Remove poll': '투표 제거',
     'Refresh results': '결과 새로 고침',
     Poll: '투표',
-    media: '미디어',
+    Media: '미디어',
     'Broadcast to ...': '브로드캐스트 대상...',
     'Successfully broadcasted to your write relays': '쓰기 릴레이로 브로드캐스트에 성공했습니다',
     'Failed to broadcast to your write relays: {{error}}':

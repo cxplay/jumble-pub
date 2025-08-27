@@ -110,7 +110,7 @@ export default {
       'หมายเหตุพิเศษสำหรับไคลเอนต์ที่เน้นรูปภาพเช่น Olas',
     'Picture note requires images': 'โน้ตรูปภาพต้องมีรูปภาพ',
     Relays: 'รีเลย์',
-    image: 'รูปภาพ',
+    Image: 'รูปภาพ',
     'R & W': 'อ่าน & เขียน',
     Read: 'อ่าน',
     Write: 'เขียน',
@@ -313,7 +313,7 @@ export default {
     'Remove poll': 'ลบโพลล์',
     'Refresh results': 'รีเฟรชผลลัพธ์',
     Poll: 'โพลล์',
-    media: 'สื่อ',
+    Media: 'สื่อ',
     'Broadcast to ...': 'ส่งสัญญาณไปยัง...',
     'Successfully broadcasted to your write relays': 'ส่งสัญญาณไปยังรีเลย์การเขียนของคุณสำเร็จแล้ว',
     'Failed to broadcast to your write relays: {{error}}':

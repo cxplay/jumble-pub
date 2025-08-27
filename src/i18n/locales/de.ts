@@ -111,7 +111,7 @@ export default {
       'Eine spezielle Notiz für bildfokussierte Clients wie Olas',
     'Picture note requires images': 'Bildnotiz erfordert Bilder',
     Relays: 'Relays',
-    image: 'Bild',
+    Image: 'Bild',
     'R & W': 'R & W',
     Read: 'Lesen',
     Write: 'Schreiben',
@@ -321,7 +321,7 @@ export default {
     'Remove poll': 'Umfrage entfernen',
     'Refresh results': 'Ergebnisse aktualisieren',
     Poll: 'Umfrage',
-    media: 'Medien',
+    Media: 'Medien',
     'Broadcast to ...': 'Senden an...',
     'Successfully broadcasted to your write relays': 'Erfolgreich an Ihre Schreibrelays gesendet',
     'Failed to broadcast to your write relays: {{error}}':

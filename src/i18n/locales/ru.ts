@@ -112,7 +112,7 @@ export default {
       'Особенная заметка для клиентов с приоритетом изображений, таких как Olas',
     'Picture note requires images': 'Заметка с изображением требует наличия изображений',
     Relays: 'Ретрансляторы',
-    image: 'изображение',
+    Image: 'изображение',
     'R & W': 'Чтение & Запись',
     Read: 'Читать',
     Write: 'Писать',
@@ -319,7 +319,7 @@ export default {
     'Remove poll': 'Удалить опрос',
     'Refresh results': 'Обновить результаты',
     Poll: 'Опрос',
-    media: 'медиа',
+    Media: 'медиа',
     'Broadcast to ...': 'Транслировать в...',
     'Successfully broadcasted to your write relays': 'Успешно транслировано в ваши релеи записи',
     'Failed to broadcast to your write relays: {{error}}':

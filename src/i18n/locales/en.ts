@@ -110,7 +110,7 @@ export default {
       'A special note for picture-first clients like Olas',
     'Picture note requires images': 'Picture note requires images',
     Relays: 'Relays',
-    image: 'image',
+    Image: 'Image',
     'R & W': 'R & W',
     Read: 'Read',
     Write: 'Write',
@@ -314,7 +314,7 @@ export default {
     'Remove poll': 'Remove poll',
     'Refresh results': 'Refresh results',
     Poll: 'Poll',
-    media: 'media',
+    Media: 'Media',
     'Broadcast to ...': 'Broadcast to ...',
     'Successfully broadcasted to your write relays':
       'Successfully broadcasted to your write relays',

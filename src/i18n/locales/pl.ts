@@ -110,7 +110,7 @@ export default {
       'Publikacja ze zdjęciami i opisem dla klientów takich jak Olas',
     'Picture note requires images': 'Wpis graficzny wymaga obrazów',
     Relays: 'Transmitery',
-    image: 'grafika',
+    Image: 'grafika',
     'R & W': 'O & Z',
     Read: 'Odczyt',
     Write: 'Zapis',
@@ -318,7 +318,7 @@ export default {
     'Remove poll': 'Usuń ankietę',
     'Refresh results': 'Odśwież wyniki',
     Poll: 'Ankieta',
-    media: 'media',
+    Media: 'media',
     'Broadcast to ...': 'Transmituj do...',
     'Successfully broadcasted to your write relays':
       'Pomyślnie transmitowano do twoich przekaźników zapisu',

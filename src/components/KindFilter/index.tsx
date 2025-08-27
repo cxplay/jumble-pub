@@ -49,14 +49,10 @@ export default function KindFilter({
     }
 
     const newShowKinds = [...temporaryShowKinds].sort()
-    let isSame = true
-    for (let index = 0; index < newShowKinds.length; index++) {
-      if (showKinds[index] !== newShowKinds[index]) {
-        isSame = false
-        break
-      }
-    }
-    if (!isSame) {
+    if (
+      newShowKinds.length !== showKinds.length ||
+      newShowKinds.some((k, i) => k !== showKinds[i])
+    ) {
       onShowKindsChange(newShowKinds)
     }
 
@@ -95,6 +91,7 @@ export default function KindFilter({
                 checked ? 'border-primary bg-primary/20' : 'clickable'
               )}
               onClick={() => {
+                console.log(checked)
                 if (!checked) {
                   // add all kinds in this group
                   setTemporaryShowKinds((prev) => Array.from(new Set([...prev, ...kindGroup])))

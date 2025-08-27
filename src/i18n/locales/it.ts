@@ -111,7 +111,7 @@ export default {
       'Una nota speciale per i client immagine che privilegiano Olas',
     'Picture note requires images': 'La nota illustrativa richiede immagini',
     Relays: 'Relays',
-    image: 'immagine',
+    Image: 'immagine',
     'R & W': 'L & S',
     Read: 'Leggi',
     Write: 'Scrivi',
@@ -318,7 +318,7 @@ export default {
     'Remove poll': 'Rimuovi sondaggio',
     'Refresh results': 'Aggiorna risultati',
     Poll: 'Sondaggio',
-    media: 'media',
+    Media: 'media',
     'Broadcast to ...': 'Trasmetti a...',
     'Successfully broadcasted to your write relays':
       'Trasmesso con successo ai tuoi relay di scrittura',

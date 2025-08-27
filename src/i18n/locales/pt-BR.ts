@@ -110,7 +110,7 @@ export default {
       'Uma nota especial para clientes que priorizam imagens, como Olas',
     'Picture note requires images': 'Nota de imagem requer imagens',
     Relays: 'Relés',
-    image: 'imagem',
+    Image: 'imagem',
     'R & W': 'Leitura & Escrita',
     Read: 'Leitura',
     Write: 'Escrita',
@@ -317,7 +317,7 @@ export default {
     'Remove poll': 'Remover enquete',
     'Refresh results': 'Atualizar resultados',
     Poll: 'Enquete',
-    media: 'Mídia',
+    Media: 'Mídia',
     'Broadcast to ...': 'Transmitir para...',
     'Successfully broadcasted to your write relays':
       'Transmitido com sucesso para seus relays de escrita',

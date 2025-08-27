@@ -58,7 +58,14 @@ export default function Note({
   const [showMuted, setShowMuted] = useState(false)
 
   let content: React.ReactNode
-  if (!SUPPORTED_KINDS.includes(event.kind)) {
+  if (
+    ![
+      ...SUPPORTED_KINDS,
+      kinds.CommunityDefinition,
+      kinds.LiveEvent,
+      ExtendedKind.GROUP_METADATA
+    ].includes(event.kind)
+  ) {
     content = <UnknownNote className="mt-2" event={event} />
   } else if (mutePubkeys.includes(event.pubkey) && !showMuted) {
     content = <MutedNote show={() => setShowMuted(true)} />

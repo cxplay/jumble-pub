@@ -111,7 +111,7 @@ export default {
       'Olas のような画像優先クライアント向けの特別なノート',
     'Picture note requires images': '画像ノートには画像が必要です',
     Relays: 'リレイ',
-    image: '画像',
+    Image: '画像',
     'R & W': '読＆書',
     Read: '読む',
     Write: '書く',
@@ -316,7 +316,7 @@ export default {
     'Remove poll': '投票を削除',
     'Refresh results': '結果を更新',
     Poll: '投票',
-    media: 'メディア',
+    Media: 'メディア',
     'Broadcast to ...': 'ブロードキャスト先...',
     'Successfully broadcasted to your write relays': '書きリレイへのブロードキャストが成功しました',
     'Failed to broadcast to your write relays: {{error}}':
