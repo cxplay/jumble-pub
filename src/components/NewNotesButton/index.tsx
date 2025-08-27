@@ -44,7 +44,7 @@ export default function NewNotesButton({
             {pubkeys.length > 0 && (
               <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale">
                 {pubkeys.map((pubkey) => (
-                  <SimpleUserAvatar userId={pubkey} size="small" />
+                  <SimpleUserAvatar key={pubkey} userId={pubkey} size="small" />
                 ))}
               </div>
             )}
