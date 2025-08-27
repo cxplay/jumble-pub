@@ -121,6 +121,7 @@ export default function Likes({ event }: { event: Event }) {
                 : 'bg-muted/80 text-muted-foreground cursor-pointer hover:bg-primary/40 hover:border-primary hover:text-foreground',
               (isLongPressing === key || isCompleted === key) && 'border-primary bg-primary/20'
             )}
+            onClick={(e) => e.stopPropagation()}
             onMouseDown={() => handleMouseDown(key)}
             onMouseUp={handleMouseUp}
             onMouseLeave={handleMouseLeave}
