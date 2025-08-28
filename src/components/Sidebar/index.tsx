@@ -6,6 +6,7 @@ import RelaysButton from './ExploreButton'
 import HomeButton from './HomeButton'
 import NotificationsButton from './NotificationButton'
 import PostButton from './PostButton'
+import ProfileButton from './ProfileButton'
 import SearchButton from './SearchButton'
 import SettingsButton from './SettingsButton'
 
@@ -24,6 +25,7 @@ export default function PrimaryPageSidebar() {
         <RelaysButton />
         <NotificationsButton />
         <SearchButton />
+        <ProfileButton />
         <SettingsButton />
         <PostButton />
       </div>
