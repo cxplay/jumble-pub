@@ -3,10 +3,13 @@ import { Compass } from 'lucide-react'
 import BottomNavigationBarItem from './BottomNavigationBarItem'
 
 export default function ExploreButton() {
-  const { navigate, current } = usePrimaryPage()
+  const { navigate, current, display } = usePrimaryPage()
 
   return (
-    <BottomNavigationBarItem active={current === 'explore'} onClick={() => navigate('explore')}>
+    <BottomNavigationBarItem
+      active={current === 'explore' && display}
+      onClick={() => navigate('explore')}
+    >
       <Compass />
     </BottomNavigationBarItem>
   )

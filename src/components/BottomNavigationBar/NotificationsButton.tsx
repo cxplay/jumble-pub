@@ -6,12 +6,12 @@ import BottomNavigationBarItem from './BottomNavigationBarItem'
 
 export default function NotificationsButton() {
   const { checkLogin } = useNostr()
-  const { navigate, current } = usePrimaryPage()
+  const { navigate, current, display } = usePrimaryPage()
   const { hasNewNotification } = useNotification()
 
   return (
     <BottomNavigationBarItem
-      active={current === 'notifications'}
+      active={current === 'notifications' && display}
       onClick={() => checkLogin(() => navigate('notifications'))}
     >
       <div className="relative">
