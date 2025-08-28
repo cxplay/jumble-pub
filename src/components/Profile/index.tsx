@@ -20,6 +20,7 @@ import client from '@/services/client.service'
 import { Link, Zap } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import NotFound from '../NotFound'
 import FollowedBy from './FollowedBy'
 import Followings from './Followings'
 import ProfileFeed from './ProfileFeed'
@@ -98,7 +99,7 @@ export default function Profile({ id }: { id?: string }) {
       </>
     )
   }
-  if (!profile) return null
+  if (!profile) return <NotFound />
 
   const { banner, username, about, avatar, pubkey, website, lightningAddress } = profile
   return (

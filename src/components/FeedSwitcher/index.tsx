@@ -8,13 +8,12 @@ import { BookmarkIcon, UsersRound } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import RelayIcon from '../RelayIcon'
 import RelaySetCard from '../RelaySetCard'
-import SaveRelayDropdownMenu from '../SaveRelayDropdownMenu'
 
 export default function FeedSwitcher({ close }: { close?: () => void }) {
   const { t } = useTranslation()
   const { pubkey } = useNostr()
   const { relaySets, favoriteRelays } = useFavoriteRelays()
-  const { feedInfo, switchFeed, temporaryRelayUrls } = useFeed()
+  const { feedInfo, switchFeed } = useFeed()
 
   return (
     <div className="space-y-4">
@@ -54,20 +53,6 @@ export default function FeedSwitcher({ close }: { close?: () => void }) {
         </FeedSwitcherItem>
       )}
 
-      {temporaryRelayUrls.length > 0 && (
-        <FeedSwitcherItem
-          key="temporary"
-          isActive={feedInfo.feedType === 'temporary'}
-          temporary
-          onClick={() => {
-            switchFeed('temporary')
-            close?.()
-          }}
-          controls={<SaveRelayDropdownMenu urls={temporaryRelayUrls} />}
-        >
-          {temporaryRelayUrls.length === 1 ? simplifyUrl(temporaryRelayUrls[0]) : t('Temporary')}
-        </FeedSwitcherItem>
-      )}
       <div className="space-y-2">
         <div className="flex justify-end items-center text-sm">
           <SecondaryPageLink
@@ -115,19 +100,17 @@ export default function FeedSwitcher({ close }: { close?: () => void }) {
 function FeedSwitcherItem({
   children,
   isActive,
-  temporary = false,
   onClick,
   controls
 }: {
   children: React.ReactNode
   isActive: boolean
-  temporary?: boolean
   onClick: () => void
   controls?: React.ReactNode
 }) {
   return (
     <div
-      className={`w-full border rounded-lg p-4 ${isActive ? 'border-primary bg-primary/5' : 'clickable'} ${temporary ? 'border-dashed' : ''}`}
+      className={`w-full border rounded-lg p-4 ${isActive ? 'border-primary bg-primary/5' : 'clickable'}`}
       onClick={onClick}
     >
       <div className="flex justify-between items-center">

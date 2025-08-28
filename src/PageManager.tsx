@@ -16,10 +16,12 @@ import {
 } from 'react'
 import BottomNavigationBar from './components/BottomNavigationBar'
 import TooManyRelaysAlertDialog from './components/TooManyRelaysAlertDialog'
+import { normalizeUrl } from './lib/url'
 import ExplorePage from './pages/primary/ExplorePage'
 import MePage from './pages/primary/MePage'
 import NotificationListPage from './pages/primary/NotificationListPage'
 import ProfilePage from './pages/primary/ProfilePage'
+import RelayPage from './pages/primary/RelayPage'
 import { NotificationProvider } from './providers/NotificationProvider'
 import { useScreenSize } from './providers/ScreenSizeProvider'
 import { routes } from './routes'
@@ -28,7 +30,7 @@ import modalManager from './services/modal-manager.service'
 export type TPrimaryPageName = keyof typeof PRIMARY_PAGE_MAP
 
 type TPrimaryPageContext = {
-  navigate: (page: TPrimaryPageName) => void
+  navigate: (page: TPrimaryPageName, props?: object) => void
   current: TPrimaryPageName | null
   display: boolean
 }
@@ -51,7 +53,8 @@ const PRIMARY_PAGE_REF_MAP = {
   explore: createRef<TPageRef>(),
   notifications: createRef<TPageRef>(),
   me: createRef<TPageRef>(),
-  profile: createRef<TPageRef>()
+  profile: createRef<TPageRef>(),
+  relay: createRef<TPageRef>()
 }
 
 const PRIMARY_PAGE_MAP = {
@@ -59,7 +62,8 @@ const PRIMARY_PAGE_MAP = {
   explore: <ExplorePage ref={PRIMARY_PAGE_REF_MAP.explore} />,
   notifications: <NotificationListPage ref={PRIMARY_PAGE_REF_MAP.notifications} />,
   me: <MePage ref={PRIMARY_PAGE_REF_MAP.me} />,
-  profile: <ProfilePage ref={PRIMARY_PAGE_REF_MAP.profile} />
+  profile: <ProfilePage ref={PRIMARY_PAGE_REF_MAP.profile} />,
+  relay: <RelayPage ref={PRIMARY_PAGE_REF_MAP.relay} />
 }
 
 const PrimaryPageContext = createContext<TPrimaryPageContext | undefined>(undefined)
@@ -85,7 +89,7 @@ export function useSecondaryPage() {
 export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
   const [currentPrimaryPage, setCurrentPrimaryPage] = useState<TPrimaryPageName>('home')
   const [primaryPages, setPrimaryPages] = useState<
-    { name: TPrimaryPageName; element: ReactNode }[]
+    { name: TPrimaryPageName; element: ReactNode; props?: any }[]
   >([
     {
       name: 'home',
@@ -131,6 +135,15 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
         }
         return newStack
       })
+    } else {
+      const searchParams = new URLSearchParams(window.location.search)
+      const r = searchParams.get('r')
+      if (r) {
+        const url = normalizeUrl(r)
+        if (url) {
+          navigatePrimaryPage('relay', { url })
+        }
+      }
     }
 
     const onPopState = (e: PopStateEvent) => {
@@ -206,12 +219,18 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
     }
   }, [])
 
-  const navigatePrimaryPage = (page: TPrimaryPageName) => {
+  const navigatePrimaryPage = (page: TPrimaryPageName, props?: any) => {
     const needScrollToTop = page === currentPrimaryPage
-    const exists = primaryPages.find((p) => p.name === page)
-    if (!exists) {
-      setPrimaryPages((prev) => [...prev, { name: page, element: PRIMARY_PAGE_MAP[page] }])
-    }
+    setPrimaryPages((prev) => {
+      const exists = prev.find((p) => p.name === page)
+      if (exists && props) {
+        exists.props = props
+        return [...prev]
+      } else if (!exists) {
+        return [...prev, { name: page, element: PRIMARY_PAGE_MAP[page], props }]
+      }
+      return prev
+    })
     setCurrentPrimaryPage(page)
     if (needScrollToTop) {
       PRIMARY_PAGE_REF_MAP[page].current?.scrollToTop('smooth')
@@ -284,7 +303,7 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
                   {item.component}
                 </div>
               ))}
-            {primaryPages.map(({ name, element }) => (
+            {primaryPages.map(({ name, element, props }) => (
               <div
                 key={name}
                 style={{
@@ -292,7 +311,7 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
                     secondaryStack.length === 0 && currentPrimaryPage === name ? 'block' : 'none'
                 }}
               >
-                {element}
+                {props ? cloneElement(element as React.ReactElement, props) : element}
               </div>
             ))}
             <BottomNavigationBar />
@@ -323,7 +342,7 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
             <Sidebar />
             <div className="grid grid-cols-2 gap-2 w-full pr-2">
               <div className="flex rounded-lg my-2 max-h-screen shadow-md bg-background overflow-hidden">
-                {primaryPages.map(({ name, element }) => (
+                {primaryPages.map(({ name, element, props }) => (
                   <div
                     key={name}
                     className="w-full"
@@ -331,7 +350,7 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
                       display: currentPrimaryPage === name ? 'block' : 'none'
                     }}
                   >
-                    {element}
+                    {props ? cloneElement(element as React.ReactElement, props) : element}
                   </div>
                 ))}
               </div>

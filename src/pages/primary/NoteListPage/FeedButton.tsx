@@ -71,11 +71,6 @@ const FeedSwitcherTrigger = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivEle
       if (feedInfo.feedType === 'relays') {
         return activeRelaySet?.name ?? activeRelaySet?.id
       }
-      if (feedInfo.feedType === 'temporary') {
-        return relayUrls.length === 1
-          ? simplifyUrl(relayUrls[0])
-          : (activeRelaySet?.name ?? t('Temporary'))
-      }
     }, [feedInfo, activeRelaySet])
 
     return (

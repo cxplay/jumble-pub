@@ -22,11 +22,7 @@ export default function RelaysFeed() {
     return null
   }
 
-  if (
-    feedInfo.feedType !== 'relay' &&
-    feedInfo.feedType !== 'relays' &&
-    feedInfo.feedType !== 'temporary'
-  ) {
+  if (feedInfo.feedType !== 'relay' && feedInfo.feedType !== 'relays') {
     return null
   }
 

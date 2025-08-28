@@ -104,7 +104,7 @@ export type TAccount = {
 
 export type TAccountPointer = Pick<TAccount, 'pubkey' | 'signerType'>
 
-export type TFeedType = 'following' | 'relays' | 'relay' | 'temporary' | 'bookmarks'
+export type TFeedType = 'following' | 'relays' | 'relay' | 'bookmarks'
 export type TFeedInfo = { feedType: TFeedType; id?: string }
 
 export type TLanguage = 'en' | 'zh' | 'pl'

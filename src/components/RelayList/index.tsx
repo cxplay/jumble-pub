@@ -1,5 +1,4 @@
-import { toRelay } from '@/lib/link'
-import { useSecondaryPage } from '@/PageManager'
+import { usePrimaryPage } from '@/PageManager'
 import relayInfoService from '@/services/relay-info.service'
 import { TNip66RelayInfo } from '@/types'
 import { useEffect, useRef, useState } from 'react'
@@ -9,7 +8,7 @@ import SearchInput from '../SearchInput'
 
 export default function RelayList() {
   const { t } = useTranslation()
-  const { push } = useSecondaryPage()
+  const { navigate } = usePrimaryPage()
   const [loading, setLoading] = useState(true)
   const [relays, setRelays] = useState<TNip66RelayInfo[]>([])
   const [showCount, setShowCount] = useState(20)
@@ -78,7 +77,7 @@ export default function RelayList() {
           className="clickable p-4 border-b"
           onClick={(e) => {
             e.stopPropagation()
-            push(toRelay(relay.url))
+            navigate('relay', { url: relay.url })
           }}
         />
       ))}
