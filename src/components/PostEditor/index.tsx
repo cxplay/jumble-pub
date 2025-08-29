@@ -24,12 +24,14 @@ export default function PostEditor({
   defaultContent = '',
   parentEvent,
   open,
-  setOpen
+  setOpen,
+  openFrom
 }: {
   defaultContent?: string
   parentEvent?: Event
   open: boolean
   setOpen: Dispatch<boolean>
+  openFrom?: string[]
 }) {
   const { isSmallScreen } = useScreenSize()
 
@@ -39,6 +41,7 @@ export default function PostEditor({
         defaultContent={defaultContent}
         parentEvent={parentEvent}
         close={() => setOpen(false)}
+        openFrom={openFrom}
       />
     )
   }, [])

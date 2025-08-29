@@ -371,6 +371,7 @@ export default {
     'Clear All': 'Limpiar todo',
     'Remember my choice': 'Recordar mi elección',
     Apply: 'Aplicar',
-    Reset: 'Restablecer'
+    Reset: 'Restablecer',
+    'Share something on this Relay': 'Comparte algo en este relé'
   }
 }

@@ -369,6 +369,7 @@ export default {
     'Clear All': 'Limpar tudo',
     'Remember my choice': 'Lembrar minha escolha',
     Apply: 'Aplicar',
-    Reset: 'Redefinir'
+    Reset: 'Redefinir',
+    'Share something on this Relay': 'Compartilhe algo neste Relay'
   }
 }

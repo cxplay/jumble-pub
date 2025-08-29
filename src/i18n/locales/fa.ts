@@ -366,6 +366,7 @@ export default {
     'Clear All': 'پاک کردن همه',
     'Remember my choice': 'انتخاب من را به خاطر بسپار',
     Apply: 'اعمال',
-    Reset: 'بازنشانی'
+    Reset: 'بازنشانی',
+    'Share something on this Relay': 'در این رله چیزی به اشتراک بگذارید'
   }
 }

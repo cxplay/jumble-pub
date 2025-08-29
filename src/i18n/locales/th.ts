@@ -364,6 +364,7 @@ export default {
     'Clear All': 'ล้างทั้งหมด',
     'Remember my choice': 'จำการเลือกของฉัน',
     Apply: 'ใช้',
-    Reset: 'รีเซ็ต'
+    Reset: 'รีเซ็ต',
+    'Share something on this Relay': 'แชร์บางอย่างบนรีเลย์นี้'
   }
 }

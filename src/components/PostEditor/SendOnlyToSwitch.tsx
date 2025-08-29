@@ -13,17 +13,24 @@ import { useTranslation } from 'react-i18next'
 export default function SendOnlyToSwitch({
   parentEvent,
   specifiedRelayUrls,
-  setSpecifiedRelayUrls
+  setSpecifiedRelayUrls,
+  openFrom
 }: {
   parentEvent?: Event
   specifiedRelayUrls?: string[]
   setSpecifiedRelayUrls: Dispatch<SetStateAction<string[] | undefined>>
+  openFrom?: string[]
 }) {
   const { t } = useTranslation()
   const { currentRelayUrls } = useCurrentRelays()
   const [urls, setUrls] = useState<string[]>([])
 
   useEffect(() => {
+    if (openFrom?.length) {
+      setUrls(openFrom)
+      setSpecifiedRelayUrls(openFrom)
+      return
+    }
     if (!parentEvent) {
       setUrls(currentRelayUrls)
       return
@@ -36,7 +43,7 @@ export default function SendOnlyToSwitch({
     } else {
       setUrls(currentRelayUrls)
     }
-  }, [parentEvent, currentRelayUrls])
+  }, [parentEvent, currentRelayUrls, openFrom])
 
   if (!urls.length) return null
 

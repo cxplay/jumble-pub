@@ -1,8 +1,11 @@
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import { useFetchRelayInfo } from '@/hooks'
 import { normalizeHttpUrl } from '@/lib/url'
 import { GitBranch, Mail, SquareCode } from 'lucide-react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import PostEditor from '../PostEditor'
 import RelayBadges from '../RelayBadges'
 import RelayIcon from '../RelayIcon'
 import UserAvatar from '../UserAvatar'
@@ -11,6 +14,8 @@ import Username from '../Username'
 export default function RelayInfo({ url }: { url: string }) {
   const { t } = useTranslation()
   const { relayInfo, isFetching } = useFetchRelayInfo(url)
+  const [open, setOpen] = useState(false)
+
   if (isFetching || !relayInfo) {
     return null
   }
@@ -38,29 +43,7 @@ export default function RelayInfo({ url }: { url: string }) {
           </div>
         )}
       </div>
-      {!!relayInfo.supported_nips?.length && (
-        <div className="space-y-2">
-          <div className="text-sm font-semibold text-muted-foreground">{t('Supported NIPs')}</div>
-          <div className="flex flex-wrap gap-2">
-            {relayInfo.supported_nips
-              .sort((a, b) => a - b)
-              .map((nip) => (
-                <Badge
-                  key={nip}
-                  variant="secondary"
-                  className="clickable"
-                  onClick={() =>
-                    window.open(
-                      `https://github.com/nostr-protocol/nips/blob/master/${formatNip(nip)}.md`
-                    )
-                  }
-                >
-                  {formatNip(nip)}
-                </Badge>
-              ))}
-          </div>
-        </div>
-      )}
+
       {relayInfo.payments_url && (
         <div className="space-y-2">
           <div className="text-sm font-semibold text-muted-foreground">{t('Payment page')}:</div>
@@ -111,6 +94,10 @@ export default function RelayInfo({ url }: { url: string }) {
           </div>
         )}
       </div>
+      <Button variant="secondary" className="w-full" onClick={() => setOpen(true)}>
+        {t('Share something on this Relay')}
+      </Button>
+      <PostEditor open={open} setOpen={setOpen} openFrom={[relayInfo.url]} />
     </div>
   )
 }
@@ -118,11 +105,4 @@ export default function RelayInfo({ url }: { url: string }) {
 function formatSoftware(software: string) {
   const parts = software.split('/')
   return parts[parts.length - 1]
-}
-
-function formatNip(nip: number) {
-  if (nip < 10) {
-    return `0${nip}`
-  }
-  return `${nip}`
 }

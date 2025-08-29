@@ -371,6 +371,7 @@ export default {
     'Clear All': 'Tout effacer',
     'Remember my choice': 'Se souvenir de mon choix',
     Apply: 'Appliquer',
-    Reset: 'Réinitialiser'
+    Reset: 'Réinitialiser',
+    'Share something on this Relay': 'Partager quelque chose sur ce relais'
   }
 }

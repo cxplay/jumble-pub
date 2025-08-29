@@ -370,6 +370,7 @@ export default {
     'Clear All': 'Wyczyść wszystko',
     'Remember my choice': 'Zapamiętaj mój wybór',
     Apply: 'Zastosuj',
-    Reset: 'Resetuj'
+    Reset: 'Resetuj',
+    'Share something on this Relay': 'Udostępnij coś na tym przekaźniku'
   }
 }

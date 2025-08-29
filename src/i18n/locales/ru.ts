@@ -370,6 +370,7 @@ export default {
     'Clear All': 'Очистить все',
     'Remember my choice': 'Запомнить мой выбор',
     Apply: 'Применить',
-    Reset: 'Сбросить'
+    Reset: 'Сбросить',
+    'Share something on this Relay': 'Поделиться чем-то на этом релее'
   }
 }

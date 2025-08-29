@@ -366,6 +366,7 @@ export default {
     'Clear All': 'Clear All',
     'Remember my choice': 'Remember my choice',
     Apply: 'Apply',
-    Reset: 'Reset'
+    Reset: 'Reset',
+    'Share something on this Relay': 'Share something on this Relay'
   }
 }

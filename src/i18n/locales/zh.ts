@@ -362,6 +362,7 @@ export default {
     'Clear All': '清空',
     'Remember my choice': '记住我的选择',
     Apply: '应用',
-    Reset: '重置'
+    Reset: '重置',
+    'Share something on this Relay': '在此服务器上分享点什么'
   }
 }

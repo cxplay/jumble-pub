@@ -27,11 +27,13 @@ import Uploader from './Uploader'
 export default function PostContent({
   defaultContent = '',
   parentEvent,
-  close
+  close,
+  openFrom
 }: {
   defaultContent?: string
   parentEvent?: Event
   close: () => void
+  openFrom?: string[]
 }) {
   const { t } = useTranslation()
   const { pubkey, publish, checkLogin } = useNostr()
@@ -233,6 +235,7 @@ export default function PostContent({
           parentEvent={parentEvent}
           specifiedRelayUrls={specifiedRelayUrls}
           setSpecifiedRelayUrls={setSpecifiedRelayUrls}
+          openFrom={openFrom}
         />
       )}
       <div className="flex items-center justify-between">

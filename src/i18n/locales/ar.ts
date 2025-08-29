@@ -365,6 +365,7 @@ export default {
     'Clear All': 'مسح الكل',
     'Remember my choice': 'تذكر اختياري',
     Apply: 'تطبيق',
-    Reset: 'إعادة تعيين'
+    Reset: 'إعادة تعيين',
+    'Share something on this Relay': 'شارك شيئاً على هذا الريلاي'
   }
 }
