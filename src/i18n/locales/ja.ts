@@ -317,18 +317,17 @@ export default {
     'Refresh results': '結果を更新',
     Poll: '投票',
     Media: 'メディア',
-    'Broadcast to ...': 'ブロードキャスト先...',
-    'Successfully broadcasted to your write relays': '書きリレイへのブロードキャストが成功しました',
-    'Failed to broadcast to your write relays: {{error}}':
-      '書きリレイへのブロードキャストが失敗しました：{{error}}',
-    'Successfully broadcasted to relay set: {{name}}':
-      'リレイセットへのブロードキャストが成功しました：{{name}}',
-    'Failed to broadcast to relay set: {{name}}. Error: {{error}}':
-      'リレイセットへのブロードキャストが失敗しました：{{name}}。エラー：{{error}}',
-    'Successfully broadcasted to relay: {{url}}':
-      'リレイへのブロードキャストが成功しました：{{url}}',
-    'Failed to broadcast to relay: {{url}}. Error: {{error}}':
-      'リレイへのブロードキャストが失敗しました：{{url}}。エラー：{{error}}',
+    'Republish to ...': '再公開先 ...',
+    'Successfully republish to your write relays': '書きリレイへの再公開に成功しました',
+    'Failed to republish to your write relays: {{error}}':
+      '書きリレイへの再公開に失敗しました: {{error}}',
+    'Successfully republish to relay set: {{name}}':
+      'リレイセット {{name}} への再公開に成功しました',
+    'Failed to republish to relay set: {{name}}. Error: {{error}}':
+      'リレイセット {{name}} への再公開に失敗しました。エラー: {{error}}',
+    'Successfully republish to relay: {{url}}': 'リレイ {{url}} への再公開に成功しました',
+    'Failed to republish to relay: {{url}}. Error: {{error}}':
+      'リレイ {{url}} への再公開に失敗しました。エラー: {{error}}',
     'Write relays': '書きリレイ',
     'No more reactions': 'これ以上の反応はありません',
     'No reactions yet': 'まだ反応はありません',

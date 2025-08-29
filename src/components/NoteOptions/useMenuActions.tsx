@@ -6,7 +6,7 @@ import { useFavoriteRelays } from '@/providers/FavoriteRelaysProvider'
 import { useMuteList } from '@/providers/MuteListProvider'
 import { useNostr } from '@/providers/NostrProvider'
 import client from '@/services/client.service'
-import { Bell, BellOff, Code, Copy, Globe, Link, Mail, Server } from 'lucide-react'
+import { Bell, BellOff, Code, Copy, Link, Mail, SatelliteDish, Server } from 'lucide-react'
 import { Event } from 'nostr-tools'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -67,11 +67,11 @@ export function useMenuActions({
             await client
               .publishEvent(relays, event)
               .then(() => {
-                toast.success(t('Successfully broadcasted to your write relays'))
+                toast.success(t('Successfully republish to your write relays'))
               })
               .catch((error) => {
                 toast.error(
-                  t('Failed to broadcast to your write relays: {{error}}', { error: error.message })
+                  t('Failed to republish to your write relays: {{error}}', { error: error.message })
                 )
               })
           }
@@ -96,12 +96,12 @@ export function useMenuActions({
                 .publishEvent(set.relayUrls, event)
                 .then(() => {
                   toast.success(
-                    t('Successfully broadcasted to relay set: {{name}}', { name: set.name })
+                    t('Successfully republish to relay set: {{name}}', { name: set.name })
                   )
                 })
                 .catch((error) => {
                   toast.error(
-                    t('Failed to broadcast to relay set: {{name}}. Error: {{error}}', {
+                    t('Failed to republish to relay set: {{name}}. Error: {{error}}', {
                       name: set.name,
                       error: error.message
                     })
@@ -128,12 +128,12 @@ export function useMenuActions({
               .publishEvent([relay], event)
               .then(() => {
                 toast.success(
-                  t('Successfully broadcasted to relay: {{url}}', { url: simplifyUrl(relay) })
+                  t('Successfully republish to relay: {{url}}', { url: simplifyUrl(relay) })
                 )
               })
               .catch((error) => {
                 toast.error(
-                  t('Failed to broadcast to relay: {{url}}. Error: {{error}}', {
+                  t('Failed to republish to relay: {{url}}. Error: {{error}}', {
                     url: simplifyUrl(relay),
                     error: error.message
                   })
@@ -188,10 +188,10 @@ export function useMenuActions({
     const isProtected = isProtectedEvent(event)
     if (!isProtected || event.pubkey === pubkey) {
       actions.push({
-        icon: Globe,
-        label: t('Broadcast to ...'),
+        icon: SatelliteDish,
+        label: t('Republish to ...'),
         onClick: isSmallScreen
-          ? () => showSubMenuActions(broadcastSubMenu, t('Broadcast to ...'))
+          ? () => showSubMenuActions(broadcastSubMenu, t('Republish to ...'))
           : undefined,
         subMenu: isSmallScreen ? undefined : broadcastSubMenu,
         separator: true

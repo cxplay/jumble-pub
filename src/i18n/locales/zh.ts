@@ -315,15 +315,15 @@ export default {
     'Refresh results': '刷新结果',
     Poll: '投票',
     Media: '媒体',
-    'Broadcast to ...': '广播到...',
-    'Successfully broadcasted to your write relays': '成功广播到您的写服务器',
-    'Failed to broadcast to your write relays: {{error}}': '广播到您的写服务器失败：{{error}}',
-    'Successfully broadcasted to relay set: {{name}}': '成功广播到服务器组：{{name}}',
-    'Failed to broadcast to relay set: {{name}}. Error: {{error}}':
-      '广播到服务器组失败：{{name}}。错误：{{error}}',
-    'Successfully broadcasted to relay: {{url}}': '成功广播到服务器：{{url}}',
-    'Failed to broadcast to relay: {{url}}. Error: {{error}}':
-      '广播到服务器失败：{{url}}。错误：{{error}}',
+    'Republish to ...': '重新发布到 ...',
+    'Successfully republish to your write relays': '成功重新发布到您的写服务器',
+    'Failed to republish to your write relays: {{error}}': '重新发布到您的写服务器失败: {{error}}',
+    'Successfully republish to relay set: {{name}}': '成功重新发布到服务器组: {{name}}',
+    'Failed to republish to relay set: {{name}}. Error: {{error}}':
+      '重新发布到服务器组: {{name}} 失败。错误: {{error}}',
+    'Successfully republish to relay: {{url}}': '成功重新发布到服务器: {{url}}',
+    'Failed to republish to relay: {{url}}. Error: {{error}}':
+      '重新发布到服务器: {{url}} 失败。错误: {{error}}',
     'Write relays': '写服务器',
     'No more reactions': '没有更多互动了',
     'No reactions yet': '暂无互动',

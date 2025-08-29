@@ -319,18 +319,18 @@ export default {
     'Refresh results': 'Aggiorna risultati',
     Poll: 'Sondaggio',
     Media: 'media',
-    'Broadcast to ...': 'Trasmetti a...',
-    'Successfully broadcasted to your write relays':
-      'Trasmesso con successo ai tuoi relay di scrittura',
-    'Failed to broadcast to your write relays: {{error}}':
-      'Errore nella trasmissione ai tuoi relay di scrittura: {{error}}',
-    'Successfully broadcasted to relay set: {{name}}':
-      'Trasmesso con successo al set di relay: {{name}}',
-    'Failed to broadcast to relay set: {{name}}. Error: {{error}}':
-      'Errore nella trasmissione al set di relay: {{name}}. Errore: {{error}}',
-    'Successfully broadcasted to relay: {{url}}': 'Trasmesso con successo al relay: {{url}}',
-    'Failed to broadcast to relay: {{url}}. Error: {{error}}':
-      'Errore nella trasmissione al relay: {{url}}. Errore: {{error}}',
+    'Republish to ...': 'Ripubblica a...',
+    'Successfully republish to your write relays':
+      'Ricondivisione riuscita ai tuoi relay di scrittura',
+    'Failed to republish to your write relays: {{error}}':
+      'Impossibile ricondividere ai tuoi relay di scrittura: {{error}}',
+    'Successfully republish to relay set: {{name}}':
+      'Ricondivisione riuscita al set di relay: {{name}}',
+    'Failed to republish to relay set: {{name}}. Error: {{error}}':
+      'Impossibile ricondividere al set di relay: {{name}}. Errore: {{error}}',
+    'Successfully republish to relay: {{url}}': 'Ricondivisione riuscita al relay: {{url}}',
+    'Failed to republish to relay: {{url}}. Error: {{error}}':
+      'Impossibile ricondividere al relay: {{url}}. Errore: {{error}}',
     'Write relays': 'Relay di scrittura',
     'No more reactions': 'Non ci sono più reazioni',
     'No reactions yet': 'Ancora nessuna reazione',

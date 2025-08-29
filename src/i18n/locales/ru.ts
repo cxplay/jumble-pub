@@ -320,17 +320,18 @@ export default {
     'Refresh results': 'Обновить результаты',
     Poll: 'Опрос',
     Media: 'медиа',
-    'Broadcast to ...': 'Транслировать в...',
-    'Successfully broadcasted to your write relays': 'Успешно транслировано в ваши релеи записи',
-    'Failed to broadcast to your write relays: {{error}}':
-      'Ошибка трансляции в ваши релеи записи: {{error}}',
-    'Successfully broadcasted to relay set: {{name}}':
-      'Успешно транслировано в набор релеев: {{name}}',
-    'Failed to broadcast to relay set: {{name}}. Error: {{error}}':
-      'Ошибка трансляции в набор релеев: {{name}}. Ошибка: {{error}}',
-    'Successfully broadcasted to relay: {{url}}': 'Успешно транслировано в релей: {{url}}',
-    'Failed to broadcast to relay: {{url}}. Error: {{error}}':
-      'Ошибка трансляции в релей: {{url}}. Ошибка: {{error}}',
+    'Republish to ...': 'Ретранслировать в ...',
+    'Successfully republish to your write relays':
+      'Успешно ретранслировано в ваши ретрансляторы для записи',
+    'Failed to republish to your write relays: {{error}}':
+      'Не удалось ретранслировать в ваши ретрансляторы для записи: {{error}}',
+    'Successfully republish to relay set: {{name}}':
+      'Успешно ретранслировано в набор ретрансляторов: {{name}}',
+    'Failed to republish to relay set: {{name}}. Error: {{error}}':
+      'Не удалось ретранслировать в набор ретрансляторов: {{name}}. Ошибка: {{error}}',
+    'Successfully republish to relay: {{url}}': 'Успешно ретранслировано в ретранслятор: {{url}}',
+    'Failed to republish to relay: {{url}}. Error: {{error}}':
+      'Не удалось ретранслировать в ретранслятор: {{url}}. Ошибка: {{error}}',
     'Write relays': 'Ретрансляторы для записи',
     'No more reactions': 'Больше нет реакций',
     'No reactions yet': 'Пока нет реакций',

@@ -322,17 +322,19 @@ export default {
     'Refresh results': 'Ergebnisse aktualisieren',
     Poll: 'Umfrage',
     Media: 'Medien',
-    'Broadcast to ...': 'Senden an...',
-    'Successfully broadcasted to your write relays': 'Erfolgreich an Ihre Schreibrelays gesendet',
-    'Failed to broadcast to your write relays: {{error}}':
-      'Fehler beim Senden an Ihre Schreibrelays: {{error}}',
-    'Successfully broadcasted to relay set: {{name}}':
-      'Erfolgreich an Relay-Set gesendet: {{name}}',
-    'Failed to broadcast to relay set: {{name}}. Error: {{error}}':
-      'Fehler beim Senden an Relay-Set: {{name}}. Fehler: {{error}}',
-    'Successfully broadcasted to relay: {{url}}': 'Erfolgreich an Relay gesendet: {{url}}',
-    'Failed to broadcast to relay: {{url}}. Error: {{error}}':
-      'Fehler beim Senden an Relay: {{url}}. Fehler: {{error}}',
+    'Republish to ...': 'Erneut veröffentlichen zu ...',
+    'Successfully republish to your write relays':
+      'Erfolgreich erneut zu deinen Schreib-Relays veröffentlicht',
+    'Failed to republish to your write relays: {{error}}':
+      'Fehler beim erneuten Veröffentlichen zu deinen Schreib-Relays: {{error}}',
+    'Successfully republish to relay set: {{name}}':
+      'Erfolgreich erneut zu Relay-Set veröffentlicht: {{name}}',
+    'Failed to republish to relay set: {{name}}. Error: {{error}}':
+      'Fehler beim erneuten Veröffentlichen zu Relay-Set: {{name}}. Fehler: {{error}}',
+    'Successfully republish to relay: {{url}}':
+      'Erfolgreich erneut zu Relay veröffentlicht: {{url}}',
+    'Failed to republish to relay: {{url}}. Error: {{error}}':
+      'Fehler beim erneuten Veröffentlichen zu Relay: {{url}}. Fehler: {{error}}',
     'Write relays': 'Schreib-Relays',
     'No more reactions': 'Keine weiteren Reaktionen',
     'No reactions yet': 'Noch keine Reaktionen',

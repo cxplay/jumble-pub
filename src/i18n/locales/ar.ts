@@ -315,17 +315,18 @@ export default {
     'Refresh results': 'تحديث النتائج',
     Poll: 'استطلاع',
     Media: 'الوسائط',
-    'Broadcast to ...': 'البث إلى...',
-    'Successfully broadcasted to your write relays': 'تم البث بنجاح إلى مرحلات الكتابة الخاصة بك',
-    'Failed to broadcast to your write relays: {{error}}':
-      'فشل البث إلى مرحلات الكتابة الخاصة بك: {{error}}',
-    'Successfully broadcasted to relay set: {{name}}':
-      'تم البث بنجاح إلى مجموعة المرحلات: {{name}}',
-    'Failed to broadcast to relay set: {{name}}. Error: {{error}}':
-      'فشل البث إلى مجموعة المرحلات: {{name}}. خطأ: {{error}}',
-    'Successfully broadcasted to relay: {{url}}': 'تم البث بنجاح إلى المرحل: {{url}}',
-    'Failed to broadcast to relay: {{url}}. Error: {{error}}':
-      'فشل البث إلى المرحل: {{url}}. خطأ: {{error}}',
+    'Republish to ...': 'إعادة النشر إلى ...',
+    'Successfully republish to your write relays':
+      'تم إعادة النشر بنجاح إلى ريلايات الكتابة الخاصة بك',
+    'Failed to republish to your write relays: {{error}}':
+      'فشل في إعادة النشر إلى ريلايات الكتابة الخاصة بك: {{error}}',
+    'Successfully republish to relay set: {{name}}':
+      'تم إعادة النشر بنجاح إلى مجموعة الريلاي: {{name}}',
+    'Failed to republish to relay set: {{name}}. Error: {{error}}':
+      'فشل في إعادة النشر إلى مجموعة الريلاي: {{name}}. خطأ: {{error}}',
+    'Successfully republish to relay: {{url}}': 'تم إعادة النشر بنجاح إلى الريلاي: {{url}}',
+    'Failed to republish to relay: {{url}}. Error: {{error}}':
+      'فشل في إعادة النشر إلى الريلاي: {{url}}. خطأ: {{error}}',
     'Write relays': 'مرحلات الكتابة',
     'No more reactions': 'لا توجد تفاعلات إضافية',
     'No reactions yet': 'لا توجد تفاعلات بعد',

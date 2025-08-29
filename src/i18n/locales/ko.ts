@@ -317,17 +317,17 @@ export default {
     'Refresh results': '결과 새로 고침',
     Poll: '투표',
     Media: '미디어',
-    'Broadcast to ...': '브로드캐스트 대상...',
-    'Successfully broadcasted to your write relays': '쓰기 릴레이로 브로드캐스트에 성공했습니다',
-    'Failed to broadcast to your write relays: {{error}}':
-      '쓰기 릴레이로 브로드캐스트에 실패했습니다: {{error}}',
-    'Successfully broadcasted to relay set: {{name}}':
-      '릴레이 세트로 브로드캐스트에 성공했습니다: {{name}}',
-    'Failed to broadcast to relay set: {{name}}. Error: {{error}}':
-      '릴레이 세트로 브로드캐스트에 실패했습니다: {{name}}. 오류: {{error}}',
-    'Successfully broadcasted to relay: {{url}}': '릴레이로 브로드캐스트에 성공했습니다: {{url}}',
-    'Failed to broadcast to relay: {{url}}. Error: {{error}}':
-      '릴레이로 브로드캐스트에 실패했습니다: {{url}}. 오류: {{error}}',
+    'Republish to ...': '다시 게시 ...',
+    'Successfully republish to your write relays': '쓰기 릴레이에 성공적으로 다시 게시됨',
+    'Failed to republish to your write relays: {{error}}':
+      '쓰기 릴레이에 다시 게시하지 못함: {{error}}',
+    'Successfully republish to relay set: {{name}}':
+      '릴레이 세트에 성공적으로 다시 게시됨: {{name}}',
+    'Failed to republish to relay set: {{name}}. Error: {{error}}':
+      '릴레이 세트에 다시 게시하지 못함: {{name}}. 오류: {{error}}',
+    'Successfully republish to relay: {{url}}': '릴레이에 성공적으로 다시 게시됨: {{url}}',
+    'Failed to republish to relay: {{url}}. Error: {{error}}':
+      '릴레이에 다시 게시하지 못함: {{url}}. 오류: {{error}}',
     'Write relays': '쓰기 릴레이',
     'No more reactions': '더 이상 반응이 없습니다',
     'No reactions yet': '아직 반응이 없습니다',

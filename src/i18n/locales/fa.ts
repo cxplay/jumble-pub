@@ -317,16 +317,17 @@ export default {
     'Refresh results': 'بارگیری مجدد نتایج',
     Poll: 'نظرسنجی',
     Media: 'رسانه',
-    'Broadcast to ...': 'پخش به...',
-    'Successfully broadcasted to your write relays': 'با موفقیت به رله‌های نوشتن شما پخش شد',
-    'Failed to broadcast to your write relays: {{error}}':
-      'پخش به رله‌های نوشتن شما ناموفق بود: {{error}}',
-    'Successfully broadcasted to relay set: {{name}}': 'با موفقیت به مجموعه رله پخش شد: {{name}}',
-    'Failed to broadcast to relay set: {{name}}. Error: {{error}}':
-      'پخش به مجموعه رله ناموفق بود: {{name}}. خطا: {{error}}',
-    'Successfully broadcasted to relay: {{url}}': 'با موفقیت به رله پخش شد: {{url}}',
-    'Failed to broadcast to relay: {{url}}. Error: {{error}}':
-      'پخش به رله ناموفق بود: {{url}}. خطا: {{error}}',
+    'Republish to ...': 'بازنشر به ...',
+    'Successfully republish to your write relays': 'با موفقیت بازنشر به رله‌های نوشتن شما انجام شد',
+    'Failed to republish to your write relays: {{error}}':
+      'بازنشر به رله‌های نوشتن شما با خطا مواجه شد: {{error}}',
+    'Successfully republish to relay set: {{name}}':
+      'با موفقیت بازنشر به مجموعه رله: {{name}} انجام شد',
+    'Failed to republish to relay set: {{name}}. Error: {{error}}':
+      'بازنشر به مجموعه رله: {{name}} با خطا مواجه شد. خطا: {{error}}',
+    'Successfully republish to relay: {{url}}': 'با موفقیت بازنشر به رله: {{url}} انجام شد',
+    'Failed to republish to relay: {{url}}. Error: {{error}}':
+      'بازنشر به رله: {{url}} با خطا مواجه شد. خطا: {{error}}',
     'Write relays': 'رله‌های نوشتن',
     'No more reactions': 'هیچ واکنشی بیشتر وجود ندارد',
     'No reactions yet': 'هنوز هیچ واکنشی وجود ندارد',

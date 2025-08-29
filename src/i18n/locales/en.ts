@@ -315,18 +315,17 @@ export default {
     'Refresh results': 'Refresh results',
     Poll: 'Poll',
     Media: 'Media',
-    'Broadcast to ...': 'Broadcast to ...',
-    'Successfully broadcasted to your write relays':
-      'Successfully broadcasted to your write relays',
-    'Failed to broadcast to your write relays: {{error}}':
-      'Failed to broadcast to your write relays: {{error}}',
-    'Successfully broadcasted to relay set: {{name}}':
-      'Successfully broadcasted to relay set: {{name}}',
-    'Failed to broadcast to relay set: {{name}}. Error: {{error}}':
-      'Failed to broadcast to relay set: {{name}}. Error: {{error}}',
-    'Successfully broadcasted to relay: {{url}}': 'Successfully broadcasted to relay: {{url}}',
-    'Failed to broadcast to relay: {{url}}. Error: {{error}}':
-      'Failed to broadcast to relay: {{url}}. Error: {{error}}',
+    'Republish to ...': 'Republish to ...',
+    'Successfully republish to your write relays': 'Successfully republish to your write relays',
+    'Failed to republish to your write relays: {{error}}':
+      'Failed to republish to your write relays: {{error}}',
+    'Successfully republish to relay set: {{name}}':
+      'Successfully republish to relay set: {{name}}',
+    'Failed to republish to relay set: {{name}}. Error: {{error}}':
+      'Failed to republish to relay set: {{name}}. Error: {{error}}',
+    'Successfully republish to relay: {{url}}': 'Successfully republish to relay: {{url}}',
+    'Failed to republish to relay: {{url}}. Error: {{error}}':
+      'Failed to republish to relay: {{url}}. Error: {{error}}',
     'Write relays': 'Write relays',
     'No more reactions': 'No more reactions',
     'No reactions yet': 'No reactions yet',

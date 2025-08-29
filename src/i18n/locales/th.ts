@@ -314,17 +314,17 @@ export default {
     'Refresh results': 'รีเฟรชผลลัพธ์',
     Poll: 'โพลล์',
     Media: 'สื่อ',
-    'Broadcast to ...': 'ส่งสัญญาณไปยัง...',
-    'Successfully broadcasted to your write relays': 'ส่งสัญญาณไปยังรีเลย์การเขียนของคุณสำเร็จแล้ว',
-    'Failed to broadcast to your write relays: {{error}}':
-      'การส่งสัญญาณไปยังรีเลย์การเขียนของคุณล้มเหลว: {{error}}',
-    'Successfully broadcasted to relay set: {{name}}':
-      'ส่งสัญญาณไปยังชุดรีเลย์สำเร็จแล้ว: {{name}}',
-    'Failed to broadcast to relay set: {{name}}. Error: {{error}}':
-      'การส่งสัญญาณไปยังชุดรีเลย์ล้มเหลว: {{name}} ข้อผิดพลาด: {{error}}',
-    'Successfully broadcasted to relay: {{url}}': 'ส่งสัญญาณไปยังรีเลย์สำเร็จแล้ว: {{url}}',
-    'Failed to broadcast to relay: {{url}}. Error: {{error}}':
-      'การส่งสัญญาณไปยังรีเลย์ล้มเหลว: {{url}} ข้อผิดพลาด: {{error}}',
+    'Republish to ...': 'เผยแพร่ซ้ำไปยัง ...',
+    'Successfully republish to your write relays': 'Successfully republish to your write relays',
+    'Failed to republish to your write relays: {{error}}':
+      'Failed to republish to your write relays: {{error}}',
+    'Successfully republish to relay set: {{name}}':
+      'Successfully republish to relay set: {{name}}',
+    'Failed to republish to relay set: {{name}}. Error: {{error}}':
+      'Failed to republish to relay set: {{name}}. Error: {{error}}',
+    'Successfully republish to relay: {{url}}': 'Successfully republish to relay: {{url}}',
+    'Failed to republish to relay: {{url}}. Error: {{error}}':
+      'Failed to republish to relay: {{url}}. Error: {{error}}',
     'Write relays': 'รีเลย์การเขียน',
     'No more reactions': 'ไม่มีปฏิกิริยาเพิ่มเติม',
     'No reactions yet': 'ยังไม่มีปฏิกิริยา',

@@ -319,18 +319,19 @@ export default {
     'Refresh results': 'Odśwież wyniki',
     Poll: 'Ankieta',
     Media: 'media',
-    'Broadcast to ...': 'Transmituj do...',
-    'Successfully broadcasted to your write relays':
-      'Pomyślnie transmitowano do twoich przekaźników zapisu',
-    'Failed to broadcast to your write relays: {{error}}':
-      'Nie udało się transmitować do twoich przekaźników zapisu: {{error}}',
-    'Successfully broadcasted to relay set: {{name}}':
-      'Pomyślnie transmitowano do zestawu przekaźników: {{name}}',
-    'Failed to broadcast to relay set: {{name}}. Error: {{error}}':
-      'Nie udało się transmitować do zestawu przekaźników: {{name}}. Błąd: {{error}}',
-    'Successfully broadcasted to relay: {{url}}': 'Pomyślnie transmitowano do przekaźnika: {{url}}',
-    'Failed to broadcast to relay: {{url}}. Error: {{error}}':
-      'Nie udało się transmitować do przekaźnika: {{url}}. Błąd: {{error}}',
+    'Republish to ...': 'Przekaż ponownie do ...',
+    'Successfully republish to your write relays':
+      'Pomyślnie ponownie opublikowano na swoich przekaźnikach zapisu',
+    'Failed to republish to your write relays: {{error}}':
+      'Nie udało się ponownie opublikować na swoich przekaźnikach zapisu: {{error}}',
+    'Successfully republish to relay set: {{name}}':
+      'Pomyślnie ponownie opublikowano do zestawu przekaźników: {{name}}',
+    'Failed to republish to relay set: {{name}}. Error: {{error}}':
+      'Nie udało się ponownie opublikować do zestawu przekaźników: {{name}}. Błąd: {{error}}',
+    'Successfully republish to relay: {{url}}':
+      'Pomyślnie ponownie opublikowano do przekaźnika: {{url}}',
+    'Failed to republish to relay: {{url}}. Error: {{error}}':
+      'Nie udało się ponownie opublikować do przekaźnika: {{url}}. Błąd: {{error}}',
     'Write relays': 'Przekaźniki zapisu',
     'No more reactions': 'Brak kolejnych reakcji',
     'No reactions yet': 'Brak reakcji',

@@ -320,18 +320,17 @@ export default {
     'Refresh results': 'Actualizar resultados',
     Poll: 'Encuesta',
     Media: 'medios',
-    'Broadcast to ...': 'Transmitir a...',
-    'Successfully broadcasted to your write relays':
-      'Transmitido exitosamente a sus relés de escritura',
-    'Failed to broadcast to your write relays: {{error}}':
-      'Error al transmitir a sus relés de escritura: {{error}}',
-    'Successfully broadcasted to relay set: {{name}}':
-      'Transmitido exitosamente al conjunto de relés: {{name}}',
-    'Failed to broadcast to relay set: {{name}}. Error: {{error}}':
-      'Error al transmitir al conjunto de relés: {{name}}. Error: {{error}}',
-    'Successfully broadcasted to relay: {{url}}': 'Transmitido exitosamente al relé: {{url}}',
-    'Failed to broadcast to relay: {{url}}. Error: {{error}}':
-      'Error al transmitir al relé: {{url}}. Error: {{error}}',
+    'Republish to ...': 'Republicar a ...',
+    'Successfully republish to your write relays': 'Republicado con éxito a tus relés de escritura',
+    'Failed to republish to your write relays: {{error}}':
+      'Error al republicar a tus relés de escritura: {{error}}',
+    'Successfully republish to relay set: {{name}}':
+      'Republicado con éxito al conjunto de relés: {{name}}',
+    'Failed to republish to relay set: {{name}}. Error: {{error}}':
+      'Error al republicar al conjunto de relés: {{name}}. Error: {{error}}',
+    'Successfully republish to relay: {{url}}': 'Republicado con éxito al relé: {{url}}',
+    'Failed to republish to relay: {{url}}. Error: {{error}}':
+      'Error al republicar al relé: {{url}}. Error: {{error}}',
     'Write relays': 'Relés de escritura',
     'No more reactions': 'No hay más reacciones',
     'No reactions yet': 'Sin reacciones aún',
