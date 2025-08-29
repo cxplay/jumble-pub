@@ -9,7 +9,7 @@ import { useKindFilter } from '@/providers/KindFilterProvider'
 import { useScreenSize } from '@/providers/ScreenSizeProvider'
 import { ListFilter } from 'lucide-react'
 import { kinds } from 'nostr-tools'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 const KIND_FILTER_OPTIONS = [
@@ -32,10 +32,19 @@ export default function KindFilter({
 }) {
   const { t } = useTranslation()
   const { isSmallScreen } = useScreenSize()
+  const { showKinds: savedShowKinds } = useKindFilter()
   const [open, setOpen] = useState(false)
   const { updateShowKinds } = useKindFilter()
   const [temporaryShowKinds, setTemporaryShowKinds] = useState(showKinds)
   const [isPersistent, setIsPersistent] = useState(false)
+  const isDifferentFromSaved = useMemo(
+    () => !isSameKindFilter(showKinds, savedShowKinds),
+    [showKinds, savedShowKinds]
+  )
+  const isTemporaryDifferentFromSaved = useMemo(
+    () => !isSameKindFilter(temporaryShowKinds, savedShowKinds),
+    [temporaryShowKinds, savedShowKinds]
+  )
 
   useEffect(() => {
     setTemporaryShowKinds(showKinds)
@@ -49,10 +58,7 @@ export default function KindFilter({
     }
 
     const newShowKinds = [...temporaryShowKinds].sort()
-    if (
-      newShowKinds.length !== showKinds.length ||
-      newShowKinds.some((k, i) => k !== showKinds[i])
-    ) {
+    if (!isSameKindFilter(newShowKinds, showKinds)) {
       onShowKindsChange(newShowKinds)
     }
 
@@ -68,6 +74,7 @@ export default function KindFilter({
     <Button
       variant="ghost"
       size="titlebar-icon"
+      className="relative"
       onClick={() => {
         if (isSmallScreen) {
           setOpen(true)
@@ -75,6 +82,9 @@ export default function KindFilter({
       }}
     >
       <ListFilter />
+      {isDifferentFromSaved && (
+        <div className="absolute size-2 rounded-full bg-primary right-2 top-2.5 ring-2 ring-background" />
+      )}
     </Button>
   )
 
@@ -108,13 +118,12 @@ export default function KindFilter({
         })}
       </div>
 
-      <div className="flex gap-2 mt-4">
+      <div className="grid grid-cols-3 gap-2 mt-4">
         <Button
           variant="secondary"
           onClick={() => {
             setTemporaryShowKinds(SUPPORTED_KINDS)
           }}
-          className="flex-1"
         >
           {t('Select All')}
         </Button>
@@ -123,9 +132,15 @@ export default function KindFilter({
           onClick={() => {
             setTemporaryShowKinds([])
           }}
-          className="flex-1"
         >
           {t('Clear All')}
+        </Button>
+        <Button
+          variant="secondary"
+          onClick={() => setTemporaryShowKinds(savedShowKinds)}
+          disabled={!isTemporaryDifferentFromSaved}
+        >
+          {t('Reset')}
         </Button>
       </div>
 
@@ -171,4 +186,13 @@ export default function KindFilter({
       </PopoverContent>
     </Popover>
   )
+}
+
+function isSameKindFilter(a: number[], b: number[]) {
+  if (a.length !== b.length) {
+    return false
+  }
+  const sortedA = [...a].sort()
+  const sortedB = [...b].sort()
+  return sortedA.every((value, index) => value === sortedB[index])
 }

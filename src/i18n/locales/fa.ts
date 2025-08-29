@@ -365,6 +365,7 @@ export default {
     'Select All': 'انتخاب همه',
     'Clear All': 'پاک کردن همه',
     'Remember my choice': 'انتخاب من را به خاطر بسپار',
-    Apply: 'اعمال'
+    Apply: 'اعمال',
+    Reset: 'بازنشانی'
   }
 }

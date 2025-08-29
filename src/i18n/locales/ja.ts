@@ -367,6 +367,7 @@ export default {
     'Select All': 'すべて選択',
     'Clear All': 'すべてクリア',
     'Remember my choice': '選択を記憶',
-    Apply: '適用'
+    Apply: '適用',
+    Reset: 'リセット'
   }
 }

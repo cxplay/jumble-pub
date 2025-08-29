@@ -370,6 +370,7 @@ export default {
     'Select All': 'Tout sélectionner',
     'Clear All': 'Tout effacer',
     'Remember my choice': 'Se souvenir de mon choix',
-    Apply: 'Appliquer'
+    Apply: 'Appliquer',
+    Reset: 'Réinitialiser'
   }
 }

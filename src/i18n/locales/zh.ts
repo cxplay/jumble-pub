@@ -361,6 +361,7 @@ export default {
     'Select All': '全选',
     'Clear All': '清空',
     'Remember my choice': '记住我的选择',
-    Apply: '应用'
+    Apply: '应用',
+    Reset: '重置'
   }
 }

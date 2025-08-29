@@ -364,6 +364,7 @@ export default {
     'Select All': 'تحديد الكل',
     'Clear All': 'مسح الكل',
     'Remember my choice': 'تذكر اختياري',
-    Apply: 'تطبيق'
+    Apply: 'تطبيق',
+    Reset: 'إعادة تعيين'
   }
 }

@@ -371,6 +371,7 @@ export default {
     'Select All': 'Alle auswählen',
     'Clear All': 'Alle löschen',
     'Remember my choice': 'Meine Auswahl merken',
-    Apply: 'Anwenden'
+    Apply: 'Anwenden',
+    Reset: 'Zurücksetzen'
   }
 }

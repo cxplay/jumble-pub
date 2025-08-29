@@ -366,6 +366,7 @@ export default {
     'Select All': '모두 선택',
     'Clear All': '모두 지우기',
     'Remember my choice': '내 선택 기억하기',
-    Apply: '적용'
+    Apply: '적용',
+    Reset: '초기화'
   }
 }

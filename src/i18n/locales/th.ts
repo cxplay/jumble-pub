@@ -363,6 +363,7 @@ export default {
     'Select All': 'เลือกทั้งหมด',
     'Clear All': 'ล้างทั้งหมด',
     'Remember my choice': 'จำการเลือกของฉัน',
-    Apply: 'ใช้'
+    Apply: 'ใช้',
+    Reset: 'รีเซ็ต'
   }
 }

@@ -369,6 +369,7 @@ export default {
     'Select All': 'Выбрать все',
     'Clear All': 'Очистить все',
     'Remember my choice': 'Запомнить мой выбор',
-    Apply: 'Применить'
+    Apply: 'Применить',
+    Reset: 'Сбросить'
   }
 }
