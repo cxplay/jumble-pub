@@ -3,7 +3,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Switch } from '@/components/ui/switch'
 import { isProtectedEvent } from '@/lib/event'
 import { simplifyUrl } from '@/lib/url'
-import { useFeed } from '@/providers/FeedProvider'
+import { useCurrentRelays } from '@/providers/CurrentRelaysProvider'
 import client from '@/services/client.service'
 import { Info } from 'lucide-react'
 import { Event } from 'nostr-tools'
@@ -20,12 +20,12 @@ export default function SendOnlyToSwitch({
   setSpecifiedRelayUrls: Dispatch<SetStateAction<string[] | undefined>>
 }) {
   const { t } = useTranslation()
-  const { relayUrls } = useFeed()
+  const { currentRelayUrls } = useCurrentRelays()
   const [urls, setUrls] = useState<string[]>([])
 
   useEffect(() => {
     if (!parentEvent) {
-      setUrls(relayUrls)
+      setUrls(currentRelayUrls)
       return
     }
     const isProtected = isProtectedEvent(parentEvent)
@@ -34,9 +34,9 @@ export default function SendOnlyToSwitch({
       setSpecifiedRelayUrls(seenOn)
       setUrls(seenOn)
     } else {
-      setUrls(relayUrls)
+      setUrls(currentRelayUrls)
     }
-  }, [parentEvent, relayUrls])
+  }, [parentEvent, currentRelayUrls])
 
   if (!urls.length) return null
 

@@ -2,6 +2,7 @@ import Sidebar from '@/components/Sidebar'
 import { cn } from '@/lib/utils'
 import NoteListPage from '@/pages/primary/NoteListPage'
 import HomePage from '@/pages/secondary/HomePage'
+import { CurrentRelaysProvider } from '@/providers/CurrentRelaysProvider'
 import { TPageRef } from '@/types'
 import {
   cloneElement,
@@ -291,32 +292,34 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
               : 0
           }}
         >
-          <NotificationProvider>
-            {!!secondaryStack.length &&
-              secondaryStack.map((item, index) => (
+          <CurrentRelaysProvider>
+            <NotificationProvider>
+              {!!secondaryStack.length &&
+                secondaryStack.map((item, index) => (
+                  <div
+                    key={item.index}
+                    style={{
+                      display: index === secondaryStack.length - 1 ? 'block' : 'none'
+                    }}
+                  >
+                    {item.component}
+                  </div>
+                ))}
+              {primaryPages.map(({ name, element, props }) => (
                 <div
-                  key={item.index}
+                  key={name}
                   style={{
-                    display: index === secondaryStack.length - 1 ? 'block' : 'none'
+                    display:
+                      secondaryStack.length === 0 && currentPrimaryPage === name ? 'block' : 'none'
                   }}
                 >
-                  {item.component}
+                  {props ? cloneElement(element as React.ReactElement, props) : element}
                 </div>
               ))}
-            {primaryPages.map(({ name, element, props }) => (
-              <div
-                key={name}
-                style={{
-                  display:
-                    secondaryStack.length === 0 && currentPrimaryPage === name ? 'block' : 'none'
-                }}
-              >
-                {props ? cloneElement(element as React.ReactElement, props) : element}
-              </div>
-            ))}
-            <BottomNavigationBar />
-            <TooManyRelaysAlertDialog />
-          </NotificationProvider>
+              <BottomNavigationBar />
+              <TooManyRelaysAlertDialog />
+            </NotificationProvider>
+          </CurrentRelaysProvider>
         </SecondaryPageContext.Provider>
       </PrimaryPageContext.Provider>
     )
@@ -337,45 +340,47 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
           currentIndex: secondaryStack.length ? secondaryStack[secondaryStack.length - 1].index : 0
         }}
       >
-        <NotificationProvider>
-          <div className="flex h-screen overflow-hidden bg-surface-background">
-            <Sidebar />
-            <div className="grid grid-cols-2 gap-2 w-full pr-2">
-              <div className="flex rounded-lg my-2 max-h-screen shadow-md bg-background overflow-hidden">
-                {primaryPages.map(({ name, element, props }) => (
+        <CurrentRelaysProvider>
+          <NotificationProvider>
+            <div className="flex h-screen overflow-hidden bg-surface-background">
+              <Sidebar />
+              <div className="grid grid-cols-2 gap-2 w-full pr-2">
+                <div className="flex rounded-lg my-2 max-h-screen shadow-md bg-background overflow-hidden">
+                  {primaryPages.map(({ name, element, props }) => (
+                    <div
+                      key={name}
+                      className="w-full"
+                      style={{
+                        display: currentPrimaryPage === name ? 'block' : 'none'
+                      }}
+                    >
+                      {props ? cloneElement(element as React.ReactElement, props) : element}
+                    </div>
+                  ))}
+                </div>
+                <div className="flex rounded-lg my-2 max-h-screen shadow-md bg-background overflow-hidden">
+                  {secondaryStack.map((item, index) => (
+                    <div
+                      key={item.index}
+                      className="w-full"
+                      style={{ display: index === secondaryStack.length - 1 ? 'block' : 'none' }}
+                    >
+                      {item.component}
+                    </div>
+                  ))}
                   <div
-                    key={name}
+                    key="home"
                     className="w-full"
-                    style={{
-                      display: currentPrimaryPage === name ? 'block' : 'none'
-                    }}
+                    style={{ display: secondaryStack.length === 0 ? 'block' : 'none' }}
                   >
-                    {props ? cloneElement(element as React.ReactElement, props) : element}
+                    <HomePage />
                   </div>
-                ))}
-              </div>
-              <div className="flex rounded-lg my-2 max-h-screen shadow-md bg-background overflow-hidden">
-                {secondaryStack.map((item, index) => (
-                  <div
-                    key={item.index}
-                    className="w-full"
-                    style={{ display: index === secondaryStack.length - 1 ? 'block' : 'none' }}
-                  >
-                    {item.component}
-                  </div>
-                ))}
-                <div
-                  key="home"
-                  className="w-full"
-                  style={{ display: secondaryStack.length === 0 ? 'block' : 'none' }}
-                >
-                  <HomePage />
                 </div>
               </div>
             </div>
-          </div>
-          <TooManyRelaysAlertDialog />
-        </NotificationProvider>
+            <TooManyRelaysAlertDialog />
+          </NotificationProvider>
+        </CurrentRelaysProvider>
       </SecondaryPageContext.Provider>
     </PrimaryPageContext.Provider>
   )
