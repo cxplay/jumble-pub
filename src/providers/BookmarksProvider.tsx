@@ -1,8 +1,9 @@
-import { createBookmarkDraftEvent } from '@/lib/draft-event'
+import { buildATag, buildETag, createBookmarkDraftEvent } from '@/lib/draft-event'
+import { getReplaceableCoordinateFromEvent, isReplaceableEvent } from '@/lib/event'
 import client from '@/services/client.service'
+import { Event } from 'nostr-tools'
 import { createContext, useContext } from 'react'
 import { useNostr } from './NostrProvider'
-import { Event } from 'nostr-tools'
 
 type TBookmarksContext = {
   addBookmark: (event: Event) => Promise<void>
@@ -27,11 +28,21 @@ export function BookmarksProvider({ children }: { children: React.ReactNode }) {
 
     const bookmarkListEvent = await client.fetchBookmarkListEvent(accountPubkey)
     const currentTags = bookmarkListEvent?.tags || []
+    const isReplaceable = isReplaceableEvent(event.kind)
+    const eventKey = isReplaceable ? getReplaceableCoordinateFromEvent(event) : event.id
 
-    if (currentTags.some((tag) => tag[0] === 'e' && tag[1] === event.id)) return
+    if (
+      currentTags.some((tag) =>
+        isReplaceable
+          ? tag[0] === 'a' && tag[1] === eventKey
+          : tag[0] === 'e' && tag[1] === eventKey
+      )
+    ) {
+      return
+    }
 
     const newBookmarkDraftEvent = createBookmarkDraftEvent(
-      [...currentTags, ['e', event.id, client.getEventHint(event.id), '', event.pubkey]],
+      [...currentTags, isReplaceable ? buildATag(event) : buildETag(event.id, event.pubkey)],
       bookmarkListEvent?.content
     )
     const newBookmarkEvent = await publish(newBookmarkDraftEvent)
@@ -44,7 +55,12 @@ export function BookmarksProvider({ children }: { children: React.ReactNode }) {
     const bookmarkListEvent = await client.fetchBookmarkListEvent(accountPubkey)
     if (!bookmarkListEvent) return
 
-    const newTags = bookmarkListEvent.tags.filter((tag) => !(tag[0] === 'e' && tag[1] === event.id))
+    const isReplaceable = isReplaceableEvent(event.kind)
+    const eventKey = isReplaceable ? getReplaceableCoordinateFromEvent(event) : event.id
+
+    const newTags = bookmarkListEvent.tags.filter((tag) =>
+      isReplaceable ? tag[0] !== 'a' || tag[1] !== eventKey : tag[0] !== 'e' || tag[1] !== eventKey
+    )
     if (newTags.length === bookmarkListEvent.tags.length) return
 
     const newBookmarkDraftEvent = createBookmarkDraftEvent(newTags, bookmarkListEvent.content)

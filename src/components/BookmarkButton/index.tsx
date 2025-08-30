@@ -1,3 +1,4 @@
+import { getReplaceableCoordinateFromEvent, isReplaceableEvent } from '@/lib/event'
 import { useBookmarks } from '@/providers/BookmarksProvider'
 import { useNostr } from '@/providers/NostrProvider'
 import { BookmarkIcon, Loader } from 'lucide-react'
@@ -11,10 +12,14 @@ export default function BookmarkButton({ event }: { event: Event }) {
   const { pubkey: accountPubkey, bookmarkListEvent, checkLogin } = useNostr()
   const { addBookmark, removeBookmark } = useBookmarks()
   const [updating, setUpdating] = useState(false)
-  const isBookmarked = useMemo(
-    () => bookmarkListEvent?.tags.some((tag) => tag[0] === 'e' && tag[1] === event.id),
-    [bookmarkListEvent, event]
-  )
+  const isBookmarked = useMemo(() => {
+    const isReplaceable = isReplaceableEvent(event.kind)
+    const eventKey = isReplaceable ? getReplaceableCoordinateFromEvent(event) : event.id
+
+    return bookmarkListEvent?.tags.some((tag) =>
+      isReplaceable ? tag[0] === 'a' && tag[1] === eventKey : tag[0] === 'e' && tag[1] === eventKey
+    )
+  }, [bookmarkListEvent, event])
 
   if (!accountPubkey) return null
 

@@ -599,7 +599,7 @@ function buildDTag(identifier: string) {
   return ['d', identifier]
 }
 
-function buildETag(
+export function buildETag(
   eventHexId: string,
   pubkey: string = '',
   hint: string = '',
