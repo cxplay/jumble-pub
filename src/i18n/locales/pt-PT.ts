@@ -371,6 +371,9 @@ export default {
     'Remember my choice': 'Lembrar a minha escolha',
     Apply: 'Aplicar',
     Reset: 'Repor',
-    'Share something on this Relay': 'Partilhe algo neste Relay'
+    'Share something on this Relay': 'Partilhe algo neste Relay',
+    'Try deleting this note': 'Tente eliminar esta nota',
+    'Deletion request sent to {{count}} relays':
+      'Pedido de eliminação enviado para {{count}} relays'
   }
 }

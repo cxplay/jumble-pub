@@ -4,6 +4,7 @@ import './index.css'
 import { Toaster } from '@/components/ui/sonner'
 import { BookmarksProvider } from '@/providers/BookmarksProvider'
 import { ContentPolicyProvider } from '@/providers/ContentPolicyProvider'
+import { DeletedEventProvider } from '@/providers/DeletedEventProvider'
 import { FavoriteRelaysProvider } from '@/providers/FavoriteRelaysProvider'
 import { FeedProvider } from '@/providers/FeedProvider'
 import { FollowListProvider } from '@/providers/FollowListProvider'
@@ -24,32 +25,34 @@ export default function App(): JSX.Element {
     <ThemeProvider>
       <ContentPolicyProvider>
         <ScreenSizeProvider>
-          <NostrProvider>
-            <ZapProvider>
-              <TranslationServiceProvider>
-                <FavoriteRelaysProvider>
-                  <FollowListProvider>
-                    <MuteListProvider>
-                      <UserTrustProvider>
-                        <BookmarksProvider>
-                          <FeedProvider>
-                            <ReplyProvider>
-                              <MediaUploadServiceProvider>
-                                <KindFilterProvider>
-                                  <PageManager />
-                                  <Toaster />
-                                </KindFilterProvider>
-                              </MediaUploadServiceProvider>
-                            </ReplyProvider>
-                          </FeedProvider>
-                        </BookmarksProvider>
-                      </UserTrustProvider>
-                    </MuteListProvider>
-                  </FollowListProvider>
-                </FavoriteRelaysProvider>
-              </TranslationServiceProvider>
-            </ZapProvider>
-          </NostrProvider>
+          <DeletedEventProvider>
+            <NostrProvider>
+              <ZapProvider>
+                <TranslationServiceProvider>
+                  <FavoriteRelaysProvider>
+                    <FollowListProvider>
+                      <MuteListProvider>
+                        <UserTrustProvider>
+                          <BookmarksProvider>
+                            <FeedProvider>
+                              <ReplyProvider>
+                                <MediaUploadServiceProvider>
+                                  <KindFilterProvider>
+                                    <PageManager />
+                                    <Toaster />
+                                  </KindFilterProvider>
+                                </MediaUploadServiceProvider>
+                              </ReplyProvider>
+                            </FeedProvider>
+                          </BookmarksProvider>
+                        </UserTrustProvider>
+                      </MuteListProvider>
+                    </FollowListProvider>
+                  </FavoriteRelaysProvider>
+                </TranslationServiceProvider>
+              </ZapProvider>
+            </NostrProvider>
+          </DeletedEventProvider>
         </ScreenSizeProvider>
       </ContentPolicyProvider>
     </ThemeProvider>

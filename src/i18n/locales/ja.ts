@@ -368,6 +368,9 @@ export default {
     'Remember my choice': '選択を記憶',
     Apply: '適用',
     Reset: 'リセット',
-    'Share something on this Relay': 'このリレーで何かを共有する'
+    'Share something on this Relay': 'このリレーで何かを共有する',
+    'Try deleting this note': 'このノートを削除してみてください',
+    'Deletion request sent to {{count}} relays':
+      '削除リクエストが{{count}}個のリレーに送信されました'
   }
 }

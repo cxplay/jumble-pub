@@ -372,6 +372,9 @@ export default {
     'Remember my choice': 'Zapamiętaj mój wybór',
     Apply: 'Zastosuj',
     Reset: 'Resetuj',
-    'Share something on this Relay': 'Udostępnij coś na tym przekaźniku'
+    'Share something on this Relay': 'Udostępnij coś na tym przekaźniku',
+    'Try deleting this note': 'Spróbuj usunąć ten wpis',
+    'Deletion request sent to {{count}} relays':
+      'Żądanie usunięcia wysłane do {{count}} przekaźników'
   }
 }

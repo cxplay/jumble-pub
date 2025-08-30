@@ -369,6 +369,8 @@ export default {
     'Remember my choice': 'Lembrar minha escolha',
     Apply: 'Aplicar',
     Reset: 'Redefinir',
-    'Share something on this Relay': 'Compartilhe algo neste Relay'
+    'Share something on this Relay': 'Compartilhe algo neste Relay',
+    'Try deleting this note': 'Tente excluir esta nota',
+    'Deletion request sent to {{count}} relays': 'Pedido de exclusão enviado para {{count}} relays'
   }
 }

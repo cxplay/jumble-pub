@@ -368,6 +368,8 @@ export default {
     'Remember my choice': '내 선택 기억하기',
     Apply: '적용',
     Reset: '초기화',
-    'Share something on this Relay': '이 릴레이에서 무언가를 공유하세요'
+    'Share something on this Relay': '이 릴레이에서 무언가를 공유하세요',
+    'Try deleting this note': '이 노트를 삭제해 보세요',
+    'Deletion request sent to {{count}} relays': '삭제 요청이 {{count}}개의 릴레이로 전송되었습니다'
   }
 }

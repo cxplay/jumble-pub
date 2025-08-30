@@ -6,7 +6,7 @@ import { useFavoriteRelays } from '@/providers/FavoriteRelaysProvider'
 import { useMuteList } from '@/providers/MuteListProvider'
 import { useNostr } from '@/providers/NostrProvider'
 import client from '@/services/client.service'
-import { Bell, BellOff, Code, Copy, Link, Mail, SatelliteDish, Server } from 'lucide-react'
+import { Bell, BellOff, Code, Copy, Link, Mail, SatelliteDish, Server, Trash2 } from 'lucide-react'
 import { Event } from 'nostr-tools'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -45,7 +45,7 @@ export function useMenuActions({
   isSmallScreen
 }: UseMenuActionsProps) {
   const { t } = useTranslation()
-  const { pubkey, relayList } = useNostr()
+  const { pubkey, relayList, attemptDelete } = useNostr()
   const { relaySets, favoriteRelays } = useFavoriteRelays()
   const { mutePubkeyPublicly, mutePubkeyPrivately, unmutePubkey, mutePubkeys } = useMuteList()
   const isMuted = useMemo(() => mutePubkeys.includes(event.pubkey), [mutePubkeys, event])
@@ -233,6 +233,19 @@ export function useMenuActions({
           }
         )
       }
+    }
+
+    if (pubkey && event.pubkey === pubkey) {
+      actions.push({
+        icon: Trash2,
+        label: t('Try deleting this note'),
+        onClick: () => {
+          closeDrawer()
+          attemptDelete(event)
+        },
+        className: 'text-destructive focus:text-destructive',
+        separator: true
+      })
     }
 
     return actions

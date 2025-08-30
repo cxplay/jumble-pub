@@ -5,6 +5,7 @@ import {
   isReplaceableEvent,
   isReplyNoteEvent
 } from '@/lib/event'
+import { useDeletedEvent } from '@/providers/DeletedEventProvider'
 import { useMuteList } from '@/providers/MuteListProvider'
 import { useNostr } from '@/providers/NostrProvider'
 import { useUserTrust } from '@/providers/UserTrustProvider'
@@ -44,6 +45,7 @@ const NoteList = forwardRef(
     const { startLogin } = useNostr()
     const { isUserTrusted } = useUserTrust()
     const { mutePubkeys } = useMuteList()
+    const { isEventDeleted } = useDeletedEvent()
     const [events, setEvents] = useState<Event[]>([])
     const [newEvents, setNewEvents] = useState<Event[]>([])
     const [hasMore, setHasMore] = useState<boolean>(true)
@@ -58,6 +60,7 @@ const NoteList = forwardRef(
       const idSet = new Set<string>()
 
       return events.slice(0, showCount).filter((evt) => {
+        if (isEventDeleted(evt)) return false
         if (hideReplies && isReplyNoteEvent(evt)) return false
         if (hideUntrustedNotes && !isUserTrusted(evt.pubkey)) return false
 
@@ -68,12 +71,13 @@ const NoteList = forwardRef(
         idSet.add(id)
         return true
       })
-    }, [events, hideReplies, hideUntrustedNotes, showCount])
+    }, [events, hideReplies, hideUntrustedNotes, showCount, isEventDeleted])
 
     const filteredNewEvents = useMemo(() => {
       const idSet = new Set<string>()
 
       return newEvents.filter((event: Event) => {
+        if (isEventDeleted(event)) return false
         if (hideReplies && isReplyNoteEvent(event)) return false
         if (hideUntrustedNotes && !isUserTrusted(event.pubkey)) return false
         if (filterMutedNotes && mutePubkeys.includes(event.pubkey)) return false
@@ -87,7 +91,7 @@ const NoteList = forwardRef(
         idSet.add(id)
         return true
       })
-    }, [newEvents, hideReplies, hideUntrustedNotes, filterMutedNotes, mutePubkeys])
+    }, [newEvents, hideReplies, hideUntrustedNotes, filterMutedNotes, mutePubkeys, isEventDeleted])
 
     const scrollToTop = (behavior: ScrollBehavior = 'instant') => {
       setTimeout(() => {

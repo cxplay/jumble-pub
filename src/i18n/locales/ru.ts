@@ -372,6 +372,8 @@ export default {
     'Remember my choice': 'Запомнить мой выбор',
     Apply: 'Применить',
     Reset: 'Сбросить',
-    'Share something on this Relay': 'Поделиться чем-то на этом релее'
+    'Share something on this Relay': 'Поделиться чем-то на этом релее',
+    'Try deleting this note': 'Попробуйте удалить эту заметку',
+    'Deletion request sent to {{count}} relays': 'Запрос на удаление отправлен на {{count}} релеев'
   }
 }

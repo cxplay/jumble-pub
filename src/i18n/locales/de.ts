@@ -375,6 +375,8 @@ export default {
     'Remember my choice': 'Meine Auswahl merken',
     Apply: 'Anwenden',
     Reset: 'Zurücksetzen',
-    'Share something on this Relay': 'Teile etwas auf diesem Relay'
+    'Share something on this Relay': 'Teile etwas auf diesem Relay',
+    'Try deleting this note': 'Versuche, diese Notiz zu löschen',
+    'Deletion request sent to {{count}} relays': 'Löschanfrage an {{count}} Relays gesendet'
   }
 }

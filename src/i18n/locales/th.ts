@@ -365,6 +365,8 @@ export default {
     'Remember my choice': 'จำการเลือกของฉัน',
     Apply: 'ใช้',
     Reset: 'รีเซ็ต',
-    'Share something on this Relay': 'แชร์บางอย่างบนรีเลย์นี้'
+    'Share something on this Relay': 'แชร์บางอย่างบนรีเลย์นี้',
+    'Try deleting this note': 'ลองลบโน้ตนี้ดู',
+    'Deletion request sent to {{count}} relays': 'คำขอลบถูกส่งไปยังรีเลย์ {{count}} รายการ'
   }
 }

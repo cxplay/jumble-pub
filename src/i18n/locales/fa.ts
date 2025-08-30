@@ -368,6 +368,8 @@ export default {
     'Remember my choice': 'انتخاب من را به خاطر بسپار',
     Apply: 'اعمال',
     Reset: 'بازنشانی',
-    'Share something on this Relay': 'در این رله چیزی به اشتراک بگذارید'
+    'Share something on this Relay': 'در این رله چیزی به اشتراک بگذارید',
+    'Try deleting this note': 'سعی کنید این یادداشت را حذف کنید',
+    'Deletion request sent to {{count}} relays': 'درخواست حذف به {{count}} رله ارسال شد'
   }
 }

@@ -416,6 +416,22 @@ export function createPollResponseDraftEvent(
   }
 }
 
+export function createDeletionRequestDraftEvent(event: Event): TDraftEvent {
+  const tags: string[][] = [buildKTag(event.kind)]
+  if (isReplaceableEvent(event.kind)) {
+    tags.push(['a', getReplaceableCoordinateFromEvent(event)])
+  } else {
+    tags.push(['e', event.id])
+  }
+
+  return {
+    kind: kinds.EventDeletion,
+    content: 'Request for deletion of the event.',
+    tags,
+    created_at: dayjs().unix()
+  }
+}
+
 function generateImetaTags(imageUrls: string[]) {
   return imageUrls
     .map((imageUrl) => {

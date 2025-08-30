@@ -373,6 +373,8 @@ export default {
     'Remember my choice': 'Se souvenir de mon choix',
     Apply: 'Appliquer',
     Reset: 'Réinitialiser',
-    'Share something on this Relay': 'Partager quelque chose sur ce relais'
+    'Share something on this Relay': 'Partager quelque chose sur ce relais',
+    'Try deleting this note': 'Essayez de supprimer cette note',
+    'Deletion request sent to {{count}} relays': 'Demande de suppression envoyée à {{count}} relais'
   }
 }

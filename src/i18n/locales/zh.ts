@@ -363,6 +363,8 @@ export default {
     'Remember my choice': '记住我的选择',
     Apply: '应用',
     Reset: '重置',
-    'Share something on this Relay': '在此服务器上分享点什么'
+    'Share something on this Relay': '在此服务器上分享点什么',
+    'Try deleting this note': '尝试删除此笔记',
+    'Deletion request sent to {{count}} relays': '删除请求已发送到 {{count}} 个服务器'
   }
 }

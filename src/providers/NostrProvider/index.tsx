@@ -1,12 +1,13 @@
 import LoginDialog from '@/components/LoginDialog'
 import { ApplicationDataKey, BIG_RELAY_URLS, ExtendedKind } from '@/constants'
 import {
+  createDeletionRequestDraftEvent,
   createFollowListDraftEvent,
   createMuteListDraftEvent,
   createRelayListDraftEvent,
   createSeenNotificationsAtDraftEvent
 } from '@/lib/draft-event'
-import { getLatestEvent, getReplaceableEventIdentifier } from '@/lib/event'
+import { getLatestEvent, getReplaceableEventIdentifier, isProtectedEvent } from '@/lib/event'
 import { getProfileFromEvent, getRelayListFromEvent } from '@/lib/event-metadata'
 import { formatPubkey, isValidPubkey, pubkeyToNpub } from '@/lib/pubkey'
 import client from '@/services/client.service'
@@ -28,6 +29,7 @@ import { Nip07Signer } from './nip-07.signer'
 import { NostrConnectionSigner } from './nostrConnection.signer'
 import { NpubSigner } from './npub.signer'
 import { NsecSigner } from './nsec.signer'
+import { useDeletedEvent } from '../DeletedEventProvider'
 
 type TPublishOptions = {
   specifiedRelayUrls?: string[]
@@ -62,6 +64,7 @@ type TNostrContext = {
    * Default publish the event to current relays, user's write relays and additional relays
    */
   publish: (draftEvent: TDraftEvent, options?: TPublishOptions) => Promise<Event>
+  attemptDelete: (targetEvent: Event) => Promise<void>
   signHttpAuth: (url: string, method: string) => Promise<string>
   signEvent: (draftEvent: TDraftEvent) => Promise<VerifiedEvent>
   nip04Encrypt: (pubkey: string, plainText: string) => Promise<string>
@@ -91,6 +94,7 @@ export const useNostr = () => {
 
 export function NostrProvider({ children }: { children: React.ReactNode }) {
   const { t } = useTranslation()
+  const { addDeletedEvent } = useDeletedEvent()
   const [accounts, setAccounts] = useState<TAccountPointer[]>(
     storage.getAccounts().map((act) => ({ pubkey: act.pubkey, signerType: act.signerType }))
   )
@@ -587,10 +591,7 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
     return event as VerifiedEvent
   }
 
-  const publish = async (
-    draftEvent: TDraftEvent,
-    { specifiedRelayUrls, additionalRelayUrls }: TPublishOptions = {}
-  ) => {
+  const publish = async (draftEvent: TDraftEvent, options: TPublishOptions = {}) => {
     if (!account || !signer || account.signerType === 'npub') {
       throw new Error('You need to login first')
     }
@@ -610,56 +611,32 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
       }
     }
 
-    const _additionalRelayUrls: string[] = additionalRelayUrls ?? []
-    if (
-      !specifiedRelayUrls?.length &&
-      ![kinds.Contacts, kinds.Mutelist].includes(draftEvent.kind)
-    ) {
-      const mentions: string[] = []
-      draftEvent.tags.forEach(([tagName, tagValue]) => {
-        if (
-          ['p', 'P'].includes(tagName) &&
-          !!tagValue &&
-          isValidPubkey(tagValue) &&
-          !mentions.includes(tagValue)
-        ) {
-          mentions.push(tagValue)
-        }
-      })
-      if (mentions.length > 0) {
-        const relayLists = await client.fetchRelayLists(mentions)
-        relayLists.forEach((relayList) => {
-          _additionalRelayUrls.push(...relayList.read.slice(0, 4))
-        })
-      }
-    }
-    if (
-      [
-        kinds.RelayList,
-        kinds.Contacts,
-        ExtendedKind.FAVORITE_RELAYS,
-        ExtendedKind.BLOSSOM_SERVER_LIST
-      ].includes(draftEvent.kind)
-    ) {
-      _additionalRelayUrls.push(...BIG_RELAY_URLS)
-    }
-
-    let relays: string[]
-    if (specifiedRelayUrls?.length) {
-      relays = specifiedRelayUrls
-    } else {
-      const relayList = await client.fetchRelayList(event.pubkey)
-      relays = (relayList?.write.slice(0, 10) ?? []).concat(
-        Array.from(new Set(_additionalRelayUrls)) ?? []
-      )
-    }
-
-    if (!relays.length) {
-      relays.push(...BIG_RELAY_URLS)
-    }
+    const relays = await determineTargetRelays(event, options)
 
     await client.publishEvent(relays, event)
     return event
+  }
+
+  const attemptDelete = async (targetEvent: Event) => {
+    if (!signer) {
+      throw new Error(t('You need to login first'))
+    }
+    if (account?.pubkey !== targetEvent.pubkey) {
+      throw new Error(t('You can only delete your own notes'))
+    }
+
+    const deletionRequest = await signEvent(createDeletionRequestDraftEvent(targetEvent))
+
+    const seenOn = client.getSeenEventRelayUrls(targetEvent.id)
+    const relays = await determineTargetRelays(targetEvent, {
+      specifiedRelayUrls: isProtectedEvent(targetEvent) ? seenOn : undefined,
+      additionalRelayUrls: seenOn
+    })
+
+    await client.publishEvent(relays, deletionRequest)
+
+    addDeletedEvent(targetEvent)
+    toast.success(t('Deletion request sent to {{count}} relays', { count: relays.length }))
   }
 
   const signHttpAuth = async (url: string, method: string, content = '') => {
@@ -779,6 +756,7 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
         npubLogin,
         removeAccount,
         publish,
+        attemptDelete,
         signHttpAuth,
         nip04Encrypt,
         nip04Decrypt,
@@ -798,4 +776,56 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
       <LoginDialog open={openLoginDialog} setOpen={setOpenLoginDialog} />
     </NostrContext.Provider>
   )
+}
+
+async function determineTargetRelays(
+  event: Event,
+  { specifiedRelayUrls, additionalRelayUrls }: TPublishOptions = {}
+) {
+  const _additionalRelayUrls: string[] = additionalRelayUrls ?? []
+  if (!specifiedRelayUrls?.length && ![kinds.Contacts, kinds.Mutelist].includes(event.kind)) {
+    const mentions: string[] = []
+    event.tags.forEach(([tagName, tagValue]) => {
+      if (
+        ['p', 'P'].includes(tagName) &&
+        !!tagValue &&
+        isValidPubkey(tagValue) &&
+        !mentions.includes(tagValue)
+      ) {
+        mentions.push(tagValue)
+      }
+    })
+    if (mentions.length > 0) {
+      const relayLists = await client.fetchRelayLists(mentions)
+      relayLists.forEach((relayList) => {
+        _additionalRelayUrls.push(...relayList.read.slice(0, 4))
+      })
+    }
+  }
+  if (
+    [
+      kinds.RelayList,
+      kinds.Contacts,
+      ExtendedKind.FAVORITE_RELAYS,
+      ExtendedKind.BLOSSOM_SERVER_LIST
+    ].includes(event.kind)
+  ) {
+    _additionalRelayUrls.push(...BIG_RELAY_URLS)
+  }
+
+  let relays: string[]
+  if (specifiedRelayUrls?.length) {
+    relays = specifiedRelayUrls
+  } else {
+    const relayList = await client.fetchRelayList(event.pubkey)
+    relays = (relayList?.write.slice(0, 10) ?? []).concat(
+      Array.from(new Set(_additionalRelayUrls)) ?? []
+    )
+  }
+
+  if (!relays.length) {
+    relays.push(...BIG_RELAY_URLS)
+  }
+
+  return relays
 }
