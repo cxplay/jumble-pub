@@ -137,7 +137,7 @@ export default function ReplyNoteList({ index, event }: { index?: number; event:
           rootInfo.type === 'E'
             ? client.getSeenEventRelayUrls(rootInfo.id)
             : rootInfo.type === 'A'
-              ? client.getCurrentRelayUrls()
+              ? client.getSeenEventRelayUrls(rootInfo.eventId)
               : []
         relayUrls.unshift(...seenOn)
 
@@ -317,7 +317,7 @@ export default function ReplyNoteList({ index, event }: { index?: number; event:
         })}
       </div>
       {!loading && (
-        <div className="text-sm mt-2 text-center text-muted-foreground">
+        <div className="text-sm mt-2 mb-3 text-center text-muted-foreground">
           {replies.length > 0 ? t('no more replies') : t('no replies')}
         </div>
       )}

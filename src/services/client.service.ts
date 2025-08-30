@@ -35,7 +35,6 @@ class ClientService extends EventTarget {
 
   signer?: ISigner
   pubkey?: string
-  private currentRelayUrls: string[] = []
   private pool: SimplePool
 
   private timelines: Record<
@@ -79,14 +78,6 @@ class ClientService extends EventTarget {
 
   async init() {
     await indexedDb.iterateProfileEvents((profileEvent) => this.addUsernameToIndex(profileEvent))
-  }
-
-  setCurrentRelayUrls(urls: string[]) {
-    this.currentRelayUrls = urls
-  }
-
-  getCurrentRelayUrls() {
-    return this.currentRelayUrls
   }
 
   async publishEvent(relayUrls: string[], event: NEvent) {
@@ -626,11 +617,7 @@ class ClientService extends EventTarget {
     } = {}
   ) {
     const relays = Array.from(new Set(urls))
-    const events = await this.query(
-      relays.length > 0 ? relays : this.currentRelayUrls.concat(BIG_RELAY_URLS),
-      filter,
-      onevent
-    )
+    const events = await this.query(relays.length > 0 ? relays : BIG_RELAY_URLS, filter, onevent)
     if (cache) {
       events.forEach((evt) => {
         this.addEventToCache(evt)

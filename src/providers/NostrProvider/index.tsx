@@ -649,9 +649,9 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
       relays = specifiedRelayUrls
     } else {
       const relayList = await client.fetchRelayList(event.pubkey)
-      relays = (relayList?.write.slice(0, 10) ?? [])
-        .concat(Array.from(new Set(_additionalRelayUrls)) ?? [])
-        .concat(client.getCurrentRelayUrls())
+      relays = (relayList?.write.slice(0, 10) ?? []).concat(
+        Array.from(new Set(_additionalRelayUrls)) ?? []
+      )
     }
 
     if (!relays.length) {
