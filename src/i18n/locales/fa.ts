@@ -370,6 +370,7 @@ export default {
     Reset: 'بازنشانی',
     'Share something on this Relay': 'در این رله چیزی به اشتراک بگذارید',
     'Try deleting this note': 'سعی کنید این یادداشت را حذف کنید',
-    'Deletion request sent to {{count}} relays': 'درخواست حذف به {{count}} رله ارسال شد'
+    'Deletion request sent to {{count}} relays': 'درخواست حذف به {{count}} رله ارسال شد',
+    'Suitable Relays': 'رله‌های مناسب'
   }
 }

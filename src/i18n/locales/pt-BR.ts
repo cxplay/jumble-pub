@@ -371,6 +371,7 @@ export default {
     Reset: 'Redefinir',
     'Share something on this Relay': 'Compartilhe algo neste Relay',
     'Try deleting this note': 'Solicitar exclusão desta nota',
-    'Deletion request sent to {{count}} relays': 'Pedido de exclusão enviado para {{count}} relays'
+    'Deletion request sent to {{count}} relays': 'Pedido de exclusão enviado para {{count}} relays',
+    'Suitable Relays': 'Relays adequados'
   }
 }

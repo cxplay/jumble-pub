@@ -45,24 +45,24 @@ export function useMenuActions({
   isSmallScreen
 }: UseMenuActionsProps) {
   const { t } = useTranslation()
-  const { pubkey, relayList, attemptDelete } = useNostr()
+  const { pubkey, attemptDelete } = useNostr()
   const { relaySets, favoriteRelays } = useFavoriteRelays()
   const { mutePubkeyPublicly, mutePubkeyPrivately, unmutePubkey, mutePubkeys } = useMuteList()
   const isMuted = useMemo(() => mutePubkeys.includes(event.pubkey), [mutePubkeys, event])
 
   const broadcastSubMenu: SubMenuAction[] = useMemo(() => {
     const items = []
-    if (pubkey) {
+    if (pubkey && event.pubkey === pubkey) {
       items.push({
         label: (
           <div className="flex items-center gap-2 w-full pl-1">
             <Mail />
-            <div className="flex-1 truncate text-left">{t('Write relays')}</div>
+            <div className="flex-1 truncate text-left">{t('Suitable Relays')}</div>
           </div>
         ),
         onClick: async () => {
           closeDrawer()
-          const relays = relayList?.write.slice(0, 10)
+          const relays = await client.determineTargetRelays(event)
           if (relays?.length) {
             await client
               .publishEvent(relays, event)

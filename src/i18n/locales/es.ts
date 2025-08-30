@@ -374,6 +374,7 @@ export default {
     'Share something on this Relay': 'Comparte algo en este relé',
     'Try deleting this note': 'Intenta eliminar esta nota',
     'Deletion request sent to {{count}} relays':
-      'Solicitud de eliminación enviada a {{count}} relés'
+      'Solicitud de eliminación enviada a {{count}} relés',
+    'Suitable Relays': 'Relés adecuados'
   }
 }

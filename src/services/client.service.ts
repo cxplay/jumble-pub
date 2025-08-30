@@ -6,11 +6,11 @@ import {
   isReplaceableEvent
 } from '@/lib/event'
 import { getProfileFromEvent, getRelayListFromEvent } from '@/lib/event-metadata'
-import { formatPubkey, pubkeyToNpub, userIdToPubkey } from '@/lib/pubkey'
+import { formatPubkey, isValidPubkey, pubkeyToNpub, userIdToPubkey } from '@/lib/pubkey'
 import { getPubkeysFromPTags, getServersFromServerTags } from '@/lib/tag'
 import { isLocalNetworkUrl, isWebsocketUrl, normalizeUrl } from '@/lib/url'
 import { isSafari } from '@/lib/utils'
-import { ISigner, TProfile, TRelayList, TSubRequestFilter } from '@/types'
+import { ISigner, TProfile, TPublishOptions, TRelayList, TSubRequestFilter } from '@/types'
 import { sha256 } from '@noble/hashes/sha2'
 import DataLoader from 'dataloader'
 import dayjs from 'dayjs'
@@ -78,6 +78,58 @@ class ClientService extends EventTarget {
 
   async init() {
     await indexedDb.iterateProfileEvents((profileEvent) => this.addUsernameToIndex(profileEvent))
+  }
+
+  async determineTargetRelays(
+    event: NEvent,
+    { specifiedRelayUrls, additionalRelayUrls }: TPublishOptions = {}
+  ) {
+    const _additionalRelayUrls: string[] = additionalRelayUrls ?? []
+    if (!specifiedRelayUrls?.length && ![kinds.Contacts, kinds.Mutelist].includes(event.kind)) {
+      const mentions: string[] = []
+      event.tags.forEach(([tagName, tagValue]) => {
+        if (
+          ['p', 'P'].includes(tagName) &&
+          !!tagValue &&
+          isValidPubkey(tagValue) &&
+          !mentions.includes(tagValue)
+        ) {
+          mentions.push(tagValue)
+        }
+      })
+      if (mentions.length > 0) {
+        const relayLists = await this.fetchRelayLists(mentions)
+        relayLists.forEach((relayList) => {
+          _additionalRelayUrls.push(...relayList.read.slice(0, 4))
+        })
+      }
+    }
+    if (
+      [
+        kinds.RelayList,
+        kinds.Contacts,
+        ExtendedKind.FAVORITE_RELAYS,
+        ExtendedKind.BLOSSOM_SERVER_LIST
+      ].includes(event.kind)
+    ) {
+      _additionalRelayUrls.push(...BIG_RELAY_URLS)
+    }
+
+    let relays: string[]
+    if (specifiedRelayUrls?.length) {
+      relays = specifiedRelayUrls
+    } else {
+      const relayList = await this.fetchRelayList(event.pubkey)
+      relays = (relayList?.write.slice(0, 10) ?? []).concat(
+        Array.from(new Set(_additionalRelayUrls)) ?? []
+      )
+    }
+
+    if (!relays.length) {
+      relays.push(...BIG_RELAY_URLS)
+    }
+
+    return relays
   }
 
   async publishEvent(relayUrls: string[], event: NEvent) {

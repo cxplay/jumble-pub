@@ -116,6 +116,11 @@ export type TImetaInfo = {
   pubkey?: string
 }
 
+export type TPublishOptions = {
+  specifiedRelayUrls?: string[]
+  additionalRelayUrls?: string[]
+}
+
 export type TNoteListMode = 'posts' | 'postsAndReplies' | 'you'
 
 export type TNotificationType = 'all' | 'mentions' | 'reactions' | 'zaps'

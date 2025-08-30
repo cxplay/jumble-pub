@@ -9,13 +9,21 @@ import {
 } from '@/lib/draft-event'
 import { getLatestEvent, getReplaceableEventIdentifier, isProtectedEvent } from '@/lib/event'
 import { getProfileFromEvent, getRelayListFromEvent } from '@/lib/event-metadata'
-import { formatPubkey, isValidPubkey, pubkeyToNpub } from '@/lib/pubkey'
+import { formatPubkey, pubkeyToNpub } from '@/lib/pubkey'
 import client from '@/services/client.service'
 import customEmojiService from '@/services/custom-emoji.service'
 import indexedDb from '@/services/indexed-db.service'
 import storage from '@/services/local-storage.service'
 import noteStatsService from '@/services/note-stats.service'
-import { ISigner, TAccount, TAccountPointer, TDraftEvent, TProfile, TRelayList } from '@/types'
+import {
+  ISigner,
+  TAccount,
+  TAccountPointer,
+  TDraftEvent,
+  TProfile,
+  TPublishOptions,
+  TRelayList
+} from '@/types'
 import { hexToBytes } from '@noble/hashes/utils'
 import dayjs from 'dayjs'
 import { Event, kinds, VerifiedEvent } from 'nostr-tools'
@@ -24,17 +32,12 @@ import * as nip49 from 'nostr-tools/nip49'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
+import { useDeletedEvent } from '../DeletedEventProvider'
 import { BunkerSigner } from './bunker.signer'
 import { Nip07Signer } from './nip-07.signer'
 import { NostrConnectionSigner } from './nostrConnection.signer'
 import { NpubSigner } from './npub.signer'
 import { NsecSigner } from './nsec.signer'
-import { useDeletedEvent } from '../DeletedEventProvider'
-
-type TPublishOptions = {
-  specifiedRelayUrls?: string[]
-  additionalRelayUrls?: string[]
-}
 
 type TNostrContext = {
   isInitialized: boolean
@@ -611,7 +614,7 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
       }
     }
 
-    const relays = await determineTargetRelays(event, options)
+    const relays = await client.determineTargetRelays(event, options)
 
     await client.publishEvent(relays, event)
     return event
@@ -628,7 +631,7 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
     const deletionRequest = await signEvent(createDeletionRequestDraftEvent(targetEvent))
 
     const seenOn = client.getSeenEventRelayUrls(targetEvent.id)
-    const relays = await determineTargetRelays(targetEvent, {
+    const relays = await client.determineTargetRelays(targetEvent, {
       specifiedRelayUrls: isProtectedEvent(targetEvent) ? seenOn : undefined,
       additionalRelayUrls: seenOn
     })
@@ -776,56 +779,4 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
       <LoginDialog open={openLoginDialog} setOpen={setOpenLoginDialog} />
     </NostrContext.Provider>
   )
-}
-
-async function determineTargetRelays(
-  event: Event,
-  { specifiedRelayUrls, additionalRelayUrls }: TPublishOptions = {}
-) {
-  const _additionalRelayUrls: string[] = additionalRelayUrls ?? []
-  if (!specifiedRelayUrls?.length && ![kinds.Contacts, kinds.Mutelist].includes(event.kind)) {
-    const mentions: string[] = []
-    event.tags.forEach(([tagName, tagValue]) => {
-      if (
-        ['p', 'P'].includes(tagName) &&
-        !!tagValue &&
-        isValidPubkey(tagValue) &&
-        !mentions.includes(tagValue)
-      ) {
-        mentions.push(tagValue)
-      }
-    })
-    if (mentions.length > 0) {
-      const relayLists = await client.fetchRelayLists(mentions)
-      relayLists.forEach((relayList) => {
-        _additionalRelayUrls.push(...relayList.read.slice(0, 4))
-      })
-    }
-  }
-  if (
-    [
-      kinds.RelayList,
-      kinds.Contacts,
-      ExtendedKind.FAVORITE_RELAYS,
-      ExtendedKind.BLOSSOM_SERVER_LIST
-    ].includes(event.kind)
-  ) {
-    _additionalRelayUrls.push(...BIG_RELAY_URLS)
-  }
-
-  let relays: string[]
-  if (specifiedRelayUrls?.length) {
-    relays = specifiedRelayUrls
-  } else {
-    const relayList = await client.fetchRelayList(event.pubkey)
-    relays = (relayList?.write.slice(0, 10) ?? []).concat(
-      Array.from(new Set(_additionalRelayUrls)) ?? []
-    )
-  }
-
-  if (!relays.length) {
-    relays.push(...BIG_RELAY_URLS)
-  }
-
-  return relays
 }

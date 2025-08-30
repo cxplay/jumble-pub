@@ -375,6 +375,8 @@ export default {
     Reset: 'Réinitialiser',
     'Share something on this Relay': 'Partager quelque chose sur ce relais',
     'Try deleting this note': 'Essayez de supprimer cette note',
-    'Deletion request sent to {{count}} relays': 'Demande de suppression envoyée à {{count}} relais'
+    'Deletion request sent to {{count}} relays':
+      'Demande de suppression envoyée à {{count}} relais',
+    'Suitable Relays': 'Relais adaptés'
   }
 }

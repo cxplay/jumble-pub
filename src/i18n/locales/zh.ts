@@ -365,6 +365,7 @@ export default {
     Reset: '重置',
     'Share something on this Relay': '在此服务器上分享点什么',
     'Try deleting this note': '尝试删除此笔记',
-    'Deletion request sent to {{count}} relays': '删除请求已发送到 {{count}} 个服务器'
+    'Deletion request sent to {{count}} relays': '删除请求已发送到 {{count}} 个服务器',
+    'Suitable Relays': '适合的服务器'
   }
 }

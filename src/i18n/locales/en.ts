@@ -368,6 +368,7 @@ export default {
     Reset: 'Reset',
     'Share something on this Relay': 'Share something on this Relay',
     'Try deleting this note': 'Try deleting this note',
-    'Deletion request sent to {{count}} relays': 'Deletion request sent to {{count}} relays'
+    'Deletion request sent to {{count}} relays': 'Deletion request sent to {{count}} relays',
+    'Suitable Relays': 'Suitable Relays'
   }
 }

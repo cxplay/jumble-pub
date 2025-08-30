@@ -369,6 +369,7 @@ export default {
     Reset: 'إعادة تعيين',
     'Share something on this Relay': 'شارك شيئاً على هذا الريلاي',
     'Try deleting this note': 'حاول حذف هذه الملاحظة',
-    'Deletion request sent to {{count}} relays': 'تم إرسال طلب الحذف إلى {{count}} ريلايات'
+    'Deletion request sent to {{count}} relays': 'تم إرسال طلب الحذف إلى {{count}} ريلايات',
+    'Suitable Relays': 'الريلايات المناسبة'
   }
 }
