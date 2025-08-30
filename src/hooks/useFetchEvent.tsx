@@ -1,9 +1,11 @@
+import { useDeletedEvent } from '@/providers/DeletedEventProvider'
 import { useReply } from '@/providers/ReplyProvider'
 import client from '@/services/client.service'
 import { Event } from 'nostr-tools'
 import { useEffect, useState } from 'react'
 
 export function useFetchEvent(eventId?: string) {
+  const { isEventDeleted } = useDeletedEvent()
   const [isFetching, setIsFetching] = useState(true)
   const { addReplies } = useReply()
   const [error, setError] = useState<Error | null>(null)
@@ -20,7 +22,7 @@ export function useFetchEvent(eventId?: string) {
 
       try {
         const event = await client.fetchEvent(eventId)
-        if (event) {
+        if (event && !isEventDeleted(event)) {
           setEvent(event)
           addReplies([event])
         }
@@ -36,6 +38,12 @@ export function useFetchEvent(eventId?: string) {
       setIsFetching(false)
     })
   }, [eventId])
+
+  useEffect(() => {
+    if (event && isEventDeleted(event)) {
+      setEvent(undefined)
+    }
+  }, [isEventDeleted])
 
   return { isFetching, error, event }
 }
