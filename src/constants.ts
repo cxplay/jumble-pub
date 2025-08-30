@@ -93,13 +93,9 @@ export const SUPPORTED_KINDS = [
 ]
 
 export const URL_REGEX =
-  /https?:\/\/[\w\p{L}\p{N}\p{M}&.-/?=#\-@%+_:!~*]+(?<![.,;:'")\]}!?，。；：""''！？】）])/gu
+  /https?:\/\/[\w\p{L}\p{N}\p{M}&.-/?=#\-@%+_:!~*]+(?=[^.,;:'")\]}!?，。；："'！？】）]|$)/gu
 export const WS_URL_REGEX =
-  /wss?:\/\/[\w\p{L}\p{N}\p{M}&.-/?=#\-@%+_:!~*]+(?<![.,;:'")\]}!?，。；：""''！？】）])/gu
-export const IMAGE_REGEX =
-  /https?:\/\/[\w\p{L}\p{N}\p{M}&.-]+\/(?:[^/\s?]*\/)*([^/\s?]*\.(jpg|jpeg|png|gif|webp|bmp|tiff|heic|svg|avif))(?!\w)(?:\?[\w\p{L}\p{N}\p{M}&=.-]*)?(?<![.,;:'")\]}!?，。；：""''！？】）])/giu
-export const MEDIA_REGEX =
-  /https?:\/\/[\w\p{L}\p{N}\p{M}&.-]+\/(?:[^/\s?]*\/)*([^/\s?]*\.(mp4|webm|ogg|mov|mp3|wav|flac|aac|m4a|opus|wma))(?!\w)(?:\?[\w\p{L}\p{N}\p{M}&=.-]*)?(?<![.,;:'")\]}!?，。；：""''！？】）])/giu
+  /wss?:\/\/[\w\p{L}\p{N}\p{M}&.-/?=#\-@%+_:!~*]+(?=[^.,;:'")\]}!?，。；："'！？】）]|$)/gu
 export const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 export const EMOJI_SHORT_CODE_REGEX = /:[a-zA-Z0-9_-]+:/g
 export const EMBEDDED_EVENT_REGEX = /nostr:(note1[a-z0-9]{58}|nevent1[a-z0-9]+|naddr1[a-z0-9]+)/g
