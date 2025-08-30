@@ -71,19 +71,23 @@ const NotePage = forwardRef(({ id, index }: { id?: string; index?: number }, ref
     <SecondaryPageLayout ref={ref} index={index} title={t('Note')} displayScrollToTopButton>
       <div className="px-4 pt-3">
         {rootITag && <ExternalRoot value={rootITag[1]} />}
-        {rootEventId !== parentEventId && (
+        {rootEventId && rootEventId !== parentEventId && (
           <ParentNote
             key={`root-note-${event.id}`}
             isFetching={isFetchingRootEvent}
             event={rootEvent}
+            eventBech32Id={rootEventId}
             isConsecutive={isConsecutive(rootEvent, parentEvent)}
           />
         )}
-        <ParentNote
-          key={`parent-note-${event.id}`}
-          isFetching={isFetchingParentEvent}
-          event={parentEvent}
-        />
+        {parentEventId && (
+          <ParentNote
+            key={`parent-note-${event.id}`}
+            isFetching={isFetchingParentEvent}
+            event={parentEvent}
+            eventBech32Id={parentEventId}
+          />
+        )}
         <Note
           key={`note-${event.id}`}
           event={event}
@@ -120,10 +124,12 @@ function ExternalRoot({ value }: { value: string }) {
 
 function ParentNote({
   event,
+  eventBech32Id,
   isFetching,
   isConsecutive = true
 }: {
   event?: Event
+  eventBech32Id: string
   isFetching: boolean
   isConsecutive?: boolean
 }) {
@@ -142,7 +148,6 @@ function ParentNote({
       </div>
     )
   }
-  if (!event) return null
 
   return (
     <div>
@@ -152,8 +157,7 @@ function ParentNote({
           event && 'hover:text-foreground'
         )}
         onClick={() => {
-          if (!event) return
-          push(toNote(event))
+          push(toNote(event ?? eventBech32Id))
         }}
       >
         {event && <UserAvatar userId={event.pubkey} size="tiny" className="shrink-0" />}
