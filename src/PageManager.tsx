@@ -342,14 +342,14 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
       >
         <CurrentRelaysProvider>
           <NotificationProvider>
-            <div className="flex h-screen overflow-hidden bg-surface-background">
+            <div className="flex h-[var(--vh)] overflow-hidden bg-surface-background">
               <Sidebar />
-              <div className="grid grid-cols-2 gap-2 w-full pr-2">
-                <div className="flex rounded-lg my-2 max-h-screen shadow-md bg-background overflow-hidden">
+              <div className="grid grid-cols-2 gap-2 w-full pr-2 py-2">
+                <div className="rounded-lg shadow-lg bg-background overflow-hidden">
                   {primaryPages.map(({ name, element, props }) => (
                     <div
                       key={name}
-                      className="w-full"
+                      className="flex flex-col h-full w-full"
                       style={{
                         display: currentPrimaryPage === name ? 'block' : 'none'
                       }}
@@ -358,11 +358,11 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
                     </div>
                   ))}
                 </div>
-                <div className="flex rounded-lg my-2 max-h-screen shadow-md bg-background overflow-hidden">
+                <div className="rounded-lg shadow-lg bg-background overflow-hidden">
                   {secondaryStack.map((item, index) => (
                     <div
                       key={item.index}
-                      className="w-full"
+                      className="flex flex-col h-full w-full"
                       style={{ display: index === secondaryStack.length - 1 ? 'block' : 'none' }}
                     >
                       {item.component}
