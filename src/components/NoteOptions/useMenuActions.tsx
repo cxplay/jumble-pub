@@ -198,7 +198,7 @@ export function useMenuActions({
       })
     }
 
-    if (pubkey) {
+    if (pubkey && event.pubkey !== pubkey) {
       if (isMuted) {
         actions.push({
           icon: Bell,
