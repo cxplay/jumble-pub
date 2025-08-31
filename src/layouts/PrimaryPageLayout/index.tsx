@@ -93,7 +93,9 @@ const PrimaryPageLayout = forwardRef(
           scrollBarClassName="z-50 pt-12"
           ref={scrollAreaRef}
         >
-          <PrimaryPageTitlebar>{titlebar}</PrimaryPageTitlebar>
+          <PrimaryPageTitlebar hideBottomBorder={hideTitlebarBottomBorder}>
+            {titlebar}
+          </PrimaryPageTitlebar>
           {children}
           <div className="h-4" />
         </ScrollArea>

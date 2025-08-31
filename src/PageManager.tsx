@@ -23,6 +23,7 @@ import MePage from './pages/primary/MePage'
 import NotificationListPage from './pages/primary/NotificationListPage'
 import ProfilePage from './pages/primary/ProfilePage'
 import RelayPage from './pages/primary/RelayPage'
+import SearchPage from './pages/primary/SearchPage'
 import { NotificationProvider } from './providers/NotificationProvider'
 import { useScreenSize } from './providers/ScreenSizeProvider'
 import { routes } from './routes'
@@ -55,7 +56,8 @@ const PRIMARY_PAGE_REF_MAP = {
   notifications: createRef<TPageRef>(),
   me: createRef<TPageRef>(),
   profile: createRef<TPageRef>(),
-  relay: createRef<TPageRef>()
+  relay: createRef<TPageRef>(),
+  search: createRef<TPageRef>()
 }
 
 const PRIMARY_PAGE_MAP = {
@@ -64,7 +66,8 @@ const PRIMARY_PAGE_MAP = {
   notifications: <NotificationListPage ref={PRIMARY_PAGE_REF_MAP.notifications} />,
   me: <MePage ref={PRIMARY_PAGE_REF_MAP.me} />,
   profile: <ProfilePage ref={PRIMARY_PAGE_REF_MAP.profile} />,
-  relay: <RelayPage ref={PRIMARY_PAGE_REF_MAP.relay} />
+  relay: <RelayPage ref={PRIMARY_PAGE_REF_MAP.relay} />,
+  search: <SearchPage ref={PRIMARY_PAGE_REF_MAP.search} />
 }
 
 const PrimaryPageContext = createContext<TPrimaryPageContext | undefined>(undefined)

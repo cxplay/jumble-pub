@@ -1,11 +1,13 @@
-import BackButton from '@/components/BackButton'
 import ScrollToTopButton from '@/components/ScrollToTopButton'
 import { Titlebar } from '@/components/Titlebar'
+import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { useSecondaryPage } from '@/PageManager'
 import { DeepBrowsingProvider } from '@/providers/DeepBrowsingProvider'
 import { useScreenSize } from '@/providers/ScreenSizeProvider'
+import { ChevronLeft } from 'lucide-react'
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const SecondaryPageLayout = forwardRef(
   (
@@ -16,7 +18,8 @@ const SecondaryPageLayout = forwardRef(
       controls,
       hideBackButton = false,
       hideTitlebarBottomBorder = false,
-      displayScrollToTopButton = false
+      displayScrollToTopButton = false,
+      titlebar
     }: {
       children?: React.ReactNode
       index?: number
@@ -25,6 +28,7 @@ const SecondaryPageLayout = forwardRef(
       hideBackButton?: boolean
       hideTitlebarBottomBorder?: boolean
       displayScrollToTopButton?: boolean
+      titlebar?: React.ReactNode
     },
     ref
   ) => {
@@ -67,6 +71,7 @@ const SecondaryPageLayout = forwardRef(
               controls={controls}
               hideBackButton={hideBackButton}
               hideBottomBorder={hideTitlebarBottomBorder}
+              titlebar={titlebar}
             />
             {children}
           </div>
@@ -87,6 +92,7 @@ const SecondaryPageLayout = forwardRef(
             controls={controls}
             hideBackButton={hideBackButton}
             hideBottomBorder={hideTitlebarBottomBorder}
+            titlebar={titlebar}
           />
           {children}
           <div className="h-4" />
@@ -103,13 +109,22 @@ export function SecondaryPageTitlebar({
   title,
   controls,
   hideBackButton = false,
-  hideBottomBorder = false
+  hideBottomBorder = false,
+  titlebar
 }: {
   title?: React.ReactNode
   controls?: React.ReactNode
   hideBackButton?: boolean
   hideBottomBorder?: boolean
+  titlebar?: React.ReactNode
 }): JSX.Element {
+  if (titlebar) {
+    return (
+      <Titlebar className="p-1" hideBottomBorder={hideBottomBorder}>
+        {titlebar}
+      </Titlebar>
+    )
+  }
   return (
     <Titlebar
       className="flex gap-1 p-1 items-center justify-between font-semibold"
@@ -126,5 +141,23 @@ export function SecondaryPageTitlebar({
       )}
       <div className="flex-shrink-0">{controls}</div>
     </Titlebar>
+  )
+}
+
+function BackButton({ children }: { children?: React.ReactNode }) {
+  const { t } = useTranslation()
+  const { pop } = useSecondaryPage()
+
+  return (
+    <Button
+      className="flex gap-1 items-center w-fit max-w-full justify-start pl-2 pr-3"
+      variant="ghost"
+      size="titlebar-icon"
+      title={t('back')}
+      onClick={() => pop()}
+    >
+      <ChevronLeft />
+      <div className="truncate text-lg font-semibold">{children}</div>
+    </Button>
   )
 }

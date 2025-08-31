@@ -21,7 +21,7 @@ const RelayPage = forwardRef(({ url, index }: { url?: string; index?: number }, 
       controls={<RelayPageControls url={normalizedUrl} />}
       displayScrollToTopButton
     >
-      <Relay url={normalizedUrl} className="pt-3" />
+      <Relay url={normalizedUrl} />
     </SecondaryPageLayout>
   )
 })
