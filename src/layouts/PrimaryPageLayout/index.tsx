@@ -45,19 +45,25 @@ const PrimaryPageLayout = forwardRef(
     )
 
     useEffect(() => {
-      if (isSmallScreen) {
-        if (smallScreenScrollAreaRef.current?.checkVisibility()) {
-          window.scrollTo({ top: smallScreenLastScrollTopRef.current, behavior: 'instant' })
+      if (!isSmallScreen) return
+
+      const isVisible = () => {
+        return smallScreenScrollAreaRef.current?.checkVisibility
+          ? smallScreenScrollAreaRef.current?.checkVisibility()
+          : false
+      }
+
+      if (isVisible()) {
+        window.scrollTo({ top: smallScreenLastScrollTopRef.current, behavior: 'instant' })
+      }
+      const handleScroll = () => {
+        if (isVisible()) {
+          smallScreenLastScrollTopRef.current = window.scrollY
         }
-        const handleScroll = () => {
-          if (smallScreenScrollAreaRef.current?.checkVisibility()) {
-            smallScreenLastScrollTopRef.current = window.scrollY
-          }
-        }
-        window.addEventListener('scroll', handleScroll)
-        return () => {
-          window.removeEventListener('scroll', handleScroll)
-        }
+      }
+      window.addEventListener('scroll', handleScroll)
+      return () => {
+        window.removeEventListener('scroll', handleScroll)
       }
     }, [current, isSmallScreen, display])
 
