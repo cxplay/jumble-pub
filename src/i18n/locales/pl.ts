@@ -376,6 +376,8 @@ export default {
     'Try deleting this note': 'Spróbuj usunąć ten wpis',
     'Deletion request sent to {{count}} relays':
       'Żądanie usunięcia wysłane do {{count}} przekaźników',
-    'Suitable Relays': 'Odpowiednie przekaźniki'
+    'Suitable Relays': 'Odpowiednie przekaźniki',
+    'Type searching for people, keywords, or relays':
+      'Wpisz, aby wyszukać osoby, słowa kluczowe lub przekaźniki'
   }
 }

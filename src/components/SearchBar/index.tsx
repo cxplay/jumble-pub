@@ -12,7 +12,7 @@ import { useSecondaryPage } from '@/PageManager'
 import { useScreenSize } from '@/providers/ScreenSizeProvider'
 import modalManager from '@/services/modal-manager.service'
 import { TProfile, TSearchParams } from '@/types'
-import { Hash, Notebook, Server, UserRound } from 'lucide-react'
+import { Hash, Notebook, Search, Server, UserRound } from 'lucide-react'
 import { nip19 } from 'nostr-tools'
 import {
   forwardRef,
@@ -80,10 +80,6 @@ const SearchBar = forwardRef<
   const blur = () => {
     setSearching(false)
     searchInputRef.current?.blur()
-  }
-
-  const startSearch = () => {
-    setSearching(true)
   }
 
   const list = useMemo(() => {
@@ -167,21 +163,19 @@ const SearchBar = forwardRef<
     )
   }, [input, debouncedInput, profiles])
 
-  const showList = useMemo(() => searching && !!list, [searching, list])
-
   useEffect(() => {
-    if (showList) {
+    if (searching) {
       modalManager.register(id, () => {
         blur()
       })
     } else {
       modalManager.unregister(id)
     }
-  }, [showList])
+  }, [searching])
 
   return (
     <div className="relative flex gap-1 items-center h-full w-full">
-      {showList && (
+      {searching && (
         <>
           <div
             className={cn(
@@ -193,7 +187,13 @@ const SearchBar = forwardRef<
             )}
             onMouseDown={(e) => e.preventDefault()}
           >
-            <ScrollArea className="h-[60vh]">{list}</ScrollArea>
+            {list ? (
+              <ScrollArea className="h-[60vh]">{list}</ScrollArea>
+            ) : (
+              <div className="p-4 text-muted-foreground text-center h-20">
+                {t('Type searching for people, keywords, or relays')}
+              </div>
+            )}
           </div>
           <div className="fixed inset-0 w-full h-full" onClick={() => blur()} />
         </>
@@ -206,7 +206,8 @@ const SearchBar = forwardRef<
         )}
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        onFocus={() => startSearch()}
+        onFocus={() => setSearching(true)}
+        onBlur={() => setSearching(false)}
       />
     </div>
   )
@@ -222,7 +223,7 @@ export type TSearchBarRef = {
 function NormalItem({ search, onClick }: { search: string; onClick?: () => void }) {
   return (
     <Item onClick={onClick}>
-      <Notebook className="text-muted-foreground" />
+      <Search className="text-muted-foreground" />
       <div className="font-semibold truncate">{search}</div>
     </Item>
   )

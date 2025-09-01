@@ -372,6 +372,8 @@ export default {
     'Try deleting this note': '이 노트를 삭제해 보세요',
     'Deletion request sent to {{count}} relays':
       '삭제 요청이 {{count}}개의 릴레이로 전송되었습니다',
-    'Suitable Relays': '적합한 릴레이'
+    'Suitable Relays': '적합한 릴레이',
+    'Type searching for people, keywords, or relays':
+      '사람, 키워드 또는 릴레이를 검색하려면 입력하세요'
   }
 }

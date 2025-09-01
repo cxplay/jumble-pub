@@ -375,6 +375,8 @@ export default {
     'Share something on this Relay': 'Поделиться чем-то на этом релее',
     'Try deleting this note': 'Попробуйте удалить эту заметку',
     'Deletion request sent to {{count}} relays': 'Запрос на удаление отправлен на {{count}} релеев',
-    'Suitable Relays': 'Подходящие релея'
+    'Suitable Relays': 'Подходящие релея',
+    'Type searching for people, keywords, or relays':
+      'Начните ввод для поиска людей, ключевых слов или релеев'
   }
 }

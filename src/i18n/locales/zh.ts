@@ -366,6 +366,7 @@ export default {
     'Share something on this Relay': '在此服务器上分享点什么',
     'Try deleting this note': '尝试删除此笔记',
     'Deletion request sent to {{count}} relays': '删除请求已发送到 {{count}} 个服务器',
-    'Suitable Relays': '适合的服务器'
+    'Suitable Relays': '适合的服务器',
+    'Type searching for people, keywords, or relays': '输入以搜索用户、关键词或服务器'
   }
 }

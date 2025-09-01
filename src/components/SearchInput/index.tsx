@@ -41,6 +41,7 @@ const SearchInput = forwardRef<HTMLInputElement, ComponentProps<'input'>>(
           <button
             type="button"
             className="rounded-full bg-foreground/40 hover:bg-foreground transition-opacity size-5 shrink-0 flex flex-col items-center justify-center"
+            onMouseDown={(e) => e.preventDefault()}
             onClick={() => onChange?.({ target: { value: '' } } as any)}
           >
             <X className="!size-3 shrink-0 text-background" strokeWidth={4} />

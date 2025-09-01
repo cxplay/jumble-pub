@@ -368,6 +368,7 @@ export default {
     'Share something on this Relay': 'แชร์บางอย่างบนรีเลย์นี้',
     'Try deleting this note': 'ลองลบโน้ตนี้ดู',
     'Deletion request sent to {{count}} relays': 'คำขอลบถูกส่งไปยังรีเลย์ {{count}} รายการ',
-    'Suitable Relays': 'รีเลย์ที่เหมาะสม'
+    'Suitable Relays': 'รีเลย์ที่เหมาะสม',
+    'Type searching for people, keywords, or relays': 'พิมพ์เพื่อค้นหาผู้คน คีย์เวิร์ด หรือรีเลย์'
   }
 }

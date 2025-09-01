@@ -371,6 +371,8 @@ export default {
     'Share something on this Relay': 'در این رله چیزی به اشتراک بگذارید',
     'Try deleting this note': 'سعی کنید این یادداشت را حذف کنید',
     'Deletion request sent to {{count}} relays': 'درخواست حذف به {{count}} رله ارسال شد',
-    'Suitable Relays': 'رله‌های مناسب'
+    'Suitable Relays': 'رله‌های مناسب',
+    'Type searching for people, keywords, or relays':
+      'برای جستجو افراد، کلمات کلیدی یا رله‌ها تایپ کنید'
   }
 }

@@ -370,6 +370,8 @@ export default {
     'Share something on this Relay': 'شارك شيئاً على هذا الريلاي',
     'Try deleting this note': 'حاول حذف هذه الملاحظة',
     'Deletion request sent to {{count}} relays': 'تم إرسال طلب الحذف إلى {{count}} ريلايات',
-    'Suitable Relays': 'الريلايات المناسبة'
+    'Suitable Relays': 'الريلايات المناسبة',
+    'Type searching for people, keywords, or relays':
+      'اكتب للبحث عن أشخاص، كلمات مفتاحية، أو ريلايات'
   }
 }

@@ -372,6 +372,8 @@ export default {
     'Try deleting this note': 'このノートを削除してみてください',
     'Deletion request sent to {{count}} relays':
       '削除リクエストが{{count}}個のリレーに送信されました',
-    'Suitable Relays': '適切なリレー'
+    'Suitable Relays': '適切なリレー',
+    'Type searching for people, keywords, or relays':
+      '人、キーワード、またはリレーを検索するために入力してください'
   }
 }

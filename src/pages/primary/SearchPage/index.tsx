@@ -13,10 +13,10 @@ const SearchPage = forwardRef((_, ref) => {
   const isActive = useMemo(() => current === 'search' && display, [current, display])
 
   useEffect(() => {
-    if (isActive) {
+    if (isActive && !searchParams) {
       searchBarRef.current?.focus()
     }
-  }, [isActive])
+  }, [isActive, searchParams])
 
   const onSearch = (params: TSearchParams | null) => {
     setSearchParams(params)

@@ -375,6 +375,8 @@ export default {
     'Try deleting this note': 'Prova a eliminare questa nota',
     'Deletion request sent to {{count}} relays':
       'Richiesta di eliminazione inviata a {{count}} relays',
-    'Suitable Relays': 'Relays adatti'
+    'Suitable Relays': 'Relays adatti',
+    'Type searching for people, keywords, or relays':
+      'Digita per cercare persone, parole chiave o relays'
   }
 }
