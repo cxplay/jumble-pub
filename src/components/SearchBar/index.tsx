@@ -1,6 +1,5 @@
 import Nip05 from '@/components/Nip05'
 import SearchInput from '@/components/SearchInput'
-import { ScrollArea } from '@/components/ui/scroll-area'
 import UserAvatar from '@/components/UserAvatar'
 import Username from '@/components/Username'
 import { useSearchProfiles } from '@/hooks'
@@ -24,6 +23,7 @@ import {
   useState
 } from 'react'
 import { useTranslation } from 'react-i18next'
+import { UserItemSkeleton } from '../UserItem'
 
 const SearchBar = forwardRef<
   TSearchBarRef,
@@ -37,7 +37,7 @@ const SearchBar = forwardRef<
   const { push } = useSecondaryPage()
   const { isSmallScreen } = useScreenSize()
   const [debouncedInput, setDebouncedInput] = useState(input)
-  const { profiles } = useSearchProfiles(debouncedInput, 10)
+  const { profiles, isFetching: isFetchingProfiles } = useSearchProfiles(debouncedInput, 5)
   const [searching, setSearching] = useState(false)
   const searchInputRef = useRef<HTMLInputElement>(null)
   const normalizedUrl = useMemo(() => {
@@ -154,7 +154,8 @@ const SearchBar = forwardRef<
             }
           />
         ))}
-        {profiles.length >= 10 && (
+        {isFetchingProfiles && profiles.length < 5 && <UserItemSkeleton hideFollowButton />}
+        {profiles.length >= 5 && (
           <Item onClick={() => updateSearch({ type: 'profiles', search })}>
             <div className="font-semibold">{t('Show more...')}</div>
           </Item>
@@ -179,16 +180,15 @@ const SearchBar = forwardRef<
         <>
           <div
             className={cn(
-              'bg-surface-background rounded-b-lg shadow-lg',
+              'bg-surface-background rounded-b-lg shadow-lg z-50',
               isSmallScreen
                 ? 'fixed top-12 inset-x-0'
-                : 'absolute top-full -translate-y-1 inset-x-0 pt-1 ',
-              searching ? 'z-50' : ''
+                : 'absolute top-full -translate-y-1 inset-x-0 pt-1 '
             )}
             onMouseDown={(e) => e.preventDefault()}
           >
             {list ? (
-              <ScrollArea className="h-[60vh]">{list}</ScrollArea>
+              <div className="h-fit">{list}</div>
             ) : (
               <div className="p-4 text-muted-foreground text-center h-20">
                 {t('Type searching for people, keywords, or relays')}

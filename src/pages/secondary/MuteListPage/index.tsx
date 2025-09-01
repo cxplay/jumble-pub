@@ -63,7 +63,7 @@ const MuteListPage = forwardRef(({ index }: { index?: number }, ref) => {
       title={t("username's muted", { username: profile.username })}
       displayScrollToTopButton
     >
-      <div className="space-y-2 px-4">
+      <div className="space-y-2 px-4 pt-2">
         {visibleMutePubkeys.map((pubkey, index) => (
           <UserItem key={`${index}-${pubkey}`} pubkey={pubkey} />
         ))}

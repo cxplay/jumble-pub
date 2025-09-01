@@ -2,7 +2,7 @@ import { SEARCHABLE_RELAY_URLS } from '@/constants'
 import client from '@/services/client.service'
 import dayjs from 'dayjs'
 import { useEffect, useRef, useState } from 'react'
-import UserItem from '../UserItem'
+import UserItem, { UserItemSkeleton } from '../UserItem'
 
 const LIMIT = 50
 
@@ -11,6 +11,13 @@ export function ProfileListBySearch({ search }: { search: string }) {
   const [hasMore, setHasMore] = useState<boolean>(true)
   const [pubkeySet, setPubkeySet] = useState(new Set<string>())
   const bottomRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    setUntil(dayjs().unix())
+    setHasMore(true)
+    setPubkeySet(new Set<string>())
+    loadMore()
+  }, [search])
 
   useEffect(() => {
     if (!hasMore) return
@@ -39,7 +46,7 @@ export function ProfileListBySearch({ search }: { search: string }) {
     }
   }, [hasMore, search, until])
 
-  async function loadMore() {
+  const loadMore = async () => {
     const profiles = await client.searchProfiles(SEARCHABLE_RELAY_URLS, {
       search,
       until,
@@ -62,6 +69,7 @@ export function ProfileListBySearch({ search }: { search: string }) {
       {Array.from(pubkeySet).map((pubkey, index) => (
         <UserItem key={`${index}-${pubkey}`} pubkey={pubkey} />
       ))}
+      {hasMore && <UserItemSkeleton />}
       {hasMore && <div ref={bottomRef} />}
     </div>
   )

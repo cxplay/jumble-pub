@@ -2,6 +2,7 @@ import FollowButton from '@/components/FollowButton'
 import Nip05 from '@/components/Nip05'
 import UserAvatar from '@/components/UserAvatar'
 import Username from '@/components/Username'
+import { Skeleton } from '@/components/ui/skeleton'
 
 export default function UserItem({ pubkey }: { pubkey: string }) {
   return (
@@ -16,6 +17,20 @@ export default function UserItem({ pubkey }: { pubkey: string }) {
         <Nip05 pubkey={pubkey} />
       </div>
       <FollowButton pubkey={pubkey} />
+    </div>
+  )
+}
+
+export function UserItemSkeleton({ hideFollowButton }: { hideFollowButton?: boolean }) {
+  return (
+    <div className="flex gap-2 items-center h-14">
+      <Skeleton className="w-10 h-10 rounded-full shrink-0" />
+      <div className="w-full">
+        <div className="py-1">
+          <Skeleton className="w-16 h-4" />
+        </div>
+      </div>
+      {!hideFollowButton && <Skeleton className="rounded-full min-w-28 h-9" />}
     </div>
   )
 }
