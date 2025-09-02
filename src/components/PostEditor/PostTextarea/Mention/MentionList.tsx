@@ -40,7 +40,7 @@ const MentionList = forwardRef<MentionListHandle, MentionListProps>((props, ref)
   }
 
   useEffect(() => {
-    setSelectedIndex(0)
+    setSelectedIndex(props.items.length ? 0 : -1)
   }, [props.items])
 
   useImperativeHandle(ref, () => ({
@@ -55,7 +55,7 @@ const MentionList = forwardRef<MentionListHandle, MentionListProps>((props, ref)
         return true
       }
 
-      if (event.key === 'Enter') {
+      if (event.key === 'Enter' && selectedIndex >= 0) {
         enterHandler()
         return true
       }

@@ -38,7 +38,7 @@ export const EmojiList = forwardRef<EmojiListHandler, EmojiListProps>((props, re
     selectItem(selectedIndex)
   }
 
-  useEffect(() => setSelectedIndex(0), [props.items])
+  useEffect(() => setSelectedIndex(props.items.length ? 0 : -1), [props.items])
 
   useImperativeHandle(ref, () => {
     return {
@@ -53,7 +53,7 @@ export const EmojiList = forwardRef<EmojiListHandler, EmojiListProps>((props, re
           return true
         }
 
-        if (x.event.key === 'Enter') {
+        if (x.event.key === 'Enter' && selectedIndex >= 0) {
           enterHandler()
           return true
         }
