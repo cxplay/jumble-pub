@@ -374,6 +374,7 @@ export default {
     'Type searching for people, keywords, or relays':
       'اكتب للبحث عن أشخاص، كلمات مفتاحية، أو ريلايات',
     'Hide content mentioning muted users': 'إخفاء المحتوى الذي يذكر المستخدمين المكتومين',
-    'This note mentions a user you muted': 'هذه الملاحظة تذكر مستخدماً قمت بكتمه'
+    'This note mentions a user you muted': 'هذه الملاحظة تذكر مستخدماً قمت بكتمه',
+    Filter: 'مرشح'
   }
 }

@@ -376,6 +376,7 @@ export default {
     'Type searching for people, keywords, or relays':
       '사람, 키워드 또는 릴레이를 검색하려면 입력하세요',
     'Hide content mentioning muted users': '뮤트된 사용자를 언급하는 콘텐츠 숨기기',
-    'This note mentions a user you muted': '이 노트는 뮤트한 사용자를 언급합니다'
+    'This note mentions a user you muted': '이 노트는 뮤트한 사용자를 언급합니다',
+    Filter: '필터'
   }
 }

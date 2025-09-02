@@ -373,6 +373,7 @@ export default {
     'Type searching for people, keywords, or relays':
       'Type searching for people, keywords, or relays',
     'Hide content mentioning muted users': 'Hide content mentioning muted users',
-    'This note mentions a user you muted': 'This note mentions a user you muted'
+    'This note mentions a user you muted': 'This note mentions a user you muted',
+    Filter: 'Filter'
   }
 }

@@ -375,6 +375,7 @@ export default {
     'Type searching for people, keywords, or relays':
       'برای جستجو افراد، کلمات کلیدی یا رله‌ها تایپ کنید',
     'Hide content mentioning muted users': 'مخفی کردن محتوای اشاره کننده به کاربران بی‌صدا شده',
-    'This note mentions a user you muted': 'این یادداشت به کاربری که بی‌صدا کرده‌اید اشاره می‌کند'
+    'This note mentions a user you muted': 'این یادداشت به کاربری که بی‌صدا کرده‌اید اشاره می‌کند',
+    Filter: 'فیلتر'
   }
 }

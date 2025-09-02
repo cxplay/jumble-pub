@@ -383,6 +383,7 @@ export default {
       'Gib ein, um nach Personen, Schlüsselwörtern oder Relays zu suchen',
     'Hide content mentioning muted users': 'Inhalte ausblenden, die stumme Benutzer erwähnen',
     'This note mentions a user you muted':
-      'Diese Notiz erwähnt einen Benutzer, den Sie stumm geschaltet haben'
+      'Diese Notiz erwähnt einen Benutzer, den Sie stumm geschaltet haben',
+    Filter: 'Filter'
   }
 }

@@ -383,6 +383,7 @@ export default {
     'Hide content mentioning muted users':
       'Masquer le contenu mentionnant des utilisateurs masqués',
     'This note mentions a user you muted':
-      'Cette note mentionne un utilisateur que vous avez masqué'
+      'Cette note mentionne un utilisateur que vous avez masqué',
+    Filter: 'Filtre'
   }
 }

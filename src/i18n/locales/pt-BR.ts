@@ -376,6 +376,7 @@ export default {
     'Type searching for people, keywords, or relays':
       'Digite para buscar pessoas, palavras-chave ou relays',
     'Hide content mentioning muted users': 'Ocultar conteúdo que menciona usuários silenciados',
-    'This note mentions a user you muted': 'Esta nota menciona um usuário que você silenciou'
+    'This note mentions a user you muted': 'Esta nota menciona um usuário que você silenciou',
+    Filter: 'Filtro'
   }
 }
