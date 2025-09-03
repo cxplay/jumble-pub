@@ -116,7 +116,7 @@ const NoteList = forwardRef(
         idSet.add(id)
         return true
       })
-    }, [events, showCount, shouldHideEvent])
+    }, [newEvents, shouldHideEvent])
 
     const scrollToTop = (behavior: ScrollBehavior = 'instant') => {
       setTimeout(() => {
