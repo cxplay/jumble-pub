@@ -108,7 +108,7 @@ PrimaryPageLayout.displayName = 'PrimaryPageLayout'
 export default PrimaryPageLayout
 
 export type TPrimaryPageLayoutRef = {
-  scrollToTop: () => void
+  scrollToTop: (behavior?: ScrollBehavior) => void
 }
 
 function PrimaryPageTitlebar({
