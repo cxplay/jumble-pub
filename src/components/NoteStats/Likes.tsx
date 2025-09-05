@@ -3,6 +3,7 @@ import { useNoteStatsById } from '@/hooks/useNoteStatsById'
 import { createReactionDraftEvent } from '@/lib/draft-event'
 import { cn } from '@/lib/utils'
 import { useNostr } from '@/providers/NostrProvider'
+import client from '@/services/client.service'
 import noteStatsService from '@/services/note-stats.service'
 import { TEmoji } from '@/types'
 import { Loader } from 'lucide-react'
@@ -44,7 +45,8 @@ export default function Likes({ event }: { event: Event }) {
 
       try {
         const reaction = createReactionDraftEvent(event, emoji)
-        const evt = await publish(reaction)
+        const seenOn = client.getSeenEventRelayUrls(event.id)
+        const evt = await publish(reaction, { additionalRelayUrls: seenOn })
         noteStatsService.updateNoteStatsByEvents([evt])
       } catch (error) {
         console.error('like failed', error)

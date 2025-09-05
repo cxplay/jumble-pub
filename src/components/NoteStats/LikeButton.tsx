@@ -9,6 +9,7 @@ import { createReactionDraftEvent } from '@/lib/draft-event'
 import { useNostr } from '@/providers/NostrProvider'
 import { useScreenSize } from '@/providers/ScreenSizeProvider'
 import { useUserTrust } from '@/providers/UserTrustProvider'
+import client from '@/services/client.service'
 import noteStatsService from '@/services/note-stats.service'
 import { TEmoji } from '@/types'
 import { Loader, SmilePlus } from 'lucide-react'
@@ -51,7 +52,8 @@ export default function LikeButton({ event }: { event: Event }) {
         }
 
         const reaction = createReactionDraftEvent(event, emoji)
-        const evt = await publish(reaction)
+        const seenOn = client.getSeenEventRelayUrls(event.id)
+        const evt = await publish(reaction, { additionalRelayUrls: seenOn })
         noteStatsService.updateNoteStatsByEvents([evt])
       } catch (error) {
         console.error('like failed', error)
