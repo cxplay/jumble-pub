@@ -82,6 +82,7 @@ export default function PostContent({
             relays: []
           }
         )
+        setSpecifiedRelayUrls(cachedSettings.specifiedRelayUrls)
         setAddClientTag(cachedSettings.addClientTag ?? false)
       }
       return
@@ -92,6 +93,7 @@ export default function PostContent({
         isNsfw,
         isPoll,
         pollCreateData,
+        specifiedRelayUrls,
         addClientTag
       }
     )
