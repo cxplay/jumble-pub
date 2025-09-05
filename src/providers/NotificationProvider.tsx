@@ -1,9 +1,11 @@
 import { BIG_RELAY_URLS, ExtendedKind } from '@/constants'
-import { isMentioningMutedUsers } from '@/lib/event'
+import { compareEvents, isMentioningMutedUsers } from '@/lib/event'
+import { usePrimaryPage } from '@/PageManager'
 import client from '@/services/client.service'
-import { kinds } from 'nostr-tools'
+import storage from '@/services/local-storage.service'
+import { kinds, NostrEvent } from 'nostr-tools'
 import { SubCloser } from 'nostr-tools/abstract-pool'
-import { createContext, useContext, useEffect, useRef, useState } from 'react'
+import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { useContentPolicy } from './ContentPolicyProvider'
 import { useMuteList } from './MuteListProvider'
 import { useNostr } from './NostrProvider'
@@ -12,7 +14,8 @@ import { useUserTrust } from './UserTrustProvider'
 type TNotificationContext = {
   hasNewNotification: boolean
   getNotificationsSeenAt: () => number
-  clearNewNotifications: () => Promise<void>
+  isNotificationRead: (id: string) => boolean
+  markNotificationAsRead: (id: string) => void
 }
 
 const NotificationContext = createContext<TNotificationContext | undefined>(undefined)
@@ -26,25 +29,69 @@ export const useNotification = () => {
 }
 
 export function NotificationProvider({ children }: { children: React.ReactNode }) {
+  const { current } = usePrimaryPage()
+  const active = useMemo(() => current === 'notifications', [current])
   const { pubkey, notificationsSeenAt, updateNotificationsSeenAt } = useNostr()
   const { hideUntrustedNotifications, isUserTrusted } = useUserTrust()
   const { mutePubkeySet } = useMuteList()
   const { hideContentMentioningMutedUsers } = useContentPolicy()
-  const [newNotificationIds, setNewNotificationIds] = useState(new Set<string>())
-  const subCloserRef = useRef<SubCloser | null>(null)
+  const [newNotifications, setNewNotifications] = useState<NostrEvent[]>([])
+  const [readNotificationIdSet, setReadNotificationIdSet] = useState<Set<string>>(new Set())
+  const filteredNewNotifications = useMemo(() => {
+    if (active || notificationsSeenAt < 0) {
+      return []
+    }
+    const filtered: NostrEvent[] = []
+    for (const notification of newNotifications) {
+      if (notification.created_at <= notificationsSeenAt || filtered.length >= 10) {
+        break
+      }
+      if (
+        mutePubkeySet.has(notification.pubkey) ||
+        (hideContentMentioningMutedUsers && isMentioningMutedUsers(notification, mutePubkeySet)) ||
+        (hideUntrustedNotifications && !isUserTrusted(notification.pubkey))
+      ) {
+        continue
+      }
+      filtered.push(notification)
+    }
+    return filtered
+  }, [
+    newNotifications,
+    notificationsSeenAt,
+    mutePubkeySet,
+    hideContentMentioningMutedUsers,
+    hideUntrustedNotifications,
+    isUserTrusted,
+    active
+  ])
 
   useEffect(() => {
-    if (!pubkey || notificationsSeenAt < 0) return
+    setNewNotifications([])
+    updateNotificationsSeenAt(!active)
+  }, [active])
 
-    setNewNotificationIds(new Set())
+  useEffect(() => {
+    if (!pubkey) return
+
+    setNewNotifications([])
+    setReadNotificationIdSet(new Set())
 
     // Track if component is mounted
     const isMountedRef = { current: true }
+    const subCloserRef: {
+      current: SubCloser | null
+    } = { current: null }
 
     const subscribe = async () => {
+      if (subCloserRef.current) {
+        subCloserRef.current.close()
+        subCloserRef.current = null
+      }
       if (!isMountedRef.current) return null
 
       try {
+        let eosed = false
         const relayList = await client.fetchRelayList(pubkey)
         const relayUrls = relayList.read.concat(BIG_RELAY_URLS).slice(0, 4)
         const subCloser = client.subscribe(
@@ -53,32 +100,39 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
             {
               kinds: [
                 kinds.ShortTextNote,
-                kinds.Reaction,
                 kinds.Repost,
+                kinds.Reaction,
                 kinds.Zap,
                 ExtendedKind.COMMENT,
                 ExtendedKind.POLL_RESPONSE,
-                ExtendedKind.VOICE_COMMENT
+                ExtendedKind.VOICE_COMMENT,
+                ExtendedKind.POLL
               ],
               '#p': [pubkey],
-              since: notificationsSeenAt,
               limit: 20
             }
           ],
           {
+            oneose: (e) => {
+              if (e) {
+                eosed = e
+                setNewNotifications((prev) => {
+                  return [...prev.sort((a, b) => compareEvents(b, a))]
+                })
+              }
+            },
             onevent: (evt) => {
-              // Only show notification if not from self and not muted
-              if (
-                evt.pubkey !== pubkey &&
-                !mutePubkeySet.has(evt.pubkey) &&
-                (!hideContentMentioningMutedUsers || !isMentioningMutedUsers(evt, mutePubkeySet)) &&
-                (!hideUntrustedNotifications || isUserTrusted(evt.pubkey))
-              ) {
-                setNewNotificationIds((prev) => {
-                  if (prev.has(evt.id)) {
+              if (evt.pubkey !== pubkey) {
+                setNewNotifications((prev) => {
+                  if (!eosed) {
+                    return [evt, ...prev]
+                  }
+                  if (prev.length && compareEvents(prev[0], evt) >= 0) {
                     return prev
                   }
-                  return new Set([...prev, evt.id])
+
+                  client.emitNewEvent(evt)
+                  return [evt, ...prev]
                 })
               }
             },
@@ -88,7 +142,7 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
               }
 
               // Only reconnect if still mounted and not a manual close
-              if (isMountedRef.current && subCloserRef.current) {
+              if (isMountedRef.current) {
                 setTimeout(() => {
                   if (isMountedRef.current) {
                     subscribe()
@@ -127,17 +181,10 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
         subCloserRef.current = null
       }
     }
-  }, [notificationsSeenAt, pubkey])
+  }, [pubkey])
 
   useEffect(() => {
-    if (newNotificationIds.size >= 10 && subCloserRef.current) {
-      subCloserRef.current.close()
-      subCloserRef.current = null
-    }
-  }, [newNotificationIds])
-
-  useEffect(() => {
-    const newNotificationCount = newNotificationIds.size
+    const newNotificationCount = filteredNewNotifications.length
 
     // Update title
     if (newNotificationCount > 0) {
@@ -175,30 +222,33 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
         })
       }
     }
-  }, [newNotificationIds])
+  }, [filteredNewNotifications])
 
   const getNotificationsSeenAt = () => {
-    return notificationsSeenAt
+    if (notificationsSeenAt >= 0) {
+      return notificationsSeenAt
+    }
+    if (pubkey) {
+      return storage.getLastReadNotificationTime(pubkey)
+    }
+    return 0
   }
 
-  const clearNewNotifications = async () => {
-    if (!pubkey) return
+  const isNotificationRead = (notificationId: string): boolean => {
+    return readNotificationIdSet.has(notificationId)
+  }
 
-    if (subCloserRef.current) {
-      subCloserRef.current.close()
-      subCloserRef.current = null
-    }
-
-    setNewNotificationIds(new Set())
-    await updateNotificationsSeenAt()
+  const markNotificationAsRead = (notificationId: string): void => {
+    setReadNotificationIdSet((prev) => new Set([...prev, notificationId]))
   }
 
   return (
     <NotificationContext.Provider
       value={{
-        hasNewNotification: newNotificationIds.size > 0,
-        clearNewNotifications,
-        getNotificationsSeenAt
+        hasNewNotification: filteredNewNotifications.length > 0,
+        getNotificationsSeenAt,
+        isNotificationRead,
+        markNotificationAsRead
       }}
     >
       {children}

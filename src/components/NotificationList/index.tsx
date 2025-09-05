@@ -1,6 +1,5 @@
-import { Separator } from '@/components/ui/separator'
-import { Skeleton } from '@/components/ui/skeleton'
 import { BIG_RELAY_URLS, ExtendedKind } from '@/constants'
+import { compareEvents } from '@/lib/event'
 import { usePrimaryPage } from '@/PageManager'
 import { useNostr } from '@/providers/NostrProvider'
 import { useNotification } from '@/providers/NotificationProvider'
@@ -9,30 +8,39 @@ import client from '@/services/client.service'
 import noteStatsService from '@/services/note-stats.service'
 import { TNotificationType } from '@/types'
 import dayjs from 'dayjs'
-import { Event, kinds } from 'nostr-tools'
-import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
+import { NostrEvent, kinds, matchFilter } from 'nostr-tools'
+import {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState
+} from 'react'
 import { useTranslation } from 'react-i18next'
 import PullToRefresh from 'react-simple-pull-to-refresh'
 import Tabs from '../Tabs'
 import { NotificationItem } from './NotificationItem'
+import { NotificationSkeleton } from './NotificationItem/Notification'
 
 const LIMIT = 100
 const SHOW_COUNT = 30
 
 const NotificationList = forwardRef((_, ref) => {
   const { t } = useTranslation()
-  const { current } = usePrimaryPage()
+  const { current, display } = usePrimaryPage()
+  const active = useMemo(() => current === 'notifications' && display, [current, display])
   const { pubkey } = useNostr()
   const { hideUntrustedNotifications, isUserTrusted } = useUserTrust()
-  const { clearNewNotifications, getNotificationsSeenAt } = useNotification()
+  const { getNotificationsSeenAt } = useNotification()
   const [notificationType, setNotificationType] = useState<TNotificationType>('all')
   const [lastReadTime, setLastReadTime] = useState(0)
   const [refreshCount, setRefreshCount] = useState(0)
   const [timelineKey, setTimelineKey] = useState<string | undefined>(undefined)
   const [loading, setLoading] = useState(true)
-  const [notifications, setNotifications] = useState<Event[]>([])
-  const [newNotifications, setNewNotifications] = useState<Event[]>([])
-  const [oldNotifications, setOldNotifications] = useState<Event[]>([])
+  const [notifications, setNotifications] = useState<NostrEvent[]>([])
+  const [visibleNotifications, setVisibleNotifications] = useState<NostrEvent[]>([])
   const [showCount, setShowCount] = useState(SHOW_COUNT)
   const [until, setUntil] = useState<number | undefined>(dayjs().unix())
   const bottomRef = useRef<HTMLDivElement | null>(null)
@@ -73,6 +81,25 @@ const NotificationList = forwardRef((_, ref) => {
     [loading]
   )
 
+  const handleNewEvent = useCallback(
+    (event: NostrEvent) => {
+      if (event.pubkey === pubkey) return
+      setNotifications((oldEvents) => {
+        const index = oldEvents.findIndex((oldEvent) => compareEvents(oldEvent, event) <= 0)
+        if (index !== -1 && oldEvents[index].id === event.id) {
+          return oldEvents
+        }
+
+        noteStatsService.updateNoteStatsByEvents([event])
+        if (index === -1) {
+          return [...oldEvents, event]
+        }
+        return [...oldEvents.slice(0, index), event, ...oldEvents.slice(index)]
+      })
+    },
+    [pubkey]
+  )
+
   useEffect(() => {
     if (current !== 'notifications') return
 
@@ -86,7 +113,6 @@ const NotificationList = forwardRef((_, ref) => {
       setNotifications([])
       setShowCount(SHOW_COUNT)
       setLastReadTime(getNotificationsSeenAt())
-      clearNewNotifications()
       const relayList = await client.fetchRelayList(pubkey)
 
       const { closer, timelineKey } = await client.subscribeTimeline(
@@ -112,17 +138,7 @@ const NotificationList = forwardRef((_, ref) => {
             }
           },
           onNew: (event) => {
-            if (event.pubkey === pubkey) return
-            setNotifications((oldEvents) => {
-              const index = oldEvents.findIndex(
-                (oldEvent) => oldEvent.created_at < event.created_at
-              )
-              if (index === -1) {
-                return [...oldEvents, event]
-              }
-              return [...oldEvents.slice(0, index), event, ...oldEvents.slice(index)]
-            })
-            noteStatsService.updateNoteStatsByEvents([event])
+            handleNewEvent(event)
           }
         }
       )
@@ -137,20 +153,38 @@ const NotificationList = forwardRef((_, ref) => {
   }, [pubkey, refreshCount, filterKinds, current])
 
   useEffect(() => {
+    if (!active || !pubkey) return
+
+    const handler = (data: Event) => {
+      const customEvent = data as CustomEvent<NostrEvent>
+      const evt = customEvent.detail
+      if (
+        matchFilter(
+          {
+            kinds: filterKinds,
+            '#p': [pubkey]
+          },
+          evt
+        )
+      ) {
+        handleNewEvent(evt)
+      }
+    }
+
+    client.addEventListener('newEvent', handler)
+    return () => {
+      client.removeEventListener('newEvent', handler)
+    }
+  }, [pubkey, active, filterKinds, handleNewEvent])
+
+  useEffect(() => {
     let visibleNotifications = notifications.slice(0, showCount)
     if (hideUntrustedNotifications) {
       visibleNotifications = visibleNotifications.filter((event) => isUserTrusted(event.pubkey))
     }
 
-    const index = visibleNotifications.findIndex((event) => event.created_at <= lastReadTime)
-    if (index === -1) {
-      setNewNotifications(visibleNotifications)
-      setOldNotifications([])
-    } else {
-      setNewNotifications(visibleNotifications.slice(0, index))
-      setOldNotifications(visibleNotifications.slice(index))
-    }
-  }, [notifications, lastReadTime, showCount, hideUntrustedNotifications, isUserTrusted])
+    setVisibleNotifications(visibleNotifications)
+  }, [notifications, showCount, hideUntrustedNotifications, isUserTrusted])
 
   useEffect(() => {
     const options = {
@@ -228,28 +262,18 @@ const NotificationList = forwardRef((_, ref) => {
         }}
         pullingContent=""
       >
-        <div className="px-4 pt-2">
-          {newNotifications.map((notification) => (
-            <NotificationItem key={notification.id} notification={notification} isNew />
-          ))}
-          {!!newNotifications.length && (
-            <div className="relative my-2">
-              <Separator />
-              <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-background px-2 text-xs text-muted-foreground">
-                {t('Earlier notifications')}
-              </span>
-            </div>
-          )}
-          {oldNotifications.map((notification) => (
-            <NotificationItem key={notification.id} notification={notification} />
+        <div>
+          {visibleNotifications.map((notification) => (
+            <NotificationItem
+              key={notification.id}
+              notification={notification}
+              isNew={notification.created_at > lastReadTime}
+            />
           ))}
           <div className="text-center text-sm text-muted-foreground">
             {until || loading ? (
               <div ref={bottomRef}>
-                <div className="flex gap-2 items-center h-11 py-2">
-                  <Skeleton className="w-7 h-7 rounded-full" />
-                  <Skeleton className="h-6 flex-1 w-0" />
-                </div>
+                <NotificationSkeleton />
               </div>
             ) : (
               t('no more notifications')
