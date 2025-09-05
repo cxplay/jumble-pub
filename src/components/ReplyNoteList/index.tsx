@@ -284,7 +284,7 @@ export default function ReplyNoteList({ index, event }: { index?: number; event:
 
   return (
     <div className="min-h-[80vh]">
-      {loading && (replies.length === 0 ? <ReplyNoteSkeleton /> : <LoadingBar />)}
+      {loading && <LoadingBar />}
       {!loading && until && (
         <div
           className={`text-sm text-center text-muted-foreground border-b py-2 ${!loading ? 'hover:text-foreground cursor-pointer' : ''}`}
@@ -338,6 +338,7 @@ export default function ReplyNoteList({ index, event }: { index?: number; event:
         </div>
       )}
       <div ref={bottomRef} />
+      {loading && <ReplyNoteSkeleton />}
     </div>
   )
 }

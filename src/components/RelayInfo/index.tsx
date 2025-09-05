@@ -2,6 +2,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { useFetchRelayInfo } from '@/hooks'
 import { normalizeHttpUrl } from '@/lib/url'
+import { cn } from '@/lib/utils'
 import { GitBranch, Mail, SquareCode } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -11,7 +12,7 @@ import RelayIcon from '../RelayIcon'
 import UserAvatar from '../UserAvatar'
 import Username from '../Username'
 
-export default function RelayInfo({ url }: { url: string }) {
+export default function RelayInfo({ url, className }: { url: string; className?: string }) {
   const { t } = useTranslation()
   const { relayInfo, isFetching } = useFetchRelayInfo(url)
   const [open, setOpen] = useState(false)
@@ -21,7 +22,7 @@ export default function RelayInfo({ url }: { url: string }) {
   }
 
   return (
-    <div className="px-4 space-y-4 mb-2">
+    <div className={cn('px-4 space-y-4 mb-2', className)}>
       <div className="space-y-2">
         <div className="flex gap-2 items-center">
           <RelayIcon url={url} className="w-8 h-8" />

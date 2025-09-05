@@ -3,7 +3,6 @@ import RelayInfo from '@/components/RelayInfo'
 import SearchInput from '@/components/SearchInput'
 import { useFetchRelayInfo } from '@/hooks'
 import { normalizeUrl } from '@/lib/url'
-import { cn } from '@/lib/utils'
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import NotFound from '../NotFound'
@@ -30,8 +29,8 @@ export default function Relay({ url, className }: { url?: string; className?: st
   }
 
   return (
-    <div className={cn('pt-3', className)}>
-      <RelayInfo url={normalizedUrl} />
+    <div className={className}>
+      <RelayInfo url={normalizedUrl} className="pt-3" />
       {relayInfo?.supported_nips?.includes(50) && (
         <div className="px-4 py-2">
           <SearchInput
