@@ -385,6 +385,15 @@ export default {
     'reposted your note': 'あなたのノートをリポストしました',
     'zapped your note': 'あなたのノートにザップしました',
     'zapped you': 'あなたにザップしました',
-    'Mark as read': '既読にする'
+    'Mark as read': '既読にする',
+    Report: '報告',
+    'Successfully report': '報告が成功しました',
+    'Failed to report': '報告に失敗しました',
+    nudity: 'ヌード',
+    malware: 'マルウェア',
+    profanity: '冒涜的な内容',
+    illegal: '違法コンテンツ',
+    spam: 'スパム',
+    other: 'その他'
   }
 }

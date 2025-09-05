@@ -382,6 +382,15 @@ export default {
     'reposted your note': 'reposted your note',
     'zapped your note': 'zapped your note',
     'zapped you': 'zapped you',
-    'Mark as read': 'Mark as read'
+    'Mark as read': 'Mark as read',
+    Report: 'Report',
+    'Successfully report': 'Successfully reported',
+    'Failed to report': 'Failed to report',
+    nudity: 'Nudity',
+    malware: 'Malware',
+    profanity: 'Profanity',
+    illegal: 'Illegal content',
+    spam: 'Spam',
+    other: 'Other'
   }
 }

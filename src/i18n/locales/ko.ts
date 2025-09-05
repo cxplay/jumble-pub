@@ -385,6 +385,15 @@ export default {
     'reposted your note': '당신의 노트를 리포스트했습니다',
     'zapped your note': '당신의 노트를 잽했습니다',
     'zapped you': '당신을 잽했습니다',
-    'Mark as read': '읽음으로 표시'
+    'Mark as read': '읽음으로 표시',
+    Report: '신고',
+    'Successfully report': '신고가 성공적으로 완료되었습니다',
+    'Failed to report': '신고에 실패했습니다',
+    nudity: '음란물',
+    malware: '악성 소프트웨어',
+    profanity: '욕설',
+    illegal: '불법 콘텐츠',
+    spam: '스팸',
+    other: '기타'
   }
 }

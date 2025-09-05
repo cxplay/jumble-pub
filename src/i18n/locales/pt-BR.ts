@@ -385,6 +385,15 @@ export default {
     'reposted your note': 'republicou sua nota',
     'zapped your note': 'zappeou sua nota',
     'zapped you': 'zappeou você',
-    'Mark as read': 'Marcar como lida'
+    'Mark as read': 'Marcar como lida',
+    Report: 'Denunciar',
+    'Successfully report': 'Denúncia enviada com sucesso',
+    'Failed to report': 'Falha ao enviar denúncia',
+    nudity: 'Nudez',
+    malware: 'Malware',
+    profanity: 'Blasfêmia',
+    illegal: 'Conteúdo ilegal',
+    spam: 'Spam',
+    other: 'Outro'
   }
 }

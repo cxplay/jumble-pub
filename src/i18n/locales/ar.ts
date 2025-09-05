@@ -383,6 +383,15 @@ export default {
     'reposted your note': 'أعاد نشر ملاحظتك',
     'zapped your note': 'زاب ملاحظتك',
     'zapped you': 'زابك',
-    'Mark as read': 'تعليم كمقروء'
+    'Mark as read': 'تعليم كمقروء',
+    Report: 'تبليغ',
+    'Successfully report': 'تم التبليغ بنجاح',
+    'Failed to report': 'فشل في التبليغ',
+    nudity: 'عُري',
+    malware: 'برامج ضارة',
+    profanity: 'ألفاظ نابية',
+    illegal: 'محتوى غير قانوني',
+    spam: 'رسائل مزعجة',
+    other: 'أخرى'
   }
 }

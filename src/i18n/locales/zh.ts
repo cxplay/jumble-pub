@@ -378,6 +378,15 @@ export default {
     'reposted your note': '转发了您的笔记',
     'zapped your note': '打闪了您的笔记',
     'zapped you': '给您打闪',
-    'Mark as read': '标记为已读'
+    'Mark as read': '标记为已读',
+    Report: '举报',
+    'Successfully report': '举报成功',
+    'Failed to report': '举报失败',
+    nudity: '色情内容',
+    malware: '恶意软件',
+    profanity: '亵渎言论',
+    illegal: '违法内容',
+    spam: '垃圾信息',
+    other: '其他'
   }
 }

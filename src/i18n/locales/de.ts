@@ -392,6 +392,15 @@ export default {
     'reposted your note': 'hat Ihre Notiz geteilt',
     'zapped your note': 'hat Ihre Notiz gezappt',
     'zapped you': 'hat Sie gezappt',
-    'Mark as read': 'Als gelesen markieren'
+    'Mark as read': 'Als gelesen markieren',
+    Report: 'Melden',
+    'Successfully report': 'Erfolgreich gemeldet',
+    'Failed to report': 'Meldung fehlgeschlagen',
+    nudity: 'Nacktheit',
+    malware: 'Schadsoftware',
+    profanity: 'Obszönität',
+    illegal: 'Illegaler Inhalt',
+    spam: 'Spam',
+    other: 'Sonstiges'
   }
 }

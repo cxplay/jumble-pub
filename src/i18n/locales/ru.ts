@@ -389,6 +389,15 @@ export default {
     'reposted your note': 'репостнул вашу заметку',
     'zapped your note': 'заппил вашу заметку',
     'zapped you': 'заппил вас',
-    'Mark as read': 'Отметить как прочитанное'
+    'Mark as read': 'Отметить как прочитанное',
+    Report: 'Пожаловаться',
+    'Successfully report': 'Жалоба успешно отправлена',
+    'Failed to report': 'Не удалось отправить жалобу',
+    nudity: 'Обнаженность',
+    malware: 'Вредоносное ПО',
+    profanity: 'Ненормативная лексика',
+    illegal: 'Незаконный контент',
+    spam: 'Спам',
+    other: 'Другое'
   }
 }

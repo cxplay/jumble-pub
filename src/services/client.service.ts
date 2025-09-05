@@ -7,7 +7,7 @@ import {
 } from '@/lib/event'
 import { getProfileFromEvent, getRelayListFromEvent } from '@/lib/event-metadata'
 import { formatPubkey, isValidPubkey, pubkeyToNpub, userIdToPubkey } from '@/lib/pubkey'
-import { getPubkeysFromPTags, getServersFromServerTags } from '@/lib/tag'
+import { getPubkeysFromPTags, getServersFromServerTags, tagNameEquals } from '@/lib/tag'
 import { isLocalNetworkUrl, isWebsocketUrl, normalizeUrl } from '@/lib/url'
 import { isSafari } from '@/lib/utils'
 import { ISigner, TProfile, TPublishOptions, TRelayList, TSubRequestFilter } from '@/types'
@@ -87,6 +87,13 @@ class ClientService extends EventTarget {
     event: NEvent,
     { specifiedRelayUrls, additionalRelayUrls }: TPublishOptions = {}
   ) {
+    if (event.kind === kinds.Report) {
+      const targetEventId = event.tags.find(tagNameEquals('e'))?.[1]
+      if (targetEventId) {
+        return this.getSeenEventRelayUrls(targetEventId)
+      }
+    }
+
     const _additionalRelayUrls: string[] = additionalRelayUrls ?? []
     if (!specifiedRelayUrls?.length && ![kinds.Contacts, kinds.Mutelist].includes(event.kind)) {
       const mentions: string[] = []

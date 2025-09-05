@@ -388,6 +388,15 @@ export default {
     'reposted your note': 'ha ricondiviso la tua nota',
     'zapped your note': 'ha zappato la tua nota',
     'zapped you': 'ti ha zappato',
-    'Mark as read': 'Segna come letto'
+    'Mark as read': 'Segna come letto',
+    Report: 'Segnala',
+    'Successfully report': 'Segnalazione riuscita',
+    'Failed to report': 'Segnalazione fallita',
+    nudity: 'Nudità',
+    malware: 'Malware',
+    profanity: 'Blasfemia',
+    illegal: 'Contenuto illegale',
+    spam: 'Spam',
+    other: 'Altro'
   }
 }

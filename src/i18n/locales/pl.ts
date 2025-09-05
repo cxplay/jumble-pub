@@ -389,6 +389,15 @@ export default {
     'reposted your note': 'przepostował twoją notatkę',
     'zapped your note': 'zappował twoją notatkę',
     'zapped you': 'zappował cię',
-    'Mark as read': 'Oznacz jako przeczytane'
+    'Mark as read': 'Oznacz jako przeczytane',
+    Report: 'Zgłoś',
+    'Successfully report': 'Pomyślnie zgłoszono',
+    'Failed to report': 'Nie udało się zgłosić',
+    nudity: 'Nagość',
+    malware: 'Złośliwe oprogramowanie',
+    profanity: 'Wulgaryzmy',
+    illegal: 'Nielegalna treść',
+    spam: 'Spam',
+    other: 'Inne'
   }
 }

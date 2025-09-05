@@ -384,6 +384,15 @@ export default {
     'reposted your note': 'یادداشت شما را بازنشر کرد',
     'zapped your note': 'یادداشت شما را زپ کرد',
     'zapped you': 'شما را زپ کرد',
-    'Mark as read': 'علامت‌گذاری به عنوان خوانده شده'
+    'Mark as read': 'علامت‌گذاری به عنوان خوانده شده',
+    Report: 'گزارش',
+    'Successfully report': 'گزارش با موفقیت ارسال شد',
+    'Failed to report': 'ارسال گزارش ناموفق بود',
+    nudity: 'برهنگی',
+    malware: 'بدافزار',
+    profanity: 'فحاشی',
+    illegal: 'محتوای غیرقانونی',
+    spam: 'اسپم',
+    other: 'سایر'
   }
 }

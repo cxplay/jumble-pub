@@ -380,6 +380,15 @@ export default {
     'reposted your note': 'ได้รีโพสต์โน้ตของคุณ',
     'zapped your note': 'ได้แซปโน้ตของคุณ',
     'zapped you': 'ได้แซปคุณ',
-    'Mark as read': 'ทำเครื่องหมายว่าอ่านแล้ว'
+    'Mark as read': 'ทำเครื่องหมายว่าอ่านแล้ว',
+    Report: 'รายงาน',
+    'Successfully report': 'รายงานสำเร็จ',
+    'Failed to report': 'การรายงานล้มเหลว',
+    nudity: 'ภาพลามก',
+    malware: 'มัลแวร์',
+    profanity: 'คำหยาบคาย',
+    illegal: 'เนื้อหาผิดกฎหมาย',
+    spam: 'สแปม',
+    other: 'อื่นๆ'
   }
 }

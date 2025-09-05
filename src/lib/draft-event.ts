@@ -432,6 +432,26 @@ export function createDeletionRequestDraftEvent(event: Event): TDraftEvent {
   }
 }
 
+export function createReportDraftEvent(event: Event, reason: string): TDraftEvent {
+  const tags: string[][] = []
+  if (event.kind === kinds.Metadata) {
+    tags.push(['p', event.pubkey, reason])
+  } else {
+    tags.push(['p', event.pubkey])
+    tags.push(['e', event.id, reason])
+    if (isReplaceableEvent(event.kind)) {
+      tags.push(['a', getReplaceableCoordinateFromEvent(event), reason])
+    }
+  }
+
+  return {
+    kind: kinds.Report,
+    content: '',
+    tags,
+    created_at: dayjs().unix()
+  }
+}
+
 function generateImetaTags(imageUrls: string[]) {
   return imageUrls
     .map((imageUrl) => {

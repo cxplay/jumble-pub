@@ -6,7 +6,18 @@ import { useFavoriteRelays } from '@/providers/FavoriteRelaysProvider'
 import { useMuteList } from '@/providers/MuteListProvider'
 import { useNostr } from '@/providers/NostrProvider'
 import client from '@/services/client.service'
-import { Bell, BellOff, Code, Copy, Link, Mail, SatelliteDish, Server, Trash2 } from 'lucide-react'
+import {
+  Bell,
+  BellOff,
+  Code,
+  Copy,
+  Link,
+  Mail,
+  SatelliteDish,
+  Server,
+  Trash2,
+  TriangleAlert
+} from 'lucide-react'
 import { Event } from 'nostr-tools'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -34,6 +45,7 @@ interface UseMenuActionsProps {
   closeDrawer: () => void
   showSubMenuActions: (subMenu: SubMenuAction[], title: string) => void
   setIsRawEventDialogOpen: (open: boolean) => void
+  setIsReportDialogOpen: (open: boolean) => void
   isSmallScreen: boolean
 }
 
@@ -42,6 +54,7 @@ export function useMenuActions({
   closeDrawer,
   showSubMenuActions,
   setIsRawEventDialogOpen,
+  setIsReportDialogOpen,
   isSmallScreen
 }: UseMenuActionsProps) {
   const { t } = useTranslation()
@@ -194,6 +207,19 @@ export function useMenuActions({
           ? () => showSubMenuActions(broadcastSubMenu, t('Republish to ...'))
           : undefined,
         subMenu: isSmallScreen ? undefined : broadcastSubMenu,
+        separator: true
+      })
+    }
+
+    if (pubkey && event.pubkey !== pubkey) {
+      actions.push({
+        icon: TriangleAlert,
+        label: t('Report'),
+        className: 'text-destructive focus:text-destructive',
+        onClick: () => {
+          closeDrawer()
+          setIsReportDialogOpen(true)
+        },
         separator: true
       })
     }
