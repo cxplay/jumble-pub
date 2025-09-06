@@ -2,7 +2,9 @@ import { kinds } from 'nostr-tools'
 
 export const JUMBLE_API_BASE_URL = 'https://api.jumble.social'
 
-export const RECOMMENDED_RELAYS = DEFAULT_FAVORITE_RELAYS.concat(['wss://yabu.me/'])
+export const DEFAULT_FAVORITE_RELAYS = []
+
+export const RECOMMENDED_RELAYS = []
 
 export const RECOMMENDED_BLOSSOM_SERVERS = ['https://blossom.band/', 'https://nostr.download/']
 
@@ -114,8 +116,6 @@ export const MONITOR_RELAYS = ['wss://relay.nostr.watch/']
 
 export const JUMBLE_PUBKEY = 'f4eb8e62add1340b9cadcd9861e669b2e907cea534e0f7f3ac974c11c758a51a'
 export const CODY_PUBKEY = '8125b911ed0e94dbe3008a0be48cfe5cd0c0b05923cfff917ae7e87da8400883'
-
-export const DEFAULT_FAVORITE_RELAYS = []
 
 export const NIP_96_SERVICE = [
   'https://mockingyou.com',
