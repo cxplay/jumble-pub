@@ -1,7 +1,4 @@
-import Nip05 from '@/components/Nip05'
 import SearchInput from '@/components/SearchInput'
-import UserAvatar from '@/components/UserAvatar'
-import Username from '@/components/Username'
 import { useSearchProfiles } from '@/hooks'
 import { toNote } from '@/lib/link'
 import { randomString } from '@/lib/random'
@@ -23,7 +20,7 @@ import {
   useState
 } from 'react'
 import { useTranslation } from 'react-i18next'
-import { UserItemSkeleton } from '../UserItem'
+import UserItem, { UserItemSkeleton } from '../UserItem'
 
 const SearchBar = forwardRef<
   TSearchBarRef,
@@ -154,7 +151,11 @@ const SearchBar = forwardRef<
             }
           />
         ))}
-        {isFetchingProfiles && profiles.length < 5 && <UserItemSkeleton hideFollowButton />}
+        {isFetchingProfiles && profiles.length < 5 && (
+          <div className="px-2">
+            <UserItemSkeleton hideFollowButton />
+          </div>
+        )}
         {profiles.length >= 5 && (
           <Item onClick={() => updateSearch({ type: 'profiles', search })}>
             <div className="font-semibold">{t('Show more...')}</div>
@@ -259,18 +260,8 @@ function ProfileIdItem({ id, onClick }: { id: string; onClick?: () => void }) {
 
 function ProfileItem({ profile, onClick }: { profile: TProfile; onClick?: () => void }) {
   return (
-    <div className="p-2 hover:bg-accent rounded-md cursor-pointer" onClick={onClick}>
-      <div className="flex gap-2 items-center pointer-events-none h-11">
-        <UserAvatar userId={profile.pubkey} className="shrink-0" />
-        <div className="w-full overflow-hidden">
-          <Username
-            userId={profile.pubkey}
-            className="font-semibold truncate max-w-full w-fit"
-            skeletonClassName="h-4"
-          />
-          <Nip05 pubkey={profile.pubkey} />
-        </div>
-      </div>
+    <div className="px-2 hover:bg-accent rounded-md cursor-pointer" onClick={onClick}>
+      <UserItem pubkey={profile.pubkey} hideFollowButton className="pointer-events-none" />
     </div>
   )
 }

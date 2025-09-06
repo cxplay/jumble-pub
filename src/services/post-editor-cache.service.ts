@@ -6,7 +6,6 @@ type TPostSettings = {
   isNsfw?: boolean
   isPoll?: boolean
   pollCreateData?: TPollCreateData
-  specifiedRelayUrls?: string[]
   addClientTag?: boolean
 }
 

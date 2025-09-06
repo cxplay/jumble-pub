@@ -3,10 +3,19 @@ import Nip05 from '@/components/Nip05'
 import UserAvatar from '@/components/UserAvatar'
 import Username from '@/components/Username'
 import { Skeleton } from '@/components/ui/skeleton'
+import { cn } from '@/lib/utils'
 
-export default function UserItem({ pubkey }: { pubkey: string }) {
+export default function UserItem({
+  pubkey,
+  hideFollowButton,
+  className
+}: {
+  pubkey: string
+  hideFollowButton?: boolean
+  className?: string
+}) {
   return (
-    <div className="flex gap-2 items-center h-14">
+    <div className={cn('flex gap-2 items-center h-14', className)}>
       <UserAvatar userId={pubkey} className="shrink-0" />
       <div className="w-full overflow-hidden">
         <Username
@@ -16,7 +25,7 @@ export default function UserItem({ pubkey }: { pubkey: string }) {
         />
         <Nip05 pubkey={pubkey} />
       </div>
-      <FollowButton pubkey={pubkey} />
+      {!hideFollowButton && <FollowButton pubkey={pubkey} />}
     </div>
   )
 }

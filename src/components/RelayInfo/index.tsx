@@ -3,12 +3,14 @@ import { Button } from '@/components/ui/button'
 import { useFetchRelayInfo } from '@/hooks'
 import { normalizeHttpUrl } from '@/lib/url'
 import { cn } from '@/lib/utils'
-import { GitBranch, Mail, SquareCode } from 'lucide-react'
+import { Check, Copy, GitBranch, Link, Mail, SquareCode } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
 import PostEditor from '../PostEditor'
 import RelayBadges from '../RelayBadges'
 import RelayIcon from '../RelayIcon'
+import SaveRelayDropdownMenu from '../SaveRelayDropdownMenu'
 import UserAvatar from '../UserAvatar'
 import Username from '../Username'
 
@@ -24,11 +26,14 @@ export default function RelayInfo({ url, className }: { url: string; className?:
   return (
     <div className={cn('px-4 space-y-4 mb-2', className)}>
       <div className="space-y-2">
-        <div className="flex gap-2 items-center">
-          <RelayIcon url={url} className="w-8 h-8" />
-          <div className="text-2xl font-semibold truncate select-text">
-            {relayInfo.name || relayInfo.shortUrl}
+        <div className="flex items-center gap-2 justify-between">
+          <div className="flex gap-2 items-center">
+            <RelayIcon url={url} className="w-8 h-8" />
+            <div className="text-2xl font-semibold truncate select-text">
+              {relayInfo.name || relayInfo.shortUrl}
+            </div>
           </div>
+          <RelayControls url={relayInfo.url} />
         </div>
         <RelayBadges relayInfo={relayInfo} />
         {!!relayInfo.tags?.length && (
@@ -106,4 +111,34 @@ export default function RelayInfo({ url, className }: { url: string; className?:
 function formatSoftware(software: string) {
   const parts = software.split('/')
   return parts[parts.length - 1]
+}
+
+function RelayControls({ url }: { url: string }) {
+  const [copiedUrl, setCopiedUrl] = useState(false)
+  const [copiedShareableUrl, setCopiedShareableUrl] = useState(false)
+
+  const handleCopyUrl = () => {
+    navigator.clipboard.writeText(url)
+    setCopiedUrl(true)
+    setTimeout(() => setCopiedUrl(false), 2000)
+  }
+
+  const handleCopyShareableUrl = () => {
+    navigator.clipboard.writeText(`https://jumble.social/?r=${url}`)
+    setCopiedShareableUrl(true)
+    toast.success('Shareable URL copied to clipboard')
+    setTimeout(() => setCopiedShareableUrl(false), 2000)
+  }
+
+  return (
+    <div className="flex items-center gap-1">
+      <Button variant="ghost" size="titlebar-icon" onClick={handleCopyShareableUrl}>
+        {copiedShareableUrl ? <Check /> : <Link />}
+      </Button>
+      <Button variant="ghost" size="titlebar-icon" onClick={handleCopyUrl}>
+        {copiedUrl ? <Check /> : <Copy />}
+      </Button>
+      <SaveRelayDropdownMenu urls={[url]} atTitlebar />
+    </div>
+  )
 }

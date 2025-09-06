@@ -1,5 +1,4 @@
 import Relay from '@/components/Relay'
-import RelayPageControls from '@/components/RelayPageControls'
 import SecondaryPageLayout from '@/layouts/SecondaryPageLayout'
 import { normalizeUrl, simplifyUrl } from '@/lib/url'
 import { forwardRef, useMemo } from 'react'
@@ -14,13 +13,7 @@ const RelayPage = forwardRef(({ url, index }: { url?: string; index?: number }, 
   }
 
   return (
-    <SecondaryPageLayout
-      ref={ref}
-      index={index}
-      title={title}
-      controls={<RelayPageControls url={normalizedUrl} />}
-      displayScrollToTopButton
-    >
+    <SecondaryPageLayout ref={ref} index={index} title={title} displayScrollToTopButton>
       <Relay url={normalizedUrl} />
     </SecondaryPageLayout>
   )
