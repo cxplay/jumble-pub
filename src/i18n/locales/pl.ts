@@ -398,6 +398,11 @@ export default {
     profanity: 'Wulgaryzmy',
     illegal: 'Nielegalna treść',
     spam: 'Spam',
-    other: 'Inne'
+    other: 'Inne',
+    'Notification list style': 'Styl listy powiadomień',
+    'See extra info for each notification': 'Zobacz dodatkowe informacje dla każdego powiadomienia',
+    'See more notifications at a glance': 'Zobacz więcej powiadomień na pierwszy rzut oka',
+    Detailed: 'Szczegółowy',
+    Compact: 'Zwięzły'
   }
 }

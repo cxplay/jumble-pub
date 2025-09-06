@@ -394,6 +394,11 @@ export default {
     profanity: 'Blasfêmia',
     illegal: 'Conteúdo ilegal',
     spam: 'Spam',
-    other: 'Outro'
+    other: 'Outro',
+    'Notification list style': 'Estilo da lista de notificações',
+    'See extra info for each notification': 'Ver informações extras para cada notificação',
+    'See more notifications at a glance': 'Ver mais notificações rapidamente',
+    Detailed: 'Detalhado',
+    Compact: 'Compacto'
   }
 }

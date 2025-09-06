@@ -391,6 +391,11 @@ export default {
     profanity: 'Profanity',
     illegal: 'Illegal content',
     spam: 'Spam',
-    other: 'Other'
+    other: 'Other',
+    'Notification list style': 'Notification list style',
+    'See extra info for each notification': 'See extra info for each notification',
+    'See more notifications at a glance': 'See more notifications at a glance',
+    Detailed: 'Detailed',
+    Compact: 'Compact'
   }
 }

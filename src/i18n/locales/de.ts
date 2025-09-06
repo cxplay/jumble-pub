@@ -401,6 +401,12 @@ export default {
     profanity: 'Obszönität',
     illegal: 'Illegaler Inhalt',
     spam: 'Spam',
-    other: 'Sonstiges'
+    other: 'Sonstiges',
+    'Notification list style': 'Benachrichtigungslistenstil',
+    'See extra info for each notification':
+      'Zusätzliche Informationen für jede Benachrichtigung anzeigen',
+    'See more notifications at a glance': 'Mehr Benachrichtigungen auf einen Blick sehen',
+    Detailed: 'Detailliert',
+    Compact: 'Kompakt'
   }
 }

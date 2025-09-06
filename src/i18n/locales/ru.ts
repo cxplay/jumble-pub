@@ -398,6 +398,12 @@ export default {
     profanity: 'Ненормативная лексика',
     illegal: 'Незаконный контент',
     spam: 'Спам',
-    other: 'Другое'
+    other: 'Другое',
+    'Notification list style': 'Стиль списка уведомлений',
+    'See extra info for each notification':
+      'Просмотреть дополнительную информацию для каждого уведомления',
+    'See more notifications at a glance': 'Увидеть больше уведомлений с первого взгляда',
+    Detailed: 'Подробный',
+    Compact: 'Компактный'
   }
 }

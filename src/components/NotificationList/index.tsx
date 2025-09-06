@@ -1,8 +1,9 @@
-import { BIG_RELAY_URLS, ExtendedKind } from '@/constants'
+import { BIG_RELAY_URLS, ExtendedKind, NOTIFICATION_LIST_STYLE } from '@/constants'
 import { compareEvents } from '@/lib/event'
 import { usePrimaryPage } from '@/PageManager'
 import { useNostr } from '@/providers/NostrProvider'
 import { useNotification } from '@/providers/NotificationProvider'
+import { useUserPreferences } from '@/providers/UserPreferencesProvider'
 import { useUserTrust } from '@/providers/UserTrustProvider'
 import client from '@/services/client.service'
 import noteStatsService from '@/services/note-stats.service'
@@ -34,6 +35,7 @@ const NotificationList = forwardRef((_, ref) => {
   const { pubkey } = useNostr()
   const { hideUntrustedNotifications, isUserTrusted } = useUserTrust()
   const { getNotificationsSeenAt } = useNotification()
+  const { notificationListStyle } = useUserPreferences()
   const [notificationType, setNotificationType] = useState<TNotificationType>('all')
   const [lastReadTime, setLastReadTime] = useState(0)
   const [refreshCount, setRefreshCount] = useState(0)
@@ -262,7 +264,7 @@ const NotificationList = forwardRef((_, ref) => {
         }}
         pullingContent=""
       >
-        <div>
+        <div className={notificationListStyle === NOTIFICATION_LIST_STYLE.COMPACT ? 'pt-2' : ''}>
           {visibleNotifications.map((notification) => (
             <NotificationItem
               key={notification.id}

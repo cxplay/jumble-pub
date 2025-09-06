@@ -389,6 +389,11 @@ export default {
     profanity: 'คำหยาบคาย',
     illegal: 'เนื้อหาผิดกฎหมาย',
     spam: 'สแปม',
-    other: 'อื่นๆ'
+    other: 'อื่นๆ',
+    'Notification list style': 'รูปแบบรายการการแจ้งเตือน',
+    'See extra info for each notification': 'ดูข้อมูลเพิ่มเติมสำหรับการแจ้งเตือนแต่ละรายการ',
+    'See more notifications at a glance': 'ดูการแจ้งเตือนเพิ่มเติมในแวบเดียว',
+    Detailed: 'รายละเอียด',
+    Compact: 'กะทัดรัด'
   }
 }

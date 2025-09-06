@@ -394,6 +394,11 @@ export default {
     profanity: '冒涜的な内容',
     illegal: '違法コンテンツ',
     spam: 'スパム',
-    other: 'その他'
+    other: 'その他',
+    'Notification list style': '通知リストスタイル',
+    'See extra info for each notification': '各通知の詳細情報を表示',
+    'See more notifications at a glance': '一目でより多くの通知を確認',
+    Detailed: '詳細',
+    Compact: 'コンパクト'
   }
 }

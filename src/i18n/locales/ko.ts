@@ -394,6 +394,11 @@ export default {
     profanity: '욕설',
     illegal: '불법 콘텐츠',
     spam: '스팸',
-    other: '기타'
+    other: '기타',
+    'Notification list style': '알림 목록 스타일',
+    'See extra info for each notification': '각 알림의 추가 정보 보기',
+    'See more notifications at a glance': '한눈에 더 많은 알림 보기',
+    Detailed: '상세',
+    Compact: '간단'
   }
 }

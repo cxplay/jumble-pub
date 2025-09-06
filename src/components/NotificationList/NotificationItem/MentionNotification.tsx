@@ -1,8 +1,10 @@
 import ParentNotePreview from '@/components/ParentNotePreview'
+import { NOTIFICATION_LIST_STYLE } from '@/constants'
 import { getEmbeddedPubkeys, getParentBech32Id } from '@/lib/event'
 import { toNote } from '@/lib/link'
 import { useSecondaryPage } from '@/PageManager'
 import { useNostr } from '@/providers/NostrProvider'
+import { useUserPreferences } from '@/providers/UserPreferencesProvider'
 import { AtSign, MessageCircle, Quote } from 'lucide-react'
 import { Event } from 'nostr-tools'
 import { useMemo } from 'react'
@@ -19,6 +21,7 @@ export function MentionNotification({
   const { t } = useTranslation()
   const { push } = useSecondaryPage()
   const { pubkey } = useNostr()
+  const { notificationListStyle } = useUserPreferences()
   const isMention = useMemo(() => {
     if (!pubkey) return false
     const mentions = getEmbeddedPubkeys(notification)
@@ -42,6 +45,7 @@ export function MentionNotification({
       sentAt={notification.created_at}
       targetEvent={notification}
       middle={
+        notificationListStyle === NOTIFICATION_LIST_STYLE.DETAILED &&
         parentEventId && (
           <ParentNotePreview
             eventId={parentEventId}

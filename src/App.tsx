@@ -16,6 +16,7 @@ import { ReplyProvider } from '@/providers/ReplyProvider'
 import { ScreenSizeProvider } from '@/providers/ScreenSizeProvider'
 import { ThemeProvider } from '@/providers/ThemeProvider'
 import { TranslationServiceProvider } from '@/providers/TranslationServiceProvider'
+import { UserPreferencesProvider } from '@/providers/UserPreferencesProvider'
 import { UserTrustProvider } from '@/providers/UserTrustProvider'
 import { ZapProvider } from '@/providers/ZapProvider'
 import { PageManager } from './PageManager'
@@ -38,8 +39,10 @@ export default function App(): JSX.Element {
                               <ReplyProvider>
                                 <MediaUploadServiceProvider>
                                   <KindFilterProvider>
-                                    <PageManager />
-                                    <Toaster />
+                                    <UserPreferencesProvider>
+                                      <PageManager />
+                                      <Toaster />
+                                    </UserPreferencesProvider>
                                   </KindFilterProvider>
                                 </MediaUploadServiceProvider>
                               </ReplyProvider>

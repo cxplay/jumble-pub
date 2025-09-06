@@ -387,6 +387,11 @@ export default {
     profanity: '亵渎言论',
     illegal: '违法内容',
     spam: '垃圾信息',
-    other: '其他'
+    other: '其他',
+    'Notification list style': '通知列表样式',
+    'See extra info for each notification': '查看每条通知的详细信息',
+    'See more notifications at a glance': '一目了然地查看更多通知',
+    Detailed: '详细',
+    Compact: '紧凑'
   }
 }

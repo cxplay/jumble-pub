@@ -4,11 +4,13 @@ import NoteStats from '@/components/NoteStats'
 import { Skeleton } from '@/components/ui/skeleton'
 import UserAvatar from '@/components/UserAvatar'
 import Username from '@/components/Username'
+import { NOTIFICATION_LIST_STYLE } from '@/constants'
 import { toNote, toProfile } from '@/lib/link'
 import { cn } from '@/lib/utils'
 import { useSecondaryPage } from '@/PageManager'
 import { useNostr } from '@/providers/NostrProvider'
 import { useNotification } from '@/providers/NotificationProvider'
+import { useUserPreferences } from '@/providers/UserPreferencesProvider'
 import { NostrEvent } from 'nostr-tools'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -38,22 +40,52 @@ export default function Notification({
   const { push } = useSecondaryPage()
   const { pubkey } = useNostr()
   const { isNotificationRead, markNotificationAsRead } = useNotification()
+  const { notificationListStyle } = useUserPreferences()
   const unread = useMemo(
     () => isNew && !isNotificationRead(notificationId),
     [isNew, isNotificationRead, notificationId]
   )
 
+  const handleClick = () => {
+    markNotificationAsRead(notificationId)
+    if (targetEvent) {
+      push(toNote(targetEvent.id))
+    } else if (pubkey) {
+      push(toProfile(pubkey))
+    }
+  }
+
+  if (notificationListStyle === NOTIFICATION_LIST_STYLE.COMPACT) {
+    return (
+      <div
+        className="flex items-center justify-between cursor-pointer py-2 px-4"
+        onClick={handleClick}
+      >
+        <div className="flex gap-2 items-center flex-1 w-0">
+          <UserAvatar userId={sender} size="small" />
+          {icon}
+          {middle}
+          {targetEvent && (
+            <ContentPreview
+              className={cn(
+                'truncate flex-1 w-0',
+                unread ? 'font-semibold' : 'text-muted-foreground'
+              )}
+              event={targetEvent}
+            />
+          )}
+        </div>
+        <div className="text-muted-foreground shrink-0">
+          <FormattedTimestamp timestamp={sentAt} short />
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div
       className="clickable flex items-start gap-2 cursor-pointer py-2 px-4 border-b"
-      onClick={() => {
-        markNotificationAsRead(notificationId)
-        if (targetEvent) {
-          push(toNote(targetEvent.id))
-        } else if (pubkey) {
-          push(toProfile(pubkey))
-        }
-      }}
+      onClick={handleClick}
     >
       <div className="flex gap-2 items-center mt-1.5">
         {icon}
@@ -95,6 +127,17 @@ export default function Notification({
 }
 
 export function NotificationSkeleton() {
+  const { notificationListStyle } = useUserPreferences()
+
+  if (notificationListStyle === NOTIFICATION_LIST_STYLE.COMPACT) {
+    return (
+      <div className="flex gap-2 items-center h-11 py-2 px-4">
+        <Skeleton className="w-7 h-7 rounded-full" />
+        <Skeleton className="h-6 flex-1 w-0" />
+      </div>
+    )
+  }
+
   return (
     <div className="flex items-start gap-2 cursor-pointer py-2 px-4">
       <div className="flex gap-2 items-center mt-1.5">

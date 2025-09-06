@@ -1,4 +1,10 @@
-import { DEFAULT_NIP_96_SERVICE, ExtendedKind, SUPPORTED_KINDS, StorageKey } from '@/constants'
+import {
+  DEFAULT_NIP_96_SERVICE,
+  ExtendedKind,
+  NOTIFICATION_LIST_STYLE,
+  SUPPORTED_KINDS,
+  StorageKey
+} from '@/constants'
 import { isSameAccount } from '@/lib/account'
 import { randomString } from '@/lib/random'
 import {
@@ -7,6 +13,7 @@ import {
   TFeedInfo,
   TMediaUploadServiceConfig,
   TNoteListMode,
+  TNotificationStyle,
   TRelaySet,
   TThemeSetting,
   TTranslationServiceConfig
@@ -36,6 +43,7 @@ class LocalStorageService {
   private dismissedTooManyRelaysAlert: boolean = false
   private showKinds: number[] = []
   private hideContentMentioningMutedUsers: boolean = false
+  private notificationListStyle: TNotificationStyle = NOTIFICATION_LIST_STYLE.DETAILED
 
   constructor() {
     if (!LocalStorageService.instance) {
@@ -159,6 +167,12 @@ class LocalStorageService {
 
     this.hideContentMentioningMutedUsers =
       window.localStorage.getItem(StorageKey.HIDE_CONTENT_MENTIONING_MUTED_USERS) === 'true'
+
+    this.notificationListStyle =
+      window.localStorage.getItem(StorageKey.NOTIFICATION_LIST_STYLE) ===
+      NOTIFICATION_LIST_STYLE.COMPACT
+        ? NOTIFICATION_LIST_STYLE.COMPACT
+        : NOTIFICATION_LIST_STYLE.DETAILED
 
     // Clean up deprecated data
     window.localStorage.removeItem(StorageKey.ACCOUNT_PROFILE_EVENT_MAP)
@@ -409,6 +423,15 @@ class LocalStorageService {
   setHideContentMentioningMutedUsers(hide: boolean) {
     this.hideContentMentioningMutedUsers = hide
     window.localStorage.setItem(StorageKey.HIDE_CONTENT_MENTIONING_MUTED_USERS, hide.toString())
+  }
+
+  getNotificationListStyle() {
+    return this.notificationListStyle
+  }
+
+  setNotificationListStyle(style: TNotificationStyle) {
+    this.notificationListStyle = style
+    window.localStorage.setItem(StorageKey.NOTIFICATION_LIST_STYLE, style)
   }
 }
 

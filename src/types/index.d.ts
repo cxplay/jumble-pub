@@ -1,5 +1,5 @@
 import { Event, VerifiedEvent, Filter } from 'nostr-tools'
-import { POLL_TYPE } from './constants'
+import { NOTIFICATION_LIST_STYLE, POLL_TYPE } from '../constants'
 
 export type TSubRequestFilter = Omit<Filter, 'since' | 'until'> & { limit: number }
 
@@ -182,3 +182,6 @@ export type TSearchParams = {
   search: string
   input?: string
 }
+
+export type TNotificationStyle =
+  (typeof NOTIFICATION_LIST_STYLE)[keyof typeof NOTIFICATION_LIST_STYLE]
