@@ -408,6 +408,7 @@ export default {
     'See more notifications at a glance': "Voir plus de notifications en un coup d'œil",
     Detailed: 'Détaillé',
     Compact: 'Compact',
-    'Submit Relay': 'Soumettre un relais'
+    'Submit Relay': 'Soumettre un relais',
+    Homepage: 'Page d’accueil'
   }
 }

@@ -395,6 +395,7 @@ export default {
     'See more notifications at a glance': 'ดูการแจ้งเตือนเพิ่มเติมในแวบเดียว',
     Detailed: 'รายละเอียด',
     Compact: 'กะทัดรัด',
-    'Submit Relay': 'ส่งรีเลย์'
+    'Submit Relay': 'ส่งรีเลย์',
+    Homepage: 'หน้าแรก'
   }
 }

@@ -404,6 +404,7 @@ export default {
     'See more notifications at a glance': 'Zobacz więcej powiadomień na pierwszy rzut oka',
     Detailed: 'Szczegółowy',
     Compact: 'Zwięzły',
-    'Submit Relay': 'Prześlij przekaźnik'
+    'Submit Relay': 'Prześlij przekaźnik',
+    Homepage: 'Strona główna'
   }
 }

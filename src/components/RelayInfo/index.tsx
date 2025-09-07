@@ -50,6 +50,17 @@ export default function RelayInfo({ url, className }: { url: string; className?:
         )}
       </div>
 
+      <div className="space-y-2">
+        <div className="text-sm font-semibold text-muted-foreground">{t('Homepage')}:</div>
+        <a
+          href={normalizeHttpUrl(relayInfo.url)}
+          target="_blank"
+          className="hover:underline text-primary select-text"
+        >
+          {normalizeHttpUrl(relayInfo.url)}
+        </a>
+      </div>
+
       {relayInfo.payments_url && (
         <div className="space-y-2">
           <div className="text-sm font-semibold text-muted-foreground">{t('Payment page')}:</div>

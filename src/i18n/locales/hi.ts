@@ -402,6 +402,7 @@ export default {
     'See more notifications at a glance': 'एक नज़र में अधिक सूचनाएं देखें',
     Detailed: 'विस्तृत',
     Compact: 'संक्षिप्त',
-    'Submit Relay': 'रिले सबमिट करें'
+    'Submit Relay': 'रिले सबमिट करें',
+    Homepage: 'होमपेज'
   }
 }

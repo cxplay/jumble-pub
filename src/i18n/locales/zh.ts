@@ -393,6 +393,7 @@ export default {
     'See more notifications at a glance': '一目了然地查看更多通知',
     Detailed: '详细',
     Compact: '紧凑',
-    'Submit Relay': '提交服务器'
+    'Submit Relay': '提交服务器',
+    Homepage: '主页'
   }
 }

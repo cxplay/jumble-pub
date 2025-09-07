@@ -408,6 +408,7 @@ export default {
     'See more notifications at a glance': 'Mehr Benachrichtigungen auf einen Blick sehen',
     Detailed: 'Detailliert',
     Compact: 'Kompakt',
-    'Submit Relay': 'Relay einreichen'
+    'Submit Relay': 'Relay einreichen',
+    Homepage: 'Homepage'
   }
 }

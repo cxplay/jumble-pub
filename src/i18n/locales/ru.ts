@@ -405,6 +405,7 @@ export default {
     'See more notifications at a glance': 'Увидеть больше уведомлений с первого взгляда',
     Detailed: 'Подробный',
     Compact: 'Компактный',
-    'Submit Relay': 'Отправить релей'
+    'Submit Relay': 'Отправить релей',
+    Homepage: 'Домашняя страница'
   }
 }

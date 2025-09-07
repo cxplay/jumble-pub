@@ -403,6 +403,7 @@ export default {
     'See more notifications at a glance': 'Ver más notificaciones de un vistazo',
     Detailed: 'Detallado',
     Compact: 'Compacto',
-    'Submit Relay': 'Enviar relé'
+    'Submit Relay': 'Enviar relé',
+    Homepage: 'Página principal'
   }
 }

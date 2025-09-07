@@ -400,6 +400,7 @@ export default {
     'See more notifications at a glance': '一目でより多くの通知を確認',
     Detailed: '詳細',
     Compact: 'コンパクト',
-    'Submit Relay': 'リレーを提出'
+    'Submit Relay': 'リレーを提出',
+    Homepage: 'ホームページ'
   }
 }

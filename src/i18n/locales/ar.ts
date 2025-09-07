@@ -398,6 +398,7 @@ export default {
     'See more notifications at a glance': 'رؤية المزيد من الإشعارات بنظرة سريعة',
     Detailed: 'تفصيلي',
     Compact: 'مضغوط',
-    'Submit Relay': 'إرسال ريلاي'
+    'Submit Relay': 'إرسال ريلاي',
+    Homepage: 'الصفحة الرئيسية'
   }
 }

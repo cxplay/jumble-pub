@@ -400,6 +400,7 @@ export default {
     'See more notifications at a glance': '한눈에 더 많은 알림 보기',
     Detailed: '상세',
     Compact: '간단',
-    'Submit Relay': '릴레이 제출'
+    'Submit Relay': '릴레이 제출',
+    Homepage: '홈페이지'
   }
 }

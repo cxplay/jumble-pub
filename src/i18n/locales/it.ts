@@ -403,6 +403,7 @@ export default {
     'See more notifications at a glance': "Visualizza più notifiche a colpo d'occhio",
     Detailed: 'Dettagliato',
     Compact: 'Compatto',
-    'Submit Relay': 'Invia Relay'
+    'Submit Relay': 'Invia Relay',
+    Homepage: 'Homepage'
   }
 }
