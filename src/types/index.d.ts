@@ -35,6 +35,8 @@ export type TRelayList = {
 }
 
 export type TRelayInfo = {
+  url: string
+  shortUrl: string
   name?: string
   description?: string
   icon?: string
@@ -127,15 +129,6 @@ export type TNotificationType = 'all' | 'mentions' | 'reactions' | 'zaps'
 
 export type TPageRef = { scrollToTop: (behavior?: ScrollBehavior) => void }
 
-export type TNip66RelayInfo = TRelayInfo & {
-  url: string
-  shortUrl: string
-  hasNip11: boolean
-  triedNip11: boolean
-  relayType?: string
-  countryCode?: string
-}
-
 export type TEmoji = {
   shortcode: string
   url: string
@@ -185,3 +178,10 @@ export type TSearchParams = {
 
 export type TNotificationStyle =
   (typeof NOTIFICATION_LIST_STYLE)[keyof typeof NOTIFICATION_LIST_STYLE]
+
+export type TAwesomeRelayCollection = {
+  id: string
+  name: string
+  description: string
+  relays: string[]
+}

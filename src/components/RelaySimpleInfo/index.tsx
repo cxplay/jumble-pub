@@ -1,6 +1,6 @@
 import { Skeleton } from '@/components/ui/skeleton'
 import { cn } from '@/lib/utils'
-import { TNip66RelayInfo } from '@/types'
+import { TRelayInfo } from '@/types'
 import { HTMLProps } from 'react'
 import { useTranslation } from 'react-i18next'
 import RelayBadges from '../RelayBadges'
@@ -15,7 +15,7 @@ export default function RelaySimpleInfo({
   className,
   ...props
 }: HTMLProps<HTMLDivElement> & {
-  relayInfo?: TNip66RelayInfo
+  relayInfo?: TRelayInfo
   users?: string[]
   hideBadge?: boolean
 }) {
@@ -36,7 +36,7 @@ export default function RelaySimpleInfo({
         {relayInfo && <SaveRelayDropdownMenu urls={[relayInfo.url]} />}
       </div>
       {!hideBadge && relayInfo && <RelayBadges relayInfo={relayInfo} />}
-      {!!relayInfo?.description && <div className="line-clamp-4">{relayInfo.description}</div>}
+      {!!relayInfo?.description && <div className="line-clamp-3">{relayInfo.description}</div>}
       {!!users?.length && (
         <div className="flex items-center gap-2">
           <div className="text-muted-foreground">{t('Favorited by')} </div>
@@ -56,9 +56,9 @@ export default function RelaySimpleInfo({
   )
 }
 
-export function RelaySimpleInfoSkeleton() {
+export function RelaySimpleInfoSkeleton({ className }: { className?: string }) {
   return (
-    <div className="p-4 space-y-2">
+    <div className={cn('space-y-1', className)}>
       <div className="flex items-center gap-2 w-full">
         <Skeleton className="h-9 w-9 rounded-full" />
         <div className="flex-1 w-0 space-y-1">

@@ -1,5 +1,6 @@
 import { ExtendedKind } from '@/constants'
 import { tagNameEquals } from '@/lib/tag'
+import { TRelayInfo } from '@/types'
 import { Event, kinds } from 'nostr-tools'
 
 type TValue<T = any> = {
@@ -16,12 +17,13 @@ const StoreNames = {
   BOOKMARK_LIST_EVENTS: 'bookmarkListEvents',
   BLOSSOM_SERVER_LIST_EVENTS: 'blossomServerListEvents',
   MUTE_DECRYPTED_TAGS: 'muteDecryptedTags',
-  RELAY_INFO_EVENTS: 'relayInfoEvents',
   USER_EMOJI_LIST_EVENTS: 'userEmojiListEvents',
   EMOJI_SET_EVENTS: 'emojiSetEvents',
   FAVORITE_RELAYS: 'favoriteRelays',
   RELAY_SETS: 'relaySets',
-  FOLLOWING_FAVORITE_RELAYS: 'followingFavoriteRelays'
+  FOLLOWING_FAVORITE_RELAYS: 'followingFavoriteRelays',
+  RELAY_INFOS: 'relayInfos',
+  RELAY_INFO_EVENTS: 'relayInfoEvents' // deprecated
 }
 
 class IndexedDbService {
@@ -40,7 +42,7 @@ class IndexedDbService {
   init(): Promise<void> {
     if (!this.initPromise) {
       this.initPromise = new Promise((resolve, reject) => {
-        const request = window.indexedDB.open('jumble', 7)
+        const request = window.indexedDB.open('jumble', 8)
 
         request.onerror = (event) => {
           reject(event)
@@ -71,9 +73,6 @@ class IndexedDbService {
           if (!db.objectStoreNames.contains(StoreNames.MUTE_DECRYPTED_TAGS)) {
             db.createObjectStore(StoreNames.MUTE_DECRYPTED_TAGS, { keyPath: 'key' })
           }
-          if (!db.objectStoreNames.contains(StoreNames.RELAY_INFO_EVENTS)) {
-            db.createObjectStore(StoreNames.RELAY_INFO_EVENTS, { keyPath: 'key' })
-          }
           if (!db.objectStoreNames.contains(StoreNames.FAVORITE_RELAYS)) {
             db.createObjectStore(StoreNames.FAVORITE_RELAYS, { keyPath: 'key' })
           }
@@ -91,6 +90,12 @@ class IndexedDbService {
           }
           if (!db.objectStoreNames.contains(StoreNames.EMOJI_SET_EVENTS)) {
             db.createObjectStore(StoreNames.EMOJI_SET_EVENTS, { keyPath: 'key' })
+          }
+          if (!db.objectStoreNames.contains(StoreNames.RELAY_INFOS)) {
+            db.createObjectStore(StoreNames.RELAY_INFOS, { keyPath: 'key' })
+          }
+          if (db.objectStoreNames.contains(StoreNames.RELAY_INFO_EVENTS)) {
+            db.deleteObjectStore(StoreNames.RELAY_INFO_EVENTS)
           }
           this.db = db
         }
@@ -297,58 +302,6 @@ class IndexedDbService {
     })
   }
 
-  async getAllRelayInfoEvents(): Promise<Event[]> {
-    await this.initPromise
-    return new Promise((resolve, reject) => {
-      if (!this.db) {
-        return reject('database not initialized')
-      }
-      const transaction = this.db.transaction(StoreNames.RELAY_INFO_EVENTS, 'readonly')
-      const store = transaction.objectStore(StoreNames.RELAY_INFO_EVENTS)
-      const request = store.getAll()
-
-      request.onsuccess = () => {
-        transaction.commit()
-        resolve(
-          ((request.result as TValue<Event>[])
-            ?.map((item) => item.value)
-            .filter(Boolean) as Event[]) ?? []
-        )
-      }
-
-      request.onerror = (event) => {
-        transaction.commit()
-        reject(event)
-      }
-    })
-  }
-
-  async putRelayInfoEvent(event: Event): Promise<void> {
-    await this.initPromise
-    return new Promise((resolve, reject) => {
-      if (!this.db) {
-        return reject('database not initialized')
-      }
-      const dValue = event.tags.find(tagNameEquals('d'))?.[1]
-      if (!dValue) {
-        return resolve()
-      }
-      const transaction = this.db.transaction(StoreNames.RELAY_INFO_EVENTS, 'readwrite')
-      const store = transaction.objectStore(StoreNames.RELAY_INFO_EVENTS)
-
-      const putRequest = store.put(this.formatValue(dValue, event))
-      putRequest.onsuccess = () => {
-        transaction.commit()
-        resolve()
-      }
-
-      putRequest.onerror = (event) => {
-        transaction.commit()
-        reject(event)
-      }
-    })
-  }
-
   async iterateProfileEvents(callback: (event: Event) => Promise<void>): Promise<void> {
     await this.initPromise
     if (!this.db) {
@@ -424,6 +377,50 @@ class IndexedDbService {
     })
   }
 
+  async putRelayInfo(relayInfo: TRelayInfo): Promise<void> {
+    await this.initPromise
+    return new Promise((resolve, reject) => {
+      if (!this.db) {
+        return reject('database not initialized')
+      }
+      const transaction = this.db.transaction(StoreNames.RELAY_INFOS, 'readwrite')
+      const store = transaction.objectStore(StoreNames.RELAY_INFOS)
+
+      const putRequest = store.put(this.formatValue(relayInfo.url, relayInfo))
+      putRequest.onsuccess = () => {
+        transaction.commit()
+        resolve()
+      }
+
+      putRequest.onerror = (event) => {
+        transaction.commit()
+        reject(event)
+      }
+    })
+  }
+
+  async getRelayInfo(url: string): Promise<TRelayInfo | null> {
+    await this.initPromise
+    return new Promise((resolve, reject) => {
+      if (!this.db) {
+        return reject('database not initialized')
+      }
+      const transaction = this.db.transaction(StoreNames.RELAY_INFOS, 'readonly')
+      const store = transaction.objectStore(StoreNames.RELAY_INFOS)
+      const request = store.get(url)
+
+      request.onsuccess = () => {
+        transaction.commit()
+        resolve((request.result as TValue<TRelayInfo>)?.value)
+      }
+
+      request.onerror = (event) => {
+        transaction.commit()
+        reject(event)
+      }
+    })
+  }
+
   private getReplaceableEventKeyFromEvent(event: Event): string {
     if (
       [kinds.Metadata, kinds.Contacts].includes(event.kind) ||
@@ -490,6 +487,10 @@ class IndexedDbService {
       },
       {
         name: StoreNames.BLOSSOM_SERVER_LIST_EVENTS,
+        expirationTimestamp: Date.now() - 1000 * 60 * 60 * 24 // 1 days
+      },
+      {
+        name: StoreNames.RELAY_INFOS,
         expirationTimestamp: Date.now() - 1000 * 60 * 60 * 24 // 1 days
       }
     ]

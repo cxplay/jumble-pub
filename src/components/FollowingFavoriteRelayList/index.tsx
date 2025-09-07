@@ -62,7 +62,7 @@ export default function FollowingFavoriteRelayList() {
         <RelayItem key={url} url={url} users={users} />
       ))}
       {showCount < relays.length && <div ref={bottomRef} />}
-      {loading && <RelaySimpleInfoSkeleton />}
+      {loading && <RelaySimpleInfoSkeleton className="p-4" />}
       {!loading && (
         <div className="text-center text-muted-foreground text-sm mt-2">
           {relays.length === 0 ? t('no relays found') : t('no more relays')}

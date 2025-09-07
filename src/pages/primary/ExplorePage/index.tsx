@@ -1,15 +1,15 @@
+import Explore from '@/components/Explore'
 import FollowingFavoriteRelayList from '@/components/FollowingFavoriteRelayList'
-import RelayList from '@/components/RelayList'
 import Tabs from '@/components/Tabs'
 import PrimaryPageLayout from '@/layouts/PrimaryPageLayout'
 import { Compass } from 'lucide-react'
 import { forwardRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-type TExploreTabs = 'following' | 'all'
+type TExploreTabs = 'following' | 'explore'
 
 const ExplorePage = forwardRef((_, ref) => {
-  const [tab, setTab] = useState<TExploreTabs>('following')
+  const [tab, setTab] = useState<TExploreTabs>('explore')
 
   return (
     <PrimaryPageLayout
@@ -21,12 +21,12 @@ const ExplorePage = forwardRef((_, ref) => {
       <Tabs
         value={tab}
         tabs={[
-          { value: 'following', label: "Following's Favorites" },
-          { value: 'all', label: 'All' }
+          { value: 'explore', label: 'Explore' },
+          { value: 'following', label: "Following's Favorites" }
         ]}
         onTabChange={(tab) => setTab(tab as TExploreTabs)}
       />
-      {tab === 'following' ? <FollowingFavoriteRelayList /> : <RelayList />}
+      {tab === 'following' ? <FollowingFavoriteRelayList /> : <Explore />}
     </PrimaryPageLayout>
   )
 })

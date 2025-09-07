@@ -5,7 +5,7 @@ import { RECOMMENDED_RELAYS } from '@/constants'
 import SecondaryPageLayout from '@/layouts/SecondaryPageLayout'
 import { toRelay } from '@/lib/link'
 import relayInfoService from '@/services/relay-info.service'
-import { TNip66RelayInfo } from '@/types'
+import { TRelayInfo } from '@/types'
 import { ArrowRight, Server } from 'lucide-react'
 import { forwardRef, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -14,13 +14,13 @@ const HomePage = forwardRef(({ index }: { index?: number }, ref) => {
   const { t } = useTranslation()
   const { navigate } = usePrimaryPage()
   const { push } = useSecondaryPage()
-  const [recommendedRelayInfos, setRecommendedRelayInfos] = useState<TNip66RelayInfo[]>([])
+  const [recommendedRelayInfos, setRecommendedRelayInfos] = useState<TRelayInfo[]>([])
 
   useEffect(() => {
     const init = async () => {
       try {
         const relays = await relayInfoService.getRelayInfos(RECOMMENDED_RELAYS)
-        setRecommendedRelayInfos(relays.filter(Boolean) as TNip66RelayInfo[])
+        setRecommendedRelayInfos(relays.filter(Boolean) as TRelayInfo[])
       } catch (error) {
         console.error('Failed to fetch recommended relays:', error)
       }
@@ -56,7 +56,7 @@ const HomePage = forwardRef(({ index }: { index?: number }, ref) => {
           {recommendedRelayInfos.map((relayInfo) => (
             <RelaySimpleInfo
               key={relayInfo.url}
-              className="clickable h-auto p-3 rounded-lg border"
+              className="clickable h-auto px-4 py-3 rounded-lg border"
               relayInfo={relayInfo}
               onClick={(e) => {
                 e.stopPropagation()
