@@ -105,6 +105,9 @@ export function detectLanguage(text?: string): string | null {
   if (/[\u0400-\u04ff]/.test(cleanText)) {
     return 'ru'
   }
+  if (/[\u0900-\u097f]/.test(cleanText)) {
+    return 'hi'
+  }
 
   try {
     const detectedLang = franc(cleanText)
@@ -116,6 +119,7 @@ export function detectLanguage(text?: string): string | null {
       fas: 'fa', // Persian (Farsi)
       pes: 'fa', // Persian (alternative code)
       fra: 'fr', // French
+      hin: 'hi', // Hindi
       ita: 'it', // Italian
       jpn: 'ja', // Japanese
       pol: 'pl', // Polish
