@@ -399,6 +399,7 @@ export default {
     'See extra info for each notification': 'Ver informações extras para cada notificação',
     'See more notifications at a glance': 'Ver mais notificações rapidamente',
     Detailed: 'Detalhado',
-    Compact: 'Compacto'
+    Compact: 'Compacto',
+    'Submit Relay': 'Enviar Relay'
   }
 }

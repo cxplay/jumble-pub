@@ -407,6 +407,7 @@ export default {
       'Zusätzliche Informationen für jede Benachrichtigung anzeigen',
     'See more notifications at a glance': 'Mehr Benachrichtigungen auf einen Blick sehen',
     Detailed: 'Detailliert',
-    Compact: 'Kompakt'
+    Compact: 'Kompakt',
+    'Submit Relay': 'Relay einreichen'
   }
 }

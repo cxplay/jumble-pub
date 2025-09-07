@@ -402,6 +402,7 @@ export default {
     'See extra info for each notification': 'Ver información adicional para cada notificación',
     'See more notifications at a glance': 'Ver más notificaciones de un vistazo',
     Detailed: 'Detallado',
-    Compact: 'Compacto'
+    Compact: 'Compacto',
+    'Submit Relay': 'Enviar relé'
   }
 }

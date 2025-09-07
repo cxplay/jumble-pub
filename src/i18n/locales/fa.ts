@@ -398,6 +398,7 @@ export default {
     'See extra info for each notification': 'مشاهده اطلاعات اضافی برای هر اعلان',
     'See more notifications at a glance': 'مشاهده اعلان‌های بیشتر در یک نگاه',
     Detailed: 'تفصیلی',
-    Compact: 'فشرده'
+    Compact: 'فشرده',
+    'Submit Relay': 'ارسال رله'
   }
 }

@@ -403,6 +403,7 @@ export default {
     'See extra info for each notification': 'Zobacz dodatkowe informacje dla każdego powiadomienia',
     'See more notifications at a glance': 'Zobacz więcej powiadomień na pierwszy rzut oka',
     Detailed: 'Szczegółowy',
-    Compact: 'Zwięzły'
+    Compact: 'Zwięzły',
+    'Submit Relay': 'Prześlij przekaźnik'
   }
 }

@@ -397,6 +397,7 @@ export default {
     'See extra info for each notification': 'عرض معلومات إضافية لكل إشعار',
     'See more notifications at a glance': 'رؤية المزيد من الإشعارات بنظرة سريعة',
     Detailed: 'تفصيلي',
-    Compact: 'مضغوط'
+    Compact: 'مضغوط',
+    'Submit Relay': 'إرسال ريلاي'
   }
 }

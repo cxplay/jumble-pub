@@ -401,6 +401,7 @@ export default {
     'See extra info for each notification': 'प्रत्येक सूचना के लिए अतिरिक्त जानकारी देखें',
     'See more notifications at a glance': 'एक नज़र में अधिक सूचनाएं देखें',
     Detailed: 'विस्तृत',
-    Compact: 'संक्षिप्त'
+    Compact: 'संक्षिप्त',
+    'Submit Relay': 'रिले सबमिट करें'
   }
 }

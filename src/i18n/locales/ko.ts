@@ -399,6 +399,7 @@ export default {
     'See extra info for each notification': '각 알림의 추가 정보 보기',
     'See more notifications at a glance': '한눈에 더 많은 알림 보기',
     Detailed: '상세',
-    Compact: '간단'
+    Compact: '간단',
+    'Submit Relay': '릴레이 제출'
   }
 }

@@ -392,6 +392,7 @@ export default {
     'See extra info for each notification': '查看每条通知的详细信息',
     'See more notifications at a glance': '一目了然地查看更多通知',
     Detailed: '详细',
-    Compact: '紧凑'
+    Compact: '紧凑',
+    'Submit Relay': '提交服务器'
   }
 }

@@ -396,6 +396,7 @@ export default {
     'See extra info for each notification': 'See extra info for each notification',
     'See more notifications at a glance': 'See more notifications at a glance',
     Detailed: 'Detailed',
-    Compact: 'Compact'
+    Compact: 'Compact',
+    'Submit Relay': 'Submit Relay'
   }
 }

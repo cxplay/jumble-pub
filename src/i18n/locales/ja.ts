@@ -399,6 +399,7 @@ export default {
     'See extra info for each notification': '各通知の詳細情報を表示',
     'See more notifications at a glance': '一目でより多くの通知を確認',
     Detailed: '詳細',
-    Compact: 'コンパクト'
+    Compact: 'コンパクト',
+    'Submit Relay': 'リレーを提出'
   }
 }

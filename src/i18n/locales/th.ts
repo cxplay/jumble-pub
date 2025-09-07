@@ -394,6 +394,7 @@ export default {
     'See extra info for each notification': 'ดูข้อมูลเพิ่มเติมสำหรับการแจ้งเตือนแต่ละรายการ',
     'See more notifications at a glance': 'ดูการแจ้งเตือนเพิ่มเติมในแวบเดียว',
     Detailed: 'รายละเอียด',
-    Compact: 'กะทัดรัด'
+    Compact: 'กะทัดรัด',
+    'Submit Relay': 'ส่งรีเลย์'
   }
 }
