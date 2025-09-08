@@ -98,7 +98,7 @@ export default function Tabs({
               key={tab.value}
               ref={(el) => (tabRefs.current[index] = el)}
               className={cn(
-                `w-fit text-center py-2 px-6 my-1 font-semibold clickable cursor-pointer rounded-lg`,
+                `w-fit text-center py-2 px-6 my-1 font-semibold whitespace-nowrap clickable cursor-pointer rounded-lg`,
                 value === tab.value ? '' : 'text-muted-foreground'
               )}
               onClick={() => {

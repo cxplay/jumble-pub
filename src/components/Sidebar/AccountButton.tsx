@@ -7,9 +7,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
-import { toProfile, toWallet } from '@/lib/link'
+import { toWallet } from '@/lib/link'
 import { formatPubkey, generateImageByPubkey } from '@/lib/pubkey'
-import { useSecondaryPage } from '@/PageManager'
+import { usePrimaryPage, useSecondaryPage } from '@/PageManager'
 import { useNostr } from '@/providers/NostrProvider'
 import { ArrowDownUp, LogIn, LogOut, UserRound, Wallet } from 'lucide-react'
 import { useState } from 'react'
@@ -32,6 +32,7 @@ function ProfileButton() {
   const { t } = useTranslation()
   const { account, profile } = useNostr()
   const pubkey = account?.pubkey
+  const { navigate } = usePrimaryPage()
   const { push } = useSecondaryPage()
   const [loginDialogOpen, setLoginDialogOpen] = useState(false)
   const [logoutDialogOpen, setLogoutDialogOpen] = useState(false)
@@ -59,7 +60,7 @@ function ProfileButton() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent side="top">
-        <DropdownMenuItem onClick={() => push(toProfile(pubkey))}>
+        <DropdownMenuItem onClick={() => navigate('profile')}>
           <UserRound />
           {t('Profile')}
         </DropdownMenuItem>

@@ -57,6 +57,7 @@ const SearchPage = forwardRef(({ index }: { index?: number }, ref) => {
           <SearchBar ref={searchBarRef} input={input} setInput={setInput} onSearch={onSearch} />
         </div>
       }
+      displayScrollToTopButton
     >
       <SearchResult searchParams={searchParams} />
     </SecondaryPageLayout>
