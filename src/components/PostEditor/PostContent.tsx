@@ -4,7 +4,8 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import {
   createCommentDraftEvent,
   createPollDraftEvent,
-  createShortTextNoteDraftEvent
+  createShortTextNoteDraftEvent,
+  deleteDraftEventCache
 } from '@/lib/draft-event'
 import { isTouchDevice } from '@/lib/utils'
 import { useNostr } from '@/providers/NostrProvider'
@@ -56,6 +57,7 @@ export default function PostContent({
     endsAt: undefined,
     relays: []
   })
+  const [minPow, setMinPow] = useState(0)
   const isFirstRender = useRef(true)
   const canPost =
     !!pubkey &&
@@ -133,10 +135,12 @@ export default function PostContent({
 
         const newEvent = await publish(draftEvent, {
           specifiedRelayUrls,
-          additionalRelayUrls: isPoll ? pollCreateData.relays : []
+          additionalRelayUrls: isPoll ? pollCreateData.relays : [],
+          minPow
         })
-        addReplies([newEvent])
         postEditorCache.clearPostCache({ defaultContent, parentEvent })
+        deleteDraftEventCache(draftEvent)
+        addReplies([newEvent])
         close()
       } catch (error) {
         if (error instanceof AggregateError) {
@@ -311,11 +315,14 @@ export default function PostContent({
         </div>
       </div>
       <PostOptions
+        posting={posting}
         show={showMoreOptions}
         addClientTag={addClientTag}
         setAddClientTag={setAddClientTag}
         isNsfw={isNsfw}
         setIsNsfw={setIsNsfw}
+        minPow={minPow}
+        setMinPow={setMinPow}
       />
       <div className="flex gap-2 items-center justify-around sm:hidden">
         <Button

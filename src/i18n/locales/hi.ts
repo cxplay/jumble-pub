@@ -403,6 +403,7 @@ export default {
     Detailed: 'विस्तृत',
     Compact: 'संक्षिप्त',
     'Submit Relay': 'रिले सबमिट करें',
-    Homepage: 'होमपेज'
+    Homepage: 'होमपेज',
+    'Proof of Work (difficulty {{minPow}})': 'कार्य प्रमाण (कठिनाई {{minPow}})'
   }
 }

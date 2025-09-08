@@ -7,7 +7,12 @@ import {
   createRelayListDraftEvent,
   createSeenNotificationsAtDraftEvent
 } from '@/lib/draft-event'
-import { getLatestEvent, getReplaceableEventIdentifier, isProtectedEvent } from '@/lib/event'
+import {
+  getLatestEvent,
+  getReplaceableEventIdentifier,
+  isProtectedEvent,
+  minePow
+} from '@/lib/event'
 import { getProfileFromEvent, getRelayListFromEvent } from '@/lib/event-metadata'
 import { formatPubkey, pubkeyToNpub } from '@/lib/pubkey'
 import client from '@/services/client.service'
@@ -594,12 +599,22 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
     return event as VerifiedEvent
   }
 
-  const publish = async (draftEvent: TDraftEvent, options: TPublishOptions = {}) => {
+  const publish = async (
+    draftEvent: TDraftEvent,
+    { minPow = 0, ...options }: TPublishOptions = {}
+  ) => {
     if (!account || !signer || account.signerType === 'npub') {
       throw new Error('You need to login first')
     }
 
-    const event = await signEvent(draftEvent)
+    const draft = JSON.parse(JSON.stringify(draftEvent)) as TDraftEvent
+    let event: VerifiedEvent
+    if (minPow > 0) {
+      const unsignedEvent = await minePow({ ...draft, pubkey: account.pubkey }, minPow)
+      event = await signEvent(unsignedEvent)
+    } else {
+      event = await signEvent(draft)
+    }
 
     if (event.kind !== kinds.Application && event.pubkey !== account.pubkey) {
       const eventAuthor = await client.fetchProfile(event.pubkey)

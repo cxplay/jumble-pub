@@ -2,11 +2,12 @@ import { EMBEDDED_MENTION_REGEX, ExtendedKind } from '@/constants'
 import client from '@/services/client.service'
 import { TImetaInfo } from '@/types'
 import { LRUCache } from 'lru-cache'
-import { Event, kinds, nip19 } from 'nostr-tools'
+import { Event, kinds, nip19, UnsignedEvent } from 'nostr-tools'
+import { fastEventHash, getPow } from 'nostr-tools/nip13'
 import {
-  getImetaInfoFromImetaTag,
   generateBech32IdFromATag,
   generateBech32IdFromETag,
+  getImetaInfoFromImetaTag,
   tagNameEquals
 } from './tag'
 
@@ -254,6 +255,47 @@ export function createFakeEvent(event: Partial<Event>): Event {
     sig: '',
     ...event
   }
+}
+
+export async function minePow(
+  unsigned: UnsignedEvent,
+  difficulty: number
+): Promise<Omit<Event, 'sig'>> {
+  let count = 0
+
+  const event = unsigned as Omit<Event, 'sig'>
+  const tag = ['nonce', count.toString(), difficulty.toString()]
+
+  event.tags.push(tag)
+
+  return new Promise((resolve) => {
+    const mine = () => {
+      let iterations = 0
+
+      while (iterations < 1000) {
+        const now = Math.floor(new Date().getTime() / 1000)
+
+        if (now !== event.created_at) {
+          count = 0
+          event.created_at = now
+        }
+
+        tag[1] = (++count).toString()
+        event.id = fastEventHash(event)
+
+        if (getPow(event.id) >= difficulty) {
+          resolve(event)
+          return
+        }
+
+        iterations++
+      }
+
+      setTimeout(mine, 0)
+    }
+
+    mine()
+  })
 }
 
 // Legacy compare function for sorting compatibility

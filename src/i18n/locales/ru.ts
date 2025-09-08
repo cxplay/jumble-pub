@@ -406,6 +406,7 @@ export default {
     Detailed: 'Подробный',
     Compact: 'Компактный',
     'Submit Relay': 'Отправить релей',
-    Homepage: 'Домашняя страница'
+    Homepage: 'Домашняя страница',
+    'Proof of Work (difficulty {{minPow}})': 'Доказательство работы (сложность {{minPow}})'
   }
 }

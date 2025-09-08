@@ -404,6 +404,7 @@ export default {
     Detailed: 'Dettagliato',
     Compact: 'Compatto',
     'Submit Relay': 'Invia Relay',
-    Homepage: 'Homepage'
+    Homepage: 'Homepage',
+    'Proof of Work (difficulty {{minPow}})': 'Proof of Work (difficoltà {{minPow}})'
   }
 }

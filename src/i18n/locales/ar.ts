@@ -399,6 +399,7 @@ export default {
     Detailed: 'تفصيلي',
     Compact: 'مضغوط',
     'Submit Relay': 'إرسال ريلاي',
-    Homepage: 'الصفحة الرئيسية'
+    Homepage: 'الصفحة الرئيسية',
+    'Proof of Work (difficulty {{minPow}})': 'إثبات العمل (الصعوبة {{minPow}})'
   }
 }

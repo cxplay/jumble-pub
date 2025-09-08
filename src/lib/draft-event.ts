@@ -10,6 +10,7 @@ import {
   TPollCreateData,
   TRelaySet
 } from '@/types'
+import { sha256 } from '@noble/hashes/sha2'
 import dayjs from 'dayjs'
 import { Event, kinds, nip19 } from 'nostr-tools'
 import {
@@ -21,6 +22,39 @@ import {
 } from './event'
 import { randomString } from './random'
 import { generateBech32IdFromETag, tagNameEquals } from './tag'
+
+const draftEventCache: Map<string, string> = new Map()
+
+export function deleteDraftEventCache(draftEvent: TDraftEvent) {
+  const key = generateDraftEventCacheKey(draftEvent)
+  draftEventCache.delete(key)
+}
+
+function setDraftEventCache(baseDraft: Omit<TDraftEvent, 'created_at'>): TDraftEvent {
+  const cacheKey = generateDraftEventCacheKey(baseDraft)
+  const cache = draftEventCache.get(cacheKey)
+  if (cache) {
+    return JSON.parse(cache)
+  }
+  const draftEvent = { ...baseDraft, created_at: dayjs().unix() }
+  draftEventCache.set(cacheKey, JSON.stringify(draftEvent))
+
+  return draftEvent
+}
+
+function generateDraftEventCacheKey(draft: Omit<TDraftEvent, 'created_at'>) {
+  const str = JSON.stringify({
+    content: draft.content,
+    kind: draft.kind,
+    tags: draft.tags
+  })
+
+  const encoder = new TextEncoder()
+  const data = encoder.encode(str)
+  const hashBuffer = sha256(data)
+  const hashArray = Array.from(new Uint8Array(hashBuffer))
+  return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('')
+}
 
 // https://github.com/nostr-protocol/nips/blob/master/25.md
 export function createReactionDraftEvent(event: Event, emoji: TEmoji | string = '+'): TDraftEvent {
@@ -68,7 +102,6 @@ export function createRepostDraftEvent(event: Event): TDraftEvent {
   }
 }
 
-const shortTextNoteDraftEventCache: Map<string, TDraftEvent> = new Map()
 export async function createShortTextNoteDraftEvent(
   content: string,
   mentions: string[],
@@ -125,15 +158,7 @@ export async function createShortTextNoteDraftEvent(
     content: transformedEmojisContent,
     tags
   }
-  const cacheKey = JSON.stringify(baseDraft)
-  const cache = shortTextNoteDraftEventCache.get(cacheKey)
-  if (cache) {
-    return cache
-  }
-  const draftEvent = { ...baseDraft, created_at: dayjs().unix() }
-  shortTextNoteDraftEventCache.set(cacheKey, draftEvent)
-
-  return draftEvent
+  return setDraftEventCache(baseDraft)
 }
 
 // https://github.com/nostr-protocol/nips/blob/master/51.md
@@ -150,7 +175,6 @@ export function createRelaySetDraftEvent(relaySet: Omit<TRelaySet, 'aTag'>): TDr
   }
 }
 
-const commentDraftEventCache: Map<string, TDraftEvent> = new Map()
 export async function createCommentDraftEvent(
   content: string,
   parentEvent: Event,
@@ -228,15 +252,7 @@ export async function createCommentDraftEvent(
     content: transformedEmojisContent,
     tags
   }
-  const cacheKey = JSON.stringify(baseDraft)
-  const cache = commentDraftEventCache.get(cacheKey)
-  if (cache) {
-    return cache
-  }
-  const draftEvent = { ...baseDraft, created_at: dayjs().unix() }
-  commentDraftEventCache.set(cacheKey, draftEvent)
-
-  return draftEvent
+  return setDraftEventCache(baseDraft)
 }
 
 export function createRelayListDraftEvent(mailboxRelays: TMailboxRelay[]): TDraftEvent {
@@ -325,7 +341,6 @@ export function createBlossomServerListDraftEvent(servers: string[]): TDraftEven
   }
 }
 
-const pollDraftEventCache: Map<string, TDraftEvent> = new Map()
 export async function createPollDraftEvent(
   author: string,
   question: string,
@@ -389,15 +404,7 @@ export async function createPollDraftEvent(
     kind: ExtendedKind.POLL,
     tags
   }
-  const cacheKey = JSON.stringify(baseDraft)
-  const cache = pollDraftEventCache.get(cacheKey)
-  if (cache) {
-    return cache
-  }
-  const draftEvent = { ...baseDraft, created_at: dayjs().unix() }
-  pollDraftEventCache.set(cacheKey, draftEvent)
-
-  return draftEvent
+  return setDraftEventCache(baseDraft)
 }
 
 export function createPollResponseDraftEvent(

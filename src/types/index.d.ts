@@ -121,6 +121,7 @@ export type TImetaInfo = {
 export type TPublishOptions = {
   specifiedRelayUrls?: string[]
   additionalRelayUrls?: string[]
+  minPow?: number
 }
 
 export type TNoteListMode = 'posts' | 'postsAndReplies' | 'you'

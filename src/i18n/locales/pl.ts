@@ -405,6 +405,7 @@ export default {
     Detailed: 'Szczegółowy',
     Compact: 'Zwięzły',
     'Submit Relay': 'Prześlij przekaźnik',
-    Homepage: 'Strona główna'
+    Homepage: 'Strona główna',
+    'Proof of Work (difficulty {{minPow}})': 'Dowód pracy (trudność {{minPow}})'
   }
 }

@@ -400,6 +400,7 @@ export default {
     Detailed: 'تفصیلی',
     Compact: 'فشرده',
     'Submit Relay': 'ارسال رله',
-    Homepage: 'صفحه اصلی'
+    Homepage: 'صفحه اصلی',
+    'Proof of Work (difficulty {{minPow}})': 'اثبات کار (دشواری {{minPow}})'
   }
 }

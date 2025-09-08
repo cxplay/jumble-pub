@@ -5,8 +5,11 @@ import { cn } from '@/lib/utils'
 
 const Slider = React.forwardRef<
   React.ElementRef<typeof SliderPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root> & { hideThumb?: boolean }
->(({ className, ...props }, ref) => {
+  React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root> & {
+    hideThumb?: boolean
+    enableHoverAnimation?: boolean
+  }
+>(({ className, hideThumb, enableHoverAnimation, ...props }, ref) => {
   const [isHovered, setIsHovered] = React.useState(false)
 
   return (
@@ -22,17 +25,18 @@ const Slider = React.forwardRef<
       <SliderPrimitive.Track
         className={cn(
           'relative w-full grow overflow-hidden rounded-full bg-primary/20 cursor-pointer transition-all',
-          isHovered ? 'h-3' : 'h-1.5'
+          isHovered && enableHoverAnimation ? 'h-3' : 'h-1.5'
         )}
       >
-        <SliderPrimitive.Range className="absolute h-full bg-primary rounded-full" />
+        <SliderPrimitive.Range className="absolute h-full bg-primary disabled:bg-primary/30 rounded-full" />
       </SliderPrimitive.Track>
-      {/* <SliderPrimitive.Thumb
-        className={cn(
-          'block h-4 w-4 rounded-full border border-primary/50 bg-background shadow transition-all duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50',
-          isHovered ? 'opacity-100' : 'opacity-0'
-        )}
-      /> */}
+      {!hideThumb && (
+        <SliderPrimitive.Thumb
+          className={cn(
+            'block h-4 w-4 rounded-full border border-primary/50 bg-background shadow transition-all duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50'
+          )}
+        />
+      )}
     </SliderPrimitive.Root>
   )
 })

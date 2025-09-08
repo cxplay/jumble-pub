@@ -409,6 +409,7 @@ export default {
     Detailed: 'Détaillé',
     Compact: 'Compact',
     'Submit Relay': 'Soumettre un relais',
-    Homepage: 'Page d’accueil'
+    Homepage: 'Page d’accueil',
+    'Proof of Work (difficulty {{minPow}})': 'Preuve de travail (difficulté {{minPow}})'
   }
 }

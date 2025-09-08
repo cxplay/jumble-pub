@@ -394,6 +394,7 @@ export default {
     Detailed: '详细',
     Compact: '紧凑',
     'Submit Relay': '提交服务器',
-    Homepage: '主页'
+    Homepage: '主页',
+    'Proof of Work (difficulty {{minPow}})': '工作量证明 (难度 {{minPow}})'
   }
 }

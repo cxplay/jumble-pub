@@ -95,7 +95,14 @@ export default function AudioPlayer({ src, className }: AudioPlayerProps) {
 
       {/* Progress Section */}
       <div className="flex-1 relative">
-        <Slider value={[currentTime]} max={duration || 100} step={1} onValueChange={handleSeek} />
+        <Slider
+          value={[currentTime]}
+          max={duration || 100}
+          step={1}
+          onValueChange={handleSeek}
+          hideThumb
+          enableHoverAnimation
+        />
       </div>
 
       <div className="text-sm font-mono text-muted-foreground">
