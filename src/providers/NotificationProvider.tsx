@@ -93,9 +93,8 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
       try {
         let eosed = false
         const relayList = await client.fetchRelayList(pubkey)
-        const relayUrls = relayList.read.concat(BIG_RELAY_URLS).slice(0, 4)
         const subCloser = client.subscribe(
-          relayUrls,
+          relayList.read.length > 0 ? relayList.read.slice(0, 5) : BIG_RELAY_URLS,
           [
             {
               kinds: [
