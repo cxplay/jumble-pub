@@ -27,7 +27,7 @@ export default function RelayInfo({ url, className }: { url: string; className?:
     <div className={cn('px-4 space-y-4 mb-2', className)}>
       <div className="space-y-2">
         <div className="flex items-center gap-2 justify-between">
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-2 items-center truncate">
             <RelayIcon url={url} className="w-8 h-8" />
             <div className="text-2xl font-semibold truncate select-text">
               {relayInfo.name || relayInfo.shortUrl}
