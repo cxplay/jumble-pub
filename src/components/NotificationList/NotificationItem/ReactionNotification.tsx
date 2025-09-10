@@ -1,6 +1,6 @@
 import Image from '@/components/Image'
 import { useFetchEvent } from '@/hooks'
-import { generateBech32IdFromETag, tagNameEquals } from '@/lib/tag'
+import { generateBech32IdFromATag, generateBech32IdFromETag, tagNameEquals } from '@/lib/tag'
 import { useNostr } from '@/providers/NostrProvider'
 import { Heart } from 'lucide-react'
 import { Event } from 'nostr-tools'
@@ -18,9 +18,10 @@ export function ReactionNotification({
   const { t } = useTranslation()
   const { pubkey } = useNostr()
   const eventId = useMemo(() => {
-    const targetPubkey = notification.tags.findLast(tagNameEquals('p'))?.[1]
-    if (targetPubkey !== pubkey) return undefined
-
+    const aTag = notification.tags.findLast(tagNameEquals('a'))
+    if (aTag) {
+      return generateBech32IdFromATag(aTag)
+    }
     const eTag = notification.tags.findLast(tagNameEquals('e'))
     return eTag ? generateBech32IdFromETag(eTag) : undefined
   }, [notification, pubkey])

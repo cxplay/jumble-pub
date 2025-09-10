@@ -1,7 +1,9 @@
 import { ExtendedKind } from '@/constants'
-import { isMentioningMutedUsers } from '@/lib/event'
+import { notificationFilter } from '@/lib/notification'
 import { useContentPolicy } from '@/providers/ContentPolicyProvider'
 import { useMuteList } from '@/providers/MuteListProvider'
+import { useNostr } from '@/providers/NostrProvider'
+import { useUserTrust } from '@/providers/UserTrustProvider'
 import { Event, kinds } from 'nostr-tools'
 import { useMemo } from 'react'
 import { MentionNotification } from './MentionNotification'
@@ -17,18 +19,26 @@ export function NotificationItem({
   notification: Event
   isNew?: boolean
 }) {
+  const { pubkey } = useNostr()
   const { mutePubkeySet } = useMuteList()
   const { hideContentMentioningMutedUsers } = useContentPolicy()
-  const shouldHide = useMemo(() => {
-    if (mutePubkeySet.has(notification.pubkey)) {
-      return true
-    }
-    if (hideContentMentioningMutedUsers && isMentioningMutedUsers(notification, mutePubkeySet)) {
-      return true
-    }
-    return false
-  }, [])
-  if (shouldHide) return null
+  const { hideUntrustedNotifications, isUserTrusted } = useUserTrust()
+  const canShow = useMemo(() => {
+    return notificationFilter(notification, {
+      pubkey,
+      mutePubkeySet,
+      hideContentMentioningMutedUsers,
+      hideUntrustedNotifications,
+      isUserTrusted
+    })
+  }, [
+    notification,
+    mutePubkeySet,
+    hideContentMentioningMutedUsers,
+    hideUntrustedNotifications,
+    isUserTrusted
+  ])
+  if (!canShow) return null
 
   if (notification.kind === kinds.Reaction) {
     return <ReactionNotification notification={notification} isNew={isNew} />

@@ -1,5 +1,6 @@
 import { BIG_RELAY_URLS, ExtendedKind } from '@/constants'
-import { compareEvents, isMentioningMutedUsers } from '@/lib/event'
+import { compareEvents } from '@/lib/event'
+import { notificationFilter } from '@/lib/notification'
 import { usePrimaryPage } from '@/PageManager'
 import client from '@/services/client.service'
 import storage from '@/services/local-storage.service'
@@ -47,9 +48,13 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
         break
       }
       if (
-        mutePubkeySet.has(notification.pubkey) ||
-        (hideContentMentioningMutedUsers && isMentioningMutedUsers(notification, mutePubkeySet)) ||
-        (hideUntrustedNotifications && !isUserTrusted(notification.pubkey))
+        !notificationFilter(notification, {
+          pubkey,
+          mutePubkeySet,
+          hideContentMentioningMutedUsers,
+          hideUntrustedNotifications,
+          isUserTrusted
+        })
       ) {
         continue
       }

@@ -4,7 +4,6 @@ import { usePrimaryPage } from '@/PageManager'
 import { useNostr } from '@/providers/NostrProvider'
 import { useNotification } from '@/providers/NotificationProvider'
 import { useUserPreferences } from '@/providers/UserPreferencesProvider'
-import { useUserTrust } from '@/providers/UserTrustProvider'
 import client from '@/services/client.service'
 import noteStatsService from '@/services/note-stats.service'
 import { TNotificationType } from '@/types'
@@ -33,7 +32,6 @@ const NotificationList = forwardRef((_, ref) => {
   const { current, display } = usePrimaryPage()
   const active = useMemo(() => current === 'notifications' && display, [current, display])
   const { pubkey } = useNostr()
-  const { hideUntrustedNotifications, isUserTrusted } = useUserTrust()
   const { getNotificationsSeenAt } = useNotification()
   const { notificationListStyle } = useUserPreferences()
   const [notificationType, setNotificationType] = useState<TNotificationType>('all')
@@ -180,13 +178,8 @@ const NotificationList = forwardRef((_, ref) => {
   }, [pubkey, active, filterKinds, handleNewEvent])
 
   useEffect(() => {
-    let visibleNotifications = notifications.slice(0, showCount)
-    if (hideUntrustedNotifications) {
-      visibleNotifications = visibleNotifications.filter((event) => isUserTrusted(event.pubkey))
-    }
-
-    setVisibleNotifications(visibleNotifications)
-  }, [notifications, showCount, hideUntrustedNotifications, isUserTrusted])
+    setVisibleNotifications(notifications.slice(0, showCount))
+  }, [notifications, showCount])
 
   useEffect(() => {
     const options = {
