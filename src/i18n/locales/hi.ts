@@ -404,6 +404,7 @@ export default {
     Compact: 'संक्षिप्त',
     'Submit Relay': 'रिले सबमिट करें',
     Homepage: 'होमपेज',
-    'Proof of Work (difficulty {{minPow}})': 'कार्य प्रमाण (कठिनाई {{minPow}})'
+    'Proof of Work (difficulty {{minPow}})': 'कार्य प्रमाण (कठिनाई {{minPow}})',
+    'via {{client}}': 'के माध्यम से {{client}}'
   }
 }

@@ -400,6 +400,7 @@ export default {
     Compact: 'مضغوط',
     'Submit Relay': 'إرسال ريلاي',
     Homepage: 'الصفحة الرئيسية',
-    'Proof of Work (difficulty {{minPow}})': 'إثبات العمل (الصعوبة {{minPow}})'
+    'Proof of Work (difficulty {{minPow}})': 'إثبات العمل (الصعوبة {{minPow}})',
+    'via {{client}}': 'عبر {{client}}'
   }
 }

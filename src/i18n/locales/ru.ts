@@ -407,6 +407,7 @@ export default {
     Compact: 'Компактный',
     'Submit Relay': 'Отправить релей',
     Homepage: 'Домашняя страница',
-    'Proof of Work (difficulty {{minPow}})': 'Доказательство работы (сложность {{minPow}})'
+    'Proof of Work (difficulty {{minPow}})': 'Доказательство работы (сложность {{minPow}})',
+    'via {{client}}': 'через {{client}}'
   }
 }

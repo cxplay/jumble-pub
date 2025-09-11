@@ -402,6 +402,7 @@ export default {
     Compact: 'コンパクト',
     'Submit Relay': 'リレーを提出',
     Homepage: 'ホームページ',
-    'Proof of Work (difficulty {{minPow}})': 'プルーフオブワーク (難易度 {{minPow}})'
+    'Proof of Work (difficulty {{minPow}})': 'プルーフオブワーク (難易度 {{minPow}})',
+    'via {{client}}': '{{client}} 経由'
   }
 }

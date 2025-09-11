@@ -405,6 +405,7 @@ export default {
     Compact: 'Compatto',
     'Submit Relay': 'Invia Relay',
     Homepage: 'Homepage',
-    'Proof of Work (difficulty {{minPow}})': 'Proof of Work (difficoltà {{minPow}})'
+    'Proof of Work (difficulty {{minPow}})': 'Proof of Work (difficoltà {{minPow}})',
+    'via {{client}}': 'tramite {{client}}'
   }
 }

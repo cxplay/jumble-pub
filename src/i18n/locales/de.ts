@@ -410,6 +410,7 @@ export default {
     Compact: 'Kompakt',
     'Submit Relay': 'Relay einreichen',
     Homepage: 'Homepage',
-    'Proof of Work (difficulty {{minPow}})': 'Arbeitsnachweis (Schwierigkeit {{minPow}})'
+    'Proof of Work (difficulty {{minPow}})': 'Arbeitsnachweis (Schwierigkeit {{minPow}})',
+    'via {{client}}': 'über {{client}}'
   }
 }

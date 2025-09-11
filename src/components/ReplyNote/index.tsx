@@ -1,7 +1,7 @@
 import { useSecondaryPage } from '@/PageManager'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
-import { getUsingClient, isMentioningMutedUsers } from '@/lib/event'
+import { isMentioningMutedUsers } from '@/lib/event'
 import { toNote } from '@/lib/link'
 import { useContentPolicy } from '@/providers/ContentPolicyProvider'
 import { useMuteList } from '@/providers/MuteListProvider'
@@ -9,6 +9,7 @@ import { useScreenSize } from '@/providers/ScreenSizeProvider'
 import { Event } from 'nostr-tools'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import ClientTag from '../ClientTag'
 import Collapsible from '../Collapsible'
 import Content from '../Content'
 import { FormattedTimestamp } from '../FormattedTimestamp'
@@ -49,7 +50,6 @@ export default function ReplyNote({
     }
     return true
   }, [showMuted, mutePubkeySet, event, hideContentMentioningMutedUsers])
-  const usingClient = useMemo(() => getUsingClient(event), [event])
 
   return (
     <div
@@ -68,11 +68,7 @@ export default function ReplyNote({
                     className="text-sm font-semibold text-muted-foreground hover:text-foreground truncate"
                     skeletonClassName="h-3"
                   />
-                  {usingClient && (
-                    <span className="text-sm text-muted-foreground shrink-0">
-                      using {usingClient}
-                    </span>
-                  )}
+                  <ClientTag event={event} />
                 </div>
                 <div className="flex items-center gap-1 text-sm text-muted-foreground">
                   <Nip05 pubkey={event.pubkey} append="·" />

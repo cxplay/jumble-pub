@@ -401,6 +401,7 @@ export default {
     Compact: 'فشرده',
     'Submit Relay': 'ارسال رله',
     Homepage: 'صفحه اصلی',
-    'Proof of Work (difficulty {{minPow}})': 'اثبات کار (دشواری {{minPow}})'
+    'Proof of Work (difficulty {{minPow}})': 'اثبات کار (دشواری {{minPow}})',
+    'via {{client}}': 'از طریق {{client}}'
   }
 }

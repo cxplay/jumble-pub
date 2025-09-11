@@ -397,6 +397,7 @@ export default {
     Compact: 'กะทัดรัด',
     'Submit Relay': 'ส่งรีเลย์',
     Homepage: 'หน้าแรก',
-    'Proof of Work (difficulty {{minPow}})': 'หลักฐานการทำงาน (ความยาก {{minPow}})'
+    'Proof of Work (difficulty {{minPow}})': 'หลักฐานการทำงาน (ความยาก {{minPow}})',
+    'via {{client}}': 'ผ่าน {{client}}'
   }
 }

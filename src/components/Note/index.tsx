@@ -1,6 +1,6 @@
 import { useSecondaryPage } from '@/PageManager'
 import { ExtendedKind, SUPPORTED_KINDS } from '@/constants'
-import { getParentBech32Id, getUsingClient, isNsfwEvent } from '@/lib/event'
+import { getParentBech32Id, isNsfwEvent } from '@/lib/event'
 import { toNote } from '@/lib/link'
 import { useContentPolicy } from '@/providers/ContentPolicyProvider'
 import { useMuteList } from '@/providers/MuteListProvider'
@@ -8,6 +8,7 @@ import { useScreenSize } from '@/providers/ScreenSizeProvider'
 import { Event, kinds } from 'nostr-tools'
 import { useMemo, useState } from 'react'
 import AudioPlayer from '../AudioPlayer'
+import ClientTag from '../ClientTag'
 import Content from '../Content'
 import { FormattedTimestamp } from '../FormattedTimestamp'
 import Nip05 from '../Nip05'
@@ -51,7 +52,6 @@ export default function Note({
     () => (hideParentNotePreview ? undefined : getParentBech32Id(event)),
     [event, hideParentNotePreview]
   )
-  const usingClient = useMemo(() => getUsingClient(event), [event])
   const { defaultShowNsfw } = useContentPolicy()
   const [showNsfw, setShowNsfw] = useState(false)
   const { mutePubkeySet } = useMuteList()
@@ -114,9 +114,7 @@ export default function Note({
                 className={`font-semibold flex truncate ${size === 'small' ? 'text-sm' : ''}`}
                 skeletonClassName={size === 'small' ? 'h-3' : 'h-4'}
               />
-              {usingClient && (
-                <span className="text-sm text-muted-foreground shrink-0">using {usingClient}</span>
-              )}
+              <ClientTag event={event} />
             </div>
             <div className="flex items-center gap-1 text-sm text-muted-foreground">
               <Nip05 pubkey={event.pubkey} append="·" />
