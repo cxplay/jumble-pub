@@ -168,18 +168,18 @@ const SearchBar = forwardRef<
   }, [input, debouncedInput, profiles])
 
   useEffect(() => {
-    if (list) {
+    setDisplayList(searching && !!input)
+  }, [searching, input])
+
+  useEffect(() => {
+    if (displayList && list) {
       modalManager.register(id, () => {
         setDisplayList(false)
       })
     } else {
       modalManager.unregister(id)
     }
-  }, [list])
-
-  useEffect(() => {
-    setDisplayList(searching && !!input)
-  }, [searching, input])
+  }, [displayList, list])
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {

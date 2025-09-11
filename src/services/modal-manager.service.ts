@@ -11,6 +11,12 @@ class ModalManagerService {
   }
 
   register(id: string, cb: () => void) {
+    const modal = this.modals.find((m) => m.id === id)
+    if (modal) {
+      // already registered, update callback
+      modal.cb = cb
+      return
+    }
     this.modals.push({ id, cb })
   }
 
