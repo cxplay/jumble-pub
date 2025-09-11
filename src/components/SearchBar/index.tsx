@@ -13,6 +13,7 @@ import { nip19 } from 'nostr-tools'
 import {
   forwardRef,
   HTMLAttributes,
+  useCallback,
   useEffect,
   useImperativeHandle,
   useMemo,
@@ -36,6 +37,7 @@ const SearchBar = forwardRef<
   const [debouncedInput, setDebouncedInput] = useState(input)
   const { profiles, isFetching: isFetchingProfiles } = useSearchProfiles(debouncedInput, 5)
   const [searching, setSearching] = useState(false)
+  const [displayList, setDisplayList] = useState(false)
   const searchInputRef = useRef<HTMLInputElement>(null)
   const normalizedUrl = useMemo(() => {
     if (['w', 'ws', 'ws:', 'ws:/', 'wss', 'wss:', 'wss:/'].includes(input)) {
@@ -166,18 +168,33 @@ const SearchBar = forwardRef<
   }, [input, debouncedInput, profiles])
 
   useEffect(() => {
-    if (searching) {
+    if (list) {
       modalManager.register(id, () => {
-        blur()
+        setDisplayList(false)
       })
     } else {
       modalManager.unregister(id)
     }
-  }, [searching])
+  }, [list])
+
+  useEffect(() => {
+    setDisplayList(searching && !!input)
+  }, [searching, input])
+
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        e.stopPropagation()
+        onSearch({ type: 'notes', search: input.trim() })
+        blur()
+      }
+    },
+    [input, onSearch]
+  )
 
   return (
     <div className="relative flex gap-1 items-center h-full w-full">
-      {searching && (
+      {displayList && list && (
         <>
           <div
             className={cn(
@@ -188,13 +205,7 @@ const SearchBar = forwardRef<
             )}
             onMouseDown={(e) => e.preventDefault()}
           >
-            {list ? (
-              <div className="h-fit">{list}</div>
-            ) : (
-              <div className="p-4 text-muted-foreground text-center h-20">
-                {t('Type searching for people, keywords, or relays')}
-              </div>
-            )}
+            <div className="h-fit">{list}</div>
           </div>
           <div className="fixed inset-0 w-full h-full" onClick={() => blur()} />
         </>
@@ -205,8 +216,10 @@ const SearchBar = forwardRef<
           'bg-surface-background shadow-inner h-full border-none',
           searching ? 'z-50' : ''
         )}
+        placeholder={t('Type searching for people, keywords, or relays')}
         value={input}
         onChange={(e) => setInput(e.target.value)}
+        onKeyDown={handleKeyDown}
         onFocus={() => setSearching(true)}
         onBlur={() => setSearching(false)}
       />
