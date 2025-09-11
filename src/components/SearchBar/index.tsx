@@ -7,8 +7,8 @@ import { cn } from '@/lib/utils'
 import { useSecondaryPage } from '@/PageManager'
 import { useScreenSize } from '@/providers/ScreenSizeProvider'
 import modalManager from '@/services/modal-manager.service'
-import { TProfile, TSearchParams } from '@/types'
-import { Hash, Notebook, Search, Server, UserRound } from 'lucide-react'
+import { TSearchParams } from '@/types'
+import { Hash, Notebook, Search, Server } from 'lucide-react'
 import { nip19 } from 'nostr-tools'
 import {
   forwardRef,
@@ -38,6 +38,8 @@ const SearchBar = forwardRef<
   const { profiles, isFetching: isFetchingProfiles } = useSearchProfiles(debouncedInput, 5)
   const [searching, setSearching] = useState(false)
   const [displayList, setDisplayList] = useState(false)
+  const [selectableOptions, setSelectableOptions] = useState<TSearchParams[]>([])
+  const [selectedIndex, setSelectedIndex] = useState(-1)
   const searchInputRef = useRef<HTMLInputElement>(null)
   const normalizedUrl = useMemo(() => {
     if (['w', 'ws', 'ws:', 'ws:/', 'wss', 'wss:', 'wss:/'].includes(input)) {
@@ -81,28 +83,26 @@ const SearchBar = forwardRef<
     searchInputRef.current?.blur()
   }
 
-  const list = useMemo(() => {
-    const search = input.trim()
-    if (!search) return null
+  const updateSearch = (params: TSearchParams) => {
+    blur()
 
-    const updateSearch = (params: TSearchParams) => {
-      blur()
+    if (params.type === 'note') {
+      push(toNote(params.search))
+    } else {
       onSearch(params)
     }
+  }
+
+  useEffect(() => {
+    const search = input.trim()
+    if (!search) return
 
     if (/^[0-9a-f]{64}$/.test(search)) {
-      return (
-        <>
-          <NoteItem
-            id={search}
-            onClick={() => {
-              blur()
-              push(toNote(search))
-            }}
-          />
-          <ProfileIdItem id={search} onClick={() => updateSearch({ type: 'profile', search })} />
-        </>
-      )
+      setSelectableOptions([
+        { type: 'note', search },
+        { type: 'profile', search }
+      ])
+      return
     }
 
     try {
@@ -112,60 +112,111 @@ const SearchBar = forwardRef<
       }
       const { type } = nip19.decode(id)
       if (['nprofile', 'npub'].includes(type)) {
-        return (
-          <ProfileIdItem id={id} onClick={() => updateSearch({ type: 'profile', search: id })} />
-        )
+        setSelectableOptions([{ type: 'profile', search: id }])
+        return
       }
       if (['nevent', 'naddr', 'note'].includes(type)) {
-        return (
-          <NoteItem
-            id={id}
-            onClick={() => {
-              blur()
-              push(toNote(id))
-            }}
-          />
-        )
+        setSelectableOptions([{ type: 'note', search: id }])
+        return
       }
     } catch {
       // ignore
     }
 
+    const hashtag = search.match(/[\p{L}\p{N}\p{M}]+/u)?.[0].toLowerCase() ?? ''
+
+    setSelectableOptions([
+      { type: 'notes', search },
+      { type: 'hashtag', search: hashtag, input: `#${hashtag}` },
+      ...(normalizedUrl ? [{ type: 'relay', search: normalizedUrl, input: normalizedUrl }] : []),
+      ...profiles.map((profile) => ({
+        type: 'profile',
+        search: profile.npub,
+        input: profile.username
+      })),
+      ...(profiles.length >= 5 ? [{ type: 'profiles', search }] : [])
+    ] as TSearchParams[])
+  }, [input, debouncedInput, profiles])
+
+  const list = useMemo(() => {
+    if (selectableOptions.length <= 0) {
+      return null
+    }
+
     return (
       <>
-        <NormalItem search={search} onClick={() => updateSearch({ type: 'notes', search })} />
-        <HashtagItem
-          search={search}
-          onClick={() => updateSearch({ type: 'hashtag', search, input: `#${search}` })}
-        />
-        {!!normalizedUrl && (
-          <RelayItem
-            url={normalizedUrl}
-            onClick={() => updateSearch({ type: 'relay', search, input: normalizedUrl })}
-          />
-        )}
-        {profiles.map((profile) => (
-          <ProfileItem
-            key={profile.pubkey}
-            profile={profile}
-            onClick={() =>
-              updateSearch({ type: 'profile', search: profile.npub, input: profile.username })
-            }
-          />
-        ))}
+        {selectableOptions.map((option, index) => {
+          if (option.type === 'note') {
+            return (
+              <NoteItem
+                key={index}
+                selected={selectedIndex === index}
+                id={option.search}
+                onClick={() => updateSearch(option)}
+              />
+            )
+          }
+          if (option.type === 'profile') {
+            return (
+              <ProfileItem
+                key={index}
+                selected={selectedIndex === index}
+                userId={option.search}
+                onClick={() => updateSearch(option)}
+              />
+            )
+          }
+          if (option.type === 'notes') {
+            return (
+              <NormalItem
+                key={index}
+                selected={selectedIndex === index}
+                search={option.search}
+                onClick={() => updateSearch(option)}
+              />
+            )
+          }
+          if (option.type === 'hashtag') {
+            return (
+              <HashtagItem
+                key={index}
+                selected={selectedIndex === index}
+                hashtag={option.search}
+                onClick={() => updateSearch(option)}
+              />
+            )
+          }
+          if (option.type === 'relay') {
+            return (
+              <RelayItem
+                key={index}
+                selected={selectedIndex === index}
+                url={option.search}
+                onClick={() => updateSearch(option)}
+              />
+            )
+          }
+          if (option.type === 'profiles') {
+            return (
+              <Item
+                key={index}
+                selected={selectedIndex === index}
+                onClick={() => updateSearch(option)}
+              >
+                <div className="font-semibold">{t('Show more...')}</div>
+              </Item>
+            )
+          }
+          return null
+        })}
         {isFetchingProfiles && profiles.length < 5 && (
           <div className="px-2">
             <UserItemSkeleton hideFollowButton />
           </div>
         )}
-        {profiles.length >= 5 && (
-          <Item onClick={() => updateSearch({ type: 'profiles', search })}>
-            <div className="font-semibold">{t('Show more...')}</div>
-          </Item>
-        )}
       </>
     )
-  }, [input, debouncedInput, profiles])
+  }, [selectableOptions, selectedIndex, isFetchingProfiles, profiles])
 
   useEffect(() => {
     setDisplayList(searching && !!input)
@@ -185,11 +236,38 @@ const SearchBar = forwardRef<
     (e: React.KeyboardEvent) => {
       if (e.key === 'Enter') {
         e.stopPropagation()
-        onSearch({ type: 'notes', search: input.trim() })
+        if (selectableOptions.length <= 0) {
+          return
+        }
+        onSearch(selectableOptions[selectedIndex >= 0 ? selectedIndex : 0])
         blur()
+        return
+      }
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault()
+        if (selectableOptions.length <= 0) {
+          return
+        }
+        setSelectedIndex((prev) => (prev + 1) % selectableOptions.length)
+        return
+      }
+
+      if (e.key === 'ArrowUp') {
+        e.preventDefault()
+        if (selectableOptions.length <= 0) {
+          return
+        }
+        setSelectedIndex((prev) => (prev - 1 + selectableOptions.length) % selectableOptions.length)
+        return
+      }
+
+      if (e.key === 'Escape') {
+        blur()
+        return
       }
     },
-    [input, onSearch]
+    [input, onSearch, selectableOptions, selectedIndex]
   )
 
   return (
@@ -234,65 +312,104 @@ export type TSearchBarRef = {
   blur: () => void
 }
 
-function NormalItem({ search, onClick }: { search: string; onClick?: () => void }) {
+function NormalItem({
+  search,
+  onClick,
+  selected
+}: {
+  search: string
+  onClick?: () => void
+  selected?: boolean
+}) {
   return (
-    <Item onClick={onClick}>
+    <Item onClick={onClick} selected={selected}>
       <Search className="text-muted-foreground" />
       <div className="font-semibold truncate">{search}</div>
     </Item>
   )
 }
 
-function HashtagItem({ search, onClick }: { search: string; onClick?: () => void }) {
-  const hashtag = search.match(/[\p{L}\p{N}\p{M}]+/u)?.[0].toLowerCase()
+function HashtagItem({
+  hashtag,
+  onClick,
+  selected
+}: {
+  hashtag: string
+  onClick?: () => void
+  selected?: boolean
+}) {
   return (
-    <Item onClick={onClick}>
+    <Item onClick={onClick} selected={selected}>
       <Hash className="text-muted-foreground" />
       <div className="font-semibold truncate">{hashtag}</div>
     </Item>
   )
 }
 
-function NoteItem({ id, onClick }: { id: string; onClick?: () => void }) {
+function NoteItem({
+  id,
+  onClick,
+  selected
+}: {
+  id: string
+  onClick?: () => void
+  selected?: boolean
+}) {
   return (
-    <Item onClick={onClick}>
+    <Item onClick={onClick} selected={selected}>
       <Notebook className="text-muted-foreground" />
       <div className="font-semibold truncate">{id}</div>
     </Item>
   )
 }
 
-function ProfileIdItem({ id, onClick }: { id: string; onClick?: () => void }) {
+function ProfileItem({
+  userId,
+  onClick,
+  selected
+}: {
+  userId: string
+  onClick?: () => void
+  selected?: boolean
+}) {
   return (
-    <Item onClick={onClick}>
-      <UserRound className="text-muted-foreground" />
-      <div className="font-semibold truncate">{id}</div>
-    </Item>
-  )
-}
-
-function ProfileItem({ profile, onClick }: { profile: TProfile; onClick?: () => void }) {
-  return (
-    <div className="px-2 hover:bg-accent rounded-md cursor-pointer" onClick={onClick}>
-      <UserItem pubkey={profile.pubkey} hideFollowButton className="pointer-events-none" />
+    <div
+      className={cn('px-2 hover:bg-accent rounded-md cursor-pointer', selected && 'bg-accent')}
+      onClick={onClick}
+    >
+      <UserItem pubkey={userId} hideFollowButton className="pointer-events-none" />
     </div>
   )
 }
 
-function RelayItem({ url, onClick }: { url: string; onClick?: () => void }) {
+function RelayItem({
+  url,
+  onClick,
+  selected
+}: {
+  url: string
+  onClick?: () => void
+  selected?: boolean
+}) {
   return (
-    <Item onClick={onClick}>
+    <Item onClick={onClick} selected={selected}>
       <Server className="text-muted-foreground" />
       <div className="font-semibold truncate">{url}</div>
     </Item>
   )
 }
 
-function Item({ className, children, ...props }: HTMLAttributes<HTMLDivElement>) {
+function Item({
+  className,
+  children,
+  selected,
+  ...props
+}: HTMLAttributes<HTMLDivElement> & { selected?: boolean }) {
   return (
     <div
       className={cn(
         'flex gap-2 items-center px-2 py-3 hover:bg-accent rounded-md cursor-pointer',
+        selected ? 'bg-accent' : '',
         className
       )}
       {...props}
