@@ -372,8 +372,7 @@ export default {
     'Try deleting this note': 'سعی کنید این یادداشت را حذف کنید',
     'Deletion request sent to {{count}} relays': 'درخواست حذف به {{count}} رله ارسال شد',
     'Suitable Relays': 'رله‌های مناسب',
-    'Type searching for people, keywords, or relays':
-      'برای جستجو افراد، کلمات کلیدی یا رله‌ها تایپ کنید',
+    'People, keywords, or relays': 'افراد، کلمات کلیدی یا رله‌ها',
     'Hide content mentioning muted users': 'مخفی کردن محتوای اشاره کننده به کاربران بی‌صدا شده',
     'This note mentions a user you muted': 'این یادداشت به کاربری که بی‌صدا کرده‌اید اشاره می‌کند',
     Filter: 'فیلتر',

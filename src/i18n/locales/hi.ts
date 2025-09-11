@@ -373,8 +373,7 @@ export default {
     'Try deleting this note': 'इस नोट को हटाने का प्रयास करें',
     'Deletion request sent to {{count}} relays': '{{count}} रिले को डिलीट अनुरोध भेजा गया',
     'Suitable Relays': 'उपयुक्त रिले',
-    'Type searching for people, keywords, or relays':
-      'लोगों, कीवर्ड या रिले की खोज के लिए टाइप करें',
+    'People, keywords, or relays': 'लोग, कीवर्ड या रिले',
     'Hide content mentioning muted users':
       'म्यूट किए गए उपयोगकर्ताओं का उल्लेख करने वाली सामग्री छुपाएं',
     'This note mentions a user you muted':

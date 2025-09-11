@@ -376,8 +376,7 @@ export default {
     'Try deleting this note': 'Попробуйте удалить эту заметку',
     'Deletion request sent to {{count}} relays': 'Запрос на удаление отправлен на {{count}} релеев',
     'Suitable Relays': 'Подходящие релея',
-    'Type searching for people, keywords, or relays':
-      'Начните ввод для поиска людей, ключевых слов или релеев',
+    'People, keywords, or relays': 'Люди, ключевые слова или релея',
     'Hide content mentioning muted users': 'Скрыть контент, упоминающий заглушённых пользователей',
     'This note mentions a user you muted':
       'Эта заметка упоминает пользователя, которого вы заглушили',

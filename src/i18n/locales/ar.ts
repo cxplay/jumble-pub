@@ -371,8 +371,7 @@ export default {
     'Try deleting this note': 'حاول حذف هذه الملاحظة',
     'Deletion request sent to {{count}} relays': 'تم إرسال طلب الحذف إلى {{count}} ريلايات',
     'Suitable Relays': 'الريلايات المناسبة',
-    'Type searching for people, keywords, or relays':
-      'اكتب للبحث عن أشخاص، كلمات مفتاحية، أو ريلايات',
+    'People, keywords, or relays': 'أشخاص، كلمات مفتاحية، أو ريلايات',
     'Hide content mentioning muted users': 'إخفاء المحتوى الذي يذكر المستخدمين المكتومين',
     'This note mentions a user you muted': 'هذه الملاحظة تذكر مستخدماً قمت بكتمه',
     Filter: 'مرشح',

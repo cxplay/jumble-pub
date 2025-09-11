@@ -216,7 +216,7 @@ const SearchBar = forwardRef<
           'bg-surface-background shadow-inner h-full border-none',
           searching ? 'z-50' : ''
         )}
-        placeholder={t('Type searching for people, keywords, or relays')}
+        placeholder={t('People, keywords, or relays')}
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={handleKeyDown}

@@ -379,8 +379,7 @@ export default {
     'Try deleting this note': 'Versuche, diese Notiz zu löschen',
     'Deletion request sent to {{count}} relays': 'Löschanfrage an {{count}} Relays gesendet',
     'Suitable Relays': 'Geeignete Relays',
-    'Type searching for people, keywords, or relays':
-      'Gib ein, um nach Personen, Schlüsselwörtern oder Relays zu suchen',
+    'People, keywords, or relays': 'Personen, Schlüsselwörter oder Relays',
     'Hide content mentioning muted users': 'Inhalte ausblenden, die stumme Benutzer erwähnen',
     'This note mentions a user you muted':
       'Diese Notiz erwähnt einen Benutzer, den Sie stumm geschaltet haben',
