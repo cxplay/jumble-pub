@@ -150,6 +150,7 @@ class ClientService extends EventTarget {
           // eslint-disable-next-line @typescript-eslint/no-this-alias
           const that = this
           const relay = await this.pool.ensureRelay(url)
+          relay.publishTimeout = 10_000 // 10s
           return relay
             .publish(event)
             .catch((error) => {
