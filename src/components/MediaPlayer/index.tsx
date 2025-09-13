@@ -4,7 +4,15 @@ import { useTranslation } from 'react-i18next'
 import AudioPlayer from '../AudioPlayer'
 import VideoPlayer from '../VideoPlayer'
 
-export default function MediaPlayer({ src, className }: { src: string; className?: string }) {
+export default function MediaPlayer({
+  src,
+  className,
+  mustLoad = false
+}: {
+  src: string
+  className?: string
+  mustLoad?: boolean
+}) {
   const { t } = useTranslation()
   const { autoLoadMedia } = useContentPolicy()
   const [display, setDisplay] = useState(autoLoadMedia)
@@ -19,7 +27,7 @@ export default function MediaPlayer({ src, className }: { src: string; className
   }, [autoLoadMedia])
 
   useEffect(() => {
-    if (!display) {
+    if (!mustLoad && !display) {
       setMediaType(null)
       return
     }
@@ -52,9 +60,9 @@ export default function MediaPlayer({ src, className }: { src: string; className
     return () => {
       video.src = ''
     }
-  }, [src, display])
+  }, [src, display, mustLoad])
 
-  if (!display) {
+  if (!mustLoad && !display) {
     return (
       <div
         className="text-primary hover:underline truncate w-fit cursor-pointer"

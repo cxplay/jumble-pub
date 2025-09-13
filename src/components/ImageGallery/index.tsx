@@ -14,12 +14,14 @@ export default function ImageGallery({
   className,
   images,
   start = 0,
-  end = images.length
+  end = images.length,
+  mustLoad = false
 }: {
   className?: string
   images: TImetaInfo[]
   start?: number
   end?: number
+  mustLoad?: boolean
 }) {
   const id = useMemo(() => `image-gallery-${randomString()}`, [])
   const { autoLoadMedia } = useContentPolicy()
@@ -42,7 +44,7 @@ export default function ImageGallery({
 
   const displayImages = images.slice(start, end)
 
-  if (!autoLoadMedia) {
+  if (!mustLoad && !autoLoadMedia) {
     return displayImages.map((image, i) => (
       <ImageWithLightbox
         key={i}

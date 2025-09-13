@@ -31,7 +31,17 @@ import WebPreview from '../WebPreview'
 import YoutubeEmbeddedPlayer from '../YoutubeEmbeddedPlayer'
 
 const Content = memo(
-  ({ event, content, className }: { event?: Event; content?: string; className?: string }) => {
+  ({
+    event,
+    content,
+    className,
+    mustLoadMedia
+  }: {
+    event?: Event
+    content?: string
+    className?: string
+    mustLoadMedia?: boolean
+  }) => {
     const translatedEvent = useTranslatedEvent(event?.id)
     const _content = translatedEvent?.content ?? event?.content ?? content
     if (!_content) return null
@@ -95,11 +105,14 @@ const Content = memo(
                 images={allImages}
                 start={start}
                 end={end}
+                mustLoad={mustLoadMedia}
               />
             )
           }
           if (node.type === 'media') {
-            return <MediaPlayer className="mt-2" key={index} src={node.data} />
+            return (
+              <MediaPlayer className="mt-2" key={index} src={node.data} mustLoad={mustLoadMedia} />
+            )
           }
           if (node.type === 'url') {
             return <EmbeddedNormalUrl url={node.data} key={index} />
@@ -127,7 +140,14 @@ const Content = memo(
             return <Emoji classNames={{ img: 'mb-1' }} emoji={emoji} key={index} />
           }
           if (node.type === 'youtube') {
-            return <YoutubeEmbeddedPlayer key={index} url={node.data} className="mt-2" />
+            return (
+              <YoutubeEmbeddedPlayer
+                key={index}
+                url={node.data}
+                className="mt-2"
+                mustLoad={mustLoadMedia}
+              />
+            )
           }
           return null
         })}

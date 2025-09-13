@@ -7,10 +7,12 @@ import { useTranslation } from 'react-i18next'
 
 export default function YoutubeEmbeddedPlayer({
   url,
-  className
+  className,
+  mustLoad = false
 }: {
   url: string
   className?: string
+  mustLoad?: boolean
 }) {
   const { t } = useTranslation()
   const { autoLoadMedia } = useContentPolicy()
@@ -29,7 +31,7 @@ export default function YoutubeEmbeddedPlayer({
   }, [autoLoadMedia])
 
   useEffect(() => {
-    if (!videoId || !containerRef.current || !display) return
+    if (!videoId || !containerRef.current || (!mustLoad && !display)) return
 
     if (!window.YT) {
       const script = document.createElement('script')
@@ -75,9 +77,9 @@ export default function YoutubeEmbeddedPlayer({
         playerRef.current.destroy()
       }
     }
-  }, [videoId, display])
+  }, [videoId, display, mustLoad])
 
-  if (!display) {
+  if (!mustLoad && !display) {
     return (
       <div
         className="text-primary hover:underline truncate w-fit cursor-pointer"

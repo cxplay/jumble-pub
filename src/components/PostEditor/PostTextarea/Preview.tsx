@@ -15,6 +15,7 @@ export default function Preview({ content, className }: { content: string; class
       <Content
         event={createFakeEvent({ content: processedContent, tags: emojiTags })}
         className="pointer-events-none h-full"
+        mustLoadMedia
       />
     </Card>
   )
