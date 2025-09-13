@@ -1,5 +1,6 @@
 import { randomString } from '@/lib/random'
 import { cn } from '@/lib/utils'
+import { useContentPolicy } from '@/providers/ContentPolicyProvider'
 import modalManager from '@/services/modal-manager.service'
 import { TImetaInfo } from '@/types'
 import { ReactNode, useEffect, useMemo, useState } from 'react'
@@ -7,6 +8,7 @@ import { createPortal } from 'react-dom'
 import Lightbox from 'yet-another-react-lightbox'
 import Zoom from 'yet-another-react-lightbox/plugins/zoom'
 import Image from '../Image'
+import ImageWithLightbox from '../ImageWithLightbox'
 
 export default function ImageGallery({
   className,
@@ -20,6 +22,7 @@ export default function ImageGallery({
   end?: number
 }) {
   const id = useMemo(() => `image-gallery-${randomString()}`, [])
+  const { autoLoadMedia } = useContentPolicy()
   const [index, setIndex] = useState(-1)
   useEffect(() => {
     if (index >= 0) {
@@ -38,12 +41,26 @@ export default function ImageGallery({
   }
 
   const displayImages = images.slice(start, end)
+
+  if (!autoLoadMedia) {
+    return displayImages.map((image, i) => (
+      <ImageWithLightbox
+        key={i}
+        image={image}
+        className="max-h-[80vh] sm:max-h-[50vh] object-contain"
+        classNames={{
+          wrapper: cn('w-fit max-w-full', className)
+        }}
+      />
+    ))
+  }
+
   let imageContent: ReactNode | null = null
   if (displayImages.length === 1) {
     imageContent = (
       <Image
         key={0}
-        className="rounded-lg max-h-[80vh] sm:max-h-[50vh] border cursor-zoom-in"
+        className="max-h-[80vh] sm:max-h-[50vh] cursor-zoom-in object-contain"
         classNames={{
           errorPlaceholder: 'aspect-square h-[30vh]'
         }}
@@ -57,7 +74,7 @@ export default function ImageGallery({
         {displayImages.map((image, i) => (
           <Image
             key={i}
-            className="aspect-square w-full rounded-lg border cursor-zoom-in"
+            className="aspect-square w-full cursor-zoom-in"
             image={image}
             onClick={(e) => handlePhotoClick(e, i)}
           />
@@ -70,7 +87,7 @@ export default function ImageGallery({
         {displayImages.map((image, i) => (
           <Image
             key={i}
-            className="aspect-square w-full rounded-lg border cursor-zoom-in"
+            className="aspect-square w-full cursor-zoom-in"
             image={image}
             onClick={(e) => handlePhotoClick(e, i)}
           />

@@ -34,6 +34,7 @@ export const StorageKey = {
   SHOW_KINDS_VERSION: 'showKindsVersion',
   HIDE_CONTENT_MENTIONING_MUTED_USERS: 'hideContentMentioningMutedUsers',
   NOTIFICATION_LIST_STYLE: 'notificationListStyle',
+  MEDIA_AUTO_LOAD_POLICY: 'mediaAutoLoadPolicy',
   MEDIA_UPLOAD_SERVICE: 'mediaUploadService', // deprecated
   HIDE_UNTRUSTED_EVENTS: 'hideUntrustedEvents', // deprecated
   ACCOUNT_RELAY_LIST_EVENT_MAP: 'accountRelayListEventMap', // deprecated
@@ -138,4 +139,10 @@ export const POLL_TYPE = {
 export const NOTIFICATION_LIST_STYLE = {
   COMPACT: 'compact',
   DETAILED: 'detailed'
+} as const
+
+export const MEDIA_AUTO_LOAD_POLICY = {
+  ALWAYS: 'always',
+  WIFI_ONLY: 'wifi-only',
+  NEVER: 'never'
 } as const

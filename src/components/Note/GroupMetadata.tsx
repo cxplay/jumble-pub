@@ -1,4 +1,5 @@
 import { getGroupMetadataFromEvent } from '@/lib/event-metadata'
+import { useContentPolicy } from '@/providers/ContentPolicyProvider'
 import { Event } from 'nostr-tools'
 import { useMemo } from 'react'
 import ClientSelect from '../ClientSelect'
@@ -13,6 +14,7 @@ export default function GroupMetadata({
   originalNoteId?: string
   className?: string
 }) {
+  const { autoLoadMedia } = useContentPolicy()
   const metadata = useMemo(() => getGroupMetadataFromEvent(event), [event])
 
   const groupNameComponent = (
@@ -26,10 +28,10 @@ export default function GroupMetadata({
   return (
     <div className={className}>
       <div className="flex gap-4">
-        {metadata.picture && (
+        {metadata.picture && autoLoadMedia && (
           <Image
             image={{ url: metadata.picture, pubkey: event.pubkey }}
-            className="rounded-lg aspect-square object-cover bg-foreground h-20"
+            className="aspect-square bg-foreground h-20"
             hideIfError
           />
         )}

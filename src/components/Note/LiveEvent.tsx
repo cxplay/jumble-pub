@@ -1,5 +1,6 @@
 import { Badge } from '@/components/ui/badge'
 import { getLiveEventMetadataFromEvent } from '@/lib/event-metadata'
+import { useContentPolicy } from '@/providers/ContentPolicyProvider'
 import { useScreenSize } from '@/providers/ScreenSizeProvider'
 import { Event } from 'nostr-tools'
 import { useMemo } from 'react'
@@ -8,6 +9,8 @@ import Image from '../Image'
 
 export default function LiveEvent({ event, className }: { event: Event; className?: string }) {
   const { isSmallScreen } = useScreenSize()
+
+  const { autoLoadMedia } = useContentPolicy()
   const metadata = useMemo(() => getLiveEventMetadataFromEvent(event), [event])
 
   const liveStatusComponent =
@@ -39,10 +42,10 @@ export default function LiveEvent({ event, className }: { event: Event; classNam
   if (isSmallScreen) {
     return (
       <div className={className}>
-        {metadata.image && (
+        {metadata.image && autoLoadMedia && (
           <Image
             image={{ url: metadata.image, pubkey: event.pubkey }}
-            className="w-full aspect-video object-cover rounded-lg"
+            className="w-full aspect-video"
             hideIfError
           />
         )}
@@ -60,10 +63,10 @@ export default function LiveEvent({ event, className }: { event: Event; classNam
   return (
     <div className={className}>
       <div className="flex gap-4">
-        {metadata.image && (
+        {metadata.image && autoLoadMedia && (
           <Image
             image={{ url: metadata.image, pubkey: event.pubkey }}
-            className="rounded-lg aspect-[4/3] xl:aspect-video object-cover bg-foreground h-44"
+            className="aspect-[4/3] xl:aspect-video bg-foreground h-44"
             hideIfError
           />
         )}

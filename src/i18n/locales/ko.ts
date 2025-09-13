@@ -402,6 +402,12 @@ export default {
     'Submit Relay': '릴레이 제출',
     Homepage: '홈페이지',
     'Proof of Work (difficulty {{minPow}})': '작업 증명 (난이도 {{minPow}})',
-    'via {{client}}': '{{client}} 통해'
+    'via {{client}}': '{{client}} 통해',
+    'Auto-load media': '미디어 자동 로드',
+    Always: '항상',
+    'Wi-Fi only': 'Wi-Fi만',
+    Never: '안함',
+    'Click to load image': '이미지 로드하려면 클릭',
+    'Click to load media': '미디어 로드하려면 클릭'
   }
 }

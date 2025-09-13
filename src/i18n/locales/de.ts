@@ -410,6 +410,12 @@ export default {
     'Submit Relay': 'Relay einreichen',
     Homepage: 'Homepage',
     'Proof of Work (difficulty {{minPow}})': 'Arbeitsnachweis (Schwierigkeit {{minPow}})',
-    'via {{client}}': 'über {{client}}'
+    'via {{client}}': 'über {{client}}',
+    'Auto-load media': 'Medien automatisch laden',
+    Always: 'Immer',
+    'Wi-Fi only': 'Nur WLAN',
+    Never: 'Nie',
+    'Click to load image': 'Klicken, um Bild zu laden',
+    'Click to load media': 'Klicken, um Medien zu laden'
   }
 }

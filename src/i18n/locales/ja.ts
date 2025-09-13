@@ -402,6 +402,12 @@ export default {
     'Submit Relay': 'リレーを提出',
     Homepage: 'ホームページ',
     'Proof of Work (difficulty {{minPow}})': 'プルーフオブワーク (難易度 {{minPow}})',
-    'via {{client}}': '{{client}} 経由'
+    'via {{client}}': '{{client}} 経由',
+    'Auto-load media': 'メディアの自動読み込み',
+    Always: '常に',
+    'Wi-Fi only': 'Wi-Fiのみ',
+    Never: 'しない',
+    'Click to load image': 'クリックして画像を読み込む',
+    'Click to load media': 'クリックしてメディアを読み込む'
   }
 }

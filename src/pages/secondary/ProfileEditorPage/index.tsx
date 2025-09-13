@@ -131,11 +131,7 @@ const ProfileEditorPage = forwardRef(({ index }: { index?: number }, ref) => {
           onUploadEnd={() => setUploadingBanner(false)}
           className="w-full relative cursor-pointer"
         >
-          <ProfileBanner
-            banner={banner}
-            pubkey={account.pubkey}
-            className="w-full aspect-[3/1] object-cover"
-          />
+          <ProfileBanner banner={banner} pubkey={account.pubkey} className="w-full aspect-[3/1]" />
           <div className="absolute top-0 bg-muted/30 w-full h-full flex flex-col justify-center items-center">
             {uploadingBanner ? <Loader size={36} className="animate-spin" /> : <Upload size={36} />}
           </div>

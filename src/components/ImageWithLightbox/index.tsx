@@ -1,21 +1,30 @@
 import { randomString } from '@/lib/random'
 import { cn } from '@/lib/utils'
+import { useContentPolicy } from '@/providers/ContentPolicyProvider'
 import modalManager from '@/services/modal-manager.service'
 import { TImetaInfo } from '@/types'
 import { useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { useTranslation } from 'react-i18next'
 import Lightbox from 'yet-another-react-lightbox'
 import Zoom from 'yet-another-react-lightbox/plugins/zoom'
 import Image from '../Image'
 
 export default function ImageWithLightbox({
   image,
-  className
+  className,
+  classNames = {}
 }: {
   image: TImetaInfo
   className?: string
+  classNames?: {
+    wrapper?: string
+  }
 }) {
   const id = useMemo(() => `image-with-lightbox-${randomString()}`, [])
+  const { t } = useTranslation()
+  const { autoLoadMedia } = useContentPolicy()
+  const [display, setDisplay] = useState(autoLoadMedia)
   const [index, setIndex] = useState(-1)
   useEffect(() => {
     if (index >= 0) {
@@ -27,6 +36,20 @@ export default function ImageWithLightbox({
     }
   }, [index])
 
+  if (!display) {
+    return (
+      <div
+        className="text-primary hover:underline truncate w-fit cursor-pointer"
+        onClick={(e) => {
+          e.stopPropagation()
+          setDisplay(true)
+        }}
+      >
+        [{t('Click to load image')}]
+      </div>
+    )
+  }
+
   const handlePhotoClick = (event: React.MouseEvent) => {
     event.stopPropagation()
     event.preventDefault()
@@ -34,11 +57,12 @@ export default function ImageWithLightbox({
   }
 
   return (
-    <div className="w-full">
+    <div>
       <Image
         key={0}
-        className={cn('rounded-lg border cursor-zoom-in', className)}
+        className={className}
         classNames={{
+          wrapper: cn('rounded-lg border cursor-zoom-in', classNames.wrapper),
           errorPlaceholder: 'aspect-square h-[30vh]'
         }}
         image={image}

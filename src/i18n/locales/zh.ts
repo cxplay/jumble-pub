@@ -396,6 +396,12 @@ export default {
     'Submit Relay': '提交服务器',
     Homepage: '主页',
     'Proof of Work (difficulty {{minPow}})': '工作量证明 (难度 {{minPow}})',
-    'via {{client}}': '来自 {{client}}'
+    'via {{client}}': '来自 {{client}}',
+    'Auto-load media': '自动加载媒体文件',
+    Always: '始终',
+    'Wi-Fi only': '仅WiFi',
+    Never: '从不',
+    'Click to load image': '点击加载图片',
+    'Click to load media': '点击加载音视频'
   }
 }

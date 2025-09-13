@@ -1,11 +1,28 @@
+import { useContentPolicy } from '@/providers/ContentPolicyProvider'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import AudioPlayer from '../AudioPlayer'
 import VideoPlayer from '../VideoPlayer'
 
 export default function MediaPlayer({ src, className }: { src: string; className?: string }) {
+  const { t } = useTranslation()
+  const { autoLoadMedia } = useContentPolicy()
+  const [display, setDisplay] = useState(autoLoadMedia)
   const [mediaType, setMediaType] = useState<'video' | 'audio' | null>(null)
 
   useEffect(() => {
+    if (autoLoadMedia) {
+      setDisplay(true)
+    } else {
+      setDisplay(false)
+    }
+  }, [autoLoadMedia])
+
+  useEffect(() => {
+    if (!display) {
+      setMediaType(null)
+      return
+    }
     if (!src) {
       setMediaType(null)
       return
@@ -35,7 +52,21 @@ export default function MediaPlayer({ src, className }: { src: string; className
     return () => {
       video.src = ''
     }
-  }, [src])
+  }, [src, display])
+
+  if (!display) {
+    return (
+      <div
+        className="text-primary hover:underline truncate w-fit cursor-pointer"
+        onClick={(e) => {
+          e.stopPropagation()
+          setDisplay(true)
+        }}
+      >
+        [{t('Click to load media')}]
+      </div>
+    )
+  }
 
   if (!mediaType) {
     return null

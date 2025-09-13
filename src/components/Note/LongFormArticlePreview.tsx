@@ -1,6 +1,7 @@
 import { getLongFormArticleMetadataFromEvent } from '@/lib/event-metadata'
 import { toNoteList } from '@/lib/link'
 import { useSecondaryPage } from '@/PageManager'
+import { useContentPolicy } from '@/providers/ContentPolicyProvider'
 import { useScreenSize } from '@/providers/ScreenSizeProvider'
 import { Event, kinds } from 'nostr-tools'
 import { useMemo } from 'react'
@@ -15,6 +16,7 @@ export default function LongFormArticlePreview({
 }) {
   const { isSmallScreen } = useScreenSize()
   const { push } = useSecondaryPage()
+  const { autoLoadMedia } = useContentPolicy()
   const metadata = useMemo(() => getLongFormArticleMetadataFromEvent(event), [event])
 
   const titleComponent = <div className="text-xl font-semibold line-clamp-2">{metadata.title}</div>
@@ -43,10 +45,10 @@ export default function LongFormArticlePreview({
   if (isSmallScreen) {
     return (
       <div className={className}>
-        {metadata.image && (
+        {metadata.image && autoLoadMedia && (
           <Image
             image={{ url: metadata.image, pubkey: event.pubkey }}
-            className="w-full aspect-video object-cover rounded-lg"
+            className="w-full aspect-video"
             hideIfError
           />
         )}
@@ -62,7 +64,7 @@ export default function LongFormArticlePreview({
   return (
     <div className={className}>
       <div className="flex gap-4">
-        {metadata.image && (
+        {metadata.image && autoLoadMedia && (
           <Image
             image={{ url: metadata.image, pubkey: event.pubkey }}
             className="rounded-lg aspect-[4/3] xl:aspect-video object-cover bg-foreground h-44"

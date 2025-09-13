@@ -406,6 +406,12 @@ export default {
     'Submit Relay': 'Prześlij przekaźnik',
     Homepage: 'Strona główna',
     'Proof of Work (difficulty {{minPow}})': 'Dowód pracy (trudność {{minPow}})',
-    'via {{client}}': 'przez {{client}}'
+    'via {{client}}': 'przez {{client}}',
+    'Auto-load media': 'Automatyczne ładowanie mediów',
+    Always: 'Zawsze',
+    'Wi-Fi only': 'Tylko Wi-Fi',
+    Never: 'Nigdy',
+    'Click to load image': 'Kliknij, aby załadować obraz',
+    'Click to load media': 'Kliknij, aby załadować media'
   }
 }

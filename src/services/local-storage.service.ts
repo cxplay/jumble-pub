@@ -1,6 +1,7 @@
 import {
   DEFAULT_NIP_96_SERVICE,
   ExtendedKind,
+  MEDIA_AUTO_LOAD_POLICY,
   NOTIFICATION_LIST_STYLE,
   SUPPORTED_KINDS,
   StorageKey
@@ -11,6 +12,7 @@ import {
   TAccount,
   TAccountPointer,
   TFeedInfo,
+  TMediaAutoLoadPolicy,
   TMediaUploadServiceConfig,
   TNoteListMode,
   TNotificationStyle,
@@ -44,6 +46,7 @@ class LocalStorageService {
   private showKinds: number[] = []
   private hideContentMentioningMutedUsers: boolean = false
   private notificationListStyle: TNotificationStyle = NOTIFICATION_LIST_STYLE.DETAILED
+  private mediaAutoLoadPolicy: TMediaAutoLoadPolicy = MEDIA_AUTO_LOAD_POLICY.ALWAYS
 
   constructor() {
     if (!LocalStorageService.instance) {
@@ -173,6 +176,14 @@ class LocalStorageService {
       NOTIFICATION_LIST_STYLE.COMPACT
         ? NOTIFICATION_LIST_STYLE.COMPACT
         : NOTIFICATION_LIST_STYLE.DETAILED
+
+    const mediaAutoLoadPolicy = window.localStorage.getItem(StorageKey.MEDIA_AUTO_LOAD_POLICY)
+    if (
+      mediaAutoLoadPolicy &&
+      Object.values(MEDIA_AUTO_LOAD_POLICY).includes(mediaAutoLoadPolicy as TMediaAutoLoadPolicy)
+    ) {
+      this.mediaAutoLoadPolicy = mediaAutoLoadPolicy as TMediaAutoLoadPolicy
+    }
 
     // Clean up deprecated data
     window.localStorage.removeItem(StorageKey.ACCOUNT_PROFILE_EVENT_MAP)
@@ -432,6 +443,15 @@ class LocalStorageService {
   setNotificationListStyle(style: TNotificationStyle) {
     this.notificationListStyle = style
     window.localStorage.setItem(StorageKey.NOTIFICATION_LIST_STYLE, style)
+  }
+
+  getMediaAutoLoadPolicy() {
+    return this.mediaAutoLoadPolicy
+  }
+
+  setMediaAutoLoadPolicy(policy: TMediaAutoLoadPolicy) {
+    this.mediaAutoLoadPolicy = policy
+    window.localStorage.setItem(StorageKey.MEDIA_AUTO_LOAD_POLICY, policy)
   }
 }
 

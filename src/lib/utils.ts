@@ -61,6 +61,11 @@ export function isPartiallyInViewport(el: HTMLElement) {
   )
 }
 
+export function isSupportCheckConnectionType() {
+  if (typeof window === 'undefined' || !(navigator as any).connection) return false
+  return typeof (navigator as any).connection.type === 'string'
+}
+
 export function isEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 }

@@ -400,6 +400,12 @@ export default {
     'Submit Relay': 'إرسال ريلاي',
     Homepage: 'الصفحة الرئيسية',
     'Proof of Work (difficulty {{minPow}})': 'إثبات العمل (الصعوبة {{minPow}})',
-    'via {{client}}': 'عبر {{client}}'
+    'via {{client}}': 'عبر {{client}}',
+    'Auto-load media': 'تحميل الوسائط تلقائياً',
+    Always: 'دائماً',
+    'Wi-Fi only': 'Wi-Fi فقط',
+    Never: 'أبداً',
+    'Click to load image': 'انقر لتحميل الصورة',
+    'Click to load media': 'انقر لتحميل الوسائط'
   }
 }

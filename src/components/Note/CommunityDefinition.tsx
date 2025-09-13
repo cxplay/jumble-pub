@@ -1,4 +1,5 @@
 import { getCommunityDefinitionFromEvent } from '@/lib/event-metadata'
+import { useContentPolicy } from '@/providers/ContentPolicyProvider'
 import { Event } from 'nostr-tools'
 import { useMemo } from 'react'
 import ClientSelect from '../ClientSelect'
@@ -11,6 +12,7 @@ export default function CommunityDefinition({
   event: Event
   className?: string
 }) {
+  const { autoLoadMedia } = useContentPolicy()
   const metadata = useMemo(() => getCommunityDefinitionFromEvent(event), [event])
 
   const communityNameComponent = (
@@ -24,10 +26,10 @@ export default function CommunityDefinition({
   return (
     <div className={className}>
       <div className="flex gap-4">
-        {metadata.image && (
+        {metadata.image && autoLoadMedia && (
           <Image
             image={{ url: metadata.image, pubkey: event.pubkey }}
-            className="rounded-lg aspect-square object-cover bg-foreground h-20"
+            className="aspect-square bg-foreground h-20"
             hideIfError
           />
         )}

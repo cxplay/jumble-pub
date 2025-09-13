@@ -63,7 +63,16 @@ export default function LongFormArticle({
         },
         p: (props) => <p {...props} className="break-words" />,
         div: (props) => <div {...props} className="break-words" />,
-        code: (props) => <code {...props} className="break-words whitespace-pre-wrap" />
+        code: (props) => <code {...props} className="break-words whitespace-pre-wrap" />,
+        img: (props) => (
+          <ImageWithLightbox
+            image={{ url: props.src || '', pubkey: event.pubkey }}
+            className="max-h-[80vh] sm:max-h-[50vh] object-contain my-0"
+            classNames={{
+              wrapper: 'w-fit max-w-full'
+            }}
+          />
+        )
       }) as Components,
     []
   )
@@ -81,7 +90,7 @@ export default function LongFormArticle({
       {metadata.image && (
         <ImageWithLightbox
           image={{ url: metadata.image, pubkey: event.pubkey }}
-          className="w-full aspect-[3/1] object-cover rounded-lg"
+          className="w-full aspect-[3/1] object-cover my-0"
         />
       )}
       <Markdown

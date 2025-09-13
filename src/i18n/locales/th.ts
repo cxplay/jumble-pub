@@ -398,6 +398,12 @@ export default {
     'Submit Relay': 'ส่งรีเลย์',
     Homepage: 'หน้าแรก',
     'Proof of Work (difficulty {{minPow}})': 'หลักฐานการทำงาน (ความยาก {{minPow}})',
-    'via {{client}}': 'ผ่าน {{client}}'
+    'via {{client}}': 'ผ่าน {{client}}',
+    'Auto-load media': 'โหลดสื่ออัตโนมัติ',
+    Always: 'เสมอ',
+    'Wi-Fi only': 'Wi-Fi เท่านั้น',
+    Never: 'ไม่เลย',
+    'Click to load image': 'คลิกเพื่อโหลดรูปภาพ',
+    'Click to load media': 'คลิกเพื่อโหลดสื่อ'
   }
 }

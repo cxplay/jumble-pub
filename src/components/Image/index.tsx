@@ -5,10 +5,10 @@ import { TImetaInfo } from '@/types'
 import { getHashFromURL } from 'blossom-client-sdk'
 import { decode } from 'blurhash'
 import { ImageOff } from 'lucide-react'
-import { HTMLAttributes, useEffect, useState } from 'react'
+import { HTMLAttributes, useEffect, useMemo, useRef, useState } from 'react'
 
 export default function Image({
-  image: { url, blurHash, pubkey },
+  image: { url, blurHash, pubkey, dim },
   alt,
   className = '',
   classNames = {},
@@ -26,8 +26,7 @@ export default function Image({
   errorPlaceholder?: React.ReactNode
 }) {
   const [isLoading, setIsLoading] = useState(true)
-  const [displayBlurHash, setDisplayBlurHash] = useState(true)
-  const [blurDataUrl, setBlurDataUrl] = useState<string | null>(null)
+  const [displaySkeleton, setDisplaySkeleton] = useState(true)
   const [hasError, setHasError] = useState(false)
   const [imageUrl, setImageUrl] = useState(url)
   const [tried, setTried] = useState(new Set())
@@ -36,32 +35,13 @@ export default function Image({
     setImageUrl(url)
     setIsLoading(true)
     setHasError(false)
-    setDisplayBlurHash(true)
+    setDisplaySkeleton(true)
     setTried(new Set())
   }, [url])
 
-  useEffect(() => {
-    if (blurHash) {
-      const { numX, numY } = decodeBlurHashSize(blurHash)
-      const width = numX * 3
-      const height = numY * 3
-      const pixels = decode(blurHash, width, height)
-      const canvas = document.createElement('canvas')
-      canvas.width = width
-      canvas.height = height
-      const ctx = canvas.getContext('2d')
-      if (ctx) {
-        const imageData = ctx.createImageData(width, height)
-        imageData.data.set(pixels)
-        ctx.putImageData(imageData, 0, 0)
-        setBlurDataUrl(canvas.toDataURL())
-      }
-    }
-  }, [blurHash])
-
   if (hideIfError && hasError) return null
 
-  const handleImageError = async () => {
+  const handleError = async () => {
     let oldImageUrl: URL | undefined
     let hash: string | null = null
     try {
@@ -101,26 +81,52 @@ export default function Image({
     setImageUrl(nextUrl.toString())
   }
 
+  const handleLoad = () => {
+    setIsLoading(false)
+    setHasError(false)
+    setTimeout(() => setDisplaySkeleton(false), 600)
+  }
+
   return (
-    <div className={cn('relative', classNames.wrapper)} {...props}>
-      {isLoading && <Skeleton className={cn('absolute inset-0', className)} />}
-      {!hasError ? (
+    <div className={cn('relative overflow-hidden', classNames.wrapper)} {...props}>
+      {displaySkeleton && (
+        <div className="absolute inset-0 z-10">
+          {blurHash ? (
+            <BlurHashCanvas
+              blurHash={blurHash}
+              className={cn(
+                'absolute inset-0 transition-opacity duration-500 rounded-lg',
+                isLoading ? 'opacity-100' : 'opacity-0'
+              )}
+            />
+          ) : (
+            <Skeleton
+              className={cn(
+                'absolute inset-0 transition-opacity duration-500 rounded-lg',
+                isLoading ? 'opacity-100' : 'opacity-0'
+              )}
+            />
+          )}
+        </div>
+      )}
+      {!hasError && (
         <img
           src={imageUrl}
           alt={alt}
+          decoding="async"
+          loading="lazy"
+          onLoad={handleLoad}
+          onError={handleError}
           className={cn(
-            'object-cover transition-opacity duration-300',
-            isLoading ? 'opacity-0' : 'opacity-100',
+            'object-cover rounded-lg w-full h-full transition-opacity duration-500',
             className
           )}
-          onLoad={() => {
-            setIsLoading(false)
-            setHasError(false)
-            setTimeout(() => setDisplayBlurHash(false), 500)
-          }}
-          onError={handleImageError}
+          width={dim?.width}
+          height={dim?.height}
+          {...props}
         />
-      ) : (
+      )}
+      {hasError && (
         <div
           className={cn(
             'object-cover flex flex-col items-center justify-center w-full h-full bg-muted',
@@ -131,21 +137,49 @@ export default function Image({
           {errorPlaceholder}
         </div>
       )}
-      {displayBlurHash && blurDataUrl && !hasError && (
-        <img
-          src={blurDataUrl}
-          className={cn('absolute inset-0 object-cover w-full h-full -z-10', className)}
-          alt={alt}
-        />
-      )}
     </div>
   )
 }
 
-const DIGITS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz#$%*+,-.:;=?@[]^_{|}~'
-function decodeBlurHashSize(blurHash: string) {
-  const sizeValue = DIGITS.indexOf(blurHash[0])
-  const numY = (sizeValue / 9 + 1) | 0
-  const numX = (sizeValue % 9) + 1
-  return { numX, numY }
+const blurHashWidth = 32
+const blurHashHeight = 32
+function BlurHashCanvas({ blurHash, className = '' }: { blurHash: string; className?: string }) {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+
+  const pixels = useMemo(() => {
+    if (!blurHash) return null
+    try {
+      return decode(blurHash, blurHashWidth, blurHashHeight)
+    } catch (error) {
+      console.warn('Failed to decode blurhash:', error)
+      return null
+    }
+  }, [blurHash])
+
+  useEffect(() => {
+    if (!pixels || !canvasRef.current) return
+
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    const imageData = ctx.createImageData(blurHashWidth, blurHashHeight)
+    imageData.data.set(pixels)
+    ctx.putImageData(imageData, 0, 0)
+  }, [pixels])
+
+  if (!blurHash) return null
+
+  return (
+    <canvas
+      ref={canvasRef}
+      width={blurHashWidth}
+      height={blurHashHeight}
+      className={cn('w-full h-full object-cover rounded-lg', className)}
+      style={{
+        imageRendering: 'auto',
+        filter: 'blur(0.5px)'
+      }}
+    />
+  )
 }

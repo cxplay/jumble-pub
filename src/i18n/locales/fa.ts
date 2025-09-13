@@ -401,6 +401,12 @@ export default {
     'Submit Relay': 'ارسال رله',
     Homepage: 'صفحه اصلی',
     'Proof of Work (difficulty {{minPow}})': 'اثبات کار (دشواری {{minPow}})',
-    'via {{client}}': 'از طریق {{client}}'
+    'via {{client}}': 'از طریق {{client}}',
+    'Auto-load media': 'بارگذاری خودکار رسانه',
+    Always: 'همیشه',
+    'Wi-Fi only': 'فقط Wi-Fi',
+    Never: 'هرگز',
+    'Click to load image': 'برای بارگذاری تصویر کلیک کنید',
+    'Click to load media': 'برای بارگذاری رسانه کلیک کنید'
   }
 }

@@ -404,6 +404,12 @@ export default {
     'Submit Relay': 'रिले सबमिट करें',
     Homepage: 'होमपेज',
     'Proof of Work (difficulty {{minPow}})': 'कार्य प्रमाण (कठिनाई {{minPow}})',
-    'via {{client}}': 'के माध्यम से {{client}}'
+    'via {{client}}': 'के माध्यम से {{client}}',
+    'Auto-load media': 'मीडिया स्वतः लोड करें',
+    Always: 'हमेशा',
+    'Wi-Fi only': 'केवल Wi-Fi',
+    Never: 'कभी नहीं',
+    'Click to load image': 'इमेज लोड करने के लिए क्लिक करें',
+    'Click to load media': 'मीडिया लोड करने के लिए क्लिक करें'
   }
 }

@@ -1,7 +1,9 @@
 import { cn } from '@/lib/utils'
+import { useContentPolicy } from '@/providers/ContentPolicyProvider'
 import mediaManager from '@/services/media-manager.service'
 import { YouTubePlayer } from '@/types/youtube'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export default function YoutubeEmbeddedPlayer({
   url,
@@ -10,13 +12,24 @@ export default function YoutubeEmbeddedPlayer({
   url: string
   className?: string
 }) {
+  const { t } = useTranslation()
+  const { autoLoadMedia } = useContentPolicy()
+  const [display, setDisplay] = useState(autoLoadMedia)
   const { videoId, isShort } = useMemo(() => parseYoutubeUrl(url), [url])
   const [initSuccess, setInitSuccess] = useState(false)
   const playerRef = useRef<YouTubePlayer | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (!videoId || !containerRef.current) return
+    if (autoLoadMedia) {
+      setDisplay(true)
+    } else {
+      setDisplay(false)
+    }
+  }, [autoLoadMedia])
+
+  useEffect(() => {
+    if (!videoId || !containerRef.current || !display) return
 
     if (!window.YT) {
       const script = document.createElement('script')
@@ -62,7 +75,21 @@ export default function YoutubeEmbeddedPlayer({
         playerRef.current.destroy()
       }
     }
-  }, [videoId])
+  }, [videoId, display])
+
+  if (!display) {
+    return (
+      <div
+        className="text-primary hover:underline truncate w-fit cursor-pointer"
+        onClick={(e) => {
+          e.stopPropagation()
+          setDisplay(true)
+        }}
+      >
+        [{t('Click to load YouTube video')}]
+      </div>
+    )
+  }
 
   if (!videoId && !initSuccess) {
     return (

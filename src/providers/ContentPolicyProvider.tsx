@@ -1,5 +1,7 @@
+import { MEDIA_AUTO_LOAD_POLICY } from '@/constants'
 import storage from '@/services/local-storage.service'
-import { createContext, useContext, useState } from 'react'
+import { TMediaAutoLoadPolicy } from '@/types'
+import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 
 type TContentPolicyContext = {
   autoplay: boolean
@@ -10,6 +12,10 @@ type TContentPolicyContext = {
 
   hideContentMentioningMutedUsers?: boolean
   setHideContentMentioningMutedUsers?: (hide: boolean) => void
+
+  autoLoadMedia: boolean
+  mediaAutoLoadPolicy: TMediaAutoLoadPolicy
+  setMediaAutoLoadPolicy: (policy: TMediaAutoLoadPolicy) => void
 }
 
 const ContentPolicyContext = createContext<TContentPolicyContext | undefined>(undefined)
@@ -23,11 +29,39 @@ export const useContentPolicy = () => {
 }
 
 export function ContentPolicyProvider({ children }: { children: React.ReactNode }) {
-  const [autoplay, setAutoplay] = useState<boolean>(storage.getAutoplay())
-  const [defaultShowNsfw, setDefaultShowNsfw] = useState<boolean>(storage.getDefaultShowNsfw())
-  const [hideContentMentioningMutedUsers, setHideContentMentioningMutedUsers] = useState<boolean>(
+  const [autoplay, setAutoplay] = useState(storage.getAutoplay())
+  const [defaultShowNsfw, setDefaultShowNsfw] = useState(storage.getDefaultShowNsfw())
+  const [hideContentMentioningMutedUsers, setHideContentMentioningMutedUsers] = useState(
     storage.getHideContentMentioningMutedUsers()
   )
+  const [mediaAutoLoadPolicy, setMediaAutoLoadPolicy] = useState(storage.getMediaAutoLoadPolicy())
+  const [connectionType, setConnectionType] = useState((navigator as any).connection?.type)
+
+  useEffect(() => {
+    const connection = (navigator as any).connection
+    if (!connection) {
+      setConnectionType(undefined)
+      return
+    }
+    const handleConnectionChange = () => {
+      setConnectionType(connection.type)
+    }
+    connection.addEventListener('change', handleConnectionChange)
+    return () => {
+      connection.removeEventListener('change', handleConnectionChange)
+    }
+  }, [])
+
+  const autoLoadMedia = useMemo(() => {
+    if (mediaAutoLoadPolicy === MEDIA_AUTO_LOAD_POLICY.ALWAYS) {
+      return true
+    }
+    if (mediaAutoLoadPolicy === MEDIA_AUTO_LOAD_POLICY.NEVER) {
+      return false
+    }
+    // WIFI_ONLY
+    return connectionType === 'wifi' || connectionType === 'ethernet'
+  }, [mediaAutoLoadPolicy, connectionType])
 
   const updateAutoplay = (autoplay: boolean) => {
     storage.setAutoplay(autoplay)
@@ -44,6 +78,11 @@ export function ContentPolicyProvider({ children }: { children: React.ReactNode 
     setHideContentMentioningMutedUsers(hide)
   }
 
+  const updateMediaAutoLoadPolicy = (policy: TMediaAutoLoadPolicy) => {
+    storage.setMediaAutoLoadPolicy(policy)
+    setMediaAutoLoadPolicy(policy)
+  }
+
   return (
     <ContentPolicyContext.Provider
       value={{
@@ -52,7 +91,10 @@ export function ContentPolicyProvider({ children }: { children: React.ReactNode 
         defaultShowNsfw,
         setDefaultShowNsfw: updateDefaultShowNsfw,
         hideContentMentioningMutedUsers,
-        setHideContentMentioningMutedUsers: updateHideContentMentioningMutedUsers
+        setHideContentMentioningMutedUsers: updateHideContentMentioningMutedUsers,
+        autoLoadMedia,
+        mediaAutoLoadPolicy,
+        setMediaAutoLoadPolicy: updateMediaAutoLoadPolicy
       }}
     >
       {children}

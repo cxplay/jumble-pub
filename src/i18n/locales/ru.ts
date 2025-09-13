@@ -407,6 +407,12 @@ export default {
     'Submit Relay': 'Отправить релей',
     Homepage: 'Домашняя страница',
     'Proof of Work (difficulty {{minPow}})': 'Доказательство работы (сложность {{minPow}})',
-    'via {{client}}': 'через {{client}}'
+    'via {{client}}': 'через {{client}}',
+    'Auto-load media': 'Автозагрузка медиа',
+    Always: 'Всегда',
+    'Wi-Fi only': 'Только Wi-Fi',
+    Never: 'Никогда',
+    'Click to load image': 'Нажмите, чтобы загрузить изображение',
+    'Click to load media': 'Нажмите, чтобы загрузить медиа'
   }
 }

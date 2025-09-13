@@ -405,6 +405,12 @@ export default {
     'Submit Relay': 'Enviar Relay',
     Homepage: 'Página inicial',
     'Proof of Work (difficulty {{minPow}})': 'Prova de Trabalho (dificuldade {{minPow}})',
-    'via {{client}}': 'via {{client}}'
+    'via {{client}}': 'via {{client}}',
+    'Auto-load media': 'Carregamento automático de multimédia',
+    Always: 'Sempre',
+    'Wi-Fi only': 'Apenas Wi-Fi',
+    Never: 'Nunca',
+    'Click to load image': 'Clique para carregar a imagem',
+    'Click to load media': 'Clique para carregar a mídia'
   }
 }

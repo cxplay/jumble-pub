@@ -1,14 +1,15 @@
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select'
 import { Switch } from '@/components/ui/switch'
-import { NOTIFICATION_LIST_STYLE } from '@/constants'
+import { MEDIA_AUTO_LOAD_POLICY, NOTIFICATION_LIST_STYLE } from '@/constants'
 import { LocalizedLanguageNames, TLanguage } from '@/i18n'
 import SecondaryPageLayout from '@/layouts/SecondaryPageLayout'
-import { cn } from '@/lib/utils'
+import { cn, isSupportCheckConnectionType } from '@/lib/utils'
 import { useContentPolicy } from '@/providers/ContentPolicyProvider'
 import { useTheme } from '@/providers/ThemeProvider'
 import { useUserPreferences } from '@/providers/UserPreferencesProvider'
 import { useUserTrust } from '@/providers/UserTrustProvider'
+import { TMediaAutoLoadPolicy } from '@/types'
 import { SelectValue } from '@radix-ui/react-select'
 import { ExternalLink } from 'lucide-react'
 import { forwardRef, HTMLProps, useState } from 'react'
@@ -24,7 +25,9 @@ const GeneralSettingsPage = forwardRef(({ index }: { index?: number }, ref) => {
     defaultShowNsfw,
     setDefaultShowNsfw,
     hideContentMentioningMutedUsers,
-    setHideContentMentioningMutedUsers
+    setHideContentMentioningMutedUsers,
+    mediaAutoLoadPolicy,
+    setMediaAutoLoadPolicy
   } = useContentPolicy()
   const { hideUntrustedNotes, updateHideUntrustedNotes } = useUserTrust()
   const { notificationListStyle, updateNotificationListStyle } = useUserPreferences()
@@ -89,6 +92,29 @@ const GeneralSettingsPage = forwardRef(({ index }: { index?: number }, ref) => {
             <SelectContent>
               <SelectItem value={NOTIFICATION_LIST_STYLE.DETAILED}>{t('Detailed')}</SelectItem>
               <SelectItem value={NOTIFICATION_LIST_STYLE.COMPACT}>{t('Compact')}</SelectItem>
+            </SelectContent>
+          </Select>
+        </SettingItem>
+        <SettingItem>
+          <Label htmlFor="media-auto-load-policy" className="text-base font-normal">
+            {t('Auto-load media')}
+          </Label>
+          <Select
+            defaultValue="wifi-only"
+            value={mediaAutoLoadPolicy}
+            onValueChange={(value: TMediaAutoLoadPolicy) =>
+              setMediaAutoLoadPolicy(value as TMediaAutoLoadPolicy)
+            }
+          >
+            <SelectTrigger id="media-auto-load-policy" className="w-48">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value={MEDIA_AUTO_LOAD_POLICY.ALWAYS}>{t('Always')}</SelectItem>
+              {isSupportCheckConnectionType() && (
+                <SelectItem value={MEDIA_AUTO_LOAD_POLICY.WIFI_ONLY}>{t('Wi-Fi only')}</SelectItem>
+              )}
+              <SelectItem value={MEDIA_AUTO_LOAD_POLICY.NEVER}>{t('Never')}</SelectItem>
             </SelectContent>
           </Select>
         </SettingItem>

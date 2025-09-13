@@ -410,6 +410,12 @@ export default {
     'Submit Relay': 'Soumettre un relais',
     Homepage: 'Page d’accueil',
     'Proof of Work (difficulty {{minPow}})': 'Preuve de travail (difficulté {{minPow}})',
-    'via {{client}}': 'via {{client}}'
+    'via {{client}}': 'via {{client}}',
+    'Auto-load media': 'Auto-chargement des médias',
+    Always: 'Toujours',
+    'Wi-Fi only': 'Wi-Fi uniquement',
+    Never: 'Jamais',
+    'Click to load image': 'Cliquez pour charger l’image',
+    'Click to load media': 'Cliquez pour charger les médias'
   }
 }

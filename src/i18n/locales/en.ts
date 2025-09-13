@@ -399,6 +399,12 @@ export default {
     'Submit Relay': 'Submit Relay',
     Homepage: 'Homepage',
     'Proof of Work (difficulty {{minPow}})': 'Proof of Work (difficulty {{minPow}})',
-    'via {{client}}': 'via {{client}}'
+    'via {{client}}': 'via {{client}}',
+    'Auto-load media': 'Auto-load media',
+    Always: 'Always',
+    'Wi-Fi only': 'Wi-Fi only',
+    Never: 'Never',
+    'Click to load image': 'Click to load image',
+    'Click to load media': 'Click to load media'
   }
 }
