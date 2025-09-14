@@ -28,7 +28,7 @@ import { useTranslation } from 'react-i18next'
 import PullToRefresh from 'react-simple-pull-to-refresh'
 import NoteCard, { NoteCardLoadingSkeleton } from '../NoteCard'
 
-const LIMIT = 100
+const LIMIT = 200
 const ALGO_LIMIT = 500
 const SHOW_COUNT = 10
 
@@ -166,7 +166,9 @@ const NoteList = forwardRef(
             onNew: (event) => {
               if (pubkey && event.pubkey === pubkey) {
                 // If the new event is from the current user, insert it directly into the feed
-                setEvents((oldEvents) => (oldEvents.some((e) => e.id === event.id) ? oldEvents : [event, ...oldEvents]))
+                setEvents((oldEvents) =>
+                  oldEvents.some((e) => e.id === event.id) ? oldEvents : [event, ...oldEvents]
+                )
               } else {
                 // Otherwise, buffer it and show the New Notes button
                 setNewEvents((oldEvents) =>
@@ -201,7 +203,7 @@ const NoteList = forwardRef(
         if (showCount < events.length) {
           setShowCount((prev) => prev + SHOW_COUNT)
           // preload more
-          if (events.length - showCount > SHOW_COUNT * 5) {
+          if (events.length - showCount > LIMIT / 2) {
             return
           }
         }
