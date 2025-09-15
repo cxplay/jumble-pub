@@ -4,8 +4,10 @@ import { useKindFilter } from '@/providers/KindFilterProvider'
 import { useUserTrust } from '@/providers/UserTrustProvider'
 import storage from '@/services/local-storage.service'
 import { TFeedSubRequest, TNoteListMode } from '@/types'
-import { useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import KindFilter from '../KindFilter'
+import { RefreshButton } from '../RefreshButton'
+import { isTouchDevice } from '@/lib/utils'
 
 export default function NormalFeed({
   subRequests,
@@ -20,6 +22,7 @@ export default function NormalFeed({
   const { showKinds } = useKindFilter()
   const [temporaryShowKinds, setTemporaryShowKinds] = useState(showKinds)
   const [listMode, setListMode] = useState<TNoteListMode>(() => storage.getNoteListMode())
+  const supportTouch = useMemo(() => isTouchDevice(), [])
   const noteListRef = useRef<TNoteListRef>(null)
 
   const handleListModeChange = (mode: TNoteListMode) => {
@@ -47,7 +50,10 @@ export default function NormalFeed({
           handleListModeChange(listMode as TNoteListMode)
         }}
         options={
-          <KindFilter showKinds={temporaryShowKinds} onShowKindsChange={handleShowKindsChange} />
+          <>
+            {!supportTouch && <RefreshButton onClick={() => noteListRef.current?.refresh()} />}
+            <KindFilter showKinds={temporaryShowKinds} onShowKindsChange={handleShowKindsChange} />
+          </>
         }
       />
       <NoteList

@@ -23,6 +23,8 @@ import PullToRefresh from 'react-simple-pull-to-refresh'
 import Tabs from '../Tabs'
 import { NotificationItem } from './NotificationItem'
 import { NotificationSkeleton } from './NotificationItem/Notification'
+import { isTouchDevice } from '@/lib/utils'
+import { RefreshButton } from '../RefreshButton'
 
 const LIMIT = 100
 const SHOW_COUNT = 30
@@ -43,6 +45,8 @@ const NotificationList = forwardRef((_, ref) => {
   const [visibleNotifications, setVisibleNotifications] = useState<NostrEvent[]>([])
   const [showCount, setShowCount] = useState(SHOW_COUNT)
   const [until, setUntil] = useState<number | undefined>(dayjs().unix())
+  const supportTouch = useMemo(() => isTouchDevice(), [])
+  const topRef = useRef<HTMLDivElement | null>(null)
   const bottomRef = useRef<HTMLDivElement | null>(null)
   const filterKinds = useMemo(() => {
     switch (notificationType) {
@@ -235,6 +239,34 @@ const NotificationList = forwardRef((_, ref) => {
     }
   }, [pubkey, timelineKey, until, loading, showCount, notifications])
 
+  const refresh = () => {
+    topRef.current?.scrollIntoView({ behavior: 'instant', block: 'start' })
+    setTimeout(() => {
+      setRefreshCount((count) => count + 1)
+    }, 500)
+  }
+
+  const list = (
+    <div className={notificationListStyle === NOTIFICATION_LIST_STYLE.COMPACT ? 'pt-2' : ''}>
+      {visibleNotifications.map((notification) => (
+        <NotificationItem
+          key={notification.id}
+          notification={notification}
+          isNew={notification.created_at > lastReadTime}
+        />
+      ))}
+      <div className="text-center text-sm text-muted-foreground">
+        {until || loading ? (
+          <div ref={bottomRef}>
+            <NotificationSkeleton />
+          </div>
+        ) : (
+          t('no more notifications')
+        )}
+      </div>
+    </div>
+  )
+
   return (
     <div>
       <Tabs
@@ -249,33 +281,22 @@ const NotificationList = forwardRef((_, ref) => {
           setShowCount(SHOW_COUNT)
           setNotificationType(type as TNotificationType)
         }}
+        options={!supportTouch ? <RefreshButton onClick={() => refresh()} /> : null}
       />
-      <PullToRefresh
-        onRefresh={async () => {
-          setRefreshCount((count) => count + 1)
-          await new Promise((resolve) => setTimeout(resolve, 1000))
-        }}
-        pullingContent=""
-      >
-        <div className={notificationListStyle === NOTIFICATION_LIST_STYLE.COMPACT ? 'pt-2' : ''}>
-          {visibleNotifications.map((notification) => (
-            <NotificationItem
-              key={notification.id}
-              notification={notification}
-              isNew={notification.created_at > lastReadTime}
-            />
-          ))}
-          <div className="text-center text-sm text-muted-foreground">
-            {until || loading ? (
-              <div ref={bottomRef}>
-                <NotificationSkeleton />
-              </div>
-            ) : (
-              t('no more notifications')
-            )}
-          </div>
-        </div>
-      </PullToRefresh>
+      <div ref={topRef} className="scroll-mt-[calc(6rem+1px)]" />
+      {supportTouch ? (
+        <PullToRefresh
+          onRefresh={async () => {
+            refresh()
+            await new Promise((resolve) => setTimeout(resolve, 1000))
+          }}
+          pullingContent=""
+        >
+          {list}
+        </PullToRefresh>
+      ) : (
+        list
+      )}
     </div>
   )
 })

@@ -74,7 +74,10 @@ export default function KindFilter({
     <Button
       variant="ghost"
       size="titlebar-icon"
-      className="relative w-fit px-3"
+      className={cn(
+        'relative w-fit px-3 focus:text-foreground',
+        !isDifferentFromSaved && 'text-muted-foreground'
+      )}
       onClick={() => {
         if (isSmallScreen) {
           setOpen(true)

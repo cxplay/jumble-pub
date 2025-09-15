@@ -27,6 +27,7 @@ import {
 import { useTranslation } from 'react-i18next'
 import PullToRefresh from 'react-simple-pull-to-refresh'
 import NoteCard, { NoteCardLoadingSkeleton } from '../NoteCard'
+import { isTouchDevice } from '@/lib/utils'
 
 const LIMIT = 200
 const ALGO_LIMIT = 500
@@ -64,6 +65,7 @@ const NoteList = forwardRef(
     const [timelineKey, setTimelineKey] = useState<string | undefined>(undefined)
     const [refreshCount, setRefreshCount] = useState(0)
     const [showCount, setShowCount] = useState(SHOW_COUNT)
+    const supportTouch = useMemo(() => isTouchDevice(), [])
     const bottomRef = useRef<HTMLDivElement | null>(null)
     const topRef = useRef<HTMLDivElement | null>(null)
 
@@ -124,7 +126,14 @@ const NoteList = forwardRef(
       }, 20)
     }
 
-    useImperativeHandle(ref, () => ({ scrollToTop }), [])
+    const refresh = () => {
+      scrollToTop()
+      setTimeout(() => {
+        setRefreshCount((count) => count + 1)
+      }, 500)
+    }
+
+    useImperativeHandle(ref, () => ({ scrollToTop, refresh }), [])
 
     useEffect(() => {
       if (!subRequests.length) return
@@ -250,45 +259,51 @@ const NoteList = forwardRef(
       }, 0)
     }
 
+    const list = (
+      <div className="min-h-screen">
+        {filteredEvents.map((event) => (
+          <NoteCard
+            key={event.id}
+            className="w-full"
+            event={event}
+            filterMutedNotes={filterMutedNotes}
+          />
+        ))}
+        {hasMore || loading ? (
+          <div ref={bottomRef}>
+            <NoteCardLoadingSkeleton />
+          </div>
+        ) : events.length ? (
+          <div className="text-center text-sm text-muted-foreground mt-2">{t('no more notes')}</div>
+        ) : (
+          <div className="flex justify-center w-full mt-2">
+            <Button size="lg" onClick={() => setRefreshCount((count) => count + 1)}>
+              {t('reload notes')}
+            </Button>
+          </div>
+        )}
+      </div>
+    )
+
     return (
       <div>
         {filteredNewEvents.length > 0 && (
           <NewNotesButton newEvents={filteredNewEvents} onClick={showNewEvents} />
         )}
         <div ref={topRef} className="scroll-mt-[calc(6rem+1px)]" />
-        <PullToRefresh
-          onRefresh={async () => {
-            setRefreshCount((count) => count + 1)
-            await new Promise((resolve) => setTimeout(resolve, 1000))
-          }}
-          pullingContent=""
-        >
-          <div className="min-h-screen">
-            {filteredEvents.map((event) => (
-              <NoteCard
-                key={event.id}
-                className="w-full"
-                event={event}
-                filterMutedNotes={filterMutedNotes}
-              />
-            ))}
-            {hasMore || loading ? (
-              <div ref={bottomRef}>
-                <NoteCardLoadingSkeleton />
-              </div>
-            ) : events.length ? (
-              <div className="text-center text-sm text-muted-foreground mt-2">
-                {t('no more notes')}
-              </div>
-            ) : (
-              <div className="flex justify-center w-full mt-2">
-                <Button size="lg" onClick={() => setRefreshCount((count) => count + 1)}>
-                  {t('reload notes')}
-                </Button>
-              </div>
-            )}
-          </div>
-        </PullToRefresh>
+        {supportTouch ? (
+          <PullToRefresh
+            onRefresh={async () => {
+              refresh()
+              await new Promise((resolve) => setTimeout(resolve, 1000))
+            }}
+            pullingContent=""
+          >
+            {list}
+          </PullToRefresh>
+        ) : (
+          list
+        )}
         <div className="h-40" />
       </div>
     )
@@ -299,4 +314,5 @@ export default NoteList
 
 export type TNoteListRef = {
   scrollToTop: (behavior?: ScrollBehavior) => void
+  refresh: () => void
 }

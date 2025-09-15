@@ -2,12 +2,14 @@ import KindFilter from '@/components/KindFilter'
 import NoteList, { TNoteListRef } from '@/components/NoteList'
 import Tabs from '@/components/Tabs'
 import { BIG_RELAY_URLS } from '@/constants'
+import { isTouchDevice } from '@/lib/utils'
 import { useKindFilter } from '@/providers/KindFilterProvider'
 import { useNostr } from '@/providers/NostrProvider'
 import client from '@/services/client.service'
 import storage from '@/services/local-storage.service'
 import { TFeedSubRequest, TNoteListMode } from '@/types'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { RefreshButton } from '../RefreshButton'
 
 export default function ProfileFeed({
   pubkey,
@@ -34,6 +36,7 @@ export default function ProfileFeed({
 
     return _tabs
   }, [myPubkey, pubkey])
+  const supportTouch = useMemo(() => isTouchDevice(), [])
 
   useEffect(() => {
     const init = async () => {
@@ -100,7 +103,10 @@ export default function ProfileFeed({
         }}
         threshold={Math.max(800, topSpace)}
         options={
-          <KindFilter showKinds={temporaryShowKinds} onShowKindsChange={handleShowKindsChange} />
+          <>
+            {!supportTouch && <RefreshButton onClick={() => noteListRef.current?.refresh()} />}
+            <KindFilter showKinds={temporaryShowKinds} onShowKindsChange={handleShowKindsChange} />
+          </>
         }
       />
       <NoteList
