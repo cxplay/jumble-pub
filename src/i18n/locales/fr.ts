@@ -416,6 +416,7 @@ export default {
     'Wi-Fi only': 'Wi-Fi uniquement',
     Never: 'Jamais',
     'Click to load image': 'Cliquez pour charger l’image',
-    'Click to load media': 'Cliquez pour charger les médias'
+    'Click to load media': 'Cliquez pour charger les médias',
+    'Click to load YouTube video': 'Cliquez pour charger la vidéo YouTube'
   }
 }

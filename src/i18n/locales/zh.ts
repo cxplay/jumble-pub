@@ -402,6 +402,7 @@ export default {
     'Wi-Fi only': '仅WiFi',
     Never: '从不',
     'Click to load image': '点击加载图片',
-    'Click to load media': '点击加载音视频'
+    'Click to load media': '点击加载音视频',
+    'Click to load YouTube video': '点击加载 YouTube 视频'
   }
 }

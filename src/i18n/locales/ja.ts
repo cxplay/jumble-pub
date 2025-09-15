@@ -408,6 +408,7 @@ export default {
     'Wi-Fi only': 'Wi-Fiのみ',
     Never: 'しない',
     'Click to load image': 'クリックして画像を読み込む',
-    'Click to load media': 'クリックしてメディアを読み込む'
+    'Click to load media': 'クリックしてメディアを読み込む',
+    'Click to load YouTube video': 'クリックしてYouTubeビデオを読み込む'
   }
 }

@@ -314,7 +314,7 @@ export default {
     'End Date (optional)': 'Data zakończenia (opcjonalna)',
     'Clear end date': 'Wyczyść datę zakończenia',
     'Relay URLs (optional, comma-separated)':
-    'Adresy URL transmiterów (opcjonalne, oddzielone przecinkami)',
+      'Adresy URL transmiterów (opcjonalne, oddzielone przecinkami)',
     'Remove poll': 'Usuń ankietę',
     'Refresh results': 'Odśwież wyniki',
     Poll: 'Ankieta',
@@ -356,7 +356,7 @@ export default {
       'You have {{count}} write relays. Most clients only use 2-4 relays, setting more is unnecessary.',
     'Optimize Relay Settings': 'Optymalizuj ustawienia transmiterów',
     'Your current relay configuration may not be optimal. This could make it difficult for others to find your posts and may result in incomplete notifications.':
-    'Twoja obecna konfiguracja transmiterów może nie być optymalna. To może utrudnić innym znalezienie Twoich postów i może skutkować niekompletnymi powiadomieniami.',
+      'Twoja obecna konfiguracja transmiterów może nie być optymalna. To może utrudnić innym znalezienie Twoich postów i może skutkować niekompletnymi powiadomieniami.',
     'Optimize Now': 'Optymalizuj teraz',
     'Maybe Later': 'Może później',
     "Don't remind me again": 'Nie przypominaj mi więcej',
@@ -375,7 +375,7 @@ export default {
     'Share something on this Relay': 'Udostępnij coś na tym transmiterze',
     'Try deleting this note': 'Spróbuj usunąć ten wpis',
     'Deletion request sent to {{count}} relays':
-    'Żądanie usunięcia wysłano do {{count}} transmiterów',
+      'Żądanie usunięcia wysłano do {{count}} transmiterów',
     'Suitable Relays': 'Odpowiednie transmitery',
     'People, keywords, or relays': 'Osoby, słowa kluczowe lub transmitery',
     'Hide content mentioning muted users': 'Ukryj treści wspominające wyciszonych użytkowników',
@@ -412,6 +412,7 @@ export default {
     'Wi-Fi only': 'Tylko Wi-Fi',
     Never: 'Nigdy',
     'Click to load image': 'Kliknij, aby załadować obraz',
-    'Click to load media': 'Kliknij, aby załadować media'
+    'Click to load media': 'Kliknij, aby załadować media',
+    'Click to load YouTube video': 'Kliknij, aby załadować wideo z YouTube'
   }
 }

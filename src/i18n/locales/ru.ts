@@ -413,6 +413,7 @@ export default {
     'Wi-Fi only': 'Только Wi-Fi',
     Never: 'Никогда',
     'Click to load image': 'Нажмите, чтобы загрузить изображение',
-    'Click to load media': 'Нажмите, чтобы загрузить медиа'
+    'Click to load media': 'Нажмите, чтобы загрузить медиа',
+    'Click to load YouTube video': 'Нажмите, чтобы загрузить видео YouTube'
   }
 }

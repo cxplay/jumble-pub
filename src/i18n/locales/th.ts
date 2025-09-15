@@ -404,6 +404,7 @@ export default {
     'Wi-Fi only': 'Wi-Fi เท่านั้น',
     Never: 'ไม่เลย',
     'Click to load image': 'คลิกเพื่อโหลดรูปภาพ',
-    'Click to load media': 'คลิกเพื่อโหลดสื่อ'
+    'Click to load media': 'คลิกเพื่อโหลดสื่อ',
+    'Click to load YouTube video': 'คลิกเพื่อโหลดวิดีโอ YouTube'
   }
 }

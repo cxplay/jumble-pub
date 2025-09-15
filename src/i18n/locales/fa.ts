@@ -407,6 +407,7 @@ export default {
     'Wi-Fi only': 'فقط Wi-Fi',
     Never: 'هرگز',
     'Click to load image': 'برای بارگذاری تصویر کلیک کنید',
-    'Click to load media': 'برای بارگذاری رسانه کلیک کنید'
+    'Click to load media': 'برای بارگذاری رسانه کلیک کنید',
+    'Click to load YouTube video': 'برای بارگذاری ویدیو YouTube کلیک کنید'
   }
 }

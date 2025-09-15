@@ -405,6 +405,7 @@ export default {
     'Wi-Fi only': 'Wi-Fi only',
     Never: 'Never',
     'Click to load image': 'Click to load image',
-    'Click to load media': 'Click to load media'
+    'Click to load media': 'Click to load media',
+    'Click to load YouTube video': 'Click to load YouTube video'
   }
 }

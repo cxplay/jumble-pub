@@ -406,6 +406,7 @@ export default {
     'Wi-Fi only': 'Wi-Fi فقط',
     Never: 'أبداً',
     'Click to load image': 'انقر لتحميل الصورة',
-    'Click to load media': 'انقر لتحميل الوسائط'
+    'Click to load media': 'انقر لتحميل الوسائط',
+    'Click to load YouTube video': 'انقر لتحميل فيديو YouTube'
   }
 }
