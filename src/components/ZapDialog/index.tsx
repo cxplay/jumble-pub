@@ -21,12 +21,12 @@ import { useZap } from '@/providers/ZapProvider'
 import lightning from '@/services/lightning.service'
 import noteStatsService from '@/services/note-stats.service'
 import { Loader } from 'lucide-react'
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
+import { NostrEvent } from 'nostr-tools'
+import { Dispatch, SetStateAction, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import UserAvatar from '../UserAvatar'
 import Username from '../Username'
-import { NostrEvent } from 'nostr-tools'
 
 export default function ZapDialog({
   open,
@@ -134,12 +134,45 @@ function ZapDialogContent({
   defaultAmount?: number
   defaultComment?: string
 }) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { pubkey } = useNostr()
   const { defaultZapSats, defaultZapComment } = useZap()
   const [sats, setSats] = useState(defaultAmount ?? defaultZapSats)
   const [comment, setComment] = useState(defaultComment ?? defaultZapComment)
   const [zapping, setZapping] = useState(false)
+  const presetAmounts = useMemo(() => {
+    if (i18n.language.startsWith('zh')) {
+      return [
+        { display: '21', val: 21 },
+        { display: '66', val: 66 },
+        { display: '210', val: 210 },
+        { display: '666', val: 666 },
+        { display: '1k', val: 1000 },
+        { display: '2.1k', val: 2100 },
+        { display: '6.6k', val: 6666 },
+        { display: '10k', val: 10000 },
+        { display: '21k', val: 21000 },
+        { display: '66k', val: 66666 },
+        { display: '100k', val: 100000 },
+        { display: '210k', val: 210000 }
+      ]
+    }
+
+    return [
+      { display: '21', val: 21 },
+      { display: '42', val: 42 },
+      { display: '210', val: 210 },
+      { display: '420', val: 420 },
+      { display: '1k', val: 1000 },
+      { display: '2.1k', val: 2100 },
+      { display: '4.2k', val: 4200 },
+      { display: '10k', val: 10000 },
+      { display: '21k', val: 21000 },
+      { display: '42k', val: 42000 },
+      { display: '100k', val: 100000 },
+      { display: '210k', val: 210000 }
+    ]
+  }, [i18n.language])
 
   const handleZap = async () => {
     try {
@@ -198,20 +231,7 @@ function ZapDialogContent({
 
       {/* Preset sats buttons */}
       <div className="grid grid-cols-6 gap-2">
-        {[
-          { display: '21', val: 21 },
-          { display: '66', val: 66 },
-          { display: '210', val: 210 },
-          { display: '666', val: 666 },
-          { display: '1k', val: 1000 },
-          { display: '2.1k', val: 2100 },
-          { display: '6.6k', val: 6666 },
-          { display: '10k', val: 10000 },
-          { display: '21k', val: 21000 },
-          { display: '66k', val: 66666 },
-          { display: '100k', val: 100000 },
-          { display: '210k', val: 210000 }
-        ].map(({ display, val }) => (
+        {presetAmounts.map(({ display, val }) => (
           <Button variant="secondary" key={val} onClick={() => setSats(val)}>
             {display}
           </Button>
