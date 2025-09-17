@@ -6,7 +6,11 @@ export const DEFAULT_FAVORITE_RELAYS = []
 
 export const RECOMMENDED_RELAYS = []
 
-export const RECOMMENDED_BLOSSOM_SERVERS = ['https://blossom.band/']
+export const RECOMMENDED_BLOSSOM_SERVERS = [
+  'https://blossom.band/',
+  'https://blossom.primal.net/',
+  'https://nostr.media/'
+]
 
 export const StorageKey = {
   VERSION: 'version',
