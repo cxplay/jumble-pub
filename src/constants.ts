@@ -84,6 +84,7 @@ export const ExtendedKind = {
   VOICE_COMMENT: 1244,
   FAVORITE_RELAYS: 10012,
   BLOSSOM_SERVER_LIST: 10063,
+  RELAY_REVIEW: 31987,
   GROUP_METADATA: 39000
 }
 
@@ -98,7 +99,8 @@ export const SUPPORTED_KINDS = [
   ExtendedKind.VOICE,
   ExtendedKind.VOICE_COMMENT,
   kinds.Highlights,
-  kinds.LongFormArticle
+  kinds.LongFormArticle,
+  ExtendedKind.RELAY_REVIEW
 ]
 
 export const URL_REGEX =
