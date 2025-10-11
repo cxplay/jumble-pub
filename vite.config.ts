@@ -52,6 +52,12 @@ export default defineConfig({
         short_name: 'Nostr!moe',
         icons: [
           {
+            src: '/pwa-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any'
+          },
+          {
             src: '/pwa-192x192.png',
             sizes: '192x192',
             type: 'image/png',
@@ -61,26 +67,26 @@ export default defineConfig({
             src: '/pwa-512x512.png',
             sizes: '512x512',
             type: 'image/png',
-            purpose: 'any'
+            purpose: 'maskable'
           },
           {
-            src: '/pwa-maskable-192x192.png',
+            src: '/pwa-192x192.png',
             sizes: '192x192',
             type: 'image/png',
             purpose: 'maskable'
           },
           {
-            src: '/pwa-maskable-512x512.png',
+            src: '/pwa-monochrome.svg',
             sizes: '512x512',
-            type: 'image/png',
-            purpose: 'maskable'
+            type: 'image/svg+xml',
+            purpose: 'monochrome'
           }
         ],
         start_url: '/',
         display: 'standalone',
         background_color: '#FFFFFF',
         theme_color: '#FFFFFF',
-        description: '由 Jumble 驱动的 Nostr!moe 社区'
+        description: packageJson.description
       }
     })
   ]
