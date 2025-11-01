@@ -47,10 +47,13 @@ export function FeedProvider({ children }: { children: React.ReactNode }) {
         const storedFeedInfo = storage.getFeedInfo(pubkey)
         if (storedFeedInfo) {
           feedInfo = storedFeedInfo
+        } else {
+          feedInfo = { feedType: 'following' }
         }
       }
 
       if (!feedInfo) {
+        setIsReady(true)
         return
       }
 
@@ -70,12 +73,6 @@ export function FeedProvider({ children }: { children: React.ReactNode }) {
 
     init()
   }, [pubkey, isInitialized])
-
-  useEffect(() => {
-    if (pubkey && !feedInfo) {
-      switchFeed('following', { pubkey })
-    }
-  }, [pubkey, feedInfo])
 
   const switchFeed = async (
     feedType: TFeedType | null,

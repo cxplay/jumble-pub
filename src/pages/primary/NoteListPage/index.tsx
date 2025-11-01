@@ -48,22 +48,11 @@ const NoteListPage = forwardRef((_, ref) => {
     }
   }, [relayUrls])
 
-  if (!feedInfo) {
-    return (
-      <PrimaryPageLayout
-        pageName="home"
-        ref={layoutRef}
-        titlebar={<NoteListPageTitlebar layoutRef={layoutRef} />}
-        displayScrollToTopButton
-      >
-        <WelcomeGuide />
-      </PrimaryPageLayout>
-    )
-  }
-
   let content: React.ReactNode = null
   if (!isReady) {
     content = <div className="text-center text-sm text-muted-foreground">{t('loading...')}</div>
+  } else if (!feedInfo) {
+    content = <WelcomeGuide />
   } else if (feedInfo.feedType === 'following' && !pubkey) {
     switchFeed(null)
     return null
@@ -89,7 +78,7 @@ const NoteListPage = forwardRef((_, ref) => {
           layoutRef={layoutRef}
           showRelayDetails={showRelayDetails}
           setShowRelayDetails={
-            feedInfo.feedType === 'relay' && !!feedInfo.id ? setShowRelayDetails : undefined
+            feedInfo?.feedType === 'relay' && !!feedInfo.id ? setShowRelayDetails : undefined
           }
         />
       }
