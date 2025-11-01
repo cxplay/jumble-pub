@@ -493,6 +493,7 @@ export default {
     'Jumble is a client focused on browsing relays. Get started by exploring interesting relays or login to view your following feed.':
       'Jumble은 릴레이 탐색에 중점을 둔 클라이언트입니다. 흥미로운 릴레이를 탐색하거나 로그인하여 팔로잉 피드를 확인하세요.',
     'Explore Relays': '릴레이 탐색',
-    'Choose a feed': '피드 선택'
+    'Choose a feed': '피드 선택',
+    'and {{x}} others': '및 기타 {{x}}명'
   }
 }

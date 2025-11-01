@@ -494,6 +494,7 @@ export default {
     'Jumble is a client focused on browsing relays. Get started by exploring interesting relays or login to view your following feed.':
       'Jumble é um cliente focado em navegar relays. Comece explorando relays interessantes ou faça login para ver seu feed de seguidos.',
     'Explore Relays': 'Explorar Relays',
-    'Choose a feed': 'Escolha um feed'
+    'Choose a feed': 'Escolha um feed',
+    'and {{x}} others': 'e {{x}} outros'
   }
 }

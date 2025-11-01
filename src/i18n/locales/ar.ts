@@ -489,6 +489,7 @@ export default {
     'Jumble is a client focused on browsing relays. Get started by exploring interesting relays or login to view your following feed.':
       'Jumble هو عميل يركز على تصفح المرحلات. ابدأ باستكشاف المرحلات المثيرة للاهتمام أو قم بتسجيل الدخول لعرض خلاصتك.',
     'Explore Relays': 'استكشف المرحلات',
-    'Choose a feed': 'اختر خلاصة'
+    'Choose a feed': 'اختر خلاصة',
+    'and {{x}} others': 'و {{x}} آخرون'
   }
 }

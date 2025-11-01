@@ -485,6 +485,7 @@ export default {
     'Jumble is a client focused on browsing relays. Get started by exploring interesting relays or login to view your following feed.':
       'Jumble 是一个专注于浏览服务器的客户端。从探索有趣的服务器开始，或者登录查看你的关注动态。',
     'Explore Relays': '探索服务器',
-    'Choose a feed': '选择一个动态'
+    'Choose a feed': '选择一个动态',
+    'and {{x}} others': '和其他 {{x}} 人'
   }
 }
