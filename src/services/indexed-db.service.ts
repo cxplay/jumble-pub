@@ -485,8 +485,14 @@ class IndexedDbService {
     }
 
     const stores = [
-      { name: StoreNames.PROFILE_EVENTS, expirationTimestamp: Date.now() - 1000 * 60 * 60 * 24 }, // 1 day
-      { name: StoreNames.RELAY_LIST_EVENTS, expirationTimestamp: Date.now() - 1000 * 60 * 60 * 24 }, // 1 day
+      {
+        name: StoreNames.PROFILE_EVENTS,
+        expirationTimestamp: Date.now() - 1000 * 60 * 60 * 24 * 30 // 30 day
+      },
+      {
+        name: StoreNames.RELAY_LIST_EVENTS,
+        expirationTimestamp: Date.now() - 1000 * 60 * 60 * 24 // 1 day
+      },
       {
         name: StoreNames.FOLLOW_LIST_EVENTS,
         expirationTimestamp: Date.now() - 1000 * 60 * 60 * 24 // 1 day
