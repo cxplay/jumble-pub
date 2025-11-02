@@ -1126,7 +1126,7 @@ class ClientService extends EventTarget {
   }
 
   async forceUpdateRelayListEvent(pubkey: string) {
-    await this.replaceableEventBatchLoadFn([{ pubkey, kind: kinds.RelayList }])
+    await this.replaceableEventFromBigRelaysBatchLoadFn([{ pubkey, kind: kinds.RelayList }])
   }
 
   async updateRelayListCache(event: NEvent) {
@@ -1262,7 +1262,9 @@ class ClientService extends EventTarget {
                 }
               : { authors: [pubkey], kinds: [kind] }) as Filter
         )
-        const events = await this.query(BIG_RELAY_URLS, filters)
+        const relayList = await this.fetchRelayList(pubkey)
+        const relays = relayList.write.concat(BIG_RELAY_URLS).slice(0, 5)
+        const events = await this.query(relays, filters)
 
         for (const event of events) {
           const key = getReplaceableCoordinateFromEvent(event)
