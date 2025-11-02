@@ -133,7 +133,14 @@ const NoteList = forwardRef(
           return
         }
 
-        const eventFromContent = evt.content ? (JSON.parse(evt.content) as Event) : null
+        let eventFromContent: Event | null = null
+        if (evt.content) {
+          try {
+            eventFromContent = JSON.parse(evt.content) as Event
+          } catch {
+            eventFromContent = null
+          }
+        }
         if (eventFromContent && verifyEvent(eventFromContent)) {
           if (eventFromContent.kind === kinds.Repost) {
             return
