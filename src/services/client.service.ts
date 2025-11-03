@@ -7,6 +7,7 @@ import {
 } from '@/lib/event'
 import { getProfileFromEvent, getRelayListFromEvent } from '@/lib/event-metadata'
 import { formatPubkey, isValidPubkey, pubkeyToNpub, userIdToPubkey } from '@/lib/pubkey'
+import { filterOutBigRelays } from '@/lib/relay'
 import { getPubkeysFromPTags, getServersFromServerTags, tagNameEquals } from '@/lib/tag'
 import { isLocalNetworkUrl, isWebsocketUrl, normalizeUrl } from '@/lib/url'
 import { isSafari } from '@/lib/utils'
@@ -38,6 +39,7 @@ class ClientService extends EventTarget {
 
   signer?: ISigner
   pubkey?: string
+  currentRelays: string[] = []
   private pool: SimplePool
 
   private timelines: Record<
@@ -817,10 +819,7 @@ class ClientService extends EventTarget {
       return event
     }
 
-    return this.fetchEventFromRelays(
-      relayUrls.filter((url) => !BIG_RELAY_URLS.includes(url)),
-      { ids: [id], limit: 1 }
-    )
+    return this.fetchEventFromRelays(filterOutBigRelays(relayUrls), { ids: [id], limit: 1 })
   }
 
   private async _fetchEvent(id: string): Promise<NEvent | undefined> {
@@ -1044,13 +1043,15 @@ class ClientService extends EventTarget {
       return profileFromBigRelays
     }
 
+    // If the user has a relay list, try those relays first
     if (!relays.length) {
       const relayList = await this.fetchRelayList(pubkey)
-      relays = relayList.write.filter((url) => !BIG_RELAY_URLS.includes(url)).slice(0, 5)
+      relays = filterOutBigRelays(relayList.write).slice(0, 5)
+    }
 
-      if (!relays.length) {
-        return
-      }
+    // If the user has no relay list, try current relays
+    if (!relays.length) {
+      relays = filterOutBigRelays(this.currentRelays)
     }
 
     const profileEvent = await this.fetchEventFromRelays(relays, {
