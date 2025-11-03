@@ -817,7 +817,10 @@ class ClientService extends EventTarget {
       return event
     }
 
-    return this.tryHarderToFetchEvent(relayUrls, { ids: [id], limit: 1 }, true)
+    return this.fetchEventFromRelays(
+      relayUrls.filter((url) => !BIG_RELAY_URLS.includes(url)),
+      { ids: [id], limit: 1 }
+    )
   }
 
   private async _fetchEvent(id: string): Promise<NEvent | undefined> {
@@ -861,7 +864,7 @@ class ClientService extends EventTarget {
 
     if (!event && author) {
       const relayList = await this.fetchRelayList(author)
-      event = await this.tryHarderToFetchEvent(relayList.write.slice(0, 5), filter)
+      event = await this.fetchEventFromRelays(relayList.write.slice(0, 5), filter)
     }
 
     if (event && event.id !== id) {
@@ -871,19 +874,7 @@ class ClientService extends EventTarget {
     return event
   }
 
-  private async tryHarderToFetchEvent(
-    relayUrls: string[],
-    filter: Filter,
-    alreadyFetchedFromBigRelays = false
-  ) {
-    if (!relayUrls.length && filter.authors?.length) {
-      const relayList = await this.fetchRelayList(filter.authors[0])
-      relayUrls = alreadyFetchedFromBigRelays
-        ? relayList.write.filter((url) => !BIG_RELAY_URLS.includes(url)).slice(0, 4)
-        : relayList.write.slice(0, 4)
-    } else if (!relayUrls.length && !alreadyFetchedFromBigRelays) {
-      relayUrls = BIG_RELAY_URLS
-    }
+  private async fetchEventFromRelays(relayUrls: string[], filter: Filter) {
     if (!relayUrls.length) return
 
     const events = await this.query(relayUrls, filter)
@@ -1054,18 +1045,19 @@ class ClientService extends EventTarget {
     }
 
     if (!relays.length) {
-      return undefined
+      const relayList = await this.fetchRelayList(pubkey)
+      relays = relayList.write.filter((url) => !BIG_RELAY_URLS.includes(url)).slice(0, 5)
+
+      if (!relays.length) {
+        return
+      }
     }
 
-    const profileEvent = await this.tryHarderToFetchEvent(
-      relays,
-      {
-        authors: [pubkey],
-        kinds: [kinds.Metadata],
-        limit: 1
-      },
-      true
-    )
+    const profileEvent = await this.fetchEventFromRelays(relays, {
+      authors: [pubkey],
+      kinds: [kinds.Metadata],
+      limit: 1
+    })
 
     if (profileEvent) {
       this.addUsernameToIndex(profileEvent)
