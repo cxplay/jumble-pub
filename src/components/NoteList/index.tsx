@@ -95,7 +95,6 @@ const NoteList = forwardRef(
 
         if (pinnedEventHexIdSet.has(evt.id)) return true
         if (isEventDeleted(evt)) return true
-        if (hideReplies && isReplyNoteEvent(evt)) return true
         if (hideUntrustedNotes && !isUserTrusted(evt.pubkey)) return true
         if (filterMutedNotes && mutePubkeySet.has(evt.pubkey)) return true
         if (
@@ -111,7 +110,7 @@ const NoteList = forwardRef(
 
         return false
       },
-      [hideReplies, hideUntrustedNotes, mutePubkeySet, pinnedEventIds, isEventDeleted, filterFn]
+      [hideUntrustedNotes, mutePubkeySet, pinnedEventIds, isEventDeleted, filterFn]
     )
 
     const filteredNotes = useMemo(() => {
@@ -128,6 +127,7 @@ const NoteList = forwardRef(
         keySet.add(key)
 
         if (shouldHideEvent(evt)) return
+        if (hideReplies && isReplyNoteEvent(evt)) return
         if (evt.kind !== kinds.Repost) {
           filteredEvents.push(evt)
           return
@@ -197,7 +197,7 @@ const NoteList = forwardRef(
         const key = getEventKey(evt)
         return { key, event: evt, reposters: Array.from(repostersMap.get(key) ?? []) }
       })
-    }, [events, showCount, shouldHideEvent])
+    }, [events, showCount, shouldHideEvent, hideReplies])
 
     const filteredNewEvents = useMemo(() => {
       const keySet = new Set<string>()
