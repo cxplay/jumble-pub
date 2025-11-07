@@ -505,6 +505,7 @@ export default {
     'Explore Relays': 'Relays erkunden',
     'Choose a feed': 'Wähle einen Feed',
     'and {{x}} others': 'und {{x}} andere',
-    selfZapWarning: 'Jumble ist nicht verantwortlich für das, was passiert, wenn Sie sich selbst zappen. Fahren Sie auf eigene Gefahr fort. 😉⚡',
+    selfZapWarning:
+      'Jumble ist nicht verantwortlich für das, was passiert, wenn Sie sich selbst zappen. Fahren Sie auf eigene Gefahr fort. 😉⚡'
   }
 }

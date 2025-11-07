@@ -11,7 +11,7 @@ export function getInvoiceDetails(invoice: string): { amount: number; descriptio
   const _invoice = new Invoice({ pr: invoice }) // TODO: need to validate
   return {
     amount: _invoice.satoshi,
-    description: _invoice.description,
+    description: _invoice.description
   }
 }
 

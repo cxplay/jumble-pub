@@ -487,6 +487,6 @@ export default {
     'Explore Relays': '探索服务器',
     'Choose a feed': '选择一个动态',
     'and {{x}} others': '和其他 {{x}} 人',
-    selfZapWarning: 'Jumble 对您给自己打赏所发生的事情概不负责。风险自负。😉⚡',
+    selfZapWarning: 'Jumble 对您给自己打赏所发生的事情概不负责。风险自负。😉⚡'
   }
 }
