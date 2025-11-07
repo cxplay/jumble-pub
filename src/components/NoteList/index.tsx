@@ -47,7 +47,7 @@ const NoteList = forwardRef(
       hideUntrustedNotes = false,
       areAlgoRelays = false,
       showRelayCloseReason = false,
-      pinnedEventIds = [],
+      pinnedEventIds,
       filterFn
     }: {
       subRequests: TFeedSubRequest[]
@@ -82,7 +82,7 @@ const NoteList = forwardRef(
     const shouldHideEvent = useCallback(
       (evt: Event) => {
         const pinnedEventHexIdSet = new Set()
-        pinnedEventIds.forEach((id) => {
+        pinnedEventIds?.forEach((id) => {
           try {
             const { type, data } = decode(id)
             if (type === 'nevent') {
@@ -110,7 +110,7 @@ const NoteList = forwardRef(
 
         return false
       },
-      [hideUntrustedNotes, mutePubkeySet, pinnedEventIds, isEventDeleted, filterFn]
+      [hideUntrustedNotes, mutePubkeySet, JSON.stringify(pinnedEventIds), isEventDeleted, filterFn]
     )
 
     const filteredNotes = useMemo(() => {
@@ -311,7 +311,7 @@ const NoteList = forwardRef(
       return () => {
         promise.then((closer) => closer())
       }
-    }, [JSON.stringify(subRequests), refreshCount, showKinds])
+    }, [JSON.stringify(subRequests), refreshCount, JSON.stringify(showKinds)])
 
     useEffect(() => {
       const options = {
@@ -373,9 +373,7 @@ const NoteList = forwardRef(
 
     const list = (
       <div className="min-h-screen">
-        {pinnedEventIds.map((id) => (
-          <PinnedNoteCard key={id} eventId={id} className="w-full" />
-        ))}
+        {pinnedEventIds?.map((id) => <PinnedNoteCard key={id} eventId={id} className="w-full" />)}
         {filteredNotes.map(({ key, event, reposters }) => (
           <NoteCard
             key={key}
