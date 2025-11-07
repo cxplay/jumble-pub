@@ -341,6 +341,15 @@ export function createPinListDraftEvent(tags: string[][], content = ''): TDraftE
   }
 }
 
+export function createUserEmojiListDraftEvent(tags: string[][], content = ''): TDraftEvent {
+  return {
+    kind: kinds.UserEmojiList,
+    content,
+    tags,
+    created_at: dayjs().unix()
+  }
+}
+
 export function createBlossomServerListDraftEvent(servers: string[]): TDraftEvent {
   return {
     kind: ExtendedKind.BLOSSOM_SERVER_LIST,

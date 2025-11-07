@@ -1,5 +1,5 @@
 import { useFetchEvent } from '@/hooks'
-import { generateBech32IdFromATag, generateBech32IdFromETag } from '@/lib/tag'
+import { generateBech32IdFromATag } from '@/lib/tag'
 import { useNostr } from '@/providers/NostrProvider'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -7,24 +7,18 @@ import NoteCard, { NoteCardLoadingSkeleton } from '../NoteCard'
 
 const SHOW_COUNT = 10
 
-export default function BookmarkList() {
+export default function EmojiPackList() {
   const { t } = useTranslation()
-  const { bookmarkListEvent } = useNostr()
+  const { userEmojiListEvent } = useNostr()
   const eventIds = useMemo(() => {
-    if (!bookmarkListEvent) return []
+    if (!userEmojiListEvent) return []
 
     return (
-      bookmarkListEvent.tags
-        .map((tag) =>
-          tag[0] === 'e'
-            ? generateBech32IdFromETag(tag)
-            : tag[0] === 'a'
-              ? generateBech32IdFromATag(tag)
-              : null
-        )
-        .filter(Boolean) as (`nevent1${string}` | `naddr1${string}`)[]
+      userEmojiListEvent.tags
+        .map((tag) => (tag[0] === 'a' ? generateBech32IdFromATag(tag) : null))
+        .filter(Boolean) as `naddr1${string}`[]
     ).reverse()
-  }, [bookmarkListEvent])
+  }, [userEmojiListEvent])
   const [showCount, setShowCount] = useState(SHOW_COUNT)
   const bottomRef = useRef<HTMLDivElement | null>(null)
 
@@ -63,7 +57,7 @@ export default function BookmarkList() {
   if (eventIds.length === 0) {
     return (
       <div className="mt-2 text-sm text-center text-muted-foreground">
-        {t('no bookmarks found')}
+        {t('no emoji packs found')}
       </div>
     )
   }
@@ -71,23 +65,13 @@ export default function BookmarkList() {
   return (
     <div>
       {eventIds.slice(0, showCount).map((eventId) => (
-        <BookmarkedNote key={eventId} eventId={eventId} />
+        <EmojiPackNote key={eventId} eventId={eventId} />
       ))}
-
-      {showCount < eventIds.length ? (
-        <div ref={bottomRef}>
-          <NoteCardLoadingSkeleton />
-        </div>
-      ) : (
-        <div className="text-center text-sm text-muted-foreground mt-2">
-          {t('no more bookmarks')}
-        </div>
-      )}
     </div>
   )
 }
 
-function BookmarkedNote({ eventId }: { eventId: string }) {
+function EmojiPackNote({ eventId }: { eventId: string }) {
   const { event, isFetching } = useFetchEvent(eventId)
 
   if (isFetching) {

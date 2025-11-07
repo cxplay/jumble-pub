@@ -147,6 +147,8 @@ And some Providers are placed in `PageManager.tsx` because they need to use the 
 
 ### Internationalization (i18n)
 
+Jumble is a multi-language application. When you add new text content, please ensure to add translations for all supported languages as much as possible. Append new translations to the end of each translation file without modifying or removing existing keys.
+
 - Translation files located in `src/i18n/locales/`
 - Using `react-i18next` for internationalization
 - Supported languages: ar, de, en, es, fa, fr, hi, hu, it, ja, ko, pl, pt-BR, pt-PT, ru, th, zh
@@ -187,6 +189,8 @@ I mean kinds that are supported to be displayed in the feed.
 - Kind 39000: Group Metadata
 
 More details you can find in `src/components/Note/`. If you want to add support for new kinds, you need to create new components under `src/components/Note/` and update `src/components/Note/index.tsx`.
+
+And also you need to update `src/components/ContentPreview/` to support preview rendering for the new kinds. `ContentPreview` is used in various places like parent notes, notifications, highlight sources, etc. It only has one line of text space, so you need to figure out a suitable preview display method for different types of content. Use text only as much as possible.
 
 Please avoid modifying the framework, such as avatars, usernames, timestamps, and action buttons in the `Note` component. Only add content rendering logic for new types.
 

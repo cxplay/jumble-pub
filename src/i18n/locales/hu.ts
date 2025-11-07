@@ -492,6 +492,17 @@ export default {
       'Jumble egy kliens, amivel könnyen böngészhetsz csomópontokat. Kezdd az érdekes csomópontok felderítésével, vagy lépj be, hogy a követettek posztjait megnézd.',
     'Explore Relays': 'Csomópontok felderítése',
     'Choose a feed': 'Válassz hírfolyamot',
-    'and {{x}} others': 'és {{x}} másik'
+    'and {{x}} others': 'és {{x}} másik',
+    'Emoji Pack': 'Emoji csomag',
+    'Emoji pack added': 'Emoji csomag hozzáadva',
+    'Add emoji pack failed': 'Emoji csomag hozzáadása sikertelen',
+    'Emoji pack removed': 'Emoji csomag eltávolítva',
+    'Remove emoji pack failed': 'Emoji csomag eltávolítása sikertelen',
+    Added: 'Hozzáadva',
+    'Emoji Packs': 'Emoji csomagok',
+    'My Packs': 'Saját csomagjaim',
+    'Adding...': 'Hozzáadás...',
+    'Removing...': 'Eltávolítás...',
+    Reload: 'Újratöltés'
   }
 }

@@ -497,6 +497,17 @@ export default {
     'Choose a feed': 'Escolha um feed',
     'and {{x}} others': 'e {{x}} outros',
     selfZapWarning:
-      'Jumble não é responsável pelo que acontece se você zap a si mesmo. Prossiga por sua conta e risco. 😉⚡'
+      'Jumble não é responsável pelo que acontece se você zap a si mesmo. Prossiga por sua conta e risco. 😉⚡',
+    'Emoji Pack': 'Pacote de Emojis',
+    'Emoji pack added': 'Pacote de emojis adicionado',
+    'Add emoji pack failed': 'Falha ao adicionar pacote de emojis',
+    'Emoji pack removed': 'Pacote de emojis removido',
+    'Remove emoji pack failed': 'Falha ao remover pacote de emojis',
+    Added: 'Adicionado',
+    'Emoji Packs': 'Pacotes de Emojis',
+    'My Packs': 'Meus Pacotes',
+    'Adding...': 'Adicionando...',
+    'Removing...': 'Removendo...',
+    Reload: 'Recarregar'
   }
 }

@@ -394,7 +394,7 @@ const NoteList = forwardRef(
         ) : (
           <div className="flex justify-center w-full mt-2">
             <Button size="lg" onClick={() => setRefreshCount((count) => count + 1)}>
-              {t('reload notes')}
+              {t('Reload')}
             </Button>
           </div>
         )}

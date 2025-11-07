@@ -505,6 +505,17 @@ export default {
     'Choose a feed': 'Choisir un fil',
     'and {{x}} others': 'et {{x}} autres',
     selfZapWarning:
-      "Jumble n'est pas responsable de ce qui se passe si vous vous zappez vous-même. Procédez à vos risques et périls. 😉⚡"
+      "Jumble n'est pas responsable de ce qui se passe si vous vous zappez vous-même. Procédez à vos risques et périls. 😉⚡",
+    'Emoji Pack': "Pack d'Emojis",
+    'Emoji pack added': "Pack d'emojis ajouté",
+    'Add emoji pack failed': "Échec de l'ajout du pack d'emojis",
+    'Emoji pack removed': "Pack d'emojis supprimé",
+    'Remove emoji pack failed': "Échec de la suppression du pack d'emojis",
+    Added: 'Ajouté',
+    'Emoji Packs': "Packs d'Emojis",
+    'My Packs': 'Mes Packs',
+    'Adding...': 'Ajout...',
+    'Removing...': 'Suppression...',
+    Reload: 'Recharger'
   }
 }

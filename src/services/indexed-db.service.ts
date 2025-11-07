@@ -189,6 +189,12 @@ class IndexedDbService {
     })
   }
 
+  async getReplaceableEventByCoordinate(coordinate: string): Promise<Event | undefined | null> {
+    const [kind, pubkey, ...rest] = coordinate.split(':')
+    const d = rest.length > 0 ? rest.join(':') : undefined
+    return this.getReplaceableEvent(pubkey, parseInt(kind), d)
+  }
+
   async getReplaceableEvent(
     pubkey: string,
     kind: number,

@@ -1,5 +1,6 @@
 import AppearanceSettingsPage from '@/pages/secondary/AppearanceSettingsPage'
 import BookmarkPage from '@/pages/secondary/BookmarkPage'
+import EmojiPackSettingsPage from '@/pages/secondary/EmojiPackSettingsPage'
 import FollowingListPage from '@/pages/secondary/FollowingListPage'
 import GeneralSettingsPage from '@/pages/secondary/GeneralSettingsPage'
 import MuteListPage from '@/pages/secondary/MuteListPage'
@@ -39,6 +40,7 @@ const SECONDARY_ROUTE_CONFIGS = [
   { path: '/settings/general', element: <GeneralSettingsPage /> },
   { path: '/settings/appearance', element: <AppearanceSettingsPage /> },
   { path: '/settings/translation', element: <TranslationPage /> },
+  { path: '/settings/emoji-packs', element: <EmojiPackSettingsPage /> },
   { path: '/profile-editor', element: <ProfileEditorPage /> },
   { path: '/mutes', element: <MuteListPage /> },
   { path: '/rizful', element: <RizfulPage /> },

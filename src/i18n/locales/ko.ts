@@ -496,6 +496,17 @@ export default {
     'Choose a feed': '피드 선택',
     'and {{x}} others': '및 기타 {{x}}명',
     selfZapWarning:
-      'Jumble은 자신에게 Zap을 보낼 때 발생하는 일에 대해 책임을 지지 않습니다. 본인의 책임 하에 진행하세요. 😉⚡'
+      'Jumble은 자신에게 Zap을 보낼 때 발생하는 일에 대해 책임을 지지 않습니다. 본인의 책임 하에 진행하세요. 😉⚡',
+    'Emoji Pack': '이모지 팩',
+    'Emoji pack added': '이모지 팩이 추가되었습니다',
+    'Add emoji pack failed': '이모지 팩 추가 실패',
+    'Emoji pack removed': '이모지 팩이 제거되었습니다',
+    'Remove emoji pack failed': '이모지 팩 제거 실패',
+    Added: '추가됨',
+    'Emoji Packs': '이모지 팩',
+    'My Packs': '내 팩',
+    'Adding...': '추가 중...',
+    'Removing...': '제거 중...',
+    Reload: '다시 불러오기'
   }
 }
