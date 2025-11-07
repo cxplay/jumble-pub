@@ -420,7 +420,8 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
                   <div
                     className={cn(
                       'bg-background overflow-hidden',
-                      themeSetting === 'pure-black' ? 'border-l' : 'rounded-lg shadow-lg',
+                      themeSetting === 'pure-black' ? 'border-l' : 'rounded-lg',
+                      themeSetting !== 'pure-black' && secondaryStack.length > 0 && 'shadow-lg',
                       secondaryStack.length === 0 ? 'bg-surface' : ''
                     )}
                   >
