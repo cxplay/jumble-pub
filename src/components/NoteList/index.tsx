@@ -204,6 +204,7 @@ const NoteList = forwardRef(
 
       return newEvents.filter((event: Event) => {
         if (shouldHideEvent(event)) return false
+        if (hideReplies && isReplyNoteEvent(event)) return false
 
         const key = getEventKey(event)
         if (keySet.has(key)) {
