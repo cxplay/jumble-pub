@@ -187,12 +187,52 @@ I mean kinds that are supported to be displayed in the feed.
 - Kind 34550: Community Definition
 - Kind 30311: Live Event
 - Kind 39000: Group Metadata
+- Kind 30030: Emoji Pack
 
 More details you can find in `src/components/Note/`. If you want to add support for new kinds, you need to create new components under `src/components/Note/` and update `src/components/Note/index.tsx`.
 
 And also you need to update `src/components/ContentPreview/` to support preview rendering for the new kinds. `ContentPreview` is used in various places like parent notes, notifications, highlight sources, etc. It only has one line of text space, so you need to figure out a suitable preview display method for different types of content. Use text only as much as possible.
 
 Please avoid modifying the framework, such as avatars, usernames, timestamps, and action buttons in the `Note` component. Only add content rendering logic for new types.
+
+## Common Components
+
+### src/components/Note
+
+Used to display a Nostr event (note).
+
+Properties:
+
+- `event`: `NoteEvent` - The Nostr event to display
+- `hideParentNotePreview`: `boolean` - Whether to hide the parent note preview
+- `showFull`: `boolean` - Whether to show the full content of the note. Default is `false`, which shows a truncated version with "Show more" option when content is long.
+
+### src/components/NoteList
+
+Used to display a list of notes with infinite scrolling support.
+
+Properties:
+
+- `subRequests`: `{ urls: string[]; filter: Omit<Filter, 'since' | 'until'> }[]` - Array of Nostr subscription requests to fetch notes
+  - `urls`: Relay URLs for the subscription
+  - `filter`: Nostr filter for the subscription (without `since`, `until` and `limit`, which are managed internally)
+- `showKinds`: `number[]` - Array of event kinds to display
+- `filterMutedNotes`: `boolean` - Whether to filter out muted notes
+- `hideReplies`: `boolean` - Whether to hide reply notes
+- `hideUntrustedNotes`: `boolean` - Whether to hide notes from untrusted authors
+- `filterFn`: `(note: NoteEvent) => boolean` - Custom filter function for notes. Return `true` to display the note, `false` to hide it.
+
+### src/components/Tabs
+
+A tab component for switching between different views.
+
+Properties:
+
+- `tabs`: `{ value: string; label: string }[]` - Array of tab definitions. `value` is the unique identifier for the tab, `label` is the display text. `label` will be passed through `t()` for translation.
+- `value`: `string` - Currently selected tab value.
+- `onChange`: `(value: string) => void` - Callback function when the selected tab changes.
+- `threshold`: `number` - Height threshold for hiding the tab bar on scroll down. Default is `800`. It should larger than the height of the area above the tab bar. Normally you don't need to change this value.
+- `options`: `React.ReactNode` - Additional options to display on the right side of the tab bar.
 
 ## Common Modification Scenarios
 
