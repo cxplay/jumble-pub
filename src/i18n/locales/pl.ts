@@ -511,6 +511,36 @@ export default {
     'My Packs': 'Moje Pakiety',
     'Adding...': 'Dodawanie...',
     'Removing...': 'Usuwanie...',
-    Reload: 'Przeładuj'
+    Reload: 'Przeładuj',
+    'Request to Join Relay': 'Poproś o dołączenie do przekaźnika',
+    'Leave Relay': 'Opuść przekaźnik',
+    Leave: 'Opuść',
+    'Are you sure you want to leave this relay?': 'Czy na pewno chcesz opuścić ten przekaźnik?',
+    'Join request sent successfully': 'Prośba o dołączenie wysłana pomyślnie',
+    'Failed to send join request': 'Nie udało się wysłać prośby o dołączenie',
+    'Leave request sent successfully': 'Prośba o opuszczenie wysłana pomyślnie',
+    'Failed to send leave request': 'Nie udało się wysłać prośby o opuszczenie',
+    'Enter an invite code if you have one. Otherwise, leave it blank to send a request.':
+      'Wprowadź kod zaproszenia, jeśli go masz. W przeciwnym razie pozostaw puste, aby wysłać prośbę.',
+    'Invite Code (Optional)': 'Kod zaproszenia (opcjonalnie)',
+    'Enter invite code': 'Wprowadź kod zaproszenia',
+    'Sending...': 'Wysyłanie...',
+    'Send Request': 'Wyślij prośbę',
+    'You can get an invite code from a relay member.':
+      'Możesz uzyskać kod zaproszenia od członka przekaźnika.',
+    'Enter the invite code you received from a relay member.':
+      'Wprowadź kod zaproszenia otrzymany od członka przekaźnika.',
+    'Get Invite Code': 'Uzyskaj Kod Zaproszenia',
+    'Share this invite code with others to invite them to join this relay.':
+      'Udostępnij ten kod zaproszenia innym, aby zaprosić ich do dołączenia do tego przekaźnika.',
+    'Invite Code': 'Kod Zaproszenia',
+    Copy: 'Kopiuj',
+    'This invite code can be used by others to join the relay.':
+      'Ten kod zaproszenia może być używany przez innych do dołączenia do przekaźnika.',
+    'No invite code available from this relay.': 'Brak dostępnego kodu zaproszenia z tego przekaźnika.',
+    Close: 'Zamknij',
+    'Failed to get invite code from relay': 'Nie udało się uzyskać kodu zaproszenia z przekaźnika',
+    'Failed to get invite code': 'Nie udało się uzyskać kodu zaproszenia',
+    'Invite code copied to clipboard': 'Kod zaproszenia skopiowany do schowka'
   }
 }

@@ -498,6 +498,34 @@ export default {
     'My Packs': '我的表情包',
     'Adding...': '添加中...',
     'Removing...': '移除中...',
-    Reload: '重新加载'
+    Reload: '重新加载',
+    'Request to Join Relay': '申请加入中继器',
+    'Leave Relay': '离开中继器',
+    Leave: '离开',
+    'Are you sure you want to leave this relay?': '您确定要离开此中继器吗？',
+    'Join request sent successfully': '加入请求已成功发送',
+    'Failed to send join request': '发送加入请求失败',
+    'Leave request sent successfully': '离开请求已成功发送',
+    'Failed to send leave request': '发送离开请求失败',
+    'Enter an invite code if you have one. Otherwise, leave it blank to send a request.':
+      '如果您有邀请码，请输入。否则，留空以发送请求。',
+    'Invite Code (Optional)': '邀请码（可选）',
+    'Enter invite code': '输入邀请码',
+    'Sending...': '发送中...',
+    'Send Request': '发送请求',
+    'You can get an invite code from a relay member.': '您可以从中继器成员获取邀请码。',
+    'Enter the invite code you received from a relay member.': '输入您从中继器成员处获得的邀请码。',
+    'Get Invite Code': '获取邀请码',
+    'Share this invite code with others to invite them to join this relay.':
+      '将此邀请码分享给他人以邀请他们加入此中继器。',
+    'Invite Code': '邀请码',
+    Copy: '复制',
+    'This invite code can be used by others to join the relay.':
+      '此邀请码可供他人用于加入中继器。',
+    'No invite code available from this relay.': '此中继器没有可用的邀请码。',
+    Close: '关闭',
+    'Failed to get invite code from relay': '从中继器获取邀请码失败',
+    'Failed to get invite code': '获取邀请码失败',
+    'Invite code copied to clipboard': '邀请码已复制到剪贴板'
   }
 }

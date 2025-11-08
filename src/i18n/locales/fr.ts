@@ -516,6 +516,36 @@ export default {
     'My Packs': 'Mes Packs',
     'Adding...': 'Ajout...',
     'Removing...': 'Suppression...',
-    Reload: 'Recharger'
+    Reload: 'Recharger',
+    'Request to Join Relay': 'Demander à rejoindre le Relay',
+    'Leave Relay': 'Quitter le Relay',
+    Leave: 'Quitter',
+    'Are you sure you want to leave this relay?': 'Êtes-vous sûr de vouloir quitter ce relay ?',
+    'Join request sent successfully': "Demande d'adhésion envoyée avec succès",
+    'Failed to send join request': "Échec de l'envoi de la demande d'adhésion",
+    'Leave request sent successfully': 'Demande de départ envoyée avec succès',
+    'Failed to send leave request': "Échec de l'envoi de la demande de départ",
+    'Enter an invite code if you have one. Otherwise, leave it blank to send a request.':
+      "Entrez un code d'invitation si vous en avez un. Sinon, laissez-le vide pour envoyer une demande.",
+    'Invite Code (Optional)': "Code d'Invitation (Optionnel)",
+    'Enter invite code': "Entrez le code d'invitation",
+    'Sending...': 'Envoi...',
+    'Send Request': 'Envoyer la Demande',
+    'You can get an invite code from a relay member.':
+      "Vous pouvez obtenir un code d'invitation auprès d'un membre du relay.",
+    'Enter the invite code you received from a relay member.':
+      "Entrez le code d'invitation que vous avez reçu d'un membre du relay.",
+    'Get Invite Code': "Obtenir un Code d'Invitation",
+    'Share this invite code with others to invite them to join this relay.':
+      "Partagez ce code d'invitation avec d'autres pour les inviter à rejoindre ce relay.",
+    'Invite Code': "Code d'Invitation",
+    Copy: 'Copier',
+    'This invite code can be used by others to join the relay.':
+      "Ce code d'invitation peut être utilisé par d'autres pour rejoindre le relay.",
+    'No invite code available from this relay.': "Aucun code d'invitation disponible de ce relay.",
+    Close: 'Fermer',
+    'Failed to get invite code from relay': "Échec de l'obtention du code d'invitation du relay",
+    'Failed to get invite code': "Échec de l'obtention du code d'invitation",
+    'Invite code copied to clipboard': "Code d'invitation copié dans le presse-papiers"
   }
 }

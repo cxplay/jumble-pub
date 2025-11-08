@@ -513,6 +513,36 @@ export default {
     'My Packs': 'Мои наборы',
     'Adding...': 'Добавление...',
     'Removing...': 'Удаление...',
-    Reload: 'Перезагрузить'
+    Reload: 'Перезагрузить',
+    'Request to Join Relay': 'Запросить присоединение к релею',
+    'Leave Relay': 'Покинуть релей',
+    Leave: 'Выйти',
+    'Are you sure you want to leave this relay?': 'Вы уверены, что хотите покинуть этот релей?',
+    'Join request sent successfully': 'Запрос на присоединение успешно отправлен',
+    'Failed to send join request': 'Не удалось отправить запрос на присоединение',
+    'Leave request sent successfully': 'Запрос на выход успешно отправлен',
+    'Failed to send leave request': 'Не удалось отправить запрос на выход',
+    'Enter an invite code if you have one. Otherwise, leave it blank to send a request.':
+      'Введите код приглашения, если он у вас есть. В противном случае оставьте поле пустым для отправки запроса.',
+    'Invite Code (Optional)': 'Код приглашения (необязательно)',
+    'Enter invite code': 'Введите код приглашения',
+    'Sending...': 'Отправка...',
+    'Send Request': 'Отправить запрос',
+    'You can get an invite code from a relay member.':
+      'Вы можете получить код приглашения у члена релея.',
+    'Enter the invite code you received from a relay member.':
+      'Введите код приглашения, который вы получили от члена релея.',
+    'Get Invite Code': 'Получить Код Приглашения',
+    'Share this invite code with others to invite them to join this relay.':
+      'Поделитесь этим кодом приглашения с другими, чтобы пригласить их присоединиться к этому релею.',
+    'Invite Code': 'Код Приглашения',
+    Copy: 'Копировать',
+    'This invite code can be used by others to join the relay.':
+      'Этот код приглашения может быть использован другими для присоединения к релею.',
+    'No invite code available from this relay.': 'Нет доступного кода приглашения от этого релея.',
+    Close: 'Закрыть',
+    'Failed to get invite code from relay': 'Не удалось получить код приглашения от релея',
+    'Failed to get invite code': 'Не удалось получить код приглашения',
+    'Invite code copied to clipboard': 'Код приглашения скопирован в буфер обмена'
   }
 }

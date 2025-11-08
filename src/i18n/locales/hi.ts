@@ -508,6 +508,36 @@ export default {
     'My Packs': 'मेरे पैक',
     'Adding...': 'जोड़ा जा रहा है...',
     'Removing...': 'हटाया जा रहा है...',
-    Reload: 'रीलोड करें'
+    Reload: 'रीलोड करें',
+    'Request to Join Relay': 'रिले में शामिल होने का अनुरोध करें',
+    'Leave Relay': 'रिले छोड़ें',
+    Leave: 'छोड़ें',
+    'Are you sure you want to leave this relay?': 'क्या आप वाकई इस रिले को छोड़ना चाहते हैं?',
+    'Join request sent successfully': 'शामिल होने का अनुरोध सफलतापूर्वक भेजा गया',
+    'Failed to send join request': 'शामिल होने का अनुरोध भेजने में विफल',
+    'Leave request sent successfully': 'छोड़ने का अनुरोध सफलतापूर्वक भेजा गया',
+    'Failed to send leave request': 'छोड़ने का अनुरोध भेजने में विफल',
+    'Enter an invite code if you have one. Otherwise, leave it blank to send a request.':
+      'यदि आपके पास निमंत्रण कोड है तो दर्ज करें। अन्यथा, अनुरोध भेजने के लिए इसे खाली छोड़ दें।',
+    'Invite Code (Optional)': 'निमंत्रण कोड (वैकल्पिक)',
+    'Enter invite code': 'निमंत्रण कोड दर्ज करें',
+    'Sending...': 'भेजा जा रहा है...',
+    'Send Request': 'अनुरोध भेजें',
+    'You can get an invite code from a relay member.':
+      'आप एक रिले सदस्य से निमंत्रण कोड प्राप्त कर सकते हैं।',
+    'Enter the invite code you received from a relay member.':
+      'रिले सदस्य से प्राप्त निमंत्रण कोड दर्ज करें।',
+    'Get Invite Code': 'निमंत्रण कोड प्राप्त करें',
+    'Share this invite code with others to invite them to join this relay.':
+      'इस रिले में शामिल होने के लिए दूसरों को आमंत्रित करने के लिए इस निमंत्रण कोड को साझा करें।',
+    'Invite Code': 'निमंत्रण कोड',
+    Copy: 'कॉपी करें',
+    'This invite code can be used by others to join the relay.':
+      'यह निमंत्रण कोड दूसरों द्वारा रिले में शामिल होने के लिए उपयोग किया जा सकता है।',
+    'No invite code available from this relay.': 'इस रिले से कोई निमंत्रण कोड उपलब्ध नहीं है।',
+    Close: 'बंद करें',
+    'Failed to get invite code from relay': 'रिले से निमंत्रण कोड प्राप्त करने में विफल',
+    'Failed to get invite code': 'निमंत्रण कोड प्राप्त करने में विफल',
+    'Invite code copied to clipboard': 'निमंत्रण कोड क्लिपबोर्ड पर कॉपी किया गया'
   }
 }

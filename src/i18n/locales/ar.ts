@@ -503,6 +503,34 @@ export default {
     'My Packs': 'حزمي',
     'Adding...': 'جاري الإضافة...',
     'Removing...': 'جاري الإزالة...',
-    Reload: 'إعادة التحميل'
+    Reload: 'إعادة التحميل',
+    'Request to Join Relay': 'طلب الانضمام إلى المرحل',
+    'Leave Relay': 'مغادرة المرحل',
+    Leave: 'مغادرة',
+    'Are you sure you want to leave this relay?': 'هل أنت متأكد من أنك تريد مغادرة هذا المرحل؟',
+    'Join request sent successfully': 'تم إرسال طلب الانضمام بنجاح',
+    'Failed to send join request': 'فشل إرسال طلب الانضمام',
+    'Leave request sent successfully': 'تم إرسال طلب المغادرة بنجاح',
+    'Failed to send leave request': 'فشل إرسال طلب المغادرة',
+    'Enter an invite code if you have one. Otherwise, leave it blank to send a request.':
+      'أدخل رمز الدعوة إذا كان لديك واحد. وإلا، اتركه فارغًا لإرسال طلب.',
+    'Invite Code (Optional)': 'رمز الدعوة (اختياري)',
+    'Enter invite code': 'أدخل رمز الدعوة',
+    'Sending...': 'جاري الإرسال...',
+    'Send Request': 'إرسال الطلب',
+    'You can get an invite code from a relay member.': 'يمكنك الحصول على رمز دعوة من عضو المرحل.',
+    'Enter the invite code you received from a relay member.': 'أدخل رمز الدعوة الذي تلقيته من عضو المرحل.',
+    'Get Invite Code': 'الحصول على رمز الدعوة',
+    'Share this invite code with others to invite them to join this relay.':
+      'شارك رمز الدعوة هذا مع الآخرين لدعوتهم للانضمام إلى هذا المرحل.',
+    'Invite Code': 'رمز الدعوة',
+    Copy: 'نسخ',
+    'This invite code can be used by others to join the relay.':
+      'يمكن للآخرين استخدام رمز الدعوة هذا للانضمام إلى المرحل.',
+    'No invite code available from this relay.': 'لا يوجد رمز دعوة متاح من هذا المرحل.',
+    Close: 'إغلاق',
+    'Failed to get invite code from relay': 'فشل الحصول على رمز الدعوة من المرحل',
+    'Failed to get invite code': 'فشل الحصول على رمز الدعوة',
+    'Invite code copied to clipboard': 'تم نسخ رمز الدعوة إلى الحافظة'
   }
 }

@@ -511,6 +511,36 @@ export default {
     'My Packs': 'Mis Paquetes',
     'Adding...': 'Añadiendo...',
     'Removing...': 'Eliminando...',
-    Reload: 'Recargar'
+    Reload: 'Recargar',
+    'Request to Join Relay': 'Solicitar unirse al Relay',
+    'Leave Relay': 'Salir del Relay',
+    Leave: 'Salir',
+    'Are you sure you want to leave this relay?': '¿Estás seguro de que quieres salir de este relay?',
+    'Join request sent successfully': 'Solicitud de unión enviada con éxito',
+    'Failed to send join request': 'Error al enviar solicitud de unión',
+    'Leave request sent successfully': 'Solicitud de salida enviada con éxito',
+    'Failed to send leave request': 'Error al enviar solicitud de salida',
+    'Enter an invite code if you have one. Otherwise, leave it blank to send a request.':
+      'Ingresa un código de invitación si tienes uno. De lo contrario, déjalo en blanco para enviar una solicitud.',
+    'Invite Code (Optional)': 'Código de Invitación (Opcional)',
+    'Enter invite code': 'Ingresa el código de invitación',
+    'Sending...': 'Enviando...',
+    'Send Request': 'Enviar Solicitud',
+    'You can get an invite code from a relay member.':
+      'Puedes obtener un código de invitación de un miembro del relay.',
+    'Enter the invite code you received from a relay member.':
+      'Ingresa el código de invitación que recibiste de un miembro del relay.',
+    'Get Invite Code': 'Obtener Código de Invitación',
+    'Share this invite code with others to invite them to join this relay.':
+      'Comparte este código de invitación con otros para invitarlos a unirse a este relay.',
+    'Invite Code': 'Código de Invitación',
+    Copy: 'Copiar',
+    'This invite code can be used by others to join the relay.':
+      'Este código de invitación puede ser usado por otros para unirse al relay.',
+    'No invite code available from this relay.': 'No hay código de invitación disponible de este relay.',
+    Close: 'Cerrar',
+    'Failed to get invite code from relay': 'Error al obtener código de invitación del relay',
+    'Failed to get invite code': 'Error al obtener código de invitación',
+    'Invite code copied to clipboard': 'Código de invitación copiado al portapapeles'
   }
 }

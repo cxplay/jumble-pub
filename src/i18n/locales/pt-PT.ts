@@ -511,6 +511,36 @@ export default {
     'My Packs': 'Os Meus Pacotes',
     'Adding...': 'A adicionar...',
     'Removing...': 'A remover...',
-    Reload: 'Recarregar'
+    Reload: 'Recarregar',
+    'Request to Join Relay': 'Solicitar adesão ao Relay',
+    'Leave Relay': 'Sair do Relay',
+    Leave: 'Sair',
+    'Are you sure you want to leave this relay?': 'Tem a certeza de que deseja sair deste relay?',
+    'Join request sent successfully': 'Pedido de adesão enviado com sucesso',
+    'Failed to send join request': 'Falha ao enviar pedido de adesão',
+    'Leave request sent successfully': 'Pedido de saída enviado com sucesso',
+    'Failed to send leave request': 'Falha ao enviar pedido de saída',
+    'Enter an invite code if you have one. Otherwise, leave it blank to send a request.':
+      'Introduza um código de convite se tiver um. Caso contrário, deixe em branco para enviar um pedido.',
+    'Invite Code (Optional)': 'Código de Convite (Opcional)',
+    'Enter invite code': 'Introduza o código de convite',
+    'Sending...': 'A enviar...',
+    'Send Request': 'Enviar Pedido',
+    'You can get an invite code from a relay member.':
+      'Pode obter um código de convite de um membro do relay.',
+    'Enter the invite code you received from a relay member.':
+      'Introduza o código de convite que recebeu de um membro do relay.',
+    'Get Invite Code': 'Obter Código de Convite',
+    'Share this invite code with others to invite them to join this relay.':
+      'Partilhe este código de convite com outros para os convidar a aderir a este relay.',
+    'Invite Code': 'Código de Convite',
+    Copy: 'Copiar',
+    'This invite code can be used by others to join the relay.':
+      'Este código de convite pode ser usado por outros para aderir ao relay.',
+    'No invite code available from this relay.': 'Nenhum código de convite disponível deste relay.',
+    Close: 'Fechar',
+    'Failed to get invite code from relay': 'Falha ao obter código de convite do relay',
+    'Failed to get invite code': 'Falha ao obter código de convite',
+    'Invite code copied to clipboard': 'Código de convite copiado para a área de transferência'
   }
 }

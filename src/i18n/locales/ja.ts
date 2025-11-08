@@ -507,6 +507,34 @@ export default {
     'My Packs': 'マイパック',
     'Adding...': '追加中...',
     'Removing...': '削除中...',
-    Reload: '再読み込み'
+    Reload: '再読み込み',
+    'Request to Join Relay': 'リレーへの参加をリクエスト',
+    'Leave Relay': 'リレーを退出',
+    Leave: '退出',
+    'Are you sure you want to leave this relay?': 'このリレーを退出してもよろしいですか？',
+    'Join request sent successfully': '参加リクエストを送信しました',
+    'Failed to send join request': '参加リクエストの送信に失敗しました',
+    'Leave request sent successfully': '退出リクエストを送信しました',
+    'Failed to send leave request': '退出リクエストの送信に失敗しました',
+    'Enter an invite code if you have one. Otherwise, leave it blank to send a request.':
+      '招待コードをお持ちの場合は入力してください。それ以外の場合は空白のままリクエストを送信してください。',
+    'Invite Code (Optional)': '招待コード（オプション）',
+    'Enter invite code': '招待コードを入力',
+    'Sending...': '送信中...',
+    'Send Request': 'リクエストを送信',
+    'You can get an invite code from a relay member.': 'リレーメンバーから招待コードを取得できます。',
+    'Enter the invite code you received from a relay member.': 'リレーメンバーから受け取った招待コードを入力してください。',
+    'Get Invite Code': '招待コードを取得',
+    'Share this invite code with others to invite them to join this relay.':
+      'この招待コードを他の人と共有して、このリレーへの参加を招待してください。',
+    'Invite Code': '招待コード',
+    Copy: 'コピー',
+    'This invite code can be used by others to join the relay.':
+      'この招待コードは他の人がリレーに参加するために使用できます。',
+    'No invite code available from this relay.': 'このリレーから利用可能な招待コードはありません。',
+    Close: '閉じる',
+    'Failed to get invite code from relay': 'リレーから招待コードの取得に失敗しました',
+    'Failed to get invite code': '招待コードの取得に失敗しました',
+    'Invite code copied to clipboard': '招待コードをクリップボードにコピーしました'
   }
 }

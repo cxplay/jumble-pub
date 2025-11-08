@@ -503,6 +503,36 @@ export default {
     'My Packs': 'Saját csomagjaim',
     'Adding...': 'Hozzáadás...',
     'Removing...': 'Eltávolítás...',
-    Reload: 'Újratöltés'
+    Reload: 'Újratöltés',
+    'Request to Join Relay': 'Csatlakozási kérelem küldése a relay-hez',
+    'Leave Relay': 'Relay elhagyása',
+    Leave: 'Kilépés',
+    'Are you sure you want to leave this relay?': 'Biztosan el szeretné hagyni ezt a relay-t?',
+    'Join request sent successfully': 'Csatlakozási kérelem sikeresen elküldve',
+    'Failed to send join request': 'Csatlakozási kérelem küldése sikertelen',
+    'Leave request sent successfully': 'Kilépési kérelem sikeresen elküldve',
+    'Failed to send leave request': 'Kilépési kérelem küldése sikertelen',
+    'Enter an invite code if you have one. Otherwise, leave it blank to send a request.':
+      'Írjon be egy meghívókódot, ha van. Ellenkező esetben hagyja üresen a kérelem elküldéséhez.',
+    'Invite Code (Optional)': 'Meghívókód (opcionális)',
+    'Enter invite code': 'Írja be a meghívókódot',
+    'Sending...': 'Küldés...',
+    'Send Request': 'Kérelem küldése',
+    'You can get an invite code from a relay member.':
+      'Meghívókódot kaphat egy relay tagtól.',
+    'Enter the invite code you received from a relay member.':
+      'Írja be a relay tagtól kapott meghívókódot.',
+    'Get Invite Code': 'Meghívókód Lekérése',
+    'Share this invite code with others to invite them to join this relay.':
+      'Ossza meg ezt a meghívókódot másokkal, hogy meghívja őket ehhez a relay-hez.',
+    'Invite Code': 'Meghívókód',
+    Copy: 'Másolás',
+    'This invite code can be used by others to join the relay.':
+      'Ezt a meghívókódot mások használhatják a relay-hez való csatlakozáshoz.',
+    'No invite code available from this relay.': 'Nincs elérhető meghívókód ettől a relay-től.',
+    Close: 'Bezárás',
+    'Failed to get invite code from relay': 'Nem sikerült lekérni a meghívókódot a relay-től',
+    'Failed to get invite code': 'Nem sikerült lekérni a meghívókódot',
+    'Invite code copied to clipboard': 'Meghívókód vágólapra másolva'
   }
 }

@@ -501,6 +501,34 @@ export default {
     'My Packs': 'แพ็คของฉัน',
     'Adding...': 'กำลังเพิ่ม...',
     'Removing...': 'กำลังลบ...',
-    Reload: 'โหลดใหม่'
+    Reload: 'โหลดใหม่',
+    'Request to Join Relay': 'ขอเข้าร่วมรีเลย์',
+    'Leave Relay': 'ออกจากรีเลย์',
+    Leave: 'ออก',
+    'Are you sure you want to leave this relay?': 'คุณแน่ใจหรือไม่ว่าต้องการออกจากรีเลย์นี้?',
+    'Join request sent successfully': 'ส่งคำขอเข้าร่วมสำเร็จแล้ว',
+    'Failed to send join request': 'การส่งคำขอเข้าร่วมล้มเหลว',
+    'Leave request sent successfully': 'ส่งคำขอออกสำเร็จแล้ว',
+    'Failed to send leave request': 'การส่งคำขอออกล้มเหลว',
+    'Enter an invite code if you have one. Otherwise, leave it blank to send a request.':
+      'ป้อนรหัสเชิญหากคุณมี มิฉะนั้นให้เว้นว่างไว้เพื่อส่งคำขอ',
+    'Invite Code (Optional)': 'รหัสเชิญ (ไม่บังคับ)',
+    'Enter invite code': 'ป้อนรหัสเชิญ',
+    'Sending...': 'กำลังส่ง...',
+    'Send Request': 'ส่งคำขอ',
+    'You can get an invite code from a relay member.': 'คุณสามารถรับรหัสเชิญจากสมาชิกรีเลย์',
+    'Enter the invite code you received from a relay member.': 'ป้อนรหัสเชิญที่คุณได้รับจากสมาชิกรีเลย์',
+    'Get Invite Code': 'รับรหัสเชิญ',
+    'Share this invite code with others to invite them to join this relay.':
+      'แชร์รหัสเชิญนี้กับผู้อื่นเพื่อเชิญพวกเขาเข้าร่วมรีเลย์นี้',
+    'Invite Code': 'รหัสเชิญ',
+    Copy: 'คัดลอก',
+    'This invite code can be used by others to join the relay.':
+      'รหัสเชิญนี้สามารถใช้โดยผู้อื่นเพื่อเข้าร่วมรีเลย์',
+    'No invite code available from this relay.': 'ไม่มีรหัสเชิญที่ใช้ได้จากรีเลย์นี้',
+    Close: 'ปิด',
+    'Failed to get invite code from relay': 'ไม่สามารถรับรหัสเชิญจากรีเลย์',
+    'Failed to get invite code': 'ไม่สามารถรับรหัสเชิญ',
+    'Invite code copied to clipboard': 'คัดลอกรหัสเชิญไปยังคลิปบอร์ดแล้ว'
   }
 }
