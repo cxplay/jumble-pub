@@ -202,7 +202,7 @@ class IndexedDbService {
   ): Promise<Event | undefined | null> {
     const storeName = this.getStoreNameByKind(kind)
     if (!storeName) {
-      return Promise.reject('store name not found')
+      return undefined
     }
     await this.initPromise
     return new Promise((resolve, reject) => {
