@@ -1198,9 +1198,12 @@ class ClientService extends EventTarget {
   private async fetchReplaceableEventsFromBigRelays(pubkeys: string[], kind: number) {
     const events = await indexedDb.getManyReplaceableEvents(pubkeys, kind)
     const nonExistingPubkeyIndexMap = new Map<string, number>()
+    const existingPubkeys: string[] = []
     pubkeys.forEach((pubkey, i) => {
       if (events[i] === undefined) {
         nonExistingPubkeyIndexMap.set(pubkey, i)
+      } else {
+        existingPubkeys.push(pubkey)
       }
     })
     const newEvents = await this.replaceableEventFromBigRelaysDataloader.loadMany(
@@ -1214,6 +1217,10 @@ class ClientService extends EventTarget {
         }
       }
     })
+
+    this.replaceableEventFromBigRelaysDataloader.loadMany(
+      existingPubkeys.map((pubkey) => ({ pubkey, kind }))
+    ) // update cache in background
 
     return events
   }
@@ -1306,6 +1313,7 @@ class ClientService extends EventTarget {
   private async fetchReplaceableEvent(pubkey: string, kind: number, d?: string) {
     const storedEvent = await indexedDb.getReplaceableEvent(pubkey, kind, d)
     if (storedEvent !== undefined) {
+      this.replaceableEventDataLoader.load({ pubkey, kind, d }) // update cache in background
       return storedEvent
     }
 

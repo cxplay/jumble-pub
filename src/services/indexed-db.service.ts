@@ -497,19 +497,19 @@ class IndexedDbService {
       },
       {
         name: StoreNames.RELAY_LIST_EVENTS,
-        expirationTimestamp: Date.now() - 1000 * 60 * 60 * 24 // 1 day
+        expirationTimestamp: Date.now() - 1000 * 60 * 60 * 24 * 30 // 30 day
       },
       {
         name: StoreNames.FOLLOW_LIST_EVENTS,
-        expirationTimestamp: Date.now() - 1000 * 60 * 60 * 24 // 1 day
+        expirationTimestamp: Date.now() - 1000 * 60 * 60 * 24 * 30 // 30 day
       },
       {
         name: StoreNames.BLOSSOM_SERVER_LIST_EVENTS,
-        expirationTimestamp: Date.now() - 1000 * 60 * 60 * 24 // 1 days
+        expirationTimestamp: Date.now() - 1000 * 60 * 60 * 24 * 30 // 30 day
       },
       {
         name: StoreNames.RELAY_INFOS,
-        expirationTimestamp: Date.now() - 1000 * 60 * 60 * 24 // 1 days
+        expirationTimestamp: Date.now() - 1000 * 60 * 60 * 24 * 30 // 30 day
       },
       {
         name: StoreNames.PIN_LIST_EVENTS,
