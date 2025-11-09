@@ -963,11 +963,13 @@ class ClientService extends EventTarget {
   /** =========== Followings =========== */
 
   async initUserIndexFromFollowings(pubkey: string, signal: AbortSignal) {
-    const followings = await this.fetchFollowings(pubkey)
+    const followings = await this.fetchFollowings(pubkey, false)
     for (let i = 0; i * 20 < followings.length; i++) {
       if (signal.aborted) return
       await Promise.all(
-        followings.slice(i * 20, (i + 1) * 20).map((pubkey) => this.fetchProfile(pubkey))
+        followings
+          .slice(i * 20, (i + 1) * 20)
+          .map((pubkey) => this.fetchProfile(pubkey, false, false))
       )
       await new Promise((resolve) => setTimeout(resolve, 1000))
     }
@@ -1078,7 +1080,11 @@ class ClientService extends EventTarget {
     return results.map((res) => (res.status === 'fulfilled' ? res.value : null))
   })
 
-  async fetchProfile(id: string, skipCache = false): Promise<TProfile | null> {
+  async fetchProfile(
+    id: string,
+    skipCache = false,
+    updateCacheInBackground = true
+  ): Promise<TProfile | null> {
     if (skipCache) {
       return this._fetchProfile(id)
     }
@@ -1086,7 +1092,9 @@ class ClientService extends EventTarget {
     const pubkey = userIdToPubkey(id, true)
     const localProfileEvent = await indexedDb.getReplaceableEvent(pubkey, kinds.Metadata)
     if (localProfileEvent) {
-      this.profileDataloader.load(id) // update cache in background
+      if (updateCacheInBackground) {
+        this.profileDataloader.load(id) // update cache in background
+      }
       const localProfile = getProfileFromEvent(localProfileEvent)
       return localProfile
     }
@@ -1310,10 +1318,17 @@ class ClientService extends EventTarget {
     })
   }
 
-  private async fetchReplaceableEvent(pubkey: string, kind: number, d?: string) {
+  private async fetchReplaceableEvent(
+    pubkey: string,
+    kind: number,
+    d?: string,
+    updateCache = true
+  ) {
     const storedEvent = await indexedDb.getReplaceableEvent(pubkey, kind, d)
     if (storedEvent !== undefined) {
-      this.replaceableEventDataLoader.load({ pubkey, kind, d }) // update cache in background
+      if (updateCache) {
+        this.replaceableEventDataLoader.load({ pubkey, kind, d }) // update cache in background
+      }
       return storedEvent
     }
 
@@ -1335,12 +1350,12 @@ class ClientService extends EventTarget {
 
   /** =========== Replaceable event =========== */
 
-  async fetchFollowListEvent(pubkey: string) {
-    return await this.fetchReplaceableEvent(pubkey, kinds.Contacts)
+  async fetchFollowListEvent(pubkey: string, updateCache = true) {
+    return await this.fetchReplaceableEvent(pubkey, kinds.Contacts, undefined, updateCache)
   }
 
-  async fetchFollowings(pubkey: string) {
-    const followListEvent = await this.fetchFollowListEvent(pubkey)
+  async fetchFollowings(pubkey: string, updateCache = true) {
+    const followListEvent = await this.fetchFollowListEvent(pubkey, updateCache)
     return followListEvent ? getPubkeysFromPTags(followListEvent.tags) : []
   }
 
@@ -1377,7 +1392,7 @@ class ClientService extends EventTarget {
     await this.updateReplaceableEventCache(evt)
   }
 
-  async fetchEmojiSetEvents(pointers: string[]) {
+  async fetchEmojiSetEvents(pointers: string[], updateCacheInBackground = true) {
     const params = pointers
       .map((pointer) => {
         const [kindStr, pubkey, d = ''] = pointer.split(':')
@@ -1389,7 +1404,11 @@ class ClientService extends EventTarget {
         return { pubkey, kind, d }
       })
       .filter(Boolean) as { pubkey: string; kind: number; d: string }[]
-    return await this.replaceableEventDataLoader.loadMany(params)
+    return await Promise.all(
+      params.map(({ pubkey, kind, d }) =>
+        this.fetchReplaceableEvent(pubkey, kind, d, updateCacheInBackground)
+      )
+    )
   }
 
   // ================= Utils =================
