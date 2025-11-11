@@ -704,7 +704,7 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
   }
 
   const updateRelayListEvent = async (relayListEvent: Event) => {
-    const newRelayList = await indexedDb.putReplaceableEvent(relayListEvent)
+    const newRelayList = await client.updateRelayListCache(relayListEvent)
     setRelayList(getRelayListFromEvent(newRelayList))
   }
 

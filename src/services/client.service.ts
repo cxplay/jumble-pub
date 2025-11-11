@@ -1146,7 +1146,7 @@ class ClientService extends EventTarget {
   }
 
   async updateRelayListCache(event: NEvent) {
-    await this.updateReplaceableEventFromBigRelaysCache(event)
+    return await this.updateReplaceableEventFromBigRelaysCache(event)
   }
 
   /** =========== Replaceable event from big relays dataloader =========== */
@@ -1236,7 +1236,7 @@ class ClientService extends EventTarget {
   private async updateReplaceableEventFromBigRelaysCache(event: NEvent) {
     const newEvent = await indexedDb.putReplaceableEvent(event)
     if (newEvent.id !== event.id) {
-      return
+      return newEvent
     }
 
     this.replaceableEventFromBigRelaysDataloader.clear({ pubkey: event.pubkey, kind: event.kind })
@@ -1244,6 +1244,7 @@ class ClientService extends EventTarget {
       { pubkey: event.pubkey, kind: event.kind },
       Promise.resolve(event)
     )
+    return newEvent
   }
 
   /** =========== Replaceable event dataloader =========== */

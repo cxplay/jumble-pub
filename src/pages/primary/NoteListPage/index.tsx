@@ -51,7 +51,9 @@ const NoteListPage = forwardRef<TPageRef>((_, ref) => {
 
   let content: React.ReactNode = null
   if (!isReady) {
-    content = <div className="text-center text-sm text-muted-foreground">{t('loading...')}</div>
+    content = (
+      <div className="text-center text-sm text-muted-foreground pt-3">{t('loading...')}</div>
+    )
   } else if (!feedInfo) {
     content = <WelcomeGuide />
   } else if (feedInfo.feedType === 'following' && !pubkey) {
