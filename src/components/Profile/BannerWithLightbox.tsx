@@ -1,16 +1,13 @@
 import { generateImageByPubkey } from '@/lib/pubkey'
-import { cn } from '@/lib/utils'
 import { useEffect, useMemo, useState } from 'react'
-import Image from '../Image'
+import ImageWithLightbox from '../ImageWithLightbox'
 
-export default function ProfileBanner({
+export default function BannerWithLightbox({
   pubkey,
-  banner,
-  className
+  banner
 }: {
   pubkey: string
   banner?: string
-  className?: string
 }) {
   const defaultBanner = useMemo(() => generateImageByPubkey(pubkey), [pubkey])
   const [bannerUrl, setBannerUrl] = useState(banner ?? defaultBanner)
@@ -24,10 +21,12 @@ export default function ProfileBanner({
   }, [defaultBanner, banner])
 
   return (
-    <Image
+    <ImageWithLightbox
       image={{ url: bannerUrl, pubkey }}
-      alt={`${pubkey} banner`}
-      className={cn('rounded-none', className)}
+      className="rounded-none w-full aspect-[3/1]"
+      classNames={{
+        wrapper: 'rounded-none border-none'
+      }}
       errorPlaceholder={defaultBanner}
     />
   )

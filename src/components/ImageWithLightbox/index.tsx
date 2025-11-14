@@ -13,13 +13,15 @@ import Image from '../Image'
 export default function ImageWithLightbox({
   image,
   className,
-  classNames = {}
+  classNames = {},
+  errorPlaceholder
 }: {
   image: TImetaInfo
   className?: string
   classNames?: {
     wrapper?: string
   }
+  errorPlaceholder?: string
 }) {
   const id = useMemo(() => `image-with-lightbox-${randomString()}`, [])
   const { t } = useTranslation()
@@ -67,6 +69,7 @@ export default function ImageWithLightbox({
         }}
         image={image}
         onClick={(e) => handlePhotoClick(e)}
+        errorPlaceholder={errorPlaceholder}
       />
       {index >= 0 &&
         createPortal(

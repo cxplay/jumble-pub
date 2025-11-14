@@ -3,13 +3,11 @@ import FollowButton from '@/components/FollowButton'
 import Nip05 from '@/components/Nip05'
 import NpubQrCode from '@/components/NpubQrCode'
 import ProfileAbout from '@/components/ProfileAbout'
-import { BannerWithLightbox } from '@/components/ProfileBanner'
 import ProfileOptions from '@/components/ProfileOptions'
 import ProfileZapButton from '@/components/ProfileZapButton'
 import PubkeyCopy from '@/components/PubkeyCopy'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
-import { AvatarWithLightbox } from '@/components/UserAvatar'
 import { useFetchFollowings, useFetchProfile } from '@/hooks'
 import { toMuteList, toProfileEditor } from '@/lib/link'
 import { SecondaryPageLink, useSecondaryPage } from '@/PageManager'
@@ -25,6 +23,9 @@ import FollowedBy from './FollowedBy'
 import Followings from './Followings'
 import ProfileFeed from './ProfileFeed'
 import Relays from './Relays'
+import TextWithEmojis from '../TextWithEmojis'
+import AvatarWithLightbox from './AvatarWithLightbox'
+import BannerWithLightbox from './BannerWithLightbox'
 
 export default function Profile({ id }: { id?: string }) {
   const { t } = useTranslation()
@@ -114,12 +115,8 @@ export default function Profile({ id }: { id?: string }) {
     <>
       <div ref={topContainerRef}>
         <div className="relative bg-cover bg-center mb-2">
-          <BannerWithLightbox banner={banner} pubkey={pubkey} className="w-full aspect-[3/1]" />
-          <AvatarWithLightbox
-            userId={pubkey}
-            size="large"
-            className="absolute left-3 bottom-0 translate-y-1/2 border-4 border-background"
-          />
+          <BannerWithLightbox banner={banner} pubkey={pubkey} />
+          <AvatarWithLightbox userId={pubkey} />
         </div>
         <div className="px-4">
           <div className="flex justify-end h-8 gap-2 items-center">
@@ -141,7 +138,11 @@ export default function Profile({ id }: { id?: string }) {
           </div>
           <div className="pt-2">
             <div className="flex gap-2 items-center">
-              <div className="text-xl font-semibold truncate select-text">{username}</div>
+              <TextWithEmojis
+                text={username}
+                emojis={emojis}
+                className="text-xl font-semibold truncate select-text"
+              />
               {isFollowingYou && (
                 <div className="text-muted-foreground rounded-full bg-muted text-xs h-fit px-2 shrink-0">
                   {t('Follows you')}
