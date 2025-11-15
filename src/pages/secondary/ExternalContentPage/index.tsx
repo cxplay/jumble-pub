@@ -29,7 +29,7 @@ const ExternalContentPage = forwardRef(({ index }: { index?: number }, ref) => {
       displayScrollToTopButton
     >
       <div className="px-4 mt-3">
-        <ExternalContent content={id} />
+        <ExternalContent content={id} mustLoadMedia />
         <StuffStats className="mt-3" stuff={id} fetchIfNotExisting displayTopZapsAndLikes />
       </div>
       <Separator className="mt-4" />

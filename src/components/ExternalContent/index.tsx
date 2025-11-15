@@ -45,7 +45,7 @@ export default function ExternalContent({
   }
 
   if (node.type === 'url') {
-    return <WebPreview url={node.data} className={className} />
+    return <WebPreview url={node.data} className={className} mustLoad={mustLoadMedia} />
   }
 
   if (node.type === 'x-post') {
