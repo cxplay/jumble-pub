@@ -14,7 +14,8 @@ export default function ImageWithLightbox({
   image,
   className,
   classNames = {},
-  errorPlaceholder
+  errorPlaceholder,
+  ignoreAutoLoadPolicy = false
 }: {
   image: TImetaInfo
   className?: string
@@ -22,11 +23,12 @@ export default function ImageWithLightbox({
     wrapper?: string
   }
   errorPlaceholder?: string
+  ignoreAutoLoadPolicy?: boolean
 }) {
   const id = useMemo(() => `image-with-lightbox-${randomString()}`, [])
   const { t } = useTranslation()
   const { autoLoadMedia } = useContentPolicy()
-  const [display, setDisplay] = useState(autoLoadMedia)
+  const [display, setDisplay] = useState(ignoreAutoLoadPolicy ? true : autoLoadMedia)
   const [index, setIndex] = useState(-1)
   useEffect(() => {
     if (index >= 0) {

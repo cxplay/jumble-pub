@@ -27,6 +27,7 @@ export default function AvatarWithLightbox({ userId }: { userId: string }) {
         wrapper:
           'shrink-0 rounded-full bg-background w-24 h-24 absolute left-3 bottom-0 translate-y-1/2 border-4 border-background'
       }}
+      ignoreAutoLoadPolicy
     />
   )
 }

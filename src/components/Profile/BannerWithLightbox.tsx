@@ -28,6 +28,7 @@ export default function BannerWithLightbox({
         wrapper: 'rounded-none border-none'
       }}
       errorPlaceholder={defaultBanner}
+      ignoreAutoLoadPolicy
     />
   )
 }
