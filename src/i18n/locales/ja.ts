@@ -536,6 +536,7 @@ export default {
     'Failed to get invite code from relay': 'リレーから招待コードの取得に失敗しました',
     'Failed to get invite code': '招待コードの取得に失敗しました',
     'Invite code copied to clipboard': '招待コードをクリップボードにコピーしました',
-    'Favicon URL': 'ファビコンURL'
+    'Favicon URL': 'ファビコンURL',
+    'Filter out onion relays': 'Onionリレーを除外'
   }
 }

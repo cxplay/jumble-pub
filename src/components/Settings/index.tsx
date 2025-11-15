@@ -129,6 +129,13 @@ export default function Settings() {
           {copiedNcryptsec ? <Check /> : <Copy />}
         </SettingItem>
       )}
+      <SettingItem className="clickable" onClick={() => push(toSystemSettings())}>
+        <div className="flex items-center gap-4">
+          <Cog />
+          <div>{t('System')}</div>
+        </div>
+        <ChevronRight />
+      </SettingItem>
       <AboutInfoDialog>
         <SettingItem className="clickable">
           <div className="flex items-center gap-4">
@@ -143,13 +150,6 @@ export default function Settings() {
           </div>
         </SettingItem>
       </AboutInfoDialog>
-      <SettingItem className="clickable" onClick={() => push(toSystemSettings())}>
-        <div className="flex items-center gap-4">
-          <Cog />
-          <div>{t('System')}</div>
-        </div>
-        <ChevronRight />
-      </SettingItem>
       <div className="px-4 mt-4">
         <Donation />
       </div>

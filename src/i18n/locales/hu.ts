@@ -534,6 +534,7 @@ export default {
     'Failed to get invite code from relay': 'Nem sikerült lekérni a meghívókódot a relay-től',
     'Failed to get invite code': 'Nem sikerült lekérni a meghívókódot',
     'Invite code copied to clipboard': 'Meghívókód vágólapra másolva',
-    'Favicon URL': 'Favicon URL'
+    'Favicon URL': 'Favicon URL',
+    'Filter out onion relays': 'Onion relay-ek kiszűrése'
   }
 }

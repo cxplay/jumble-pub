@@ -539,6 +539,7 @@ export default {
     'Failed to get invite code from relay': 'रिले से निमंत्रण कोड प्राप्त करने में विफल',
     'Failed to get invite code': 'निमंत्रण कोड प्राप्त करने में विफल',
     'Invite code copied to clipboard': 'निमंत्रण कोड क्लिपबोर्ड पर कॉपी किया गया',
-    'Favicon URL': 'फ़ेविकॉन URL'
+    'Favicon URL': 'फ़ेविकॉन URL',
+    'Filter out onion relays': 'ओनियन रिले फ़िल्टर करें'
   }
 }

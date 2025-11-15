@@ -207,7 +207,7 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
         indexedDb.getReplaceableEvent(account.pubkey, kinds.Pinlist)
       ])
       if (storedRelayListEvent) {
-        setRelayList(getRelayListFromEvent(storedRelayListEvent))
+        setRelayList(getRelayListFromEvent(storedRelayListEvent, storage.getFilterOutOnionRelays()))
       }
       if (storedProfileEvent) {
         setProfileEvent(storedProfileEvent)
@@ -237,7 +237,7 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
         authors: [account.pubkey]
       })
       const relayListEvent = getLatestEvent(relayListEvents) ?? storedRelayListEvent
-      const relayList = getRelayListFromEvent(relayListEvent)
+      const relayList = getRelayListFromEvent(relayListEvent, storage.getFilterOutOnionRelays())
       if (relayListEvent) {
         client.updateRelayListCache(relayListEvent)
         await indexedDb.putReplaceableEvent(relayListEvent)
@@ -705,7 +705,7 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
 
   const updateRelayListEvent = async (relayListEvent: Event) => {
     const newRelayList = await client.updateRelayListCache(relayListEvent)
-    setRelayList(getRelayListFromEvent(newRelayList))
+    setRelayList(getRelayListFromEvent(newRelayList, storage.getFilterOutOnionRelays()))
   }
 
   const updateProfileEvent = async (profileEvent: Event) => {

@@ -5,16 +5,17 @@ import { buildATag } from './draft-event'
 import { getReplaceableEventIdentifier } from './event'
 import { getAmountFromInvoice, getLightningAddressFromProfile } from './lightning'
 import { formatPubkey, pubkeyToNpub } from './pubkey'
-import { getEmojiInfosFromEmojiTags, generateBech32IdFromETag, tagNameEquals } from './tag'
-import { isWebsocketUrl, normalizeHttpUrl, normalizeUrl } from './url'
-import { isTorBrowser } from './utils'
+import { generateBech32IdFromETag, getEmojiInfosFromEmojiTags, tagNameEquals } from './tag'
+import { isOnionUrl, isWebsocketUrl, normalizeHttpUrl, normalizeUrl } from './url'
 
-export function getRelayListFromEvent(event?: Event | null) {
+export function getRelayListFromEvent(
+  event?: Event | null,
+  filterOutOnionRelays: boolean = true
+): TRelayList {
   if (!event) {
     return { write: BIG_RELAY_URLS, read: BIG_RELAY_URLS, originalRelays: [] }
   }
 
-  const torBrowserDetected = isTorBrowser()
   const relayList = { write: [], read: [], originalRelays: [] } as TRelayList
   event.tags.filter(tagNameEquals('r')).forEach(([, url, type]) => {
     if (!url || !isWebsocketUrl(url)) return
@@ -25,8 +26,7 @@ export function getRelayListFromEvent(event?: Event | null) {
     const scope = type === 'read' ? 'read' : type === 'write' ? 'write' : 'both'
     relayList.originalRelays.push({ url: normalizedUrl, scope })
 
-    // Filter out .onion URLs if not using Tor browser
-    if (normalizedUrl.endsWith('.onion/') && !torBrowserDetected) return
+    if (filterOutOnionRelays && isOnionUrl(normalizedUrl)) return
 
     if (type === 'write') {
       relayList.write.push(normalizedUrl)

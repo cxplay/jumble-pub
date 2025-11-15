@@ -542,6 +542,7 @@ export default {
     'Failed to get invite code from relay': 'Error al obtener código de invitación del relay',
     'Failed to get invite code': 'Error al obtener código de invitación',
     'Invite code copied to clipboard': 'Código de invitación copiado al portapapeles',
-    'Favicon URL': 'URL del Favicon'
+    'Favicon URL': 'URL del Favicon',
+    'Filter out onion relays': 'Filtrar relés onion'
   }
 }

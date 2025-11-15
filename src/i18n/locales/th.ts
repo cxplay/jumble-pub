@@ -530,6 +530,7 @@ export default {
     'Failed to get invite code from relay': 'ไม่สามารถรับรหัสเชิญจากรีเลย์',
     'Failed to get invite code': 'ไม่สามารถรับรหัสเชิญ',
     'Invite code copied to clipboard': 'คัดลอกรหัสเชิญไปยังคลิปบอร์ดแล้ว',
-    'Favicon URL': 'URL ไอคอน'
+    'Favicon URL': 'URL ไอคอน',
+    'Filter out onion relays': 'กรองรีเลย์ onion'
   }
 }

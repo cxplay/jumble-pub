@@ -527,6 +527,7 @@ export default {
     'Failed to get invite code from relay': '从中继器获取邀请码失败',
     'Failed to get invite code': '获取邀请码失败',
     'Invite code copied to clipboard': '邀请码已复制到剪贴板',
-    'Favicon URL': '网站图标 URL'
+    'Favicon URL': '网站图标 URL',
+    'Filter out onion relays': '过滤洋葱中继'
   }
 }

@@ -2,6 +2,15 @@ export function isWebsocketUrl(url: string): boolean {
   return /^wss?:\/\/.+$/.test(url)
 }
 
+export function isOnionUrl(url: string): boolean {
+  try {
+    const hostname = new URL(url).hostname
+    return hostname.endsWith('.onion')
+  } catch {
+    return false
+  }
+}
+
 // copy from nostr-tools/utils
 export function normalizeUrl(url: string): string {
   try {

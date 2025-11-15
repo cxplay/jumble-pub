@@ -31,6 +31,7 @@ import {
 } from 'nostr-tools'
 import { AbstractRelay } from 'nostr-tools/abstract-relay'
 import indexedDb from './indexed-db.service'
+import storage from './local-storage.service'
 
 type TTimelineRef = [string, number]
 
@@ -1131,7 +1132,7 @@ class ClientService extends EventTarget {
 
     return relayEvents.map((event) => {
       if (event) {
-        return getRelayListFromEvent(event)
+        return getRelayListFromEvent(event, storage.getFilterOutOnionRelays())
       }
       return {
         write: BIG_RELAY_URLS,
