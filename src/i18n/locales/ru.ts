@@ -545,6 +545,15 @@ export default {
     'Failed to get invite code': 'Не удалось получить код приглашения',
     'Invite code copied to clipboard': 'Код приглашения скопирован в буфер обмена',
     'Favicon URL': 'URL фавикона',
-    'Filter out onion relays': 'Фильтровать onion-релеи'
+    'Filter out onion relays': 'Фильтровать onion-релеи',
+    'Click to load X post': 'Нажмите, чтобы загрузить пост X',
+    'View Nostr comments': 'Просмотреть комментарии Nostr',
+    'Search for notes': 'Искать заметки',
+    'Search for hashtag': 'Искать хэштег',
+    'Go to note': 'Перейти к заметке',
+    'Go to relay': 'Перейти к релею',
+    'View discussions about this': 'Просмотреть обсуждения об этом контенте',
+    'Open link': 'Открыть ссылку',
+    'View Nostr discussions': 'Просмотреть обсуждения Nostr'
   }
 }

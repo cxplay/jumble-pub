@@ -518,8 +518,7 @@ export default {
     'Enter invite code': 'Írja be a meghívókódot',
     'Sending...': 'Küldés...',
     'Send Request': 'Kérelem küldése',
-    'You can get an invite code from a relay member.':
-      'Meghívókódot kaphat egy relay tagtól.',
+    'You can get an invite code from a relay member.': 'Meghívókódot kaphat egy relay tagtól.',
     'Enter the invite code you received from a relay member.':
       'Írja be a relay tagtól kapott meghívókódot.',
     'Get Invite Code': 'Meghívókód Lekérése',
@@ -535,6 +534,15 @@ export default {
     'Failed to get invite code': 'Nem sikerült lekérni a meghívókódot',
     'Invite code copied to clipboard': 'Meghívókód vágólapra másolva',
     'Favicon URL': 'Favicon URL',
-    'Filter out onion relays': 'Onion relay-ek kiszűrése'
+    'Filter out onion relays': 'Onion relay-ek kiszűrése',
+    'Click to load X post': 'Kattintson az X bejegyzés betöltéséhez',
+    'View Nostr comments': 'Nostr megjegyzések megtekintése',
+    'Search for notes': 'Jegyzetek keresése',
+    'Search for hashtag': 'Hashtag keresése',
+    'Go to note': 'Ugrás a jegyzethez',
+    'Go to relay': 'Ugrás a relay-hez',
+    'View discussions about this': 'Beszélgetések megtekintése erről a tartalomról',
+    'Open link': 'Link megnyitása',
+    'View Nostr discussions': 'Nostr beszélgetések megtekintése'
   }
 }

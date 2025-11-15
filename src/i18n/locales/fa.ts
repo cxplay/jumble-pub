@@ -510,7 +510,8 @@ export default {
     'Request to Join Relay': 'درخواست عضویت در رله',
     'Leave Relay': 'خروج از رله',
     Leave: 'خروج',
-    'Are you sure you want to leave this relay?': 'آیا مطمئن هستید که می‌خواهید از این رله خارج شوید؟',
+    'Are you sure you want to leave this relay?':
+      'آیا مطمئن هستید که می‌خواهید از این رله خارج شوید؟',
     'Join request sent successfully': 'درخواست عضویت با موفقیت ارسال شد',
     'Failed to send join request': 'ارسال درخواست عضویت ناموفق بود',
     'Leave request sent successfully': 'درخواست خروج با موفقیت ارسال شد',
@@ -538,6 +539,15 @@ export default {
     'Failed to get invite code': 'دریافت کد دعوت ناموفق بود',
     'Invite code copied to clipboard': 'کد دعوت در کلیپ‌بورد کپی شد',
     'Favicon URL': 'آدرس نماد سایت',
-    'Filter out onion relays': 'فیلتر کردن رله‌های onion'
+    'Filter out onion relays': 'فیلتر کردن رله‌های onion',
+    'Click to load X post': 'برای بارگیری پست X کلیک کنید',
+    'View Nostr comments': 'مشاهده نظرات Nostr',
+    'Search for notes': 'جستجوی یادداشت‌ها',
+    'Search for hashtag': 'جستجوی هشتگ',
+    'Go to note': 'رفتن به یادداشت',
+    'Go to relay': 'رفتن به رله',
+    'View discussions about this': 'مشاهده بحث‌ها درباره این محتوا',
+    'Open link': 'باز کردن لینک',
+    'View Nostr discussions': 'مشاهده بحث‌های Nostr'
   }
 }

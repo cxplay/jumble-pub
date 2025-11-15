@@ -1,39 +1,26 @@
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
-import { Event } from 'nostr-tools'
 import { useState } from 'react'
 import HideUntrustedContentButton from '../HideUntrustedContentButton'
-import QuoteList from '../QuoteList'
-import ReactionList from '../ReactionList'
 import ReplyNoteList from '../ReplyNoteList'
-import RepostList from '../RepostList'
-import ZapList from '../ZapList'
 import { Tabs, TTabValue } from './Tabs'
+import ReactionList from '../ReactionList'
 
-export default function NoteInteractions({
+export default function ExternalContentInteractions({
   pageIndex,
-  event
+  externalContent
 }: {
   pageIndex?: number
-  event: Event
+  externalContent: string
 }) {
   const [type, setType] = useState<TTabValue>('replies')
   let list
   switch (type) {
     case 'replies':
-      list = <ReplyNoteList index={pageIndex} stuff={event} />
-      break
-    case 'quotes':
-      list = <QuoteList event={event} />
+      list = <ReplyNoteList index={pageIndex} stuff={externalContent} />
       break
     case 'reactions':
-      list = <ReactionList stuff={event} />
-      break
-    case 'reposts':
-      list = <RepostList event={event} />
-      break
-    case 'zaps':
-      list = <ZapList event={event} />
+      list = <ReactionList stuff={externalContent} />
       break
     default:
       break

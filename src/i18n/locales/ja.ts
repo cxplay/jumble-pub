@@ -522,8 +522,10 @@ export default {
     'Enter invite code': '招待コードを入力',
     'Sending...': '送信中...',
     'Send Request': 'リクエストを送信',
-    'You can get an invite code from a relay member.': 'リレーメンバーから招待コードを取得できます。',
-    'Enter the invite code you received from a relay member.': 'リレーメンバーから受け取った招待コードを入力してください。',
+    'You can get an invite code from a relay member.':
+      'リレーメンバーから招待コードを取得できます。',
+    'Enter the invite code you received from a relay member.':
+      'リレーメンバーから受け取った招待コードを入力してください。',
     'Get Invite Code': '招待コードを取得',
     'Share this invite code with others to invite them to join this relay.':
       'この招待コードを他の人と共有して、このリレーへの参加を招待してください。',
@@ -537,6 +539,15 @@ export default {
     'Failed to get invite code': '招待コードの取得に失敗しました',
     'Invite code copied to clipboard': '招待コードをクリップボードにコピーしました',
     'Favicon URL': 'ファビコンURL',
-    'Filter out onion relays': 'Onionリレーを除外'
+    'Filter out onion relays': 'Onionリレーを除外',
+    'Click to load X post': 'クリックしてX投稿を読み込む',
+    'View Nostr comments': 'Nostrコメントを表示',
+    'Search for notes': 'ノートを検索',
+    'Search for hashtag': 'ハッシュタグを検索',
+    'Go to note': 'ノートへ移動',
+    'Go to relay': 'リレーへ移動',
+    'View discussions about this': 'このコンテンツに関する議論を表示',
+    'Open link': 'リンクを開く',
+    'View Nostr discussions': 'Nostr の議論を表示'
   }
 }

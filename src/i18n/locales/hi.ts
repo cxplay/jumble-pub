@@ -540,6 +540,15 @@ export default {
     'Failed to get invite code': 'निमंत्रण कोड प्राप्त करने में विफल',
     'Invite code copied to clipboard': 'निमंत्रण कोड क्लिपबोर्ड पर कॉपी किया गया',
     'Favicon URL': 'फ़ेविकॉन URL',
-    'Filter out onion relays': 'ओनियन रिले फ़िल्टर करें'
+    'Filter out onion relays': 'ओनियन रिले फ़िल्टर करें',
+    'Click to load X post': 'X पोस्ट लोड करने के लिए क्लिक करें',
+    'View Nostr comments': 'Nostr टिप्पणियाँ देखें',
+    'Search for notes': 'नोट्स खोजें',
+    'Search for hashtag': 'हैशटैग खोजें',
+    'Go to note': 'नोट पर जाएं',
+    'Go to relay': 'रिले पर जाएं',
+    'View discussions about this': 'इस सामग्री के बारे में चर्चाएँ देखें',
+    'Open link': 'लिंक खोलें',
+    'View Nostr discussions': 'Nostr चर्चाएँ देखें'
   }
 }

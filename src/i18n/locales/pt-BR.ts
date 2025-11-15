@@ -540,6 +540,15 @@ export default {
     'Failed to get invite code': 'Falha ao obter código de convite',
     'Invite code copied to clipboard': 'Código de convite copiado para a área de transferência',
     'Favicon URL': 'URL do Favicon',
-    'Filter out onion relays': 'Filtrar relays onion'
+    'Filter out onion relays': 'Filtrar relays onion',
+    'Click to load X post': 'Clique para carregar a postagem do X',
+    'View Nostr comments': 'Ver comentários do Nostr',
+    'Search for notes': 'Buscar notas',
+    'Search for hashtag': 'Buscar hashtag',
+    'Go to note': 'Ir para nota',
+    'Go to relay': 'Ir para relay',
+    'View discussions about this': 'Ver discussões sobre este conteúdo',
+    'Open link': 'Abrir link',
+    'View Nostr discussions': 'Ver discussões do Nostr'
   }
 }

@@ -549,6 +549,15 @@ export default {
     'Failed to get invite code': 'Fehler beim Abrufen des Einladungscodes',
     'Invite code copied to clipboard': 'Einladungscode in die Zwischenablage kopiert',
     'Favicon URL': 'Favicon-URL',
-    'Filter out onion relays': 'Onion-Relays herausfiltern'
+    'Filter out onion relays': 'Onion-Relays herausfiltern',
+    'Click to load X post': 'Klicken Sie, um X-Beitrag zu laden',
+    'View Nostr comments': 'Nostr-Kommentare anzeigen',
+    'Search for notes': 'Notizen suchen',
+    'Search for hashtag': 'Hashtag suchen',
+    'Go to note': 'Zur Notiz gehen',
+    'Go to relay': 'Zum Relay gehen',
+    'View discussions about this': 'Diskussionen über diesen Inhalt anzeigen',
+    'Open link': 'Link öffnen',
+    'View Nostr discussions': 'Nostr-Diskussionen anzeigen'
   }
 }

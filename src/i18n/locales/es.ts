@@ -515,7 +515,8 @@ export default {
     'Request to Join Relay': 'Solicitar unirse al Relay',
     'Leave Relay': 'Salir del Relay',
     Leave: 'Salir',
-    'Are you sure you want to leave this relay?': '¿Estás seguro de que quieres salir de este relay?',
+    'Are you sure you want to leave this relay?':
+      '¿Estás seguro de que quieres salir de este relay?',
     'Join request sent successfully': 'Solicitud de unión enviada con éxito',
     'Failed to send join request': 'Error al enviar solicitud de unión',
     'Leave request sent successfully': 'Solicitud de salida enviada con éxito',
@@ -537,12 +538,22 @@ export default {
     Copy: 'Copiar',
     'This invite code can be used by others to join the relay.':
       'Este código de invitación puede ser usado por otros para unirse al relay.',
-    'No invite code available from this relay.': 'No hay código de invitación disponible de este relay.',
+    'No invite code available from this relay.':
+      'No hay código de invitación disponible de este relay.',
     Close: 'Cerrar',
     'Failed to get invite code from relay': 'Error al obtener código de invitación del relay',
     'Failed to get invite code': 'Error al obtener código de invitación',
     'Invite code copied to clipboard': 'Código de invitación copiado al portapapeles',
     'Favicon URL': 'URL del Favicon',
-    'Filter out onion relays': 'Filtrar relés onion'
+    'Filter out onion relays': 'Filtrar relés onion',
+    'Click to load X post': 'Haz clic para cargar la publicación de X',
+    'View Nostr comments': 'Ver comentarios de Nostr',
+    'Search for notes': 'Buscar notas',
+    'Search for hashtag': 'Buscar hashtag',
+    'Go to note': 'Ir a la nota',
+    'Go to relay': 'Ir al relay',
+    'View discussions about this': 'Ver discusiones sobre este contenido',
+    'Open link': 'Abrir enlace',
+    'View Nostr discussions': 'Ver discusiones de Nostr'
   }
 }

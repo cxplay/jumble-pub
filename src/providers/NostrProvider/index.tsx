@@ -19,7 +19,7 @@ import client from '@/services/client.service'
 import customEmojiService from '@/services/custom-emoji.service'
 import indexedDb from '@/services/indexed-db.service'
 import storage from '@/services/local-storage.service'
-import noteStatsService from '@/services/note-stats.service'
+import stuffStatsService from '@/services/stuff-stats.service'
 import {
   ISigner,
   TAccount,
@@ -369,7 +369,7 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
           limit: 100
         }
       ])
-      noteStatsService.updateNoteStatsByEvents(events)
+      stuffStatsService.updateStuffStatsByEvents(events)
     }
     initInteractions()
   }, [account])

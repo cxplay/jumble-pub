@@ -407,6 +407,7 @@ export default {
     'Click to load image': 'Click to load image',
     'Click to load media': 'Click to load media',
     'Click to load YouTube video': 'Click to load YouTube video',
+    'Click to load X post': 'Click to load X post',
     '{{count}} reviews': '{{count}} reviews',
     'Write a review': 'Write a review',
     'No reviews yet. Be the first to write one!': 'No reviews yet. Be the first to write one!',
@@ -534,6 +535,14 @@ export default {
     'Failed to get invite code': 'Failed to get invite code',
     'Invite code copied to clipboard': 'Invite code copied to clipboard',
     'Favicon URL': 'Favicon URL',
-    'Filter out onion relays': 'Filter out onion relays'
+    'Filter out onion relays': 'Filter out onion relays',
+    'View Nostr comments': 'View Nostr comments',
+    'Search for notes': 'Search for notes',
+    'Search for hashtag': 'Search for hashtag',
+    'Go to note': 'Go to note',
+    'Go to relay': 'Go to relay',
+    'View discussions about this': 'View discussions about this',
+    'Open link': 'Open link',
+    'View Nostr discussions': 'View Nostr discussions'
   }
 }
