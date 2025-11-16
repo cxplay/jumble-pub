@@ -549,6 +549,13 @@ export default {
     'Go to relay': 'रिले पर जाएं',
     'View discussions about this': 'इस सामग्री के बारे में चर्चाएँ देखें',
     'Open link': 'लिंक खोलें',
-    'View Nostr discussions': 'Nostr चर्चाएँ देखें'
+    'View Nostr discussions': 'Nostr चर्चाएँ देखें',
+    'Optimal relays': 'इष्टतम रिले',
+    "Successfully republish to optimal relays (your write relays and mentioned users' read relays)":
+      'इष्टतम रिले पर सफलतापूर्वक पुनः प्रकाशित (आपके लेखन रिले और उल्लिखित उपयोगकर्ताओं के पठन रिले)',
+    'Failed to republish to optimal relays: {{error}}': 'इष्टतम रिले पर पुनः प्रकाशित करने में विफल: {{error}}',
+    'External Content': 'बाहरी सामग्री',
+    Highlight: 'हाइलाइट',
+    'Optimal relays and {{count}} other relays': 'इष्टतम रिले और {{count}} अन्य रिले'
   }
 }

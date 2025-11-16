@@ -543,6 +543,13 @@ export default {
     'Go to relay': 'Go to relay',
     'View discussions about this': 'View discussions about this',
     'Open link': 'Open link',
-    'View Nostr discussions': 'View Nostr discussions'
+    'View Nostr discussions': 'View Nostr discussions',
+    'Optimal relays': 'Optimal relays',
+    "Successfully republish to optimal relays (your write relays and mentioned users' read relays)":
+      "Successfully republish to optimal relays (your write relays and mentioned users' read relays)",
+    'Failed to republish to optimal relays: {{error}}': 'Failed to republish to optimal relays: {{error}}',
+    'External Content': 'External Content',
+    Highlight: 'Highlight',
+    'Optimal relays and {{count}} other relays': 'Optimal relays and {{count}} other relays'
   }
 }

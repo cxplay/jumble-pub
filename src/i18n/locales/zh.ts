@@ -536,6 +536,13 @@ export default {
     'Go to relay': '跳转到中继器',
     'View discussions about this': '查看关于此内容的讨论',
     'Open link': '打开链接',
-    'View Nostr discussions': '查看 Nostr 讨论'
+    'View Nostr discussions': '查看 Nostr 讨论',
+    'Optimal relays': '最佳中继器',
+    "Successfully republish to optimal relays (your write relays and mentioned users' read relays)":
+      '成功重新发布到最佳中继器（你的写入中继器和被提及用户的读取中继器）',
+    'Failed to republish to optimal relays: {{error}}': '重新发布到最佳中继器失败：{{error}}',
+    'External Content': '外部内容',
+    Highlight: '高亮',
+    'Optimal relays and {{count}} other relays': '最佳中继器和其他 {{count}} 个中继器'
   }
 }

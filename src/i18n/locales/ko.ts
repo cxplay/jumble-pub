@@ -548,6 +548,13 @@ export default {
     'Go to relay': '릴레이로 이동',
     'View discussions about this': '이 콘텐츠에 대한 토론 보기',
     'Open link': '링크 열기',
-    'View Nostr discussions': 'Nostr 토론 보기'
+    'View Nostr discussions': 'Nostr 토론 보기',
+    'Optimal relays': '최적 릴레이',
+    "Successfully republish to optimal relays (your write relays and mentioned users' read relays)":
+      '최적 릴레이(쓰기 릴레이 및 언급된 사용자의 읽기 릴레이)에 성공적으로 재게시되었습니다',
+    'Failed to republish to optimal relays: {{error}}': '최적 릴레이에 재게시 실패: {{error}}',
+    'External Content': '외부 콘텐츠',
+    Highlight: '하이라이트',
+    'Optimal relays and {{count}} other relays': '최적 릴레이 및 기타 {{count}}개 릴레이'
   }
 }

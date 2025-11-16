@@ -552,6 +552,13 @@ export default {
     'Go to relay': 'Ir para relay',
     'View discussions about this': 'Ver discussões sobre este conteúdo',
     'Open link': 'Abrir ligação',
-    'View Nostr discussions': 'Ver discussões do Nostr'
+    'View Nostr discussions': 'Ver discussões do Nostr',
+    'Optimal relays': 'Relays ideais',
+    "Successfully republish to optimal relays (your write relays and mentioned users' read relays)":
+      'Republicado com sucesso nos relays ideais (os seus relays de escrita e os relays de leitura dos utilizadores mencionados)',
+    'Failed to republish to optimal relays: {{error}}': 'Falha ao republicar nos relays ideais: {{error}}',
+    'External Content': 'Conteúdo externo',
+    Highlight: 'Destacar',
+    'Optimal relays and {{count}} other relays': 'Relays ideais e {{count}} outros relays'
   }
 }

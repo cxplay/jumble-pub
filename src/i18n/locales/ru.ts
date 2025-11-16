@@ -554,6 +554,13 @@ export default {
     'Go to relay': 'Перейти к релею',
     'View discussions about this': 'Просмотреть обсуждения об этом контенте',
     'Open link': 'Открыть ссылку',
-    'View Nostr discussions': 'Просмотреть обсуждения Nostr'
+    'View Nostr discussions': 'Просмотреть обсуждения Nostr',
+    'Optimal relays': 'Оптимальные релеи',
+    "Successfully republish to optimal relays (your write relays and mentioned users' read relays)":
+      'Успешно опубликовано в оптимальные релеи (ваши релеи для записи и релеи для чтения упомянутых пользователей)',
+    'Failed to republish to optimal relays: {{error}}': 'Не удалось опубликовать в оптимальные релеи: {{error}}',
+    'External Content': 'Внешний контент',
+    Highlight: 'Выделить',
+    'Optimal relays and {{count}} other relays': 'Оптимальные релеи и {{count}} других релеев'
   }
 }

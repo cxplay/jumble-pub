@@ -543,6 +543,14 @@ export default {
     'Go to relay': 'Ugrás a relay-hez',
     'View discussions about this': 'Beszélgetések megtekintése erről a tartalomról',
     'Open link': 'Link megnyitása',
-    'View Nostr discussions': 'Nostr beszélgetések megtekintése'
+    'View Nostr discussions': 'Nostr beszélgetések megtekintése',
+    'Optimal relays': 'Optimális relay-ek',
+    "Successfully republish to optimal relays (your write relays and mentioned users' read relays)":
+      'Sikeresen újra közzétéve az optimális relay-eken (az Ön írási relay-ei és az említett felhasználók olvasási relay-ei)',
+    'Failed to republish to optimal relays: {{error}}':
+      'Nem sikerült újra közzétenni az optimális relay-eken: {{error}}',
+    'External Content': 'Külső tartalom',
+    Highlight: 'Kiemelés',
+    'Optimal relays and {{count}} other relays': 'Optimális relay-ek és {{count}} másik relay'
   }
 }

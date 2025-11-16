@@ -543,6 +543,13 @@ export default {
     'Go to relay': 'الانتقال إلى المرحل',
     'View discussions about this': 'عرض المناقشات حول هذا المحتوى',
     'Open link': 'فتح الرابط',
-    'View Nostr discussions': 'عرض مناقشات Nostr'
+    'View Nostr discussions': 'عرض مناقشات Nostr',
+    'Optimal relays': 'المرحلات المثلى',
+    "Successfully republish to optimal relays (your write relays and mentioned users' read relays)":
+      'تم إعادة النشر بنجاح إلى المرحلات المثلى (مرحلات الكتابة الخاصة بك ومرحلات القراءة للمستخدمين المذكورين)',
+    'Failed to republish to optimal relays: {{error}}': 'فشل إعادة النشر إلى المرحلات المثلى: {{error}}',
+    'External Content': 'محتوى خارجي',
+    Highlight: 'تسليط الضوء',
+    'Optimal relays and {{count}} other relays': 'المرحلات المثلى و {{count}} مرحلات أخرى'
   }
 }

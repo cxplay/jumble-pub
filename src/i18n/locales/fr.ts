@@ -557,6 +557,13 @@ export default {
     'Go to relay': 'Aller au relais',
     'View discussions about this': 'Voir les discussions sur ce contenu',
     'Open link': 'Ouvrir le lien',
-    'View Nostr discussions': 'Voir les discussions Nostr'
+    'View Nostr discussions': 'Voir les discussions Nostr',
+    'Optimal relays': 'Relais optimaux',
+    "Successfully republish to optimal relays (your write relays and mentioned users' read relays)":
+      "Republié avec succès sur les relais optimaux (vos relais d'écriture et les relais de lecture des utilisateurs mentionnés)",
+    'Failed to republish to optimal relays: {{error}}': 'Échec de la republication sur les relais optimaux : {{error}}',
+    'External Content': 'Contenu externe',
+    Highlight: 'Surligner',
+    'Optimal relays and {{count}} other relays': 'Relais optimaux et {{count}} autres relais'
   }
 }

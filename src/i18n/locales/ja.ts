@@ -548,6 +548,13 @@ export default {
     'Go to relay': 'リレーへ移動',
     'View discussions about this': 'このコンテンツに関する議論を表示',
     'Open link': 'リンクを開く',
-    'View Nostr discussions': 'Nostr の議論を表示'
+    'View Nostr discussions': 'Nostr の議論を表示',
+    'Optimal relays': '最適なリレー',
+    "Successfully republish to optimal relays (your write relays and mentioned users' read relays)":
+      '最適なリレー（あなたの書き込みリレーと言及されたユーザーの読み取りリレー）への再公開に成功しました',
+    'Failed to republish to optimal relays: {{error}}': '最適なリレーへの再公開に失敗しました：{{error}}',
+    'External Content': '外部コンテンツ',
+    Highlight: 'ハイライト',
+    'Optimal relays and {{count}} other relays': '最適なリレーと他の{{count}}個のリレー'
   }
 }

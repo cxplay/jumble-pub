@@ -553,6 +553,14 @@ export default {
     'Go to relay': 'Przejdź do przekaźnika',
     'View discussions about this': 'Zobacz dyskusje o tej treści',
     'Open link': 'Otwórz link',
-    'View Nostr discussions': 'Zobacz dyskusje Nostr'
+    'View Nostr discussions': 'Zobacz dyskusje Nostr',
+    'Optimal relays': 'Optymalne przekaźniki',
+    "Successfully republish to optimal relays (your write relays and mentioned users' read relays)":
+      'Pomyślnie opublikowano ponownie na optymalnych przekaźnikach (Twoje przekaźniki zapisu i przekaźniki odczytu wspomnianych użytkowników)',
+    'Failed to republish to optimal relays: {{error}}':
+      'Nie udało się opublikować ponownie na optymalnych przekaźnikach: {{error}}',
+    'External Content': 'Treść zewnętrzna',
+    Highlight: 'Podświetl',
+    'Optimal relays and {{count}} other relays': 'Optymalne przekaźniki i {{count}} innych przekaźników'
   }
 }

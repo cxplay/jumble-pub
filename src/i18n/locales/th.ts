@@ -541,6 +541,13 @@ export default {
     'Go to relay': 'ไปที่รีเลย์',
     'View discussions about this': 'ดูการสนทนาเกี่ยวกับเนื้อหานี้',
     'Open link': 'เปิดลิงก์',
-    'View Nostr discussions': 'ดูการสนทนา Nostr'
+    'View Nostr discussions': 'ดูการสนทนา Nostr',
+    'Optimal relays': 'รีเลย์ที่เหมาะสม',
+    "Successfully republish to optimal relays (your write relays and mentioned users' read relays)":
+      'เผยแพร่ซ้ำไปยังรีเลย์ที่เหมาะสมสำเร็จ (รีเลย์เขียนของคุณและรีเลย์อ่านของผู้ใช้ที่กล่าวถึง)',
+    'Failed to republish to optimal relays: {{error}}': 'เผยแพร่ซ้ำไปยังรีเลย์ที่เหมาะสมล้มเหลว: {{error}}',
+    'External Content': 'เนื้อหาภายนอก',
+    Highlight: 'ไฮไลต์',
+    'Optimal relays and {{count}} other relays': 'รีเลย์ที่เหมาะสมและรีเลย์อื่น {{count}} รายการ'
   }
 }

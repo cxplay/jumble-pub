@@ -548,6 +548,13 @@ export default {
     'Go to relay': 'رفتن به رله',
     'View discussions about this': 'مشاهده بحث‌ها درباره این محتوا',
     'Open link': 'باز کردن لینک',
-    'View Nostr discussions': 'مشاهده بحث‌های Nostr'
+    'View Nostr discussions': 'مشاهده بحث‌های Nostr',
+    'Optimal relays': 'رله‌های بهینه',
+    "Successfully republish to optimal relays (your write relays and mentioned users' read relays)":
+      'با موفقیت در رله‌های بهینه منتشر شد (رله‌های نوشتن شما و رله‌های خواندن کاربران ذکر شده)',
+    'Failed to republish to optimal relays: {{error}}': 'خطا در انتشار مجدد در رله‌های بهینه: {{error}}',
+    'External Content': 'محتوای خارجی',
+    Highlight: 'برجسته‌سازی',
+    'Optimal relays and {{count}} other relays': 'رله‌های بهینه و {{count}} رله دیگر'
   }
 }
