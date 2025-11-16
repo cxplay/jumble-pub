@@ -80,7 +80,12 @@ export default function ExternalLink({
       <>
         {trigger}
         <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
-          <DrawerOverlay onClick={() => setIsDrawerOpen(false)} />
+          <DrawerOverlay
+            onClick={(e) => {
+              e.stopPropagation()
+              setIsDrawerOpen(false)
+            }}
+          />
           <DrawerContent hideOverlay>
             <div className="py-2">
               <Button
