@@ -1,6 +1,5 @@
 import { getEventKey, getKeyFromTag, getParentTag } from '@/lib/event'
-import { getHighlightSourceTag } from '@/lib/event-metadata'
-import { Event, kinds } from 'nostr-tools'
+import { Event } from 'nostr-tools'
 import { createContext, useCallback, useContext, useState } from 'react'
 
 type TReplyContext = {
@@ -31,25 +30,12 @@ export function ReplyProvider({ children }: { children: React.ReactNode }) {
       if (newReplyKeySet.has(key)) return
       newReplyKeySet.add(key)
 
-      let parentKey: string | undefined
-      if (reply.kind === kinds.Highlights) {
-        console.log('reply', reply)
-        const sourceTag = getHighlightSourceTag(reply)
-        if (!sourceTag) return
-
-        parentKey = getKeyFromTag(sourceTag)
-      } else {
-        const parentTag = getParentTag(reply)
-        if (!parentTag) return
-
-        parentKey = getKeyFromTag(parentTag.tag)
-      }
-
-      if (parentKey) {
-        if (reply.kind === kinds.Highlights) {
-          console.log('parentKey', parentKey)
+      const parentTag = getParentTag(reply)
+      if (parentTag) {
+        const parentKey = getKeyFromTag(parentTag.tag)
+        if (parentKey) {
+          newReplyEventMap.set(parentKey, [...(newReplyEventMap.get(parentKey) || []), reply])
         }
-        newReplyEventMap.set(parentKey, [...(newReplyEventMap.get(parentKey) || []), reply])
       }
     })
     if (newReplyEventMap.size === 0) return

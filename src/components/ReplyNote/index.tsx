@@ -6,7 +6,7 @@ import { toNote } from '@/lib/link'
 import { useContentPolicy } from '@/providers/ContentPolicyProvider'
 import { useMuteList } from '@/providers/MuteListProvider'
 import { useScreenSize } from '@/providers/ScreenSizeProvider'
-import { Event, kinds } from 'nostr-tools'
+import { Event } from 'nostr-tools'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import ClientTag from '../ClientTag'
@@ -15,12 +15,11 @@ import Content from '../Content'
 import { FormattedTimestamp } from '../FormattedTimestamp'
 import Nip05 from '../Nip05'
 import NoteOptions from '../NoteOptions'
-import ParentNotePreview from '../ParentNotePreview'
 import StuffStats from '../StuffStats'
+import ParentNotePreview from '../ParentNotePreview'
 import TranslateButton from '../TranslateButton'
 import UserAvatar from '../UserAvatar'
 import Username from '../Username'
-import Highlight from './Highlight'
 
 export default function ReplyNote({
   event,
@@ -51,13 +50,6 @@ export default function ReplyNote({
     }
     return true
   }, [showMuted, mutePubkeySet, event, hideContentMentioningMutedUsers])
-
-  let content: React.ReactNode
-  if (event.kind === kinds.Highlights) {
-    content = <Highlight className="mt-2" event={event} />
-  } else {
-    content = <Content className="mt-2" event={event} />
-  }
 
   return (
     <div
@@ -103,7 +95,7 @@ export default function ReplyNote({
               />
             )}
             {show ? (
-              content
+              <Content className="mt-2" event={event} />
             ) : (
               <Button
                 variant="outline"

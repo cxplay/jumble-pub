@@ -1,6 +1,5 @@
 import { useFetchEvent, useTranslatedEvent } from '@/hooks'
 import { createFakeEvent } from '@/lib/event'
-import { getHighlightSourceTag } from '@/lib/event-metadata'
 import { toNote } from '@/lib/link'
 import { isValidPubkey } from '@/lib/pubkey'
 import { generateBech32IdFromATag, generateBech32IdFromETag } from '@/lib/tag'
@@ -38,7 +37,36 @@ export default function Highlight({ event, className }: { event: Event; classNam
 function HighlightSource({ event }: { event: Event }) {
   const { t } = useTranslation()
   const { push } = useSecondaryPage()
-  const sourceTag = useMemo(() => getHighlightSourceTag(event), [event])
+  const sourceTag = useMemo(() => {
+    let sourceTag: string[] | undefined
+    for (const tag of event.tags) {
+      // Highest priority: 'source' tag
+      if (tag[2] === 'source') {
+        sourceTag = tag
+        break
+      }
+
+      // Give 'e' tags highest priority
+      if (tag[0] === 'e') {
+        sourceTag = tag
+        continue
+      }
+
+      // Give 'a' tags second priority over 'e' tags
+      if (tag[0] === 'a' && (!sourceTag || sourceTag[0] !== 'e')) {
+        sourceTag = tag
+        continue
+      }
+
+      // Give 'r' tags lowest priority
+      if (tag[0] === 'r' && (!sourceTag || sourceTag[0] === 'r')) {
+        sourceTag = tag
+        continue
+      }
+    }
+
+    return sourceTag
+  }, [event])
   const { event: referenceEvent } = useFetchEvent(
     sourceTag
       ? sourceTag[0] === 'e'

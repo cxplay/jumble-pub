@@ -403,34 +403,3 @@ export function getPinnedEventHexIdSetFromPinListEvent(event?: Event | null): Se
       .slice(0, MAX_PINNED_NOTES) ?? []
   )
 }
-
-export function getHighlightSourceTag(event: Event) {
-  let sourceTag: string[] | undefined
-  for (const tag of event.tags) {
-    // Highest priority: 'source' tag
-    if (tag[2] === 'source') {
-      sourceTag = tag
-      break
-    }
-
-    // Give 'e' tags highest priority
-    if (tag[0] === 'e') {
-      sourceTag = tag
-      continue
-    }
-
-    // Give 'a' tags second priority over 'e' tags
-    if (tag[0] === 'a' && (!sourceTag || sourceTag[0] !== 'e')) {
-      sourceTag = tag
-      continue
-    }
-
-    // Give 'r' tags lowest priority
-    if (tag[0] === 'r' && (!sourceTag || sourceTag[0] === 'r')) {
-      sourceTag = tag
-      continue
-    }
-  }
-
-  return sourceTag
-}
