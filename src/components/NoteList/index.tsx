@@ -43,7 +43,8 @@ const NoteList = forwardRef(
       areAlgoRelays = false,
       showRelayCloseReason = false,
       pinnedEventIds,
-      filterFn
+      filterFn,
+      showNewNotesDirectly = false
     }: {
       subRequests: TFeedSubRequest[]
       showKinds: number[]
@@ -54,11 +55,12 @@ const NoteList = forwardRef(
       showRelayCloseReason?: boolean
       pinnedEventIds?: string[]
       filterFn?: (event: Event) => boolean
+      showNewNotesDirectly?: boolean
     },
     ref
   ) => {
     const { t } = useTranslation()
-    const { startLogin, pubkey } = useNostr()
+    const { startLogin } = useNostr()
     const { isUserTrusted } = useUserTrust()
     const { mutePubkeySet } = useMuteList()
     const { hideContentMentioningMutedUsers } = useContentPolicy()
@@ -263,13 +265,11 @@ const NoteList = forwardRef(
               }
             },
             onNew: (event) => {
-              if (pubkey && event.pubkey === pubkey) {
-                // If the new event is from the current user, insert it directly into the feed
+              if (showNewNotesDirectly) {
                 setEvents((oldEvents) =>
                   oldEvents.some((e) => e.id === event.id) ? oldEvents : [event, ...oldEvents]
                 )
               } else {
-                // Otherwise, buffer it and show the New Notes button
                 setNewEvents((oldEvents) =>
                   [event, ...oldEvents].sort((a, b) => b.created_at - a.created_at)
                 )
