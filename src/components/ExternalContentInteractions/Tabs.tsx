@@ -2,10 +2,11 @@ import { cn } from '@/lib/utils'
 import { useTranslation } from 'react-i18next'
 import { useRef, useEffect, useState } from 'react'
 
-export type TTabValue = 'replies' | 'reactions'
+export type TTabValue = 'replies' | 'reactions' | 'quotes'
 const TABS = [
   { value: 'replies', label: 'Replies' },
-  { value: 'reactions', label: 'Reactions' }
+  { value: 'reactions', label: 'Reactions' },
+  { value: 'quotes', label: 'Quotes' }
 ] as { value: TTabValue; label: string }[]
 
 export function Tabs({

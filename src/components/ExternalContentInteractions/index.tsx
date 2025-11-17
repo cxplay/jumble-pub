@@ -2,9 +2,10 @@ import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import { useState } from 'react'
 import HideUntrustedContentButton from '../HideUntrustedContentButton'
+import QuoteList from '../QuoteList'
+import ReactionList from '../ReactionList'
 import ReplyNoteList from '../ReplyNoteList'
 import { Tabs, TTabValue } from './Tabs'
-import ReactionList from '../ReactionList'
 
 export default function ExternalContentInteractions({
   pageIndex,
@@ -21,6 +22,9 @@ export default function ExternalContentInteractions({
       break
     case 'reactions':
       list = <ReactionList stuff={externalContent} />
+      break
+    case 'quotes':
+      list = <QuoteList stuff={externalContent} />
       break
     default:
       break

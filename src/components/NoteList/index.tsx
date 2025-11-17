@@ -47,7 +47,7 @@ const NoteList = forwardRef(
       showNewNotesDirectly = false
     }: {
       subRequests: TFeedSubRequest[]
-      showKinds: number[]
+      showKinds?: number[]
       filterMutedNotes?: boolean
       hideReplies?: boolean
       hideUntrustedNotes?: boolean
@@ -236,7 +236,7 @@ const NoteList = forwardRef(
         setNewEvents([])
         setHasMore(true)
 
-        if (showKinds.length === 0) {
+        if (showKinds?.length === 0 && subRequests.every(({ filter }) => !filter.kinds)) {
           setLoading(false)
           setHasMore(false)
           return () => {}
@@ -246,7 +246,7 @@ const NoteList = forwardRef(
           subRequests.map(({ urls, filter }) => ({
             urls,
             filter: {
-              kinds: showKinds,
+              kinds: showKinds ?? [],
               ...filter,
               limit: areAlgoRelays ? ALGO_LIMIT : LIMIT
             }
