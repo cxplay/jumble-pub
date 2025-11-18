@@ -42,6 +42,8 @@ export default function ExternalLink({
     e.stopPropagation()
     if (isSmallScreen) {
       setIsDrawerOpen(false)
+      setTimeout(() => push(toExternalContent(url)), 100) // wait for drawer to close
+      return
     }
     push(toExternalContent(url))
   }
