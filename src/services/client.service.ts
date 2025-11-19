@@ -159,52 +159,69 @@ class ClientService extends EventTarget {
     await new Promise<void>((resolve, reject) => {
       let successCount = 0
       let finishedCount = 0
+      // If one third of the relays have accepted the event, consider it a success
+      const successThreshold = uniqueRelayUrls.length / 3
       const errors: { url: string; error: any }[] = []
+
+      const checkCompletion = () => {
+        if (successCount >= successThreshold) {
+          this.emitNewEvent(event)
+          resolve()
+        }
+        if (++finishedCount >= uniqueRelayUrls.length) {
+          reject(
+            new AggregateError(
+              errors.map(
+                ({ url, error }) =>
+                  new Error(`${url}: ${error instanceof Error ? error.message : String(error)}`)
+              )
+            )
+          )
+        }
+      }
+
       Promise.allSettled(
         uniqueRelayUrls.map(async (url) => {
           // eslint-disable-next-line @typescript-eslint/no-this-alias
           const that = this
-          const relay = await this.pool.ensureRelay(url)
+          const relay = await this.pool.ensureRelay(url, { connectionTimeout: 5_000 }).catch(() => {
+            return undefined
+          })
+          if (!relay) {
+            errors.push({ url, error: new Error('Cannot connect to relay') })
+            checkCompletion()
+            return
+          }
+
           relay.publishTimeout = 10_000 // 10s
-          return relay
-            .publish(event)
-            .then(() => {
-              this.trackEventSeenOn(event.id, relay)
+          let hasAuthed = false
+
+          const publishPromise = async () => {
+            try {
+              await relay.publish(event)
+              that.trackEventSeenOn(event.id, relay)
               successCount++
-            })
-            .catch((error) => {
+            } catch (error) {
               if (
+                !hasAuthed &&
                 error instanceof Error &&
                 error.message.startsWith('auth-required') &&
                 !!that.signer
               ) {
-                return relay
-                  .auth((authEvt: EventTemplate) => that.signer!.signEvent(authEvt))
-                  .then(() => relay.publish(event))
+                try {
+                  await relay.auth((authEvt: EventTemplate) => that.signer!.signEvent(authEvt))
+                  hasAuthed = true
+                  return await publishPromise()
+                } catch (error) {
+                  errors.push({ url, error })
+                }
               } else {
                 errors.push({ url, error })
               }
-            })
-            .finally(() => {
-              // If one third of the relays have accepted the event, consider it a success
-              const isSuccess = successCount >= uniqueRelayUrls.length / 3
-              if (isSuccess) {
-                this.emitNewEvent(event)
-                resolve()
-              }
-              if (++finishedCount >= uniqueRelayUrls.length) {
-                reject(
-                  new AggregateError(
-                    errors.map(
-                      ({ url, error }) =>
-                        new Error(
-                          `${url}: ${error instanceof Error ? error.message : String(error)}`
-                        )
-                    )
-                  )
-                )
-              }
-            })
+            }
+          }
+
+          return publishPromise().finally(checkCompletion)
         })
       )
     })
@@ -396,7 +413,7 @@ class ClientService extends EventTarget {
       subPromises.push(startSub())
 
       async function startSub() {
-        const relay = await that.pool.ensureRelay(url, { connectionTimeout: 5000 }).catch(() => {
+        const relay = await that.pool.ensureRelay(url, { connectionTimeout: 5_000 }).catch(() => {
           return undefined
         })
         // cannot connect to relay
