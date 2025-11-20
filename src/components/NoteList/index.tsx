@@ -7,6 +7,7 @@ import { useContentPolicy } from '@/providers/ContentPolicyProvider'
 import { useDeletedEvent } from '@/providers/DeletedEventProvider'
 import { useMuteList } from '@/providers/MuteListProvider'
 import { useNostr } from '@/providers/NostrProvider'
+import { useReply } from '@/providers/ReplyProvider'
 import { useUserTrust } from '@/providers/UserTrustProvider'
 import client from '@/services/client.service'
 import { TFeedSubRequest } from '@/types'
@@ -65,6 +66,7 @@ const NoteList = forwardRef(
     const { mutePubkeySet } = useMuteList()
     const { hideContentMentioningMutedUsers } = useContentPolicy()
     const { isEventDeleted } = useDeletedEvent()
+    const { addReplies } = useReply()
     const [events, setEvents] = useState<Event[]>([])
     const [newEvents, setNewEvents] = useState<Event[]>([])
     const [hasMore, setHasMore] = useState<boolean>(true)
@@ -253,6 +255,7 @@ const NoteList = forwardRef(
               if (eosed) {
                 setLoading(false)
                 setHasMore(events.length > 0)
+                addReplies(events)
               }
             },
             onNew: (event) => {
@@ -265,6 +268,7 @@ const NoteList = forwardRef(
                   [event, ...oldEvents].sort((a, b) => b.created_at - a.created_at)
                 )
               }
+              addReplies([event])
             },
             onClose: (url, reason) => {
               if (!showRelayCloseReason) return

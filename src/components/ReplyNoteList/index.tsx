@@ -1,4 +1,5 @@
 import { BIG_RELAY_URLS, ExtendedKind } from '@/constants'
+import { useStuff } from '@/hooks/useStuff'
 import {
   getEventKey,
   getKeyFromTag,
@@ -7,8 +8,7 @@ import {
   getRootTag,
   isMentioningMutedUsers,
   isProtectedEvent,
-  isReplaceableEvent,
-  isReplyNoteEvent
+  isReplaceableEvent
 } from '@/lib/event'
 import { toNote } from '@/lib/link'
 import { generateBech32IdFromATag, generateBech32IdFromETag } from '@/lib/tag'
@@ -23,7 +23,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LoadingBar } from '../LoadingBar'
 import ReplyNote, { ReplyNoteSkeleton } from '../ReplyNote'
-import { useStuff } from '@/hooks/useStuff'
 
 type TRootInfo =
   | { type: 'E'; id: string; pubkey: string }
@@ -185,7 +184,7 @@ export default function ReplyNoteList({
           {
             onEvents: (evts, eosed) => {
               if (evts.length > 0) {
-                addReplies(evts.filter((evt) => isReplyNoteEvent(evt)))
+                addReplies(evts)
               }
               if (eosed) {
                 setUntil(evts.length >= LIMIT ? evts[evts.length - 1].created_at - 1 : undefined)
@@ -193,7 +192,6 @@ export default function ReplyNoteList({
               }
             },
             onNew: (evt) => {
-              if (!isReplyNoteEvent(evt)) return
               addReplies([evt])
             }
           }
@@ -249,10 +247,7 @@ export default function ReplyNoteList({
 
     setLoading(true)
     const events = await client.loadMoreTimeline(timelineKey, until, LIMIT)
-    const olderEvents = events.filter((evt) => isReplyNoteEvent(evt))
-    if (olderEvents.length > 0) {
-      addReplies(olderEvents)
-    }
+    addReplies(events)
     setUntil(events.length ? events[events.length - 1].created_at - 1 : undefined)
     setLoading(false)
   }, [loading, until, timelineKey])

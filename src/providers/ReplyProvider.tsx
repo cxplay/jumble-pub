@@ -1,4 +1,4 @@
-import { getEventKey, getKeyFromTag, getParentTag } from '@/lib/event'
+import { getEventKey, getKeyFromTag, getParentTag, isReplyNoteEvent } from '@/lib/event'
 import { Event } from 'nostr-tools'
 import { createContext, useCallback, useContext, useState } from 'react'
 
@@ -26,6 +26,8 @@ export function ReplyProvider({ children }: { children: React.ReactNode }) {
     const newReplyKeySet = new Set<string>()
     const newReplyEventMap = new Map<string, Event[]>()
     replies.forEach((reply) => {
+      if (!isReplyNoteEvent(reply)) return
+
       const key = getEventKey(reply)
       if (newReplyKeySet.has(key)) return
       newReplyKeySet.add(key)
