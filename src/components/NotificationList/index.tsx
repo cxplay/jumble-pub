@@ -58,13 +58,14 @@ const NotificationList = forwardRef((_, ref) => {
           ExtendedKind.POLL
         ]
       case 'reactions':
-        return [kinds.Reaction, kinds.Repost, ExtendedKind.POLL_RESPONSE]
+        return [kinds.Reaction, kinds.Repost, kinds.GenericRepost, ExtendedKind.POLL_RESPONSE]
       case 'zaps':
         return [kinds.Zap]
       default:
         return [
           kinds.ShortTextNote,
           kinds.Repost,
+          kinds.GenericRepost,
           kinds.Reaction,
           kinds.Zap,
           ExtendedKind.COMMENT,

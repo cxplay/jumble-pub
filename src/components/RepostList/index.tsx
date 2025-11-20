@@ -1,5 +1,6 @@
 import { useSecondaryPage } from '@/PageManager'
 import { useStuffStatsById } from '@/hooks/useStuffStatsById'
+import { getEventKey } from '@/lib/event'
 import { toProfile } from '@/lib/link'
 import { useScreenSize } from '@/providers/ScreenSizeProvider'
 import { useUserTrust } from '@/providers/UserTrustProvider'
@@ -19,7 +20,7 @@ export default function RepostList({ event }: { event: Event }) {
   const { push } = useSecondaryPage()
   const { isSmallScreen } = useScreenSize()
   const { hideUntrustedInteractions, isUserTrusted } = useUserTrust()
-  const noteStats = useStuffStatsById(event.id)
+  const noteStats = useStuffStatsById(getEventKey(event))
   const filteredReposts = useMemo(() => {
     return (noteStats?.reposts ?? [])
       .filter((repost) => !hideUntrustedInteractions || isUserTrusted(repost.pubkey))

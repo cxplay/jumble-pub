@@ -51,7 +51,7 @@ export function NotificationItem({
   ) {
     return <MentionNotification notification={notification} isNew={isNew} />
   }
-  if (notification.kind === kinds.Repost) {
+  if (notification.kind === kinds.Repost || notification.kind === kinds.GenericRepost) {
     return <RepostNotification notification={notification} isNew={isNew} />
   }
   if (notification.kind === kinds.Zap) {

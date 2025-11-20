@@ -118,12 +118,22 @@ export function createRepostDraftEvent(event: Event): TDraftEvent {
   const isProtected = isProtectedEvent(event)
   const tags = [buildETag(event.id, event.pubkey), buildPTag(event.pubkey)]
 
+  if (event.kind === kinds.ShortTextNote) {
+    return {
+      kind: kinds.Repost,
+      content: isProtected ? '' : JSON.stringify(event),
+      tags,
+      created_at: dayjs().unix()
+    }
+  }
+
+  tags.push(buildKTag(event.kind))
   if (isReplaceableEvent(event.kind)) {
     tags.push(buildATag(event))
   }
 
   return {
-    kind: kinds.Repost,
+    kind: kinds.GenericRepost,
     content: isProtected ? '' : JSON.stringify(event),
     tags,
     created_at: dayjs().unix()

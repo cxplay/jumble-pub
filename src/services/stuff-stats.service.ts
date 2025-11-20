@@ -107,7 +107,10 @@ class StuffStatsService {
           ? {
               '#e': [event.id],
               authors: [pubkey],
-              kinds: [kinds.Reaction, kinds.Repost]
+              kinds:
+                event.kind === kinds.ShortTextNote
+                  ? [kinds.Reaction, kinds.Repost]
+                  : [kinds.Reaction, kinds.Repost, kinds.GenericRepost]
             }
           : {
               '#i': [externalContent],
@@ -120,7 +123,7 @@ class StuffStatsService {
         filters.push({
           '#a': [replaceableCoordinate],
           authors: [pubkey],
-          kinds: [kinds.Reaction, kinds.Repost]
+          kinds: [kinds.Reaction, kinds.Repost, kinds.GenericRepost]
         })
       }
 
@@ -218,7 +221,7 @@ class StuffStatsService {
         targetKey = this.addLikeByEvent(evt)
       } else if (evt.kind === ExtendedKind.EXTERNAL_CONTENT_REACTION) {
         targetKey = this.addExternalContentLikeByEvent(evt)
-      } else if (evt.kind === kinds.Repost) {
+      } else if (evt.kind === kinds.Repost || evt.kind === kinds.GenericRepost) {
         targetKey = this.addRepostByEvent(evt)
       } else if (evt.kind === kinds.Zap) {
         targetKey = this.addZapByEvent(evt)
@@ -291,18 +294,25 @@ class StuffStatsService {
   }
 
   private addRepostByEvent(evt: Event) {
-    const eventId = evt.tags.find(tagNameEquals('e'))?.[1]
-    if (!eventId) return
+    let targetEventKey
+    targetEventKey = evt.tags.find(tagNameEquals('a'))?.[1]
+    if (!targetEventKey) {
+      targetEventKey = evt.tags.find(tagNameEquals('e'))?.[1]
+    }
 
-    const old = this.stuffStatsMap.get(eventId) || {}
+    if (!targetEventKey) {
+      return
+    }
+
+    const old = this.stuffStatsMap.get(targetEventKey) || {}
     const repostPubkeySet = old.repostPubkeySet || new Set()
     const reposts = old.reposts || []
     if (repostPubkeySet.has(evt.pubkey)) return
 
     repostPubkeySet.add(evt.pubkey)
     reposts.push({ id: evt.id, pubkey: evt.pubkey, created_at: evt.created_at })
-    this.stuffStatsMap.set(eventId, { ...old, repostPubkeySet, reposts })
-    return eventId
+    this.stuffStatsMap.set(targetEventKey, { ...old, repostPubkeySet, reposts })
+    return targetEventKey
   }
 
   private addZapByEvent(evt: Event) {

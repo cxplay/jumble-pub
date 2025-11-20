@@ -34,13 +34,14 @@ export default function NoteCard({
   }, [event, filterMutedNotes, mutePubkeySet])
   if (shouldHide) return null
 
-  if (event.kind === kinds.Repost) {
+  if (event.kind === kinds.Repost || event.kind === kinds.GenericRepost) {
     return (
       <RepostNoteCard
         event={event}
         className={className}
         filterMutedNotes={filterMutedNotes}
         pinned={pinned}
+        reposters={reposters}
       />
     )
   }

@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next'
 
 const KIND_FILTER_OPTIONS = [
   { kindGroup: [kinds.ShortTextNote, ExtendedKind.COMMENT], label: 'Posts' },
-  { kindGroup: [kinds.Repost], label: 'Reposts' },
+  { kindGroup: [kinds.Repost, kinds.GenericRepost], label: 'Reposts' },
   { kindGroup: [kinds.LongFormArticle], label: 'Articles' },
   { kindGroup: [kinds.Highlights], label: 'Highlights' },
   { kindGroup: [ExtendedKind.POLL], label: 'Polls' },

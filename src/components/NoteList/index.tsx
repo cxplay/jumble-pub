@@ -11,7 +11,7 @@ import { useUserTrust } from '@/providers/UserTrustProvider'
 import client from '@/services/client.service'
 import { TFeedSubRequest } from '@/types'
 import dayjs from 'dayjs'
-import { Event, kinds, verifyEvent } from 'nostr-tools'
+import { Event, kinds } from 'nostr-tools'
 import { decode } from 'nostr-tools/nip19'
 import {
   forwardRef,
@@ -117,84 +117,75 @@ const NoteList = forwardRef(
       const repostersMap = new Map<string, Set<string>>()
       // Final list of filtered events
       const filteredEvents: Event[] = []
+      const keys: string[] = []
 
-      events.slice(0, showCount).forEach((evt) => {
+      events.forEach((evt) => {
         const key = getEventKey(evt)
         if (keySet.has(key)) return
         keySet.add(key)
 
         if (shouldHideEvent(evt)) return
         if (hideReplies && isReplyNoteEvent(evt)) return
-        if (evt.kind !== kinds.Repost) {
+        if (evt.kind !== kinds.Repost && evt.kind !== kinds.GenericRepost) {
           filteredEvents.push(evt)
+          keys.push(key)
           return
         }
 
+        let targetEventKey: string | undefined
         let eventFromContent: Event | null = null
-        if (evt.content) {
-          try {
-            eventFromContent = JSON.parse(evt.content) as Event
-          } catch {
-            eventFromContent = null
+        const targetTag = evt.tags.find(tagNameEquals('a')) ?? evt.tags.find(tagNameEquals('e'))
+        if (targetTag) {
+          targetEventKey = getKeyFromTag(targetTag)
+        } else {
+          // Attempt to extract the target event from the repost content
+          if (evt.content) {
+            try {
+              eventFromContent = JSON.parse(evt.content) as Event
+            } catch {
+              eventFromContent = null
+            }
+          }
+          if (eventFromContent) {
+            if (
+              eventFromContent.kind === kinds.Repost ||
+              eventFromContent.kind === kinds.GenericRepost
+            ) {
+              return
+            }
+            if (shouldHideEvent(evt)) return
+
+            targetEventKey = getEventKey(eventFromContent)
           }
         }
-        if (eventFromContent && verifyEvent(eventFromContent)) {
-          if (eventFromContent.kind === kinds.Repost) {
-            return
-          }
-          if (shouldHideEvent(eventFromContent)) return
 
-          client.addEventToCache(eventFromContent)
-          const targetSeenOn = client.getSeenEventRelays(eventFromContent.id)
-          if (targetSeenOn.length === 0) {
-            const seenOn = client.getSeenEventRelays(evt.id)
-            seenOn.forEach((relay) => {
-              client.trackEventSeenOn(eventFromContent.id, relay)
-            })
-          }
-
-          const targetEventKey = getEventKey(eventFromContent)
+        if (targetEventKey) {
+          // Add to reposters map
           const reposters = repostersMap.get(targetEventKey)
           if (reposters) {
             reposters.add(evt.pubkey)
           } else {
             repostersMap.set(targetEventKey, new Set([evt.pubkey]))
           }
+
           // If the target event is not already included, add it now
           if (!keySet.has(targetEventKey)) {
-            filteredEvents.push(eventFromContent)
+            filteredEvents.push(evt)
+            keys.push(targetEventKey)
             keySet.add(targetEventKey)
           }
-          return
         }
-
-        const targetTag = evt.tags.find(tagNameEquals('a')) ?? evt.tags.find(tagNameEquals('e'))
-        if (targetTag) {
-          const targetEventKey = getKeyFromTag(targetTag)
-          if (targetEventKey) {
-            // Add to reposters map
-            const reposters = repostersMap.get(targetEventKey)
-            if (reposters) {
-              reposters.add(evt.pubkey)
-            } else {
-              repostersMap.set(targetEventKey, new Set([evt.pubkey]))
-            }
-            // If the target event is already included, skip adding this repost
-            if (keySet.has(targetEventKey)) {
-              return
-            }
-          }
-        }
-        // If we can't find the original event, just show the repost itself
-        filteredEvents.push(evt)
-        return
       })
 
-      return filteredEvents.map((evt) => {
-        const key = getEventKey(evt)
+      return filteredEvents.map((evt, i) => {
+        const key = keys[i]
         return { key, event: evt, reposters: Array.from(repostersMap.get(key) ?? []) }
       })
-    }, [events, showCount, shouldHideEvent, hideReplies])
+    }, [events, shouldHideEvent, hideReplies])
+
+    const slicedNotes = useMemo(() => {
+      return filteredNotes.slice(0, showCount)
+    }, [filteredNotes, showCount])
 
     const filteredNewEvents = useMemo(() => {
       const keySet = new Set<string>()
@@ -369,7 +360,7 @@ const NoteList = forwardRef(
     const list = (
       <div className="min-h-screen">
         {pinnedEventIds?.map((id) => <PinnedNoteCard key={id} eventId={id} className="w-full" />)}
-        {filteredNotes.map(({ key, event, reposters }) => (
+        {slicedNotes.map(({ key, event, reposters }) => (
           <NoteCard
             key={key}
             className="w-full"

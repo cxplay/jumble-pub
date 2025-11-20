@@ -88,6 +88,7 @@ export const ExtendedKind = {
 export const SUPPORTED_KINDS = [
   kinds.ShortTextNote,
   kinds.Repost,
+  kinds.GenericRepost,
   ExtendedKind.PICTURE,
   ExtendedKind.VIDEO,
   ExtendedKind.SHORT_VIDEO,
