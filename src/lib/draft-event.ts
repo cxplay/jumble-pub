@@ -128,13 +128,15 @@ export function createRepostDraftEvent(event: Event): TDraftEvent {
   }
 
   tags.push(buildKTag(event.kind))
-  if (isReplaceableEvent(event.kind)) {
+
+  const isReplaceable = isReplaceableEvent(event.kind)
+  if (isReplaceable) {
     tags.push(buildATag(event))
   }
 
   return {
     kind: kinds.GenericRepost,
-    content: isProtected ? '' : JSON.stringify(event),
+    content: isProtected || isReplaceable ? '' : JSON.stringify(event),
     tags,
     created_at: dayjs().unix()
   }
