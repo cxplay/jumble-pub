@@ -61,7 +61,6 @@ class ClientService extends EventTarget {
     this.fetchEventsFromBigRelays.bind(this),
     { cache: false, batchScheduleFn: (callback) => setTimeout(callback, 50) }
   )
-  private trendingNotesCache: NEvent[] | null = null
 
   private userIndex = new FlexSearch.Index({
     tokenize: 'forward'
