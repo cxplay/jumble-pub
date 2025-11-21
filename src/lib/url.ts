@@ -1,5 +1,10 @@
 export function isWebsocketUrl(url: string): boolean {
-  return /^wss?:\/\/.+$/.test(url)
+  try {
+    const protocol = new URL(url).protocol
+    return protocol === 'ws:' || protocol === 'wss:'
+  } catch {
+    return false
+  }
 }
 
 export function isOnionUrl(url: string): boolean {

@@ -6,7 +6,9 @@ import { Button } from '@/components/ui/button'
 import { BIG_RELAY_URLS, ExtendedKind } from '@/constants'
 import PrimaryPageLayout from '@/layouts/PrimaryPageLayout'
 import { getReplaceableEventIdentifier } from '@/lib/event'
+import { isLocalNetworkUrl, isOnionUrl, isWebsocketUrl } from '@/lib/url'
 import { useUserTrust } from '@/providers/UserTrustProvider'
+import storage from '@/services/local-storage.service'
 import { TPageRef } from '@/types'
 import { Compass, Plus } from 'lucide-react'
 import { NostrEvent } from 'nostr-tools'
@@ -24,12 +26,16 @@ const ExplorePage = forwardRef<TPageRef>((_, ref) => {
     const d = getReplaceableEventIdentifier(evt)
     if (!d) return false
 
-    try {
-      const url = new URL(d)
-      return url.hostname !== 'localhost'
-    } catch {
+    if (!isWebsocketUrl(d)) {
       return false
     }
+    if (isLocalNetworkUrl(d)) {
+      return false
+    }
+    if (storage.getFilterOutOnionRelays() && isOnionUrl(d)) {
+      return false
+    }
+    return true
   }, [])
 
   const content = useMemo(() => {
