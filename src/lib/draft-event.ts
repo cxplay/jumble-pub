@@ -153,8 +153,10 @@ export async function createShortTextNoteDraftEvent(
   } = {}
 ): Promise<TDraftEvent> {
   const { content: transformedEmojisContent, emojiTags } = transformCustomEmojisInContent(content)
-  const { quoteEventHexIds, quoteReplaceableCoordinates, rootETag, parentETag } =
-    await extractRelatedEventIds(transformedEmojisContent, options.parentEvent)
+  const { quoteTags, rootETag, parentETag } = await extractRelatedEventIds(
+    transformedEmojisContent,
+    options.parentEvent
+  )
   const hashtags = extractHashtags(transformedEmojisContent)
 
   const tags = emojiTags.concat(hashtags.map((hashtag) => buildTTag(hashtag)))
@@ -166,8 +168,7 @@ export async function createShortTextNoteDraftEvent(
   }
 
   // q tags
-  tags.push(...quoteEventHexIds.map((eventId) => buildQTag(eventId)))
-  tags.push(...quoteReplaceableCoordinates.map((coordinate) => buildReplaceableQTag(coordinate)))
+  tags.push(...quoteTags)
 
   // e tags
   if (rootETag.length) {
@@ -227,8 +228,7 @@ export async function createCommentDraftEvent(
 ): Promise<TDraftEvent> {
   const { content: transformedEmojisContent, emojiTags } = transformCustomEmojisInContent(content)
   const {
-    quoteEventHexIds,
-    quoteReplaceableCoordinates,
+    quoteTags,
     rootEventId,
     rootCoordinateTag,
     rootKind,
@@ -239,10 +239,7 @@ export async function createCommentDraftEvent(
   } = await extractCommentMentions(transformedEmojisContent, parentStuff)
   const hashtags = extractHashtags(transformedEmojisContent)
 
-  const tags = emojiTags
-    .concat(hashtags.map((hashtag) => buildTTag(hashtag)))
-    .concat(quoteEventHexIds.map((eventId) => buildQTag(eventId)))
-    .concat(quoteReplaceableCoordinates.map((coordinate) => buildReplaceableQTag(coordinate)))
+  const tags = emojiTags.concat(hashtags.map((hashtag) => buildTTag(hashtag))).concat(quoteTags)
 
   const images = extractImagesFromContent(transformedEmojisContent)
   if (images && images.length) {
@@ -428,8 +425,7 @@ export async function createPollDraftEvent(
   } = {}
 ): Promise<TDraftEvent> {
   const { content: transformedEmojisContent, emojiTags } = transformCustomEmojisInContent(question)
-  const { quoteEventHexIds, quoteReplaceableCoordinates } =
-    await extractRelatedEventIds(transformedEmojisContent)
+  const { quoteTags } = await extractRelatedEventIds(transformedEmojisContent)
   const hashtags = extractHashtags(transformedEmojisContent)
 
   const tags = emojiTags.concat(hashtags.map((hashtag) => buildTTag(hashtag)))
@@ -441,8 +437,7 @@ export async function createPollDraftEvent(
   }
 
   // q tags
-  tags.push(...quoteEventHexIds.map((eventId) => buildQTag(eventId)))
-  tags.push(...quoteReplaceableCoordinates.map((coordinate) => buildReplaceableQTag(coordinate)))
+  tags.push(...quoteTags)
 
   // p tags
   tags.push(...mentions.map((pubkey) => buildPTag(pubkey)))
@@ -577,34 +572,10 @@ function generateImetaTags(imageUrls: string[]) {
 }
 
 async function extractRelatedEventIds(content: string, parentEvent?: Event) {
-  const quoteEventHexIds: string[] = []
-  const quoteReplaceableCoordinates: string[] = []
   let rootETag: string[] = []
   let parentETag: string[] = []
-  const matches = content.match(EMBEDDED_EVENT_REGEX)
 
-  const addToSet = (arr: string[], item: string) => {
-    if (!arr.includes(item)) arr.push(item)
-  }
-
-  for (const m of matches || []) {
-    try {
-      const id = m.split(':')[1]
-      const { type, data } = nip19.decode(id)
-      if (type === 'nevent') {
-        addToSet(quoteEventHexIds, data.id)
-      } else if (type === 'note') {
-        addToSet(quoteEventHexIds, data)
-      } else if (type === 'naddr') {
-        addToSet(
-          quoteReplaceableCoordinates,
-          getReplaceableCoordinate(data.kind, data.pubkey, data.identifier)
-        )
-      }
-    } catch (e) {
-      console.error(e)
-    }
-  }
+  const quoteTags = extractQuoteTags(content)
 
   if (parentEvent) {
     const _rootETag = getRootETag(parentEvent)
@@ -628,16 +599,13 @@ async function extractRelatedEventIds(content: string, parentEvent?: Event) {
   }
 
   return {
-    quoteEventHexIds,
-    quoteReplaceableCoordinates,
+    quoteTags,
     rootETag,
     parentETag
   }
 }
 
 async function extractCommentMentions(content: string, parentStuff: Event | string) {
-  const quoteEventHexIds: string[] = []
-  const quoteReplaceableCoordinates: string[] = []
   const { parentEvent, externalContent } =
     typeof parentStuff === 'string'
       ? { parentEvent: undefined, externalContent: parentStuff }
@@ -662,33 +630,10 @@ async function extractCommentMentions(content: string, parentStuff: Event | stri
     : parentEvent?.pubkey
   const rootUrl = isComment ? parentEvent.tags.find(tagNameEquals('I'))?.[1] : externalContent
 
-  const addToSet = (arr: string[], item: string) => {
-    if (!arr.includes(item)) arr.push(item)
-  }
-
-  const matches = content.match(EMBEDDED_EVENT_REGEX)
-  for (const m of matches || []) {
-    try {
-      const id = m.split(':')[1]
-      const { type, data } = nip19.decode(id)
-      if (type === 'nevent') {
-        addToSet(quoteEventHexIds, data.id)
-      } else if (type === 'note') {
-        addToSet(quoteEventHexIds, data)
-      } else if (type === 'naddr') {
-        addToSet(
-          quoteReplaceableCoordinates,
-          getReplaceableCoordinate(data.kind, data.pubkey, data.identifier)
-        )
-      }
-    } catch (e) {
-      console.error(e)
-    }
-  }
+  const quoteTags = extractQuoteTags(content)
 
   return {
-    quoteEventHexIds,
-    quoteReplaceableCoordinates,
+    quoteTags,
     rootEventId,
     rootCoordinateTag,
     rootKind,
@@ -697,6 +642,44 @@ async function extractCommentMentions(content: string, parentStuff: Event | stri
     parentEvent,
     externalContent
   }
+}
+
+function extractQuoteTags(content: string) {
+  const quoteSet = new Set<string>()
+  const quoteTags: string[][] = []
+  const matches = content.match(EMBEDDED_EVENT_REGEX)
+  for (const m of matches || []) {
+    try {
+      const id = m.split(':')[1]
+      const { type, data } = nip19.decode(id)
+      if (type === 'nevent') {
+        const id = data.id
+        if (!quoteSet.has(id)) {
+          quoteSet.add(id)
+          const relay = data.relays?.[0] ?? client.getEventHint(id)
+          quoteTags.push(buildQTag(id, relay, data.author))
+        }
+      } else if (type === 'note') {
+        const id = data
+        if (!quoteSet.has(id)) {
+          quoteSet.add(id)
+          const relay = client.getEventHint(id)
+          quoteTags.push(buildQTag(id, relay))
+        }
+      } else if (type === 'naddr') {
+        const coordinate = getReplaceableCoordinate(data.kind, data.pubkey, data.identifier)
+        if (!quoteSet.has(coordinate)) {
+          quoteSet.add(coordinate)
+          const relay = data.relays?.[0]
+          quoteTags.push(buildQTag(coordinate, relay))
+        }
+      }
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  return quoteTags
 }
 
 function extractHashtags(content: string) {
@@ -784,12 +767,17 @@ function buildPTag(pubkey: string, upperCase: boolean = false) {
   return [upperCase ? 'P' : 'p', pubkey]
 }
 
-function buildQTag(eventHexId: string) {
-  return trimTagEnd(['q', eventHexId, client.getEventHint(eventHexId)]) // TODO: pubkey
-}
-
-function buildReplaceableQTag(coordinate: string) {
-  return trimTagEnd(['q', coordinate])
+function buildQTag(eventHexIdOrCoordinate: string, relay?: string, pubkey?: string) {
+  const tag: string[] = ['q', eventHexIdOrCoordinate]
+  if (!relay) {
+    return tag
+  }
+  tag.push(relay)
+  if (!pubkey) {
+    return tag
+  }
+  tag.push(pubkey)
+  return tag
 }
 
 function buildRTag(url: string, scope: TMailboxRelayScope) {
