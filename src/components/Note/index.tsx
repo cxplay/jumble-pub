@@ -16,6 +16,7 @@ import Nip05 from '../Nip05'
 import NoteOptions from '../NoteOptions'
 import ParentNotePreview from '../ParentNotePreview'
 import TranslateButton from '../TranslateButton'
+import TrustScoreBadge from '../TrustScoreBadge'
 import UserAvatar from '../UserAvatar'
 import Username from '../Username'
 import CommunityDefinition from './CommunityDefinition'
@@ -125,6 +126,7 @@ export default function Note({
                 skeletonClassName={size === 'small' ? 'h-3' : 'h-4'}
               />
               <FollowingBadge pubkey={event.pubkey} />
+              <TrustScoreBadge pubkey={event.pubkey} />
               <ClientTag event={event} />
             </div>
             <div className="flex items-center gap-1 text-sm text-muted-foreground">

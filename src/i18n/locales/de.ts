@@ -566,6 +566,8 @@ export default {
       'Fehler beim Neuveröffentlichen auf optimale Relays: {{error}}',
     'External Content': 'Externer Inhalt',
     Highlight: 'Hervorheben',
-    'Optimal relays and {{count}} other relays': 'Optimale Relays und {{count}} andere Relays'
+    'Optimal relays and {{count}} other relays': 'Optimale Relays und {{count}} andere Relays',
+    'Likely spam account (Trust score: {{percentile}}%)': 'Wahrscheinlich Spam-Konto (Vertrauenswert: {{percentile}}%)',
+    'Suspicious account (Trust score: {{percentile}}%)': 'Verdächtiges Konto (Vertrauenswert: {{percentile}}%)'
   }
 }

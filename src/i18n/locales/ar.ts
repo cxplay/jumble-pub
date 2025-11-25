@@ -550,6 +550,8 @@ export default {
     'Failed to republish to optimal relays: {{error}}': 'فشل إعادة النشر إلى المرحلات المثلى: {{error}}',
     'External Content': 'محتوى خارجي',
     Highlight: 'تسليط الضوء',
-    'Optimal relays and {{count}} other relays': 'المرحلات المثلى و {{count}} مرحلات أخرى'
+    'Optimal relays and {{count}} other relays': 'المرحلات المثلى و {{count}} مرحلات أخرى',
+    'Likely spam account (Trust score: {{percentile}}%)': 'حساب مشبوه للغاية (درجة الثقة: {{percentile}}%)',
+    'Suspicious account (Trust score: {{percentile}}%)': 'حساب مشبوه (درجة الثقة: {{percentile}}%)'
   }
 }

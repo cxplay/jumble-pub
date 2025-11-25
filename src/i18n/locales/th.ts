@@ -548,6 +548,8 @@ export default {
     'Failed to republish to optimal relays: {{error}}': 'เผยแพร่ซ้ำไปยังรีเลย์ที่เหมาะสมล้มเหลว: {{error}}',
     'External Content': 'เนื้อหาภายนอก',
     Highlight: 'ไฮไลต์',
-    'Optimal relays and {{count}} other relays': 'รีเลย์ที่เหมาะสมและรีเลย์อื่น {{count}} รายการ'
+    'Optimal relays and {{count}} other relays': 'รีเลย์ที่เหมาะสมและรีเลย์อื่น {{count}} รายการ',
+    'Likely spam account (Trust score: {{percentile}}%)': 'น่าจะเป็นบัญชีสแปม (คะแนนความน่าเชื่อถือ: {{percentile}}%)',
+    'Suspicious account (Trust score: {{percentile}}%)': 'บัญชีที่น่าสงสัย (คะแนนความน่าเชื่อถือ: {{percentile}}%)'
   }
 }

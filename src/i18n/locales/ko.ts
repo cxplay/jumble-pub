@@ -555,6 +555,8 @@ export default {
     'Failed to republish to optimal relays: {{error}}': '최적 릴레이에 재게시 실패: {{error}}',
     'External Content': '외부 콘텐츠',
     Highlight: '하이라이트',
-    'Optimal relays and {{count}} other relays': '최적 릴레이 및 기타 {{count}}개 릴레이'
+    'Optimal relays and {{count}} other relays': '최적 릴레이 및 기타 {{count}}개 릴레이',
+    'Likely spam account (Trust score: {{percentile}}%)': '스팸 계정 가능성 높음 (신뢰 점수: {{percentile}}%)',
+    'Suspicious account (Trust score: {{percentile}}%)': '의심스러운 계정 (신뢰 점수: {{percentile}}%)'
   }
 }

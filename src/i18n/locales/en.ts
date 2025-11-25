@@ -547,9 +547,14 @@ export default {
     'Optimal relays': 'Optimal relays',
     "Successfully republish to optimal relays (your write relays and mentioned users' read relays)":
       "Successfully republish to optimal relays (your write relays and mentioned users' read relays)",
-    'Failed to republish to optimal relays: {{error}}': 'Failed to republish to optimal relays: {{error}}',
+    'Failed to republish to optimal relays: {{error}}':
+      'Failed to republish to optimal relays: {{error}}',
     'External Content': 'External Content',
     Highlight: 'Highlight',
-    'Optimal relays and {{count}} other relays': 'Optimal relays and {{count}} other relays'
+    'Optimal relays and {{count}} other relays': 'Optimal relays and {{count}} other relays',
+    'Likely spam account (Trust score: {{percentile}}%)':
+      'Likely spam account (Trust score: {{percentile}}%)',
+    'Suspicious account (Trust score: {{percentile}}%)':
+      'Suspicious account (Trust score: {{percentile}}%)'
   }
 }

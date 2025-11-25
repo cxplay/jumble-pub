@@ -556,6 +556,8 @@ export default {
     'Failed to republish to optimal relays: {{error}}': 'इष्टतम रिले पर पुनः प्रकाशित करने में विफल: {{error}}',
     'External Content': 'बाहरी सामग्री',
     Highlight: 'हाइलाइट',
-    'Optimal relays and {{count}} other relays': 'इष्टतम रिले और {{count}} अन्य रिले'
+    'Optimal relays and {{count}} other relays': 'इष्टतम रिले और {{count}} अन्य रिले',
+    'Likely spam account (Trust score: {{percentile}}%)': 'संभावित स्पैम खाता (विश्वास स्कोर: {{percentile}}%)',
+    'Suspicious account (Trust score: {{percentile}}%)': 'संदिग्ध खाता (विश्वास स्कोर: {{percentile}}%)'
   }
 }

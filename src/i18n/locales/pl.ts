@@ -561,6 +561,8 @@ export default {
       'Nie udało się opublikować ponownie na optymalnych przekaźnikach: {{error}}',
     'External Content': 'Treść zewnętrzna',
     Highlight: 'Podświetl',
-    'Optimal relays and {{count}} other relays': 'Optymalne przekaźniki i {{count}} innych przekaźników'
+    'Optimal relays and {{count}} other relays': 'Optymalne przekaźniki i {{count}} innych przekaźników',
+    'Likely spam account (Trust score: {{percentile}}%)': 'Prawdopodobnie konto spamowe (Wynik zaufania: {{percentile}}%)',
+    'Suspicious account (Trust score: {{percentile}}%)': 'Podejrzane konto (Wynik zaufania: {{percentile}}%)'
   }
 }

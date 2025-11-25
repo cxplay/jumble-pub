@@ -555,6 +555,8 @@ export default {
     'Failed to republish to optimal relays: {{error}}': 'خطا در انتشار مجدد در رله‌های بهینه: {{error}}',
     'External Content': 'محتوای خارجی',
     Highlight: 'برجسته‌سازی',
-    'Optimal relays and {{count}} other relays': 'رله‌های بهینه و {{count}} رله دیگر'
+    'Optimal relays and {{count}} other relays': 'رله‌های بهینه و {{count}} رله دیگر',
+    'Likely spam account (Trust score: {{percentile}}%)': 'احتمالاً حساب هرزنامه (امتیاز اعتماد: {{percentile}}%)',
+    'Suspicious account (Trust score: {{percentile}}%)': 'حساب مشکوک (امتیاز اعتماد: {{percentile}}%)'
   }
 }

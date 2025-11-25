@@ -561,6 +561,8 @@ export default {
     'Failed to republish to optimal relays: {{error}}': 'Не удалось опубликовать в оптимальные релеи: {{error}}',
     'External Content': 'Внешний контент',
     Highlight: 'Выделить',
-    'Optimal relays and {{count}} other relays': 'Оптимальные релеи и {{count}} других релеев'
+    'Optimal relays and {{count}} other relays': 'Оптимальные релеи и {{count}} других релеев',
+    'Likely spam account (Trust score: {{percentile}}%)': 'Вероятно спам-аккаунт (Оценка доверия: {{percentile}}%)',
+    'Suspicious account (Trust score: {{percentile}}%)': 'Подозрительный аккаунт (Оценка доверия: {{percentile}}%)'
   }
 }

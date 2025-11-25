@@ -1,0 +1,64 @@
+import { cn } from '@/lib/utils'
+import { useNostr } from '@/providers/NostrProvider'
+import trustScoreService from '@/services/trust-score.service'
+import { AlertTriangle, ShieldAlert } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+
+export default function TrustScoreBadge({
+  pubkey,
+  className
+}: {
+  pubkey: string
+  className?: string
+}) {
+  const { t } = useTranslation()
+  const { pubkey: currentPubkey } = useNostr()
+  const [percentile, setPercentile] = useState<number | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    if (currentPubkey === pubkey) {
+      setLoading(false)
+      setPercentile(null)
+      return
+    }
+
+    const fetchScore = async () => {
+      try {
+        const data = await trustScoreService.fetchTrustScore(pubkey)
+        if (data) {
+          setPercentile(data.percentile)
+        }
+      } catch (error) {
+        console.error('Failed to fetch trust score:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchScore()
+  }, [pubkey, currentPubkey])
+
+  if (loading || percentile === null) return null
+
+  // percentile < 50: likely spam (red alert)
+  // percentile < 75: suspicious (yellow warning)
+  if (percentile < 50) {
+    return (
+      <div title={t('Likely spam account (Trust score: {{percentile}}%)', { percentile })}>
+        <ShieldAlert className={cn('!size-4 text-red-500', className)} />
+      </div>
+    )
+  }
+
+  if (percentile < 75) {
+    return (
+      <div title={t('Suspicious account (Trust score: {{percentile}}%)', { percentile })}>
+        <AlertTriangle className={cn('!size-4 text-yellow-600 dark:text-yellow-500', className)} />
+      </div>
+    )
+  }
+
+  return null
+}

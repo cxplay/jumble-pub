@@ -555,6 +555,8 @@ export default {
     'Failed to republish to optimal relays: {{error}}': '最適なリレーへの再公開に失敗しました：{{error}}',
     'External Content': '外部コンテンツ',
     Highlight: 'ハイライト',
-    'Optimal relays and {{count}} other relays': '最適なリレーと他の{{count}}個のリレー'
+    'Optimal relays and {{count}} other relays': '最適なリレーと他の{{count}}個のリレー',
+    'Likely spam account (Trust score: {{percentile}}%)': 'スパムの可能性が高いアカウント（信頼スコア：{{percentile}}%）',
+    'Suspicious account (Trust score: {{percentile}}%)': '疑わしいアカウント（信頼スコア：{{percentile}}%）'
   }
 }

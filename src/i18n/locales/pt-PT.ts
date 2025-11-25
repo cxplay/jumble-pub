@@ -559,6 +559,8 @@ export default {
     'Failed to republish to optimal relays: {{error}}': 'Falha ao republicar nos relays ideais: {{error}}',
     'External Content': 'Conteúdo externo',
     Highlight: 'Destacar',
-    'Optimal relays and {{count}} other relays': 'Relays ideais e {{count}} outros relays'
+    'Optimal relays and {{count}} other relays': 'Relays ideais e {{count}} outros relays',
+    'Likely spam account (Trust score: {{percentile}}%)': 'Provável conta de spam (Pontuação de confiança: {{percentile}}%)',
+    'Suspicious account (Trust score: {{percentile}}%)': 'Conta suspeita (Pontuação de confiança: {{percentile}}%)'
   }
 }

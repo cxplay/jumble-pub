@@ -551,6 +551,8 @@ export default {
       'Nem sikerült újra közzétenni az optimális relay-eken: {{error}}',
     'External Content': 'Külső tartalom',
     Highlight: 'Kiemelés',
-    'Optimal relays and {{count}} other relays': 'Optimális relay-ek és {{count}} másik relay'
+    'Optimal relays and {{count}} other relays': 'Optimális relay-ek és {{count}} másik relay',
+    'Likely spam account (Trust score: {{percentile}}%)': 'Valószínűleg spam fiók (Megbízhatósági pontszám: {{percentile}}%)',
+    'Suspicious account (Trust score: {{percentile}}%)': 'Gyanús fiók (Megbízhatósági pontszám: {{percentile}}%)'
   }
 }

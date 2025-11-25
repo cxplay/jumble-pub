@@ -19,13 +19,14 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import NotFound from '../NotFound'
 import SearchInput from '../SearchInput'
+import TextWithEmojis from '../TextWithEmojis'
+import TrustScoreBadge from '../TrustScoreBadge'
+import AvatarWithLightbox from './AvatarWithLightbox'
+import BannerWithLightbox from './BannerWithLightbox'
 import FollowedBy from './FollowedBy'
 import Followings from './Followings'
 import ProfileFeed from './ProfileFeed'
 import Relays from './Relays'
-import TextWithEmojis from '../TextWithEmojis'
-import AvatarWithLightbox from './AvatarWithLightbox'
-import BannerWithLightbox from './BannerWithLightbox'
 
 export default function Profile({ id }: { id?: string }) {
   const { t } = useTranslation()
@@ -143,6 +144,7 @@ export default function Profile({ id }: { id?: string }) {
                 emojis={emojis}
                 className="text-xl font-semibold truncate select-text"
               />
+              <TrustScoreBadge pubkey={pubkey} />
               {isFollowingYou && (
                 <div className="text-muted-foreground rounded-full bg-muted text-xs h-fit px-2 shrink-0">
                   {t('Follows you')}
