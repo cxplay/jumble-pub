@@ -4,7 +4,7 @@ import { Event, kinds } from 'nostr-tools'
 import { buildATag } from './draft-event'
 import { getReplaceableEventIdentifier } from './event'
 import { getAmountFromInvoice, getLightningAddressFromProfile } from './lightning'
-import { formatPubkey, pubkeyToNpub } from './pubkey'
+import { formatPubkey, isValidPubkey, pubkeyToNpub } from './pubkey'
 import { generateBech32IdFromETag, getEmojiInfosFromEmojiTags, tagNameEquals } from './tag'
 import { isOnionUrl, isWebsocketUrl, normalizeHttpUrl, normalizeUrl } from './url'
 
@@ -402,4 +402,29 @@ export function getPinnedEventHexIdSetFromPinListEvent(event?: Event | null): Se
       .reverse()
       .slice(0, MAX_PINNED_NOTES) ?? []
   )
+}
+
+export function getFollowPackInfoFromEvent(event: Event) {
+  let title: string | undefined
+  let description: string | undefined
+  let image: string | undefined
+  const pubkeys: string[] = []
+
+  event.tags.forEach(([tagName, tagValue]) => {
+    if (tagName === 'title') {
+      title = tagValue
+    } else if (tagName === 'description') {
+      description = tagValue
+    } else if (tagName === 'image') {
+      image = tagValue
+    } else if (tagName === 'p' && isValidPubkey(tagValue)) {
+      pubkeys.push(tagValue)
+    }
+  })
+
+  if (!title) {
+    title = event.tags.find(tagNameEquals('d'))?.[1] ?? 'Untitled Follow Pack'
+  }
+
+  return { title, description, image, pubkeys }
 }

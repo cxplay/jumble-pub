@@ -3,6 +3,7 @@ import BookmarkPage from '@/pages/secondary/BookmarkPage'
 import EmojiPackSettingsPage from '@/pages/secondary/EmojiPackSettingsPage'
 import ExternalContentPage from '@/pages/secondary/ExternalContentPage'
 import FollowingListPage from '@/pages/secondary/FollowingListPage'
+import FollowPackPage from '@/pages/secondary/FollowPackPage'
 import GeneralSettingsPage from '@/pages/secondary/GeneralSettingsPage'
 import MuteListPage from '@/pages/secondary/MuteListPage'
 import NoteListPage from '@/pages/secondary/NoteListPage'
@@ -48,7 +49,8 @@ const SECONDARY_ROUTE_CONFIGS = [
   { path: '/profile-editor', element: <ProfileEditorPage /> },
   { path: '/mutes', element: <MuteListPage /> },
   { path: '/rizful', element: <RizfulPage /> },
-  { path: '/bookmarks', element: <BookmarkPage /> }
+  { path: '/bookmarks', element: <BookmarkPage /> },
+  { path: '/follow-packs/:id', element: <FollowPackPage /> }
 ]
 
 export const SECONDARY_ROUTES = SECONDARY_ROUTE_CONFIGS.map(({ path, element }) => ({

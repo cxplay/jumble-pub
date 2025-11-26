@@ -563,6 +563,13 @@ export default {
     Highlight: 'Выделить',
     'Optimal relays and {{count}} other relays': 'Оптимальные релеи и {{count}} других релеев',
     'Likely spam account (Trust score: {{percentile}}%)': 'Вероятно спам-аккаунт (Оценка доверия: {{percentile}}%)',
-    'Suspicious account (Trust score: {{percentile}}%)': 'Подозрительный аккаунт (Оценка доверия: {{percentile}}%)'
+    'Suspicious account (Trust score: {{percentile}}%)': 'Подозрительный аккаунт (Оценка доверия: {{percentile}}%)',
+    'n users': '{{count}} пользователей',
+    'View Details': 'Посмотреть детали',
+    'Follow Pack Not Found': 'Пакет подписок не найден',
+    'Follow pack not found': 'Пакет подписок не найден',
+    Users: 'Пользователи',
+    Feed: 'Лента',
+    'Follow Pack': 'Пакет Подписок'
   }
 }

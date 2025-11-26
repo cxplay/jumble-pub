@@ -555,6 +555,15 @@ export default {
     'Likely spam account (Trust score: {{percentile}}%)':
       'Likely spam account (Trust score: {{percentile}}%)',
     'Suspicious account (Trust score: {{percentile}}%)':
-      'Suspicious account (Trust score: {{percentile}}%)'
+      'Suspicious account (Trust score: {{percentile}}%)',
+    'n users': '{{count}} users',
+    'n users_one': '{{count}} user',
+    'n users_other': '{{count}} users',
+    'View Details': 'View Details',
+    'Follow Pack Not Found': 'Follow Pack Not Found',
+    'Follow pack not found': 'Follow pack not found',
+    Users: 'Users',
+    Feed: 'Feed',
+    'Follow Pack': 'Follow Pack'
   }
 }

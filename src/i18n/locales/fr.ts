@@ -566,6 +566,13 @@ export default {
     Highlight: 'Surligner',
     'Optimal relays and {{count}} other relays': 'Relais optimaux et {{count}} autres relais',
     'Likely spam account (Trust score: {{percentile}}%)': 'Compte probablement spam (Score de confiance: {{percentile}}%)',
-    'Suspicious account (Trust score: {{percentile}}%)': 'Compte suspect (Score de confiance: {{percentile}}%)'
+    'Suspicious account (Trust score: {{percentile}}%)': 'Compte suspect (Score de confiance: {{percentile}}%)',
+    'n users': '{{count}} utilisateurs',
+    'View Details': 'Voir les détails',
+    'Follow Pack Not Found': 'Pack de suivi introuvable',
+    'Follow pack not found': 'Pack de suivi introuvable',
+    Users: 'Utilisateurs',
+    Feed: 'Flux',
+    'Follow Pack': 'Pack de Suivi'
   }
 }

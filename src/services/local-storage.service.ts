@@ -1,10 +1,10 @@
 import {
+  ALLOWED_FILTER_KINDS,
   DEFAULT_FAVICON_URL_TEMPLATE,
   DEFAULT_NIP_96_SERVICE,
   ExtendedKind,
   MEDIA_AUTO_LOAD_POLICY,
   NOTIFICATION_LIST_STYLE,
-  SUPPORTED_KINDS,
   StorageKey,
   TPrimaryColor
 } from '@/constants'
@@ -165,7 +165,7 @@ class LocalStorageService {
 
     const showKindsStr = window.localStorage.getItem(StorageKey.SHOW_KINDS)
     if (!showKindsStr) {
-      this.showKinds = SUPPORTED_KINDS
+      this.showKinds = ALLOWED_FILTER_KINDS
     } else {
       const showKindsVersionStr = window.localStorage.getItem(StorageKey.SHOW_KINDS_VERSION)
       const showKindsVersion = showKindsVersionStr ? parseInt(showKindsVersionStr) : 0

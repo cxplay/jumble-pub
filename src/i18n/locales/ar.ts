@@ -552,6 +552,13 @@ export default {
     Highlight: 'تسليط الضوء',
     'Optimal relays and {{count}} other relays': 'المرحلات المثلى و {{count}} مرحلات أخرى',
     'Likely spam account (Trust score: {{percentile}}%)': 'حساب مشبوه للغاية (درجة الثقة: {{percentile}}%)',
-    'Suspicious account (Trust score: {{percentile}}%)': 'حساب مشبوه (درجة الثقة: {{percentile}}%)'
+    'Suspicious account (Trust score: {{percentile}}%)': 'حساب مشبوه (درجة الثقة: {{percentile}}%)',
+    'n users': '{{count}} مستخدمين',
+    'View Details': 'عرض التفاصيل',
+    'Follow Pack Not Found': 'لم يتم العثور على حزمة المتابعة',
+    'Follow pack not found': 'لم يتم العثور على حزمة المتابعة',
+    Users: 'المستخدمون',
+    Feed: 'التغذية',
+    'Follow Pack': 'حزمة المتابعة'
   }
 }

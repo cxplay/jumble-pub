@@ -77,6 +77,11 @@ export const toRelayReviews = (url: string) => `/relays/${encodeURIComponent(url
 export const toMuteList = () => '/mutes'
 export const toRizful = () => '/rizful'
 export const toBookmarks = () => '/bookmarks'
+export const toFollowPack = (eventOrId: Event | string) => {
+  if (typeof eventOrId === 'string') return `/follow-packs/${eventOrId}`
+  const naddr = getNoteBech32Id(eventOrId)
+  return `/follow-packs/${naddr}`
+}
 
 export const toChachiChat = (relay: string, d: string) => {
   return `https://chachi.chat/${relay.replace(/^wss?:\/\//, '').replace(/\/$/, '')}/${d}`

@@ -557,6 +557,13 @@ export default {
     Highlight: 'برجسته‌سازی',
     'Optimal relays and {{count}} other relays': 'رله‌های بهینه و {{count}} رله دیگر',
     'Likely spam account (Trust score: {{percentile}}%)': 'احتمالاً حساب هرزنامه (امتیاز اعتماد: {{percentile}}%)',
-    'Suspicious account (Trust score: {{percentile}}%)': 'حساب مشکوک (امتیاز اعتماد: {{percentile}}%)'
+    'Suspicious account (Trust score: {{percentile}}%)': 'حساب مشکوک (امتیاز اعتماد: {{percentile}}%)',
+    'n users': '{{count}} کاربر',
+    'View Details': 'مشاهده جزئیات',
+    'Follow Pack Not Found': 'بسته دنبال‌کننده یافت نشد',
+    'Follow pack not found': 'بسته دنبال‌کننده یافت نشد',
+    Users: 'کاربران',
+    Feed: 'فید',
+    'Follow Pack': 'بسته دنبال‌کننده'
   }
 }

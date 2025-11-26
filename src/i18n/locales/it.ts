@@ -562,6 +562,13 @@ export default {
     Highlight: 'Evidenzia',
     'Optimal relays and {{count}} other relays': 'Relay ottimali e {{count}} altri relay',
     'Likely spam account (Trust score: {{percentile}}%)': 'Probabile account spam (Punteggio di fiducia: {{percentile}}%)',
-    'Suspicious account (Trust score: {{percentile}}%)': 'Account sospetto (Punteggio di fiducia: {{percentile}}%)'
+    'Suspicious account (Trust score: {{percentile}}%)': 'Account sospetto (Punteggio di fiducia: {{percentile}}%)',
+    'n users': '{{count}} utenti',
+    'View Details': 'Visualizza dettagli',
+    'Follow Pack Not Found': 'Pacchetto di follow non trovato',
+    'Follow pack not found': 'Pacchetto di follow non trovato',
+    Users: 'Utenti',
+    Feed: 'Feed',
+    'Follow Pack': 'Pacchetto di Follow'
   }
 }

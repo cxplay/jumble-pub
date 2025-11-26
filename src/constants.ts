@@ -81,13 +81,14 @@ export const ExtendedKind = {
   VOICE_COMMENT: 1244,
   FAVORITE_RELAYS: 10012,
   BLOSSOM_SERVER_LIST: 10063,
+  FOLLOW_PACK: 39089,
   RELAY_REVIEW: 31987,
   GROUP_METADATA: 39000,
   ADDRESSABLE_NORMAL_VIDEO: 34235,
   ADDRESSABLE_SHORT_VIDEO: 34236
 }
 
-export const SUPPORTED_KINDS = [
+export const ALLOWED_FILTER_KINDS = [
   kinds.ShortTextNote,
   kinds.Repost,
   kinds.GenericRepost,
@@ -100,10 +101,15 @@ export const SUPPORTED_KINDS = [
   ExtendedKind.VOICE_COMMENT,
   kinds.Highlights,
   kinds.LongFormArticle,
-  ExtendedKind.RELAY_REVIEW,
-  kinds.Emojisets,
   ExtendedKind.ADDRESSABLE_NORMAL_VIDEO,
   ExtendedKind.ADDRESSABLE_SHORT_VIDEO
+]
+
+export const SUPPORTED_KINDS = [
+  ...ALLOWED_FILTER_KINDS,
+  ExtendedKind.RELAY_REVIEW,
+  kinds.Emojisets,
+  ExtendedKind.FOLLOW_PACK
 ]
 
 export const URL_REGEX =

@@ -558,6 +558,13 @@ export default {
     Highlight: 'हाइलाइट',
     'Optimal relays and {{count}} other relays': 'इष्टतम रिले और {{count}} अन्य रिले',
     'Likely spam account (Trust score: {{percentile}}%)': 'संभावित स्पैम खाता (विश्वास स्कोर: {{percentile}}%)',
-    'Suspicious account (Trust score: {{percentile}}%)': 'संदिग्ध खाता (विश्वास स्कोर: {{percentile}}%)'
+    'Suspicious account (Trust score: {{percentile}}%)': 'संदिग्ध खाता (विश्वास स्कोर: {{percentile}}%)',
+    'n users': '{{count}} उपयोगकर्ता',
+    'View Details': 'विवरण देखें',
+    'Follow Pack Not Found': 'फॉलो पैक नहीं मिला',
+    'Follow pack not found': 'फॉलो पैक नहीं मिला',
+    Users: 'उपयोगकर्ता',
+    Feed: 'फ़ीड',
+    'Follow Pack': 'फॉलो पैक'
   }
 }

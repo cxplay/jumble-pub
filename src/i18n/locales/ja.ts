@@ -557,6 +557,13 @@ export default {
     Highlight: 'ハイライト',
     'Optimal relays and {{count}} other relays': '最適なリレーと他の{{count}}個のリレー',
     'Likely spam account (Trust score: {{percentile}}%)': 'スパムの可能性が高いアカウント（信頼スコア：{{percentile}}%）',
-    'Suspicious account (Trust score: {{percentile}}%)': '疑わしいアカウント（信頼スコア：{{percentile}}%）'
+    'Suspicious account (Trust score: {{percentile}}%)': '疑わしいアカウント（信頼スコア：{{percentile}}%）',
+    'n users': '{{count}}人のユーザー',
+    'View Details': '詳細を表示',
+    'Follow Pack Not Found': 'フォローパックが見つかりません',
+    'Follow pack not found': 'フォローパックが見つかりません',
+    Users: 'ユーザー',
+    Feed: 'フィード',
+    'Follow Pack': 'フォローパック'
   }
 }

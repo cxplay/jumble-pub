@@ -550,6 +550,13 @@ export default {
     Highlight: 'ไฮไลต์',
     'Optimal relays and {{count}} other relays': 'รีเลย์ที่เหมาะสมและรีเลย์อื่น {{count}} รายการ',
     'Likely spam account (Trust score: {{percentile}}%)': 'น่าจะเป็นบัญชีสแปม (คะแนนความน่าเชื่อถือ: {{percentile}}%)',
-    'Suspicious account (Trust score: {{percentile}}%)': 'บัญชีที่น่าสงสัย (คะแนนความน่าเชื่อถือ: {{percentile}}%)'
+    'Suspicious account (Trust score: {{percentile}}%)': 'บัญชีที่น่าสงสัย (คะแนนความน่าเชื่อถือ: {{percentile}}%)',
+    'n users': '{{count}} ผู้ใช้',
+    'View Details': 'ดูรายละเอียด',
+    'Follow Pack Not Found': 'ไม่พบแพ็คการติดตาม',
+    'Follow pack not found': 'ไม่พบแพ็คการติดตาม',
+    Users: 'ผู้ใช้',
+    Feed: 'ฟีด',
+    'Follow Pack': 'แพ็คการติดตาม'
   }
 }

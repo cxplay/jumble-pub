@@ -558,6 +558,13 @@ export default {
     Highlight: 'Marcação',
     'Optimal relays and {{count}} other relays': 'Relays ideais e {{count}} outros relays',
     'Likely spam account (Trust score: {{percentile}}%)': 'Provável conta de spam (Pontuação de confiança: {{percentile}}%)',
-    'Suspicious account (Trust score: {{percentile}}%)': 'Conta suspeita (Pontuação de confiança: {{percentile}}%)'
+    'Suspicious account (Trust score: {{percentile}}%)': 'Conta suspeita (Pontuação de confiança: {{percentile}}%)',
+    'n users': '{{count}} usuários',
+    'View Details': 'Ver detalhes',
+    'Follow Pack Not Found': 'Pacote de seguir não encontrado',
+    'Follow pack not found': 'Pacote de seguir não encontrado',
+    Users: 'Usuários',
+    Feed: 'Feed',
+    'Follow Pack': 'Pacote de Seguir'
   }
 }

@@ -553,6 +553,13 @@ export default {
     Highlight: 'Kiemelés',
     'Optimal relays and {{count}} other relays': 'Optimális relay-ek és {{count}} másik relay',
     'Likely spam account (Trust score: {{percentile}}%)': 'Valószínűleg spam fiók (Megbízhatósági pontszám: {{percentile}}%)',
-    'Suspicious account (Trust score: {{percentile}}%)': 'Gyanús fiók (Megbízhatósági pontszám: {{percentile}}%)'
+    'Suspicious account (Trust score: {{percentile}}%)': 'Gyanús fiók (Megbízhatósági pontszám: {{percentile}}%)',
+    'n users': '{{count}} felhasználó',
+    'View Details': 'Részletek megtekintése',
+    'Follow Pack Not Found': 'Követési csomag nem található',
+    'Follow pack not found': 'Követési csomag nem található',
+    Users: 'Felhasználók',
+    Feed: 'Hírfolyam',
+    'Follow Pack': 'Követési Csomag'
   }
 }

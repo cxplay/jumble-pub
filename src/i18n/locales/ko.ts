@@ -557,6 +557,13 @@ export default {
     Highlight: '하이라이트',
     'Optimal relays and {{count}} other relays': '최적 릴레이 및 기타 {{count}}개 릴레이',
     'Likely spam account (Trust score: {{percentile}}%)': '스팸 계정 가능성 높음 (신뢰 점수: {{percentile}}%)',
-    'Suspicious account (Trust score: {{percentile}}%)': '의심스러운 계정 (신뢰 점수: {{percentile}}%)'
+    'Suspicious account (Trust score: {{percentile}}%)': '의심스러운 계정 (신뢰 점수: {{percentile}}%)',
+    'n users': '{{count}}명의 사용자',
+    'View Details': '세부 정보 보기',
+    'Follow Pack Not Found': '팔로우 팩을 찾을 수 없음',
+    'Follow pack not found': '팔로우 팩을 찾을 수 없습니다',
+    Users: '사용자',
+    Feed: '피드',
+    'Follow Pack': '팔로우 팩'
   }
 }

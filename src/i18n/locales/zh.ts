@@ -545,6 +545,13 @@ export default {
     Highlight: '高亮',
     'Optimal relays and {{count}} other relays': '最佳中继器和其他 {{count}} 个中继器',
     'Likely spam account (Trust score: {{percentile}}%)': '疑似垃圾账号（信任分数：{{percentile}}%）',
-    'Suspicious account (Trust score: {{percentile}}%)': '可疑账号（信任分数：{{percentile}}%）'
+    'Suspicious account (Trust score: {{percentile}}%)': '可疑账号（信任分数：{{percentile}}%）',
+    'n users': '{{count}} 位用户',
+    'View Details': '查看详情',
+    'Follow Pack Not Found': '未找到关注包',
+    'Follow pack not found': '未找到关注包',
+    Users: '用户',
+    Feed: '动态',
+    'Follow Pack': '关注包'
   }
 }
