@@ -58,7 +58,7 @@ function ProfileButton({ collapse }: { collapse: boolean }) {
           </div>
         </Button>
       </ResponsiveMenuTrigger>
-      <ResponsiveMenuContent side="top" className="w-72">
+      <ResponsiveMenuContent side="top" className="w-72 max-h-[80vh]">
         <ResponsiveMenuItem onClick={() => push(toWallet())}>
           <Wallet />
           {t('Wallet')}
