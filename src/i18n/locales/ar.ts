@@ -547,11 +547,13 @@ export default {
     'Optimal relays': 'المرحلات المثلى',
     "Successfully republish to optimal relays (your write relays and mentioned users' read relays)":
       'تم إعادة النشر بنجاح إلى المرحلات المثلى (مرحلات الكتابة الخاصة بك ومرحلات القراءة للمستخدمين المذكورين)',
-    'Failed to republish to optimal relays: {{error}}': 'فشل إعادة النشر إلى المرحلات المثلى: {{error}}',
+    'Failed to republish to optimal relays: {{error}}':
+      'فشل إعادة النشر إلى المرحلات المثلى: {{error}}',
     'External Content': 'محتوى خارجي',
     Highlight: 'تسليط الضوء',
     'Optimal relays and {{count}} other relays': 'المرحلات المثلى و {{count}} مرحلات أخرى',
-    'Likely spam account (Trust score: {{percentile}}%)': 'حساب مشبوه للغاية (درجة الثقة: {{percentile}}%)',
+    'Likely spam account (Trust score: {{percentile}}%)':
+      'حساب مشبوه للغاية (درجة الثقة: {{percentile}}%)',
     'Suspicious account (Trust score: {{percentile}}%)': 'حساب مشبوه (درجة الثقة: {{percentile}}%)',
     'n users': '{{count}} مستخدمين',
     'View Details': 'عرض التفاصيل',
@@ -559,6 +561,11 @@ export default {
     'Follow pack not found': 'لم يتم العثور على حزمة المتابعة',
     Users: 'المستخدمون',
     Feed: 'التغذية',
-    'Follow Pack': 'حزمة المتابعة'
+    'Follow Pack': 'حزمة المتابعة',
+    '24h Pulse': 'النبض 24 ساعة',
+    'Load earlier': 'تحميل سابق',
+    'Last 24 hours': 'آخر 24 ساعة',
+    'Last {{count}} days': 'آخر {{count}} أيام',
+    notes: 'ملاحظات'
   }
 }

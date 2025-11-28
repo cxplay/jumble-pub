@@ -552,18 +552,26 @@ export default {
     'Optimal relays': '最適なリレー',
     "Successfully republish to optimal relays (your write relays and mentioned users' read relays)":
       '最適なリレー（あなたの書き込みリレーと言及されたユーザーの読み取りリレー）への再公開に成功しました',
-    'Failed to republish to optimal relays: {{error}}': '最適なリレーへの再公開に失敗しました：{{error}}',
+    'Failed to republish to optimal relays: {{error}}':
+      '最適なリレーへの再公開に失敗しました：{{error}}',
     'External Content': '外部コンテンツ',
     Highlight: 'ハイライト',
     'Optimal relays and {{count}} other relays': '最適なリレーと他の{{count}}個のリレー',
-    'Likely spam account (Trust score: {{percentile}}%)': 'スパムの可能性が高いアカウント（信頼スコア：{{percentile}}%）',
-    'Suspicious account (Trust score: {{percentile}}%)': '疑わしいアカウント（信頼スコア：{{percentile}}%）',
+    'Likely spam account (Trust score: {{percentile}}%)':
+      'スパムの可能性が高いアカウント（信頼スコア：{{percentile}}%）',
+    'Suspicious account (Trust score: {{percentile}}%)':
+      '疑わしいアカウント（信頼スコア：{{percentile}}%）',
     'n users': '{{count}}人のユーザー',
     'View Details': '詳細を表示',
     'Follow Pack Not Found': 'フォローパックが見つかりません',
     'Follow pack not found': 'フォローパックが見つかりません',
     Users: 'ユーザー',
     Feed: 'フィード',
-    'Follow Pack': 'フォローパック'
+    'Follow Pack': 'フォローパック',
+    '24h Pulse': '24h パルス',
+    'Load earlier': '以前を読み込む',
+    'Last 24 hours': '過去24時間',
+    'Last {{count}} days': '過去{{count}}日間',
+    notes: 'ノート'
   }
 }

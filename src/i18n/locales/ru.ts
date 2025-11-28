@@ -558,18 +558,26 @@ export default {
     'Optimal relays': 'Оптимальные релеи',
     "Successfully republish to optimal relays (your write relays and mentioned users' read relays)":
       'Успешно опубликовано в оптимальные релеи (ваши релеи для записи и релеи для чтения упомянутых пользователей)',
-    'Failed to republish to optimal relays: {{error}}': 'Не удалось опубликовать в оптимальные релеи: {{error}}',
+    'Failed to republish to optimal relays: {{error}}':
+      'Не удалось опубликовать в оптимальные релеи: {{error}}',
     'External Content': 'Внешний контент',
     Highlight: 'Выделить',
     'Optimal relays and {{count}} other relays': 'Оптимальные релеи и {{count}} других релеев',
-    'Likely spam account (Trust score: {{percentile}}%)': 'Вероятно спам-аккаунт (Оценка доверия: {{percentile}}%)',
-    'Suspicious account (Trust score: {{percentile}}%)': 'Подозрительный аккаунт (Оценка доверия: {{percentile}}%)',
+    'Likely spam account (Trust score: {{percentile}}%)':
+      'Вероятно спам-аккаунт (Оценка доверия: {{percentile}}%)',
+    'Suspicious account (Trust score: {{percentile}}%)':
+      'Подозрительный аккаунт (Оценка доверия: {{percentile}}%)',
     'n users': '{{count}} пользователей',
     'View Details': 'Посмотреть детали',
     'Follow Pack Not Found': 'Пакет подписок не найден',
     'Follow pack not found': 'Пакет подписок не найден',
     Users: 'Пользователи',
     Feed: 'Лента',
-    'Follow Pack': 'Пакет Подписок'
+    'Follow Pack': 'Пакет Подписок',
+    '24h Pulse': 'Пульс 24ч',
+    'Load earlier': 'Загрузить ранее',
+    'Last 24 hours': 'Последние 24 часа',
+    'Last {{count}} days': 'Последние {{count}} дней',
+    notes: 'заметки'
   }
 }

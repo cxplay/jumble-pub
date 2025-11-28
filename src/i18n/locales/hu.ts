@@ -552,14 +552,21 @@ export default {
     'External Content': 'Külső tartalom',
     Highlight: 'Kiemelés',
     'Optimal relays and {{count}} other relays': 'Optimális relay-ek és {{count}} másik relay',
-    'Likely spam account (Trust score: {{percentile}}%)': 'Valószínűleg spam fiók (Megbízhatósági pontszám: {{percentile}}%)',
-    'Suspicious account (Trust score: {{percentile}}%)': 'Gyanús fiók (Megbízhatósági pontszám: {{percentile}}%)',
+    'Likely spam account (Trust score: {{percentile}}%)':
+      'Valószínűleg spam fiók (Megbízhatósági pontszám: {{percentile}}%)',
+    'Suspicious account (Trust score: {{percentile}}%)':
+      'Gyanús fiók (Megbízhatósági pontszám: {{percentile}}%)',
     'n users': '{{count}} felhasználó',
     'View Details': 'Részletek megtekintése',
     'Follow Pack Not Found': 'Követési csomag nem található',
     'Follow pack not found': 'Követési csomag nem található',
     Users: 'Felhasználók',
     Feed: 'Hírfolyam',
-    'Follow Pack': 'Követési Csomag'
+    'Follow Pack': 'Követési Csomag',
+    '24h Pulse': '24h Pulse',
+    'Load earlier': 'Korábbi betöltése',
+    'Last 24 hours': 'Utolsó 24 óra',
+    'Last {{count}} days': 'Utolsó {{count}} nap',
+    notes: 'jegyzetek'
   }
 }

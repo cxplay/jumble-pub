@@ -564,6 +564,11 @@ export default {
     'Follow pack not found': 'Follow pack not found',
     Users: 'Users',
     Feed: 'Feed',
-    'Follow Pack': 'Follow Pack'
+    'Follow Pack': 'Follow Pack',
+    '24h Pulse': '24h Pulse',
+    'Load earlier': 'Load earlier',
+    'Last 24 hours': 'Last 24 hours',
+    'Last {{count}} days': 'Last {{count}} days',
+    notes: 'notes'
   }
 }

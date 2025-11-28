@@ -553,18 +553,26 @@ export default {
     'Optimal relays': 'इष्टतम रिले',
     "Successfully republish to optimal relays (your write relays and mentioned users' read relays)":
       'इष्टतम रिले पर सफलतापूर्वक पुनः प्रकाशित (आपके लेखन रिले और उल्लिखित उपयोगकर्ताओं के पठन रिले)',
-    'Failed to republish to optimal relays: {{error}}': 'इष्टतम रिले पर पुनः प्रकाशित करने में विफल: {{error}}',
+    'Failed to republish to optimal relays: {{error}}':
+      'इष्टतम रिले पर पुनः प्रकाशित करने में विफल: {{error}}',
     'External Content': 'बाहरी सामग्री',
     Highlight: 'हाइलाइट',
     'Optimal relays and {{count}} other relays': 'इष्टतम रिले और {{count}} अन्य रिले',
-    'Likely spam account (Trust score: {{percentile}}%)': 'संभावित स्पैम खाता (विश्वास स्कोर: {{percentile}}%)',
-    'Suspicious account (Trust score: {{percentile}}%)': 'संदिग्ध खाता (विश्वास स्कोर: {{percentile}}%)',
+    'Likely spam account (Trust score: {{percentile}}%)':
+      'संभावित स्पैम खाता (विश्वास स्कोर: {{percentile}}%)',
+    'Suspicious account (Trust score: {{percentile}}%)':
+      'संदिग्ध खाता (विश्वास स्कोर: {{percentile}}%)',
     'n users': '{{count}} उपयोगकर्ता',
     'View Details': 'विवरण देखें',
     'Follow Pack Not Found': 'फॉलो पैक नहीं मिला',
     'Follow pack not found': 'फॉलो पैक नहीं मिला',
     Users: 'उपयोगकर्ता',
     Feed: 'फ़ीड',
-    'Follow Pack': 'फॉलो पैक'
+    'Follow Pack': 'फॉलो पैक',
+    '24h Pulse': '24h पल्स',
+    'Load earlier': 'पहले लोड करें',
+    'Last 24 hours': 'पिछले 24 घंटे',
+    'Last {{count}} days': 'पिछले {{count}} दिन',
+    notes: 'नोट्स'
   }
 }

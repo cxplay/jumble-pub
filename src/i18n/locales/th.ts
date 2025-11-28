@@ -545,18 +545,26 @@ export default {
     'Optimal relays': 'รีเลย์ที่เหมาะสม',
     "Successfully republish to optimal relays (your write relays and mentioned users' read relays)":
       'เผยแพร่ซ้ำไปยังรีเลย์ที่เหมาะสมสำเร็จ (รีเลย์เขียนของคุณและรีเลย์อ่านของผู้ใช้ที่กล่าวถึง)',
-    'Failed to republish to optimal relays: {{error}}': 'เผยแพร่ซ้ำไปยังรีเลย์ที่เหมาะสมล้มเหลว: {{error}}',
+    'Failed to republish to optimal relays: {{error}}':
+      'เผยแพร่ซ้ำไปยังรีเลย์ที่เหมาะสมล้มเหลว: {{error}}',
     'External Content': 'เนื้อหาภายนอก',
     Highlight: 'ไฮไลต์',
     'Optimal relays and {{count}} other relays': 'รีเลย์ที่เหมาะสมและรีเลย์อื่น {{count}} รายการ',
-    'Likely spam account (Trust score: {{percentile}}%)': 'น่าจะเป็นบัญชีสแปม (คะแนนความน่าเชื่อถือ: {{percentile}}%)',
-    'Suspicious account (Trust score: {{percentile}}%)': 'บัญชีที่น่าสงสัย (คะแนนความน่าเชื่อถือ: {{percentile}}%)',
+    'Likely spam account (Trust score: {{percentile}}%)':
+      'น่าจะเป็นบัญชีสแปม (คะแนนความน่าเชื่อถือ: {{percentile}}%)',
+    'Suspicious account (Trust score: {{percentile}}%)':
+      'บัญชีที่น่าสงสัย (คะแนนความน่าเชื่อถือ: {{percentile}}%)',
     'n users': '{{count}} ผู้ใช้',
     'View Details': 'ดูรายละเอียด',
     'Follow Pack Not Found': 'ไม่พบแพ็คการติดตาม',
     'Follow pack not found': 'ไม่พบแพ็คการติดตาม',
     Users: 'ผู้ใช้',
     Feed: 'ฟีด',
-    'Follow Pack': 'แพ็คการติดตาม'
+    'Follow Pack': 'แพ็คการติดตาม',
+    '24h Pulse': '24h พัลส์',
+    'Load earlier': 'โหลดข้อมูลก่อนหน้า',
+    'Last 24 hours': '24 ชั่วโมงที่แล้ว',
+    'Last {{count}} days': '{{count}} วันที่แล้ว',
+    notes: 'โน้ต'
   }
 }

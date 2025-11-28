@@ -561,15 +561,23 @@ export default {
       'Nie udało się opublikować ponownie na optymalnych przekaźnikach: {{error}}',
     'External Content': 'Treść zewnętrzna',
     Highlight: 'Podświetl',
-    'Optimal relays and {{count}} other relays': 'Optymalne przekaźniki i {{count}} innych przekaźników',
-    'Likely spam account (Trust score: {{percentile}}%)': 'Prawdopodobnie konto spamowe (Wynik zaufania: {{percentile}}%)',
-    'Suspicious account (Trust score: {{percentile}}%)': 'Podejrzane konto (Wynik zaufania: {{percentile}}%)',
+    'Optimal relays and {{count}} other relays':
+      'Optymalne przekaźniki i {{count}} innych przekaźników',
+    'Likely spam account (Trust score: {{percentile}}%)':
+      'Prawdopodobnie konto spamowe (Wynik zaufania: {{percentile}}%)',
+    'Suspicious account (Trust score: {{percentile}}%)':
+      'Podejrzane konto (Wynik zaufania: {{percentile}}%)',
     'n users': '{{count}} użytkowników',
     'View Details': 'Zobacz szczegóły',
     'Follow Pack Not Found': 'Nie znaleziono pakietu obserwowanych',
     'Follow pack not found': 'Nie znaleziono pakietu obserwowanych',
     Users: 'Użytkownicy',
     Feed: 'Kanał',
-    'Follow Pack': 'Pakiet Obserwowanych'
+    'Follow Pack': 'Pakiet Obserwowanych',
+    '24h Pulse': '24h Pulse',
+    'Load earlier': 'Załaduj wcześniejsze',
+    'Last 24 hours': 'Ostatnie 24 godziny',
+    'Last {{count}} days': 'Ostatnie {{count}} dni',
+    notes: 'notatki'
   }
 }

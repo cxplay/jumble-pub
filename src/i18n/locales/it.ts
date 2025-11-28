@@ -557,18 +557,26 @@ export default {
     'Optimal relays': 'Relay ottimali',
     "Successfully republish to optimal relays (your write relays and mentioned users' read relays)":
       'Ripubblicato con successo sui relay ottimali (i tuoi relay di scrittura e i relay di lettura degli utenti menzionati)',
-    'Failed to republish to optimal relays: {{error}}': 'Errore nella ripubblicazione sui relay ottimali: {{error}}',
+    'Failed to republish to optimal relays: {{error}}':
+      'Errore nella ripubblicazione sui relay ottimali: {{error}}',
     'External Content': 'Contenuto esterno',
     Highlight: 'Evidenzia',
     'Optimal relays and {{count}} other relays': 'Relay ottimali e {{count}} altri relay',
-    'Likely spam account (Trust score: {{percentile}}%)': 'Probabile account spam (Punteggio di fiducia: {{percentile}}%)',
-    'Suspicious account (Trust score: {{percentile}}%)': 'Account sospetto (Punteggio di fiducia: {{percentile}}%)',
+    'Likely spam account (Trust score: {{percentile}}%)':
+      'Probabile account spam (Punteggio di fiducia: {{percentile}}%)',
+    'Suspicious account (Trust score: {{percentile}}%)':
+      'Account sospetto (Punteggio di fiducia: {{percentile}}%)',
     'n users': '{{count}} utenti',
     'View Details': 'Visualizza dettagli',
     'Follow Pack Not Found': 'Pacchetto di follow non trovato',
     'Follow pack not found': 'Pacchetto di follow non trovato',
     Users: 'Utenti',
     Feed: 'Feed',
-    'Follow Pack': 'Pacchetto di Follow'
+    'Follow Pack': 'Pacchetto di Follow',
+    '24h Pulse': 'Pulse 24h',
+    'Load earlier': 'Carica precedente',
+    'Last 24 hours': 'Ultime 24 ore',
+    'Last {{count}} days': 'Ultimi {{count}} giorni',
+    notes: 'note'
   }
 }

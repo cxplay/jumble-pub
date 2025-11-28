@@ -552,18 +552,26 @@ export default {
     'Optimal relays': 'رله‌های بهینه',
     "Successfully republish to optimal relays (your write relays and mentioned users' read relays)":
       'با موفقیت در رله‌های بهینه منتشر شد (رله‌های نوشتن شما و رله‌های خواندن کاربران ذکر شده)',
-    'Failed to republish to optimal relays: {{error}}': 'خطا در انتشار مجدد در رله‌های بهینه: {{error}}',
+    'Failed to republish to optimal relays: {{error}}':
+      'خطا در انتشار مجدد در رله‌های بهینه: {{error}}',
     'External Content': 'محتوای خارجی',
     Highlight: 'برجسته‌سازی',
     'Optimal relays and {{count}} other relays': 'رله‌های بهینه و {{count}} رله دیگر',
-    'Likely spam account (Trust score: {{percentile}}%)': 'احتمالاً حساب هرزنامه (امتیاز اعتماد: {{percentile}}%)',
-    'Suspicious account (Trust score: {{percentile}}%)': 'حساب مشکوک (امتیاز اعتماد: {{percentile}}%)',
+    'Likely spam account (Trust score: {{percentile}}%)':
+      'احتمالاً حساب هرزنامه (امتیاز اعتماد: {{percentile}}%)',
+    'Suspicious account (Trust score: {{percentile}}%)':
+      'حساب مشکوک (امتیاز اعتماد: {{percentile}}%)',
     'n users': '{{count}} کاربر',
     'View Details': 'مشاهده جزئیات',
     'Follow Pack Not Found': 'بسته دنبال‌کننده یافت نشد',
     'Follow pack not found': 'بسته دنبال‌کننده یافت نشد',
     Users: 'کاربران',
     Feed: 'فید',
-    'Follow Pack': 'بسته دنبال‌کننده'
+    'Follow Pack': 'بسته دنبال‌کننده',
+    '24h Pulse': 'نبض 24 ساعته',
+    'Load earlier': 'بارگذاری قدیمی‌تر',
+    'Last 24 hours': '24 ساعت گذشته',
+    'Last {{count}} days': '{{count}} روز گذشته',
+    notes: 'یادداشت‌ها'
   }
 }

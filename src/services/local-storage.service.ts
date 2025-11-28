@@ -57,6 +57,7 @@ class LocalStorageService {
   private enableSingleColumnLayout: boolean = true
   private faviconUrlTemplate: string = DEFAULT_FAVICON_URL_TEMPLATE
   private filterOutOnionRelays: boolean = !isTorBrowser()
+  private pinnedPubkeys: Set<string> = new Set()
 
   constructor() {
     if (!LocalStorageService.instance) {
@@ -75,7 +76,7 @@ class LocalStorageService {
     this.currentAccount = currentAccountStr ? JSON.parse(currentAccountStr) : null
     const noteListModeStr = window.localStorage.getItem(StorageKey.NOTE_LIST_MODE)
     this.noteListMode =
-      noteListModeStr && ['posts', 'postsAndReplies', 'pictures'].includes(noteListModeStr)
+      noteListModeStr && ['posts', 'postsAndReplies', '24h'].includes(noteListModeStr)
         ? (noteListModeStr as TNoteListMode)
         : 'posts'
     const lastReadNotificationTimeMapStr =
@@ -228,6 +229,11 @@ class LocalStorageService {
     const filterOutOnionRelaysStr = window.localStorage.getItem(StorageKey.FILTER_OUT_ONION_RELAYS)
     if (filterOutOnionRelaysStr) {
       this.filterOutOnionRelays = filterOutOnionRelaysStr !== 'false'
+    }
+
+    const pinnedPubkeysStr = window.localStorage.getItem(StorageKey.PINNED_PUBKEYS)
+    if (pinnedPubkeysStr) {
+      this.pinnedPubkeys = new Set(JSON.parse(pinnedPubkeysStr))
     }
 
     // Clean up deprecated data
@@ -557,6 +563,18 @@ class LocalStorageService {
   setFilterOutOnionRelays(filterOut: boolean) {
     this.filterOutOnionRelays = filterOut
     window.localStorage.setItem(StorageKey.FILTER_OUT_ONION_RELAYS, filterOut.toString())
+  }
+
+  getPinnedPubkeys(): Set<string> {
+    return this.pinnedPubkeys
+  }
+
+  setPinnedPubkeys(pinnedPubkeys: Set<string>) {
+    this.pinnedPubkeys = pinnedPubkeys
+    window.localStorage.setItem(
+      StorageKey.PINNED_PUBKEYS,
+      JSON.stringify(Array.from(this.pinnedPubkeys))
+    )
   }
 }
 

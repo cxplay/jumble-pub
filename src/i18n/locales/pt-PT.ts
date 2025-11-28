@@ -556,18 +556,26 @@ export default {
     'Optimal relays': 'Relays ideais',
     "Successfully republish to optimal relays (your write relays and mentioned users' read relays)":
       'Republicado com sucesso nos relays ideais (os seus relays de escrita e os relays de leitura dos utilizadores mencionados)',
-    'Failed to republish to optimal relays: {{error}}': 'Falha ao republicar nos relays ideais: {{error}}',
+    'Failed to republish to optimal relays: {{error}}':
+      'Falha ao republicar nos relays ideais: {{error}}',
     'External Content': 'Conteúdo externo',
     Highlight: 'Destacar',
     'Optimal relays and {{count}} other relays': 'Relays ideais e {{count}} outros relays',
-    'Likely spam account (Trust score: {{percentile}}%)': 'Provável conta de spam (Pontuação de confiança: {{percentile}}%)',
-    'Suspicious account (Trust score: {{percentile}}%)': 'Conta suspeita (Pontuação de confiança: {{percentile}}%)',
+    'Likely spam account (Trust score: {{percentile}}%)':
+      'Provável conta de spam (Pontuação de confiança: {{percentile}}%)',
+    'Suspicious account (Trust score: {{percentile}}%)':
+      'Conta suspeita (Pontuação de confiança: {{percentile}}%)',
     'n users': '{{count}} utilizadores',
     'View Details': 'Ver detalhes',
     'Follow Pack Not Found': 'Pacote de seguir não encontrado',
     'Follow pack not found': 'Pacote de seguir não encontrado',
     Users: 'Utilizadores',
     Feed: 'Feed',
-    'Follow Pack': 'Pacote de Seguir'
+    'Follow Pack': 'Pacote de Seguir',
+    '24h Pulse': 'Pulso 24h',
+    'Load earlier': 'Carregar anterior',
+    'Last 24 hours': 'Últimas 24 horas',
+    'Last {{count}} days': 'Últimos {{count}} dias',
+    notes: 'notas'
   }
 }
