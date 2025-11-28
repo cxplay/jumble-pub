@@ -50,7 +50,7 @@ export default function ExternalLink({
   }
 
   return (
-    <div onClick={(e) => e.stopPropagation()}>
+    <div className="inline-block" onClick={(e) => e.stopPropagation()}>
       <ResponsiveMenu>
         <ResponsiveMenuTrigger asChild>
           <span
