@@ -1,12 +1,12 @@
 import { Button } from '@/components/ui/button'
 import {
-  ResponsiveMenu,
-  ResponsiveMenuContent,
-  ResponsiveMenuItem,
-  ResponsiveMenuLabel,
-  ResponsiveMenuSeparator,
-  ResponsiveMenuTrigger
-} from '@/components/ui/responsive-menu'
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu'
 import { toWallet } from '@/lib/link'
 import { cn } from '@/lib/utils'
 import { useSecondaryPage } from '@/PageManager'
@@ -41,8 +41,8 @@ function ProfileButton({ collapse }: { collapse: boolean }) {
   if (!pubkey) return null
 
   return (
-    <ResponsiveMenu>
-      <ResponsiveMenuTrigger asChild>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
           className={cn(
@@ -57,16 +57,16 @@ function ProfileButton({ collapse }: { collapse: boolean }) {
             )}
           </div>
         </Button>
-      </ResponsiveMenuTrigger>
-      <ResponsiveMenuContent side="top" className="w-72 max-h-[80vh]">
-        <ResponsiveMenuItem onClick={() => push(toWallet())}>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent side="top" className="w-72">
+        <DropdownMenuItem onClick={() => push(toWallet())}>
           <Wallet />
           {t('Wallet')}
-        </ResponsiveMenuItem>
-        <ResponsiveMenuSeparator />
-        <ResponsiveMenuLabel>{t('Switch account')}</ResponsiveMenuLabel>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuLabel>{t('Switch account')}</DropdownMenuLabel>
         {accounts.map((act) => (
-          <ResponsiveMenuItem
+          <DropdownMenuItem
             className={act.pubkey === pubkey ? 'cursor-default focus:bg-background' : ''}
             key={`${act.pubkey}:${act.signerType}`}
             onClick={() => {
@@ -92,17 +92,18 @@ function ProfileButton({ collapse }: { collapse: boolean }) {
                 act.pubkey === pubkey && 'size-4 border-4 border-primary'
               )}
             />
-          </ResponsiveMenuItem>
+          </DropdownMenuItem>
         ))}
-        <div className="border border-dashed m-2 rounded-md">
-          <ResponsiveMenuItem onClick={() => setLoginDialogOpen(true)}>
-            <div className="flex gap-2 items-center justify-center w-full py-2">
-              <Plus />
-              {t('Add an Account')}
-            </div>
-          </ResponsiveMenuItem>
-        </div>
-        <ResponsiveMenuItem
+        <DropdownMenuItem
+          onClick={() => setLoginDialogOpen(true)}
+          className="border border-dashed m-2 focus:border-muted-foreground focus:bg-background"
+        >
+          <div className="flex gap-2 items-center justify-center w-full py-2">
+            <Plus />
+            {t('Add an Account')}
+          </div>
+        </DropdownMenuItem>
+        <DropdownMenuItem
           className="text-destructive focus:text-destructive"
           onClick={() => setLogoutDialogOpen(true)}
         >
@@ -110,13 +111,13 @@ function ProfileButton({ collapse }: { collapse: boolean }) {
           <span className="shrink-0">{t('Logout')}</span>
           <SimpleUsername
             userId={pubkey}
-            className="text-muted-foreground border border-muted-foreground px-1 rounded-md text-xs truncate ml-auto"
+            className="text-muted-foreground border border-muted-foreground px-1 rounded-md text-xs truncate"
           />
-        </ResponsiveMenuItem>
-      </ResponsiveMenuContent>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
       <LoginDialog open={loginDialogOpen} setOpen={setLoginDialogOpen} />
       <LogoutDialog open={logoutDialogOpen} setOpen={setLogoutDialogOpen} />
-    </ResponsiveMenu>
+    </DropdownMenu>
   )
 }
 

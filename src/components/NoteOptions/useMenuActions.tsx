@@ -44,14 +44,20 @@ export interface MenuAction {
 
 interface UseMenuActionsProps {
   event: Event
+  closeDrawer: () => void
+  showSubMenuActions: (subMenu: SubMenuAction[], title: string) => void
   setIsRawEventDialogOpen: (open: boolean) => void
   setIsReportDialogOpen: (open: boolean) => void
+  isSmallScreen: boolean
 }
 
 export function useMenuActions({
   event,
+  closeDrawer,
+  showSubMenuActions,
   setIsRawEventDialogOpen,
-  setIsReportDialogOpen
+  setIsReportDialogOpen,
+  isSmallScreen
 }: UseMenuActionsProps) {
   const { t } = useTranslation()
   const { pubkey, attemptDelete } = useNostr()
@@ -70,6 +76,7 @@ export function useMenuActions({
       items.push({
         label: <div className="text-left"> {t('Optimal relays')}</div>,
         onClick: async () => {
+          closeDrawer()
           const promise = async () => {
             const relays = await client.determineTargetRelays(event)
             if (relays?.length) {
@@ -100,6 +107,7 @@ export function useMenuActions({
           .map((set, index) => ({
             label: <div className="text-left truncate">{set.name}</div>,
             onClick: async () => {
+              closeDrawer()
               const promise = client.publishEvent(set.relayUrls, event)
               toast.promise(promise, {
                 loading: t('Republishing...'),
@@ -129,6 +137,7 @@ export function useMenuActions({
             </div>
           ),
           onClick: async () => {
+            closeDrawer()
             const promise = client.publishEvent([relay], event)
             toast.promise(promise, {
               loading: t('Republishing...'),
@@ -149,7 +158,7 @@ export function useMenuActions({
     }
 
     return items
-  }, [pubkey, relayUrls, relaySets, event, t])
+  }, [pubkey, relayUrls, relaySets])
 
   const menuActions: MenuAction[] = useMemo(() => {
     const actions: MenuAction[] = [
@@ -158,6 +167,7 @@ export function useMenuActions({
         label: t('Copy event ID'),
         onClick: () => {
           navigator.clipboard.writeText(getNoteBech32Id(event))
+          closeDrawer()
         }
       },
       {
@@ -165,6 +175,7 @@ export function useMenuActions({
         label: t('Copy user ID'),
         onClick: () => {
           navigator.clipboard.writeText(pubkeyToNpub(event.pubkey) ?? '')
+          closeDrawer()
         }
       },
       {
@@ -172,12 +183,14 @@ export function useMenuActions({
         label: t('Copy share link'),
         onClick: () => {
           navigator.clipboard.writeText(toNjump(getNoteBech32Id(event)))
+          closeDrawer()
         }
       },
       {
         icon: Code,
         label: t('View raw event'),
         onClick: () => {
+          closeDrawer()
           setIsRawEventDialogOpen(true)
         },
         separator: true
@@ -189,7 +202,10 @@ export function useMenuActions({
       actions.push({
         icon: SatelliteDish,
         label: t('Republish to ...'),
-        subMenu: broadcastSubMenu,
+        onClick: isSmallScreen
+          ? () => showSubMenuActions(broadcastSubMenu, t('Republish to ...'))
+          : undefined,
+        subMenu: isSmallScreen ? undefined : broadcastSubMenu,
         separator: true
       })
     }
@@ -200,6 +216,7 @@ export function useMenuActions({
         icon: pinned ? PinOff : Pin,
         label: pinned ? t('Unpin from profile') : t('Pin to profile'),
         onClick: async () => {
+          closeDrawer()
           await (pinned ? unpin(event) : pin(event))
         }
       })
@@ -211,6 +228,7 @@ export function useMenuActions({
         label: t('Report'),
         className: 'text-destructive focus:text-destructive',
         onClick: () => {
+          closeDrawer()
           setIsReportDialogOpen(true)
         },
         separator: true
@@ -223,6 +241,7 @@ export function useMenuActions({
           icon: Bell,
           label: t('Unmute user'),
           onClick: () => {
+            closeDrawer()
             unmutePubkey(event.pubkey)
           },
           className: 'text-destructive focus:text-destructive',
@@ -234,6 +253,7 @@ export function useMenuActions({
             icon: BellOff,
             label: t('Mute user privately'),
             onClick: () => {
+              closeDrawer()
               mutePubkeyPrivately(event.pubkey)
             },
             className: 'text-destructive focus:text-destructive',
@@ -243,6 +263,7 @@ export function useMenuActions({
             icon: BellOff,
             label: t('Mute user publicly'),
             onClick: () => {
+              closeDrawer()
               mutePubkeyPublicly(event.pubkey)
             },
             className: 'text-destructive focus:text-destructive'
@@ -256,6 +277,7 @@ export function useMenuActions({
         icon: Trash2,
         label: t('Try deleting this note'),
         onClick: () => {
+          closeDrawer()
           attemptDelete(event)
         },
         className: 'text-destructive focus:text-destructive',
@@ -269,16 +291,15 @@ export function useMenuActions({
     event,
     pubkey,
     isMuted,
+    isSmallScreen,
     broadcastSubMenu,
     pinnedEventHexIdSet,
+    closeDrawer,
+    showSubMenuActions,
     setIsRawEventDialogOpen,
-    setIsReportDialogOpen,
     mutePubkeyPrivately,
     mutePubkeyPublicly,
-    unmutePubkey,
-    unpin,
-    pin,
-    attemptDelete
+    unmutePubkey
   ])
 
   return menuActions
