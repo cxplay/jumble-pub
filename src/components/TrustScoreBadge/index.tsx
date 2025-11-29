@@ -1,5 +1,6 @@
 import { cn } from '@/lib/utils'
 import { useNostr } from '@/providers/NostrProvider'
+import { useUserTrust } from '@/providers/UserTrustProvider'
 import trustScoreService from '@/services/trust-score.service'
 import { AlertTriangle, ShieldAlert } from 'lucide-react'
 import { useEffect, useState } from 'react'
@@ -13,12 +14,19 @@ export default function TrustScoreBadge({
   className?: string
 }) {
   const { t } = useTranslation()
+  const { isUserTrusted } = useUserTrust()
   const { pubkey: currentPubkey } = useNostr()
   const [percentile, setPercentile] = useState<number | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     if (currentPubkey === pubkey) {
+      setLoading(false)
+      setPercentile(null)
+      return
+    }
+
+    if (isUserTrusted(pubkey)) {
       setLoading(false)
       setPercentile(null)
       return
@@ -38,7 +46,7 @@ export default function TrustScoreBadge({
     }
 
     fetchScore()
-  }, [pubkey, currentPubkey])
+  }, [pubkey, currentPubkey, isUserTrusted])
 
   if (loading || percentile === null) return null
 
