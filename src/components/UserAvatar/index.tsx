@@ -3,7 +3,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { useFetchProfile } from '@/hooks'
 import { toProfile } from '@/lib/link'
 import { generateImageByPubkey } from '@/lib/pubkey'
-import { cn } from '@/lib/utils'
+import { cn, isTouchDevice } from '@/lib/utils'
 import { SecondaryPageLink } from '@/PageManager'
 import { useMemo } from 'react'
 import Image from '../Image'
@@ -29,13 +29,21 @@ export default function UserAvatar({
   className?: string
   size?: 'large' | 'big' | 'semiBig' | 'normal' | 'medium' | 'small' | 'xSmall' | 'tiny'
 }) {
+  const supportTouch = useMemo(() => isTouchDevice(), [])
+
+  const trigger = (
+    <SecondaryPageLink to={toProfile(userId)} onClick={(e) => e.stopPropagation()}>
+      <SimpleUserAvatar userId={userId} size={size} className={className} />
+    </SecondaryPageLink>
+  )
+
+  if (supportTouch) {
+    return trigger
+  }
+
   return (
     <HoverCard>
-      <HoverCardTrigger>
-        <SecondaryPageLink to={toProfile(userId)} onClick={(e) => e.stopPropagation()}>
-          <SimpleUserAvatar userId={userId} size={size} className={className} />
-        </SecondaryPageLink>
-      </HoverCardTrigger>
+      <HoverCardTrigger>{trigger}</HoverCardTrigger>
       <HoverCardContent className="w-72">
         <ProfileCard userId={userId} />
       </HoverCardContent>

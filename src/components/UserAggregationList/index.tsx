@@ -1,8 +1,8 @@
 import { FormattedTimestamp } from '@/components/FormattedTimestamp'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
-import UserAvatar from '@/components/UserAvatar'
-import Username from '@/components/Username'
+import UserAvatar, { SimpleUserAvatar } from '@/components/UserAvatar'
+import Username, { SimpleUsername } from '@/components/Username'
 import { isMentioningMutedUsers } from '@/lib/event'
 import { toNote, toUserAggregationDetail } from '@/lib/link'
 import { cn, isTouchDevice } from '@/lib/utils'
@@ -371,6 +371,7 @@ function UserAggregationItem({
   onClick: () => void
 }) {
   const { t } = useTranslation()
+  const supportTouch = useMemo(() => isTouchDevice(), [])
   const [hasNewEvents, setHasNewEvents] = useState(true)
   const [isPinned, setIsPinned] = useState(userAggregationService.isPinned(aggregation.pubkey))
 
@@ -418,14 +419,26 @@ function UserAggregationItem({
       className="group relative flex items-center gap-4 px-4 py-3 border-b hover:bg-accent/30 cursor-pointer transition-all duration-200"
       onClick={onClick}
     >
-      <UserAvatar userId={aggregation.pubkey} />
+      {supportTouch ? (
+        <SimpleUserAvatar userId={aggregation.pubkey} />
+      ) : (
+        <UserAvatar userId={aggregation.pubkey} />
+      )}
 
       <div className="flex-1 min-w-0 flex flex-col">
-        <Username
-          userId={aggregation.pubkey}
-          className="font-semibold text-base truncate max-w-fit"
-          skeletonClassName="h-4"
-        />
+        {supportTouch ? (
+          <SimpleUsername
+            userId={aggregation.pubkey}
+            className="font-semibold text-base truncate max-w-fit"
+            skeletonClassName="h-4"
+          />
+        ) : (
+          <Username
+            userId={aggregation.pubkey}
+            className="font-semibold text-base truncate max-w-fit"
+            skeletonClassName="h-4"
+          />
+        )}
         <FormattedTimestamp
           timestamp={aggregation.lastEventTime}
           className="text-sm text-muted-foreground"
