@@ -62,6 +62,7 @@ const UserAggregationList = forwardRef<
   const [showLoadingBar, setShowLoadingBar] = useState(true)
   const [refreshCount, setRefreshCount] = useState(0)
   const [showCount, setShowCount] = useState(SHOW_COUNT)
+  const [hasMore, setHasMore] = useState(true)
   const supportTouch = useMemo(() => isTouchDevice(), [])
   const [pinnedPubkeys, setPinnedPubkeys] = useState<Set<string>>(
     new Set(userAggregationService.getPinnedPubkeys())
@@ -98,6 +99,7 @@ const UserAggregationList = forwardRef<
 
     setPinnedPubkeys(new Set(userAggregationService.getPinnedPubkeys()))
     setSince(dayjs().subtract(1, 'day').unix())
+    setHasMore(true)
 
     async function init() {
       setLoading(true)
@@ -124,6 +126,9 @@ const UserAggregationList = forwardRef<
             }
             if (eosed) {
               setLoading(false)
+              if (events.length === 0) {
+                setHasMore(false)
+              }
             }
           },
           onNew: (event) => {
@@ -152,23 +157,26 @@ const UserAggregationList = forwardRef<
   }, [feedId, refreshCount])
 
   useEffect(() => {
-    if (
-      loading ||
-      !timelineKey ||
-      !events.length ||
-      events[events.length - 1].created_at <= since
-    ) {
+    if (loading || !hasMore || !timelineKey || !events.length) {
       return
     }
 
     const until = events[events.length - 1].created_at - 1
+    if (until < since) {
+      return
+    }
 
     setLoading(true)
     client.loadMoreTimeline(timelineKey, until, LIMIT).then((moreEvents) => {
+      if (moreEvents.length === 0) {
+        setHasMore(false)
+        setLoading(false)
+        return
+      }
       setEvents((oldEvents) => [...oldEvents, ...moreEvents])
       setLoading(false)
     })
-  }, [loading, timelineKey, events, since])
+  }, [loading, timelineKey, events, since, hasMore])
 
   useEffect(() => {
     if (loading) {
@@ -234,7 +242,7 @@ const UserAggregationList = forwardRef<
     return aggregations.slice(0, showCount)
   }, [aggregations, showCount])
 
-  const hasMore = useMemo(() => {
+  const hasMoreToDisplay = useMemo(() => {
     return aggregations.length > displayedAggregations.length
   }, [aggregations, displayedAggregations])
 
@@ -244,7 +252,7 @@ const UserAggregationList = forwardRef<
       rootMargin: '10px',
       threshold: 1
     }
-    if (!hasMore) return
+    if (!hasMoreToDisplay) return
 
     const observerInstance = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
@@ -262,7 +270,7 @@ const UserAggregationList = forwardRef<
         observerInstance.unobserve(currentBottomRef)
       }
     }
-  }, [hasMore])
+  }, [hasMoreToDisplay])
 
   const handleViewUser = (agg: TUserAggregation) => {
     // Mark as viewed when user clicks
@@ -294,7 +302,7 @@ const UserAggregationList = forwardRef<
           onClick={() => handleViewUser(agg)}
         />
       ))}
-      {loading || hasMore ? (
+      {loading || hasMoreToDisplay ? (
         <div ref={bottomRef}>
           <UserAggregationItemSkeleton />
         </div>
@@ -327,7 +335,7 @@ const UserAggregationList = forwardRef<
         <Button
           variant="ghost"
           className="h-10 px-3 shrink-0 rounded-lg text-muted-foreground hover:text-foreground"
-          disabled={showLoadingBar}
+          disabled={showLoadingBar || !hasMore}
           onClick={handleLoadEarlier}
         >
           {showLoadingBar ? <Loader className="animate-spin" /> : <History />}
