@@ -63,9 +63,6 @@ export default function XEmbeddedPost({
     function embedTweet() {
       if (!containerRef.current || !window.twttr || !tweetId) return
 
-      // Clear container
-      containerRef.current.innerHTML = ''
-
       window.twttr.widgets
         .createTweet(tweetId, containerRef.current, {
           theme: theme === 'light' ? 'light' : 'dark',
@@ -127,7 +124,7 @@ export default function XEmbeddedPost({
       {loaded && embedded && (
         /* Hover overlay mask */
         <div
-          className="absolute inset-0 bg-muted/30 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center cursor-pointer rounded-xl"
+          className="absolute inset-0 bg-muted/40 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center cursor-pointer rounded-xl"
           onClick={handleViewComments}
         >
           <div className="flex flex-col items-center gap-3">
