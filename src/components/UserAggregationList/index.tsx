@@ -12,6 +12,7 @@ import { useDeletedEvent } from '@/providers/DeletedEventProvider'
 import { useMuteList } from '@/providers/MuteListProvider'
 import { useNostr } from '@/providers/NostrProvider'
 import { usePinnedUsers } from '@/providers/PinnedUsersProvider'
+import { useReply } from '@/providers/ReplyProvider'
 import { useUserTrust } from '@/providers/UserTrustProvider'
 import client from '@/services/client.service'
 import userAggregationService, { TUserAggregation } from '@/services/user-aggregation.service'
@@ -30,7 +31,9 @@ import {
 } from 'react'
 import { useTranslation } from 'react-i18next'
 import PullToRefresh from 'react-simple-pull-to-refresh'
+import { toast } from 'sonner'
 import { LoadingBar } from '../LoadingBar'
+import NewNotesButton from '../NewNotesButton'
 
 const LIMIT = 500
 const SHOW_COUNT = 20
@@ -47,321 +50,375 @@ const UserAggregationList = forwardRef<
     showKinds?: number[]
     filterFn?: (event: Event) => boolean
     filterMutedNotes?: boolean
+    areAlgoRelays?: boolean
+    showRelayCloseReason?: boolean
   }
->(({ subRequests, showKinds, filterFn, filterMutedNotes = true }, ref) => {
-  const { t } = useTranslation()
-  const { startLogin } = useNostr()
-  const { push } = useSecondaryPage()
-  const { hideUntrustedNotes, isUserTrusted } = useUserTrust()
-  const { mutePubkeySet } = useMuteList()
-  const { pinnedPubkeySet } = usePinnedUsers()
-  const { hideContentMentioningMutedUsers } = useContentPolicy()
-  const { isEventDeleted } = useDeletedEvent()
-  const [since, setSince] = useState(() => dayjs().subtract(1, 'day').unix())
-  const [events, setEvents] = useState<Event[]>([])
-  const [timelineKey, setTimelineKey] = useState<string | undefined>(undefined)
-  const [loading, setLoading] = useState(true)
-  const [showLoadingBar, setShowLoadingBar] = useState(true)
-  const [refreshCount, setRefreshCount] = useState(0)
-  const [showCount, setShowCount] = useState(SHOW_COUNT)
-  const [hasMore, setHasMore] = useState(true)
-  const supportTouch = useMemo(() => isTouchDevice(), [])
-  const feedId = useMemo(() => {
-    return userAggregationService.getFeedId(subRequests, showKinds)
-  }, [JSON.stringify(subRequests), JSON.stringify(showKinds)])
-  const bottomRef = useRef<HTMLDivElement | null>(null)
-  const topRef = useRef<HTMLDivElement | null>(null)
+>(
+  (
+    {
+      subRequests,
+      showKinds,
+      filterFn,
+      filterMutedNotes = true,
+      areAlgoRelays = false,
+      showRelayCloseReason = false
+    },
+    ref
+  ) => {
+    const { t } = useTranslation()
+    const { startLogin } = useNostr()
+    const { push } = useSecondaryPage()
+    const { hideUntrustedNotes, isUserTrusted } = useUserTrust()
+    const { mutePubkeySet } = useMuteList()
+    const { pinnedPubkeySet } = usePinnedUsers()
+    const { hideContentMentioningMutedUsers } = useContentPolicy()
+    const { isEventDeleted } = useDeletedEvent()
+    const { addReplies } = useReply()
+    const [since, setSince] = useState(() => dayjs().subtract(1, 'day').unix())
+    const [events, setEvents] = useState<Event[]>([])
+    const [newEvents, setNewEvents] = useState<Event[]>([])
+    const [timelineKey, setTimelineKey] = useState<string | undefined>(undefined)
+    const [loading, setLoading] = useState(true)
+    const [showLoadingBar, setShowLoadingBar] = useState(true)
+    const [refreshCount, setRefreshCount] = useState(0)
+    const [showCount, setShowCount] = useState(SHOW_COUNT)
+    const [hasMore, setHasMore] = useState(true)
+    const supportTouch = useMemo(() => isTouchDevice(), [])
+    const feedId = useMemo(() => {
+      return userAggregationService.getFeedId(subRequests, showKinds)
+    }, [JSON.stringify(subRequests), JSON.stringify(showKinds)])
+    const bottomRef = useRef<HTMLDivElement | null>(null)
+    const topRef = useRef<HTMLDivElement | null>(null)
 
-  const scrollToTop = (behavior: ScrollBehavior = 'instant') => {
-    setTimeout(() => {
-      topRef.current?.scrollIntoView({ behavior, block: 'start' })
-    }, 20)
-  }
-
-  const refresh = () => {
-    scrollToTop()
-    setTimeout(() => {
-      setRefreshCount((count) => count + 1)
-    }, 500)
-  }
-
-  useImperativeHandle(ref, () => ({ scrollToTop, refresh }), [])
-
-  useEffect(() => {
-    return () => {
-      userAggregationService.clearAggregations(feedId)
+    const scrollToTop = (behavior: ScrollBehavior = 'instant') => {
+      setTimeout(() => {
+        topRef.current?.scrollIntoView({ behavior, block: 'start' })
+      }, 20)
     }
-  }, [feedId])
 
-  useEffect(() => {
-    if (!subRequests.length) return
+    const refresh = () => {
+      scrollToTop()
+      setTimeout(() => {
+        setRefreshCount((count) => count + 1)
+      }, 500)
+    }
 
-    setSince(dayjs().subtract(1, 'day').unix())
-    setHasMore(true)
+    useImperativeHandle(ref, () => ({ scrollToTop, refresh }), [])
 
-    async function init() {
-      setLoading(true)
-      setEvents([])
-
-      if (showKinds?.length === 0 && subRequests.every(({ filter }) => !filter.kinds)) {
-        setLoading(false)
-        return () => {}
+    useEffect(() => {
+      return () => {
+        userAggregationService.clearAggregations(feedId)
       }
+    }, [feedId])
 
-      const { closer, timelineKey } = await client.subscribeTimeline(
-        subRequests.map(({ urls, filter }) => ({
-          urls,
-          filter: {
-            kinds: showKinds ?? [],
-            ...filter,
-            limit: LIMIT
-          }
-        })),
-        {
-          onEvents: (events, eosed) => {
-            if (events.length > 0) {
-              setEvents(events)
+    useEffect(() => {
+      if (!subRequests.length) return
+
+      setSince(dayjs().subtract(1, 'day').unix())
+      setHasMore(true)
+
+      async function init() {
+        setLoading(true)
+        setEvents([])
+        setNewEvents([])
+        setHasMore(true)
+
+        if (showKinds?.length === 0 && subRequests.every(({ filter }) => !filter.kinds)) {
+          setLoading(false)
+          setHasMore(false)
+          return () => {}
+        }
+
+        const { closer, timelineKey } = await client.subscribeTimeline(
+          subRequests.map(({ urls, filter }) => ({
+            urls,
+            filter: {
+              kinds: showKinds ?? [],
+              ...filter,
+              limit: LIMIT
             }
-            if (eosed) {
-              setLoading(false)
-              if (events.length === 0) {
+          })),
+          {
+            onEvents: (events, eosed) => {
+              if (events.length > 0) {
+                setEvents(events)
+              }
+              if (areAlgoRelays) {
                 setHasMore(false)
               }
+              if (eosed) {
+                setLoading(false)
+                setHasMore(events.length > 0)
+                addReplies(events)
+              }
+            },
+            onNew: (event) => {
+              setNewEvents((oldEvents) =>
+                [event, ...oldEvents].sort((a, b) => b.created_at - a.created_at)
+              )
+              addReplies([event])
+            },
+            onClose: (url, reason) => {
+              if (!showRelayCloseReason) return
+              // ignore reasons from nostr-tools
+              if (
+                [
+                  'closed by caller',
+                  'relay connection errored',
+                  'relay connection closed',
+                  'pingpong timed out',
+                  'relay connection closed by us'
+                ].includes(reason)
+              ) {
+                return
+              }
+
+              toast.error(`${url}: ${reason}`)
             }
           },
-          onNew: (event) => {
-            setEvents((oldEvents) => {
-              const newEvents = oldEvents.some((e) => e.id === event.id)
-                ? oldEvents
-                : [event, ...oldEvents]
-              return newEvents
-            })
+          {
+            startLogin,
+            needSort: !areAlgoRelays
           }
-        },
-        {
-          startLogin,
-          needSort: true
+        )
+        setTimelineKey(timelineKey)
+
+        return closer
+      }
+
+      const promise = init()
+      return () => {
+        promise.then((closer) => closer())
+      }
+    }, [feedId, refreshCount])
+
+    useEffect(() => {
+      if (loading || !hasMore || !timelineKey || !events.length) {
+        return
+      }
+
+      const until = events[events.length - 1].created_at - 1
+      if (until < since) {
+        return
+      }
+
+      setLoading(true)
+      client.loadMoreTimeline(timelineKey, until, LIMIT).then((moreEvents) => {
+        if (moreEvents.length === 0) {
+          setHasMore(false)
+          setLoading(false)
+          return
         }
-      )
-      setTimelineKey(timelineKey)
-
-      return closer
-    }
-
-    const promise = init()
-    return () => {
-      promise.then((closer) => closer())
-    }
-  }, [feedId, refreshCount])
-
-  useEffect(() => {
-    if (loading || !hasMore || !timelineKey || !events.length) {
-      return
-    }
-
-    const until = events[events.length - 1].created_at - 1
-    if (until < since) {
-      return
-    }
-
-    setLoading(true)
-    client.loadMoreTimeline(timelineKey, until, LIMIT).then((moreEvents) => {
-      if (moreEvents.length === 0) {
-        setHasMore(false)
+        setEvents((oldEvents) => [...oldEvents, ...moreEvents])
         setLoading(false)
+      })
+    }, [loading, timelineKey, events, since, hasMore])
+
+    useEffect(() => {
+      if (loading) {
+        setShowLoadingBar(true)
         return
       }
-      setEvents((oldEvents) => [...oldEvents, ...moreEvents])
-      setLoading(false)
-    })
-  }, [loading, timelineKey, events, since, hasMore])
 
-  useEffect(() => {
-    if (loading) {
-      setShowLoadingBar(true)
-      return
+      const timeout = setTimeout(() => {
+        setShowLoadingBar(false)
+      }, 1000)
+
+      return () => clearTimeout(timeout)
+    }, [loading])
+
+    const shouldHideEvent = useCallback(
+      (evt: Event) => {
+        if (isEventDeleted(evt)) return true
+        if (hideUntrustedNotes && !isUserTrusted(evt.pubkey)) return true
+        if (filterMutedNotes && mutePubkeySet.has(evt.pubkey)) return true
+        if (
+          filterMutedNotes &&
+          hideContentMentioningMutedUsers &&
+          isMentioningMutedUsers(evt, mutePubkeySet)
+        ) {
+          return true
+        }
+        if (filterFn && !filterFn(evt)) {
+          return true
+        }
+
+        return false
+      },
+      [hideUntrustedNotes, mutePubkeySet, isEventDeleted, filterFn]
+    )
+
+    const lastXDays = useMemo(() => {
+      return dayjs().diff(dayjs.unix(since), 'day')
+    }, [since])
+
+    const filteredEvents = useMemo(() => {
+      return events.filter((evt) => evt.created_at >= since && !shouldHideEvent(evt))
+    }, [events, since, shouldHideEvent])
+
+    const filteredNewEvents = useMemo(() => {
+      return newEvents.filter((evt) => evt.created_at >= since && !shouldHideEvent(evt))
+    }, [newEvents, since, shouldHideEvent])
+
+    const aggregations = useMemo(() => {
+      const aggs = userAggregationService.aggregateByUser(filteredEvents)
+      userAggregationService.saveAggregations(feedId, aggs)
+      return aggs
+    }, [feedId, filteredEvents])
+
+    const pinnedAggregations = useMemo(() => {
+      return aggregations.filter((agg) => pinnedPubkeySet.has(agg.pubkey))
+    }, [aggregations, pinnedPubkeySet])
+
+    const normalAggregations = useMemo(() => {
+      return aggregations.filter((agg) => !pinnedPubkeySet.has(agg.pubkey))
+    }, [aggregations, pinnedPubkeySet])
+
+    const displayedNormalAggregations = useMemo(() => {
+      return normalAggregations.slice(0, showCount)
+    }, [normalAggregations, showCount])
+
+    const hasMoreToDisplay = useMemo(() => {
+      return normalAggregations.length > displayedNormalAggregations.length
+    }, [normalAggregations, displayedNormalAggregations])
+
+    useEffect(() => {
+      const options = {
+        root: null,
+        rootMargin: '10px',
+        threshold: 1
+      }
+      if (!hasMoreToDisplay) return
+
+      const observerInstance = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          setShowCount((count) => count + SHOW_COUNT)
+        }
+      }, options)
+
+      const currentBottomRef = bottomRef.current
+      if (currentBottomRef) {
+        observerInstance.observe(currentBottomRef)
+      }
+
+      return () => {
+        if (observerInstance && currentBottomRef) {
+          observerInstance.unobserve(currentBottomRef)
+        }
+      }
+    }, [hasMoreToDisplay])
+
+    const handleViewUser = (agg: TUserAggregation) => {
+      // Mark as viewed when user clicks
+      userAggregationService.markAsViewed(feedId, agg.pubkey)
+
+      if (agg.count === 1) {
+        const evt = agg.events[0]
+        if (evt.kind !== kinds.Repost && evt.kind !== kinds.GenericRepost) {
+          push(toNote(agg.events[0]))
+          return
+        }
+      }
+
+      push(toUserAggregationDetail(feedId, agg.pubkey))
     }
 
-    const timeout = setTimeout(() => {
-      setShowLoadingBar(false)
-    }, 1000)
-
-    return () => clearTimeout(timeout)
-  }, [loading])
-
-  const shouldHideEvent = useCallback(
-    (evt: Event) => {
-      if (isEventDeleted(evt)) return true
-      if (hideUntrustedNotes && !isUserTrusted(evt.pubkey)) return true
-      if (filterMutedNotes && mutePubkeySet.has(evt.pubkey)) return true
-      if (
-        filterMutedNotes &&
-        hideContentMentioningMutedUsers &&
-        isMentioningMutedUsers(evt, mutePubkeySet)
-      ) {
-        return true
-      }
-      if (filterFn && !filterFn(evt)) {
-        return true
-      }
-
-      return false
-    },
-    [hideUntrustedNotes, mutePubkeySet, isEventDeleted, filterFn]
-  )
-
-  const lastXDays = useMemo(() => {
-    return dayjs().diff(dayjs.unix(since), 'day')
-  }, [since])
-
-  const filteredEvents = useMemo(() => {
-    return events.filter((evt) => evt.created_at >= since && !shouldHideEvent(evt))
-  }, [events, since, shouldHideEvent])
-
-  const aggregations = useMemo(() => {
-    const aggs = userAggregationService.aggregateByUser(filteredEvents)
-    userAggregationService.saveAggregations(feedId, aggs)
-    return aggs
-  }, [feedId, filteredEvents])
-
-  const pinnedAggregations = useMemo(() => {
-    return aggregations.filter((agg) => pinnedPubkeySet.has(agg.pubkey))
-  }, [aggregations, pinnedPubkeySet])
-
-  const normalAggregations = useMemo(() => {
-    return aggregations.filter((agg) => !pinnedPubkeySet.has(agg.pubkey))
-  }, [aggregations, pinnedPubkeySet])
-
-  const displayedNormalAggregations = useMemo(() => {
-    return normalAggregations.slice(0, showCount)
-  }, [normalAggregations, showCount])
-
-  const hasMoreToDisplay = useMemo(() => {
-    return normalAggregations.length > displayedNormalAggregations.length
-  }, [normalAggregations, displayedNormalAggregations])
-
-  useEffect(() => {
-    const options = {
-      root: null,
-      rootMargin: '10px',
-      threshold: 1
-    }
-    if (!hasMoreToDisplay) return
-
-    const observerInstance = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        setShowCount((count) => count + SHOW_COUNT)
-      }
-    }, options)
-
-    const currentBottomRef = bottomRef.current
-    if (currentBottomRef) {
-      observerInstance.observe(currentBottomRef)
+    const handleLoadEarlier = () => {
+      setSince((prevSince) => dayjs.unix(prevSince).subtract(1, 'day').unix())
+      setShowCount(SHOW_COUNT)
     }
 
-    return () => {
-      if (observerInstance && currentBottomRef) {
-        observerInstance.unobserve(currentBottomRef)
-      }
-    }
-  }, [hasMoreToDisplay])
-
-  const handleViewUser = (agg: TUserAggregation) => {
-    // Mark as viewed when user clicks
-    userAggregationService.markAsViewed(feedId, agg.pubkey)
-
-    if (agg.count === 1) {
-      const evt = agg.events[0]
-      if (evt.kind !== kinds.Repost && evt.kind !== kinds.GenericRepost) {
-        push(toNote(agg.events[0]))
-        return
-      }
+    const showNewEvents = () => {
+      setEvents((oldEvents) => [...newEvents, ...oldEvents])
+      setNewEvents([])
+      setTimeout(() => {
+        scrollToTop('smooth')
+      }, 0)
     }
 
-    push(toUserAggregationDetail(feedId, agg.pubkey))
-  }
+    const list = (
+      <div className="min-h-screen">
+        {pinnedAggregations.map((agg) => (
+          <UserAggregationItem
+            key={agg.pubkey}
+            feedId={feedId}
+            aggregation={agg}
+            onClick={() => handleViewUser(agg)}
+          />
+        ))}
 
-  const handleLoadEarlier = () => {
-    setSince((prevSince) => dayjs.unix(prevSince).subtract(1, 'day').unix())
-    setShowCount(SHOW_COUNT)
-  }
+        {normalAggregations.map((agg) => (
+          <UserAggregationItem
+            key={agg.pubkey}
+            feedId={feedId}
+            aggregation={agg}
+            onClick={() => handleViewUser(agg)}
+          />
+        ))}
 
-  const list = (
-    <div className="min-h-screen">
-      {pinnedAggregations.map((agg) => (
-        <UserAggregationItem
-          key={agg.pubkey}
-          feedId={feedId}
-          aggregation={agg}
-          onClick={() => handleViewUser(agg)}
-        />
-      ))}
+        {loading || hasMoreToDisplay ? (
+          <div ref={bottomRef}>
+            <UserAggregationItemSkeleton />
+          </div>
+        ) : aggregations.length === 0 ? (
+          <div className="flex justify-center w-full mt-2">
+            <Button size="lg" onClick={() => setRefreshCount((count) => count + 1)}>
+              {t('Reload')}
+            </Button>
+          </div>
+        ) : (
+          <div className="text-center text-sm text-muted-foreground mt-2">{t('no more notes')}</div>
+        )}
+      </div>
+    )
 
-      {normalAggregations.map((agg) => (
-        <UserAggregationItem
-          key={agg.pubkey}
-          feedId={feedId}
-          aggregation={agg}
-          onClick={() => handleViewUser(agg)}
-        />
-      ))}
-
-      {loading || hasMoreToDisplay ? (
-        <div ref={bottomRef}>
-          <UserAggregationItemSkeleton />
-        </div>
-      ) : aggregations.length === 0 ? (
-        <div className="flex justify-center w-full mt-2">
-          <Button size="lg" onClick={() => setRefreshCount((count) => count + 1)}>
-            {t('Reload')}
+    return (
+      <div>
+        <div ref={topRef} className="scroll-mt-[calc(6rem+1px)]" />
+        {showLoadingBar && <LoadingBar />}
+        <div className="border-b h-12 pl-4 pr-1 flex items-center justify-between gap-2">
+          <div className="text-sm text-muted-foreground flex items-center gap-1.5 min-w-0">
+            <span className="font-medium text-foreground">
+              {lastXDays === 1
+                ? t('Last 24 hours')
+                : t('Last {{count}} days', { count: lastXDays })}
+            </span>
+            ·
+            <span>
+              {filteredEvents.length} {t('notes')}
+            </span>
+          </div>
+          <Button
+            variant="ghost"
+            className="h-10 px-3 shrink-0 rounded-lg text-muted-foreground hover:text-foreground"
+            disabled={showLoadingBar || !hasMore}
+            onClick={handleLoadEarlier}
+          >
+            {showLoadingBar ? <Loader className="animate-spin" /> : <History />}
+            {t('Load earlier')}
           </Button>
         </div>
-      ) : (
-        <div className="text-center text-sm text-muted-foreground mt-2">{t('no more notes')}</div>
-      )}
-    </div>
-  )
-
-  return (
-    <div>
-      <div ref={topRef} className="scroll-mt-[calc(6rem+1px)]" />
-      {showLoadingBar && <LoadingBar />}
-      <div className="border-b h-12 pl-4 pr-1 flex items-center justify-between gap-2">
-        <div className="text-sm text-muted-foreground flex items-center gap-1.5 min-w-0">
-          <span className="font-medium text-foreground">
-            {lastXDays === 1 ? t('Last 24 hours') : t('Last {{count}} days', { count: lastXDays })}
-          </span>
-          ·
-          <span>
-            {filteredEvents.length} {t('notes')}
-          </span>
-        </div>
-        <Button
-          variant="ghost"
-          className="h-10 px-3 shrink-0 rounded-lg text-muted-foreground hover:text-foreground"
-          disabled={showLoadingBar || !hasMore}
-          onClick={handleLoadEarlier}
-        >
-          {showLoadingBar ? <Loader className="animate-spin" /> : <History />}
-          {t('Load earlier')}
-        </Button>
+        {supportTouch ? (
+          <PullToRefresh
+            onRefresh={async () => {
+              refresh()
+              await new Promise((resolve) => setTimeout(resolve, 1000))
+            }}
+            pullingContent=""
+          >
+            {list}
+          </PullToRefresh>
+        ) : (
+          list
+        )}
+        <div className="h-40" />
+        {filteredNewEvents.length > 0 && (
+          <NewNotesButton newEvents={filteredNewEvents} onClick={showNewEvents} />
+        )}
       </div>
-      {supportTouch ? (
-        <PullToRefresh
-          onRefresh={async () => {
-            refresh()
-            await new Promise((resolve) => setTimeout(resolve, 1000))
-          }}
-          pullingContent=""
-        >
-          {list}
-        </PullToRefresh>
-      ) : (
-        list
-      )}
-    </div>
-  )
-})
+    )
+  }
+)
 UserAggregationList.displayName = 'UserAggregationList'
 export default UserAggregationList
 

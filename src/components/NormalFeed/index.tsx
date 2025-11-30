@@ -92,6 +92,8 @@ export default function NormalFeed({
           showKinds={temporaryShowKinds}
           subRequests={subRequests}
           filterFn={filterFn}
+          areAlgoRelays={areAlgoRelays}
+          showRelayCloseReason={showRelayCloseReason}
         />
       ) : (
         <NoteList
