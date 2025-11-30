@@ -420,22 +420,31 @@ function UserAggregationItem({
       onClick={onClick}
     >
       {supportTouch ? (
-        <SimpleUserAvatar userId={aggregation.pubkey} />
+        <SimpleUserAvatar
+          userId={aggregation.pubkey}
+          className={!hasNewEvents ? 'grayscale' : ''}
+        />
       ) : (
-        <UserAvatar userId={aggregation.pubkey} />
+        <UserAvatar userId={aggregation.pubkey} className={!hasNewEvents ? 'grayscale' : ''} />
       )}
 
       <div className="flex-1 min-w-0 flex flex-col">
         {supportTouch ? (
           <SimpleUsername
             userId={aggregation.pubkey}
-            className="font-semibold text-base truncate max-w-fit"
+            className={cn(
+              'font-semibold text-base truncate max-w-fit',
+              !hasNewEvents && 'text-muted-foreground'
+            )}
             skeletonClassName="h-4"
           />
         ) : (
           <Username
             userId={aggregation.pubkey}
-            className="font-semibold text-base truncate max-w-fit"
+            className={cn(
+              'font-semibold text-base truncate max-w-fit',
+              !hasNewEvents && 'text-muted-foreground'
+            )}
             skeletonClassName="h-4"
           />
         )}
