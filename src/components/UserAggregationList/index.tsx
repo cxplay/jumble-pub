@@ -434,6 +434,7 @@ function UserAggregationItem({
   const { t } = useTranslation()
   const supportTouch = useMemo(() => isTouchDevice(), [])
   const [hasNewEvents, setHasNewEvents] = useState(true)
+  const [loading, setLoading] = useState(false)
   const { isPinned, togglePin } = usePinnedUsers()
 
   useEffect(() => {
@@ -457,7 +458,10 @@ function UserAggregationItem({
 
   const onTogglePin = (e: React.MouseEvent) => {
     e.stopPropagation()
-    togglePin(aggregation.pubkey)
+    setLoading(true)
+    togglePin(aggregation.pubkey).finally(() => {
+      setLoading(false)
+    })
   }
 
   const onToggleViewed = (e: React.MouseEvent) => {
@@ -520,10 +524,12 @@ function UserAggregationItem({
         }`}
         title={isPinned(aggregation.pubkey) ? t('Unpin') : t('Pin')}
       >
-        {isPinned(aggregation.pubkey) ? (
-          <PinOff className="w-4 h-4" />
+        {loading ? (
+          <Loader className="animate-spin" />
+        ) : isPinned(aggregation.pubkey) ? (
+          <PinOff />
         ) : (
-          <Pin className="w-4 h-4" />
+          <Pin />
         )}
       </Button>
 
