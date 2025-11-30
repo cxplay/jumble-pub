@@ -14,6 +14,7 @@ import { MediaUploadServiceProvider } from '@/providers/MediaUploadServiceProvid
 import { MuteListProvider } from '@/providers/MuteListProvider'
 import { NostrProvider } from '@/providers/NostrProvider'
 import { PinListProvider } from '@/providers/PinListProvider'
+import { PinnedUsersProvider } from '@/providers/PinnedUsersProvider'
 import { ReplyProvider } from '@/providers/ReplyProvider'
 import { ScreenSizeProvider } from '@/providers/ScreenSizeProvider'
 import { ThemeProvider } from '@/providers/ThemeProvider'
@@ -40,16 +41,18 @@ export default function App(): JSX.Element {
                             <BookmarksProvider>
                               <EmojiPackProvider>
                                 <PinListProvider>
-                                  <FeedProvider>
-                                    <ReplyProvider>
-                                      <MediaUploadServiceProvider>
-                                        <KindFilterProvider>
-                                          <PageManager />
-                                          <Toaster />
-                                        </KindFilterProvider>
-                                      </MediaUploadServiceProvider>
-                                    </ReplyProvider>
-                                  </FeedProvider>
+                                  <PinnedUsersProvider>
+                                    <FeedProvider>
+                                      <ReplyProvider>
+                                        <MediaUploadServiceProvider>
+                                          <KindFilterProvider>
+                                            <PageManager />
+                                            <Toaster />
+                                          </KindFilterProvider>
+                                        </MediaUploadServiceProvider>
+                                      </ReplyProvider>
+                                    </FeedProvider>
+                                  </PinnedUsersProvider>
                                 </PinListProvider>
                               </EmojiPackProvider>
                             </BookmarksProvider>

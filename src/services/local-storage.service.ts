@@ -57,7 +57,6 @@ class LocalStorageService {
   private enableSingleColumnLayout: boolean = true
   private faviconUrlTemplate: string = DEFAULT_FAVICON_URL_TEMPLATE
   private filterOutOnionRelays: boolean = !isTorBrowser()
-  private pinnedPubkeys: Set<string> = new Set()
 
   constructor() {
     if (!LocalStorageService.instance) {
@@ -231,12 +230,8 @@ class LocalStorageService {
       this.filterOutOnionRelays = filterOutOnionRelaysStr !== 'false'
     }
 
-    const pinnedPubkeysStr = window.localStorage.getItem(StorageKey.PINNED_PUBKEYS)
-    if (pinnedPubkeysStr) {
-      this.pinnedPubkeys = new Set(JSON.parse(pinnedPubkeysStr))
-    }
-
     // Clean up deprecated data
+    window.localStorage.removeItem(StorageKey.PINNED_PUBKEYS)
     window.localStorage.removeItem(StorageKey.ACCOUNT_PROFILE_EVENT_MAP)
     window.localStorage.removeItem(StorageKey.ACCOUNT_FOLLOW_LIST_EVENT_MAP)
     window.localStorage.removeItem(StorageKey.ACCOUNT_RELAY_LIST_EVENT_MAP)
@@ -563,18 +558,6 @@ class LocalStorageService {
   setFilterOutOnionRelays(filterOut: boolean) {
     this.filterOutOnionRelays = filterOut
     window.localStorage.setItem(StorageKey.FILTER_OUT_ONION_RELAYS, filterOut.toString())
-  }
-
-  getPinnedPubkeys(): Set<string> {
-    return this.pinnedPubkeys
-  }
-
-  setPinnedPubkeys(pinnedPubkeys: Set<string>) {
-    this.pinnedPubkeys = pinnedPubkeys
-    window.localStorage.setItem(
-      StorageKey.PINNED_PUBKEYS,
-      JSON.stringify(Array.from(this.pinnedPubkeys))
-    )
   }
 }
 

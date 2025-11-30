@@ -41,7 +41,7 @@ export const StorageKey = {
   ENABLE_SINGLE_COLUMN_LAYOUT: 'enableSingleColumnLayout',
   FAVICON_URL_TEMPLATE: 'faviconUrlTemplate',
   FILTER_OUT_ONION_RELAYS: 'filterOutOnionRelays',
-  PINNED_PUBKEYS: 'pinnedPubkeys',
+  PINNED_PUBKEYS: 'pinnedPubkeys', // deprecated
   MEDIA_UPLOAD_SERVICE: 'mediaUploadService', // deprecated
   HIDE_UNTRUSTED_EVENTS: 'hideUntrustedEvents', // deprecated
   ACCOUNT_RELAY_LIST_EVENT_MAP: 'accountRelayListEventMap', // deprecated
@@ -80,6 +80,7 @@ export const ExtendedKind = {
   COMMENT: 1111,
   VOICE: 1222,
   VOICE_COMMENT: 1244,
+  PINNED_USERS: 10010,
   FAVORITE_RELAYS: 10012,
   BLOSSOM_SERVER_LIST: 10063,
   FOLLOW_PACK: 39089,

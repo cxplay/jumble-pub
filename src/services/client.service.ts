@@ -1397,6 +1397,10 @@ class ClientService extends EventTarget {
     return this.fetchReplaceableEvent(pubkey, kinds.UserEmojiList)
   }
 
+  async fetchPinnedUsersList(pubkey: string) {
+    return this.fetchReplaceableEvent(pubkey, ExtendedKind.PINNED_USERS)
+  }
+
   async updateBlossomServerListEventCache(evt: NEvent) {
     await this.updateReplaceableEventCache(evt)
   }

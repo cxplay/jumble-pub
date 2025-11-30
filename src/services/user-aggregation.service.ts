@@ -1,5 +1,4 @@
 import { getEventKey } from '@/lib/event'
-import storage from '@/services/local-storage.service'
 import { TFeedSubRequest } from '@/types'
 import dayjs from 'dayjs'
 import { Event } from 'nostr-tools'
@@ -14,7 +13,6 @@ export type TUserAggregation = {
 class UserAggregationService {
   static instance: UserAggregationService
 
-  private pinnedPubkeys: Set<string> = new Set()
   private aggregationStore: Map<string, Map<string, Event[]>> = new Map()
   private listenersMap: Map<string, Set<() => void>> = new Map()
   private lastViewedMap: Map<string, number> = new Map()
@@ -24,7 +22,6 @@ class UserAggregationService {
       return UserAggregationService.instance
     }
     UserAggregationService.instance = this
-    this.pinnedPubkeys = storage.getPinnedPubkeys()
   }
 
   subscribeAggregationChange(feedId: string, pubkey: string, listener: () => void) {
@@ -64,33 +61,6 @@ class UserAggregationService {
     }
   }
 
-  // Pinned users management
-  getPinnedPubkeys(): string[] {
-    return [...this.pinnedPubkeys]
-  }
-
-  isPinned(pubkey: string): boolean {
-    return this.pinnedPubkeys.has(pubkey)
-  }
-
-  pinUser(pubkey: string) {
-    this.pinnedPubkeys.add(pubkey)
-    storage.setPinnedPubkeys(this.pinnedPubkeys)
-  }
-
-  unpinUser(pubkey: string) {
-    this.pinnedPubkeys.delete(pubkey)
-    storage.setPinnedPubkeys(this.pinnedPubkeys)
-  }
-
-  togglePin(pubkey: string) {
-    if (this.isPinned(pubkey)) {
-      this.unpinUser(pubkey)
-    } else {
-      this.pinUser(pubkey)
-    }
-  }
-
   // Aggregate events by user
   aggregateByUser(events: Event[]): TUserAggregation[] {
     const userEventsMap = new Map<string, Event[]>()
@@ -123,21 +93,6 @@ class UserAggregationService {
     return aggregations.sort((a, b) => {
       return b.lastEventTime - a.lastEventTime
     })
-  }
-
-  sortWithPinned(aggregations: TUserAggregation[]): TUserAggregation[] {
-    const pinned: TUserAggregation[] = []
-    const unpinned: TUserAggregation[] = []
-
-    aggregations.forEach((agg) => {
-      if (this.isPinned(agg.pubkey)) {
-        pinned.push(agg)
-      } else {
-        unpinned.push(agg)
-      }
-    })
-
-    return [...pinned, ...unpinned]
   }
 
   saveAggregations(feedId: string, aggregations: TUserAggregation[]) {

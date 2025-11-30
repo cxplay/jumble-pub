@@ -16,7 +16,6 @@ const StoreNames = {
   MUTE_LIST_EVENTS: 'muteListEvents',
   BOOKMARK_LIST_EVENTS: 'bookmarkListEvents',
   BLOSSOM_SERVER_LIST_EVENTS: 'blossomServerListEvents',
-  MUTE_DECRYPTED_TAGS: 'muteDecryptedTags',
   USER_EMOJI_LIST_EVENTS: 'userEmojiListEvents',
   EMOJI_SET_EVENTS: 'emojiSetEvents',
   PIN_LIST_EVENTS: 'pinListEvents',
@@ -24,6 +23,9 @@ const StoreNames = {
   RELAY_SETS: 'relaySets',
   FOLLOWING_FAVORITE_RELAYS: 'followingFavoriteRelays',
   RELAY_INFOS: 'relayInfos',
+  DECRYPTED_CONTENTS: 'decryptedContents',
+  PINNED_USERS_EVENTS: 'pinnedUsersEvents',
+  MUTE_DECRYPTED_TAGS: 'muteDecryptedTags', // deprecated
   RELAY_INFO_EVENTS: 'relayInfoEvents' // deprecated
 }
 
@@ -43,7 +45,7 @@ class IndexedDbService {
   init(): Promise<void> {
     if (!this.initPromise) {
       this.initPromise = new Promise((resolve, reject) => {
-        const request = window.indexedDB.open('jumble', 9)
+        const request = window.indexedDB.open('jumble', 10)
 
         request.onerror = (event) => {
           reject(event)
@@ -71,8 +73,8 @@ class IndexedDbService {
           if (!db.objectStoreNames.contains(StoreNames.BOOKMARK_LIST_EVENTS)) {
             db.createObjectStore(StoreNames.BOOKMARK_LIST_EVENTS, { keyPath: 'key' })
           }
-          if (!db.objectStoreNames.contains(StoreNames.MUTE_DECRYPTED_TAGS)) {
-            db.createObjectStore(StoreNames.MUTE_DECRYPTED_TAGS, { keyPath: 'key' })
+          if (!db.objectStoreNames.contains(StoreNames.DECRYPTED_CONTENTS)) {
+            db.createObjectStore(StoreNames.DECRYPTED_CONTENTS, { keyPath: 'key' })
           }
           if (!db.objectStoreNames.contains(StoreNames.FAVORITE_RELAYS)) {
             db.createObjectStore(StoreNames.FAVORITE_RELAYS, { keyPath: 'key' })
@@ -98,8 +100,15 @@ class IndexedDbService {
           if (!db.objectStoreNames.contains(StoreNames.PIN_LIST_EVENTS)) {
             db.createObjectStore(StoreNames.PIN_LIST_EVENTS, { keyPath: 'key' })
           }
+          if (!db.objectStoreNames.contains(StoreNames.PINNED_USERS_EVENTS)) {
+            db.createObjectStore(StoreNames.PINNED_USERS_EVENTS, { keyPath: 'key' })
+          }
+
           if (db.objectStoreNames.contains(StoreNames.RELAY_INFO_EVENTS)) {
             db.deleteObjectStore(StoreNames.RELAY_INFO_EVENTS)
+          }
+          if (db.objectStoreNames.contains(StoreNames.MUTE_DECRYPTED_TAGS)) {
+            db.deleteObjectStore(StoreNames.MUTE_DECRYPTED_TAGS)
           }
           this.db = db
         }
@@ -268,19 +277,19 @@ class IndexedDbService {
     })
   }
 
-  async getMuteDecryptedTags(id: string): Promise<string[][] | null> {
+  async getDecryptedContent(key: string): Promise<string | null> {
     await this.initPromise
     return new Promise((resolve, reject) => {
       if (!this.db) {
         return reject('database not initialized')
       }
-      const transaction = this.db.transaction(StoreNames.MUTE_DECRYPTED_TAGS, 'readonly')
-      const store = transaction.objectStore(StoreNames.MUTE_DECRYPTED_TAGS)
-      const request = store.get(id)
+      const transaction = this.db.transaction(StoreNames.DECRYPTED_CONTENTS, 'readonly')
+      const store = transaction.objectStore(StoreNames.DECRYPTED_CONTENTS)
+      const request = store.get(key)
 
       request.onsuccess = () => {
         transaction.commit()
-        resolve((request.result as TValue<string[][]>)?.value)
+        resolve((request.result as TValue<string>)?.value)
       }
 
       request.onerror = (event) => {
@@ -290,16 +299,16 @@ class IndexedDbService {
     })
   }
 
-  async putMuteDecryptedTags(id: string, tags: string[][]): Promise<void> {
+  async putDecryptedContent(key: string, content: string): Promise<void> {
     await this.initPromise
     return new Promise((resolve, reject) => {
       if (!this.db) {
         return reject('database not initialized')
       }
-      const transaction = this.db.transaction(StoreNames.MUTE_DECRYPTED_TAGS, 'readwrite')
-      const store = transaction.objectStore(StoreNames.MUTE_DECRYPTED_TAGS)
+      const transaction = this.db.transaction(StoreNames.DECRYPTED_CONTENTS, 'readwrite')
+      const store = transaction.objectStore(StoreNames.DECRYPTED_CONTENTS)
 
-      const putRequest = store.put(this.formatValue(id, tags))
+      const putRequest = store.put(this.formatValue(key, content))
       putRequest.onsuccess = () => {
         transaction.commit()
         resolve()
@@ -471,6 +480,8 @@ class IndexedDbService {
         return StoreNames.EMOJI_SET_EVENTS
       case kinds.Pinlist:
         return StoreNames.PIN_LIST_EVENTS
+      case ExtendedKind.PINNED_USERS:
+        return StoreNames.PINNED_USERS_EVENTS
       default:
         return undefined
     }

@@ -11,6 +11,7 @@ import { useContentPolicy } from '@/providers/ContentPolicyProvider'
 import { useDeletedEvent } from '@/providers/DeletedEventProvider'
 import { useMuteList } from '@/providers/MuteListProvider'
 import { useNostr } from '@/providers/NostrProvider'
+import { usePinnedUsers } from '@/providers/PinnedUsersProvider'
 import { useUserTrust } from '@/providers/UserTrustProvider'
 import client from '@/services/client.service'
 import userAggregationService, { TUserAggregation } from '@/services/user-aggregation.service'
@@ -53,6 +54,7 @@ const UserAggregationList = forwardRef<
   const { push } = useSecondaryPage()
   const { hideUntrustedNotes, isUserTrusted } = useUserTrust()
   const { mutePubkeySet } = useMuteList()
+  const { pinnedPubkeySet } = usePinnedUsers()
   const { hideContentMentioningMutedUsers } = useContentPolicy()
   const { isEventDeleted } = useDeletedEvent()
   const [since, setSince] = useState(() => dayjs().subtract(1, 'day').unix())
@@ -64,9 +66,6 @@ const UserAggregationList = forwardRef<
   const [showCount, setShowCount] = useState(SHOW_COUNT)
   const [hasMore, setHasMore] = useState(true)
   const supportTouch = useMemo(() => isTouchDevice(), [])
-  const [pinnedPubkeys, setPinnedPubkeys] = useState<Set<string>>(
-    new Set(userAggregationService.getPinnedPubkeys())
-  )
   const feedId = useMemo(() => {
     return userAggregationService.getFeedId(subRequests, showKinds)
   }, [JSON.stringify(subRequests), JSON.stringify(showKinds)])
@@ -97,7 +96,6 @@ const UserAggregationList = forwardRef<
   useEffect(() => {
     if (!subRequests.length) return
 
-    setPinnedPubkeys(new Set(userAggregationService.getPinnedPubkeys()))
     setSince(dayjs().subtract(1, 'day').unix())
     setHasMore(true)
 
@@ -223,28 +221,24 @@ const UserAggregationList = forwardRef<
   const aggregations = useMemo(() => {
     const aggs = userAggregationService.aggregateByUser(filteredEvents)
     userAggregationService.saveAggregations(feedId, aggs)
+    return aggs
+  }, [feedId, filteredEvents])
 
-    const pinned: TUserAggregation[] = []
-    const unpinned: TUserAggregation[] = []
+  const pinnedAggregations = useMemo(() => {
+    return aggregations.filter((agg) => pinnedPubkeySet.has(agg.pubkey))
+  }, [aggregations, pinnedPubkeySet])
 
-    aggs.forEach((agg) => {
-      if (pinnedPubkeys.has(agg.pubkey)) {
-        pinned.push(agg)
-      } else {
-        unpinned.push(agg)
-      }
-    })
+  const normalAggregations = useMemo(() => {
+    return aggregations.filter((agg) => !pinnedPubkeySet.has(agg.pubkey))
+  }, [aggregations, pinnedPubkeySet])
 
-    return [...pinned, ...unpinned]
-  }, [feedId, filteredEvents, pinnedPubkeys])
-
-  const displayedAggregations = useMemo(() => {
-    return aggregations.slice(0, showCount)
-  }, [aggregations, showCount])
+  const displayedNormalAggregations = useMemo(() => {
+    return normalAggregations.slice(0, showCount)
+  }, [normalAggregations, showCount])
 
   const hasMoreToDisplay = useMemo(() => {
-    return aggregations.length > displayedAggregations.length
-  }, [aggregations, displayedAggregations])
+    return normalAggregations.length > displayedNormalAggregations.length
+  }, [normalAggregations, displayedNormalAggregations])
 
   useEffect(() => {
     const options = {
@@ -294,7 +288,7 @@ const UserAggregationList = forwardRef<
 
   const list = (
     <div className="min-h-screen">
-      {displayedAggregations.map((agg) => (
+      {pinnedAggregations.map((agg) => (
         <UserAggregationItem
           key={agg.pubkey}
           feedId={feedId}
@@ -302,11 +296,21 @@ const UserAggregationList = forwardRef<
           onClick={() => handleViewUser(agg)}
         />
       ))}
+
+      {normalAggregations.map((agg) => (
+        <UserAggregationItem
+          key={agg.pubkey}
+          feedId={feedId}
+          aggregation={agg}
+          onClick={() => handleViewUser(agg)}
+        />
+      ))}
+
       {loading || hasMoreToDisplay ? (
         <div ref={bottomRef}>
           <UserAggregationItemSkeleton />
         </div>
-      ) : displayedAggregations.length === 0 ? (
+      ) : aggregations.length === 0 ? (
         <div className="flex justify-center w-full mt-2">
           <Button size="lg" onClick={() => setRefreshCount((count) => count + 1)}>
             {t('Reload')}
@@ -373,7 +377,7 @@ function UserAggregationItem({
   const { t } = useTranslation()
   const supportTouch = useMemo(() => isTouchDevice(), [])
   const [hasNewEvents, setHasNewEvents] = useState(true)
-  const [isPinned, setIsPinned] = useState(userAggregationService.isPinned(aggregation.pubkey))
+  const { isPinned, togglePin } = usePinnedUsers()
 
   useEffect(() => {
     const update = () => {
@@ -396,13 +400,7 @@ function UserAggregationItem({
 
   const onTogglePin = (e: React.MouseEvent) => {
     e.stopPropagation()
-    if (isPinned) {
-      userAggregationService.unpinUser(aggregation.pubkey)
-      setIsPinned(false)
-    } else {
-      userAggregationService.pinUser(aggregation.pubkey)
-      setIsPinned(true)
-    }
+    togglePin(aggregation.pubkey)
   }
 
   const onToggleViewed = (e: React.MouseEvent) => {
@@ -459,13 +457,17 @@ function UserAggregationItem({
         size="icon"
         onClick={onTogglePin}
         className={`flex-shrink-0 ${
-          isPinned
+          isPinned(aggregation.pubkey)
             ? 'text-primary hover:text-primary/80'
             : 'text-muted-foreground hover:text-foreground'
         }`}
-        title={isPinned ? t('Unpin') : t('Pin')}
+        title={isPinned(aggregation.pubkey) ? t('Unpin') : t('Pin')}
       >
-        {isPinned ? <PinOff className="w-4 h-4" /> : <Pin className="w-4 h-4" />}
+        {isPinned(aggregation.pubkey) ? (
+          <PinOff className="w-4 h-4" />
+        ) : (
+          <Pin className="w-4 h-4" />
+        )}
       </Button>
 
       <button
