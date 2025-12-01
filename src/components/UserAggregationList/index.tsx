@@ -77,6 +77,7 @@ const UserAggregationList = forwardRef<
     const [since, setSince] = useState(() => dayjs().subtract(1, 'day').unix())
     const [events, setEvents] = useState<Event[]>([])
     const [newEvents, setNewEvents] = useState<Event[]>([])
+    const [newEventPubkeys, setNewEventPubkeys] = useState<Set<string>>(new Set())
     const [timelineKey, setTimelineKey] = useState<string | undefined>(undefined)
     const [loading, setLoading] = useState(true)
     const [showLoadingBar, setShowLoadingBar] = useState(true)
@@ -89,6 +90,7 @@ const UserAggregationList = forwardRef<
     }, [JSON.stringify(subRequests), JSON.stringify(showKinds)])
     const bottomRef = useRef<HTMLDivElement | null>(null)
     const topRef = useRef<HTMLDivElement | null>(null)
+    const nonPinnedTopRef = useRef<HTMLDivElement | null>(null)
 
     const scrollToTop = (behavior: ScrollBehavior = 'instant') => {
       setTimeout(() => {
@@ -322,6 +324,11 @@ const UserAggregationList = forwardRef<
     const handleViewUser = (agg: TUserAggregation) => {
       // Mark as viewed when user clicks
       userAggregationService.markAsViewed(feedId, agg.pubkey)
+      setNewEventPubkeys((prev) => {
+        const newSet = new Set(prev)
+        newSet.delete(agg.pubkey)
+        return newSet
+      })
 
       if (agg.count === 1) {
         const evt = agg.events[0]
@@ -340,10 +347,23 @@ const UserAggregationList = forwardRef<
     }
 
     const showNewEvents = () => {
+      const pubkeySet = new Set<string>()
+      let hasPinnedUser = false
+      newEvents.forEach((evt) => {
+        pubkeySet.add(evt.pubkey)
+        if (pinnedPubkeySet.has(evt.pubkey)) {
+          hasPinnedUser = true
+        }
+      })
+      setNewEventPubkeys(pubkeySet)
       setEvents((oldEvents) => [...newEvents, ...oldEvents])
       setNewEvents([])
       setTimeout(() => {
-        scrollToTop('smooth')
+        if (hasPinnedUser) {
+          scrollToTop('smooth')
+          return
+        }
+        nonPinnedTopRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
       }, 0)
     }
 
@@ -355,15 +375,18 @@ const UserAggregationList = forwardRef<
             feedId={feedId}
             aggregation={agg}
             onClick={() => handleViewUser(agg)}
+            isNew={newEventPubkeys.has(agg.pubkey)}
           />
         ))}
 
+        <div ref={nonPinnedTopRef} className="scroll-mt-[calc(6rem+1px)]" />
         {normalAggregations.map((agg) => (
           <UserAggregationItem
             key={agg.pubkey}
             feedId={feedId}
             aggregation={agg}
             onClick={() => handleViewUser(agg)}
+            isNew={newEventPubkeys.has(agg.pubkey)}
           />
         ))}
 
@@ -436,11 +459,13 @@ export default UserAggregationList
 function UserAggregationItem({
   feedId,
   aggregation,
-  onClick
+  onClick,
+  isNew
 }: {
   feedId: string
   aggregation: TUserAggregation
   onClick: () => void
+  isNew?: boolean
 }) {
   const { t } = useTranslation()
   const supportTouch = useMemo(() => isTouchDevice(), [])
@@ -487,7 +512,10 @@ function UserAggregationItem({
 
   return (
     <div
-      className="group relative flex items-center gap-4 px-4 py-3 border-b hover:bg-accent/30 cursor-pointer transition-all duration-200"
+      className={cn(
+        'group relative flex items-center gap-4 px-4 py-3 border-b hover:bg-accent/30 cursor-pointer transition-all duration-200',
+        isNew && 'bg-primary/15 hover:bg-primary/20'
+      )}
       onClick={onClick}
     >
       {supportTouch ? (
