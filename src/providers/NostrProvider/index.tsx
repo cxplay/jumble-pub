@@ -236,7 +236,7 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
       if (storedPinListEvent) {
         setPinListEvent(storedPinListEvent)
       }
-      if (storedPinnedUsersEvent !== undefined) {
+      if (storedPinnedUsersEvent) {
         setPinnedUsersEvent(storedPinnedUsersEvent)
       }
 
@@ -348,9 +348,6 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
         if (updatedPinnedUsersEvent.id === pinnedUsersEvent.id) {
           setPinnedUsersEvent(updatedPinnedUsersEvent)
         }
-      } else {
-        await indexedDb.putNullReplaceableEvent(account.pubkey, ExtendedKind.PINNED_USERS)
-        setPinnedUsersEvent(null)
       }
 
       const notificationsSeenAt = Math.max(

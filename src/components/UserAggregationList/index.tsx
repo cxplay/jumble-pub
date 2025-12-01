@@ -66,7 +66,7 @@ const UserAggregationList = forwardRef<
     ref
   ) => {
     const { t } = useTranslation()
-    const { startLogin } = useNostr()
+    const { pubkey: currentPubkey, startLogin } = useNostr()
     const { push } = useSecondaryPage()
     const { hideUntrustedNotes, isUserTrusted } = useUserTrust()
     const { mutePubkeySet } = useMuteList()
@@ -229,6 +229,7 @@ const UserAggregationList = forwardRef<
 
     const shouldHideEvent = useCallback(
       (evt: Event) => {
+        if (evt.pubkey === currentPubkey) return true
         if (isEventDeleted(evt)) return true
         if (hideUntrustedNotes && !isUserTrusted(evt.pubkey)) return true
         if (filterMutedNotes && mutePubkeySet.has(evt.pubkey)) return true
@@ -245,7 +246,17 @@ const UserAggregationList = forwardRef<
 
         return false
       },
-      [hideUntrustedNotes, mutePubkeySet, isEventDeleted, filterFn]
+      [
+        hideUntrustedNotes,
+        mutePubkeySet,
+        isEventDeleted,
+        filterFn,
+        currentPubkey,
+        filterMutedNotes,
+        isUserTrusted,
+        hideContentMentioningMutedUsers,
+        isMentioningMutedUsers
+      ]
     )
 
     const lastXDays = useMemo(() => {
@@ -436,6 +447,7 @@ function UserAggregationItem({
   const [hasNewEvents, setHasNewEvents] = useState(true)
   const [loading, setLoading] = useState(false)
   const { isPinned, togglePin } = usePinnedUsers()
+  const pinned = useMemo(() => isPinned(aggregation.pubkey), [aggregation.pubkey, isPinned])
 
   useEffect(() => {
     const update = () => {
@@ -518,19 +530,13 @@ function UserAggregationItem({
         size="icon"
         onClick={onTogglePin}
         className={`flex-shrink-0 ${
-          isPinned(aggregation.pubkey)
+          pinned
             ? 'text-primary hover:text-primary/80'
             : 'text-muted-foreground hover:text-foreground'
         }`}
-        title={isPinned(aggregation.pubkey) ? t('Unpin') : t('Pin')}
+        title={pinned ? t('Unpin') : t('Pin')}
       >
-        {loading ? (
-          <Loader className="animate-spin" />
-        ) : isPinned(aggregation.pubkey) ? (
-          <PinOff />
-        ) : (
-          <Pin />
-        )}
+        {loading ? <Loader className="animate-spin" /> : pinned ? <PinOff /> : <Pin />}
       </Button>
 
       <button
