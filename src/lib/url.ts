@@ -149,7 +149,8 @@ export function isMedia(url: string) {
       '.aac',
       '.m4a',
       '.opus',
-      '.wma'
+      '.wma',
+      '.3gp'
     ]
     return mediaExtensions.some((ext) => new URL(url).pathname.toLowerCase().endsWith(ext))
   } catch {
