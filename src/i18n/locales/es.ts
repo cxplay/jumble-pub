@@ -578,6 +578,11 @@ export default {
     'Load earlier': 'Cargar anterior',
     'Last 24 hours': 'Últimas 24 horas',
     'Last {{count}} days': 'Últimos {{count}} días',
-    notes: 'notas'
+    notes: 'notas',
+    'Quick reaction': 'Reacción rápida',
+    'If enabled, you can react with a single click. Click and hold for more options':
+      'Si está habilitado, puedes reaccionar con un solo clic. Mantén presionado para más opciones',
+    'Quick reaction emoji': 'Emoji de reacción rápida',
+    'Select emoji': 'Seleccionar emoji'
   }
 }

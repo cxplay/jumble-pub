@@ -578,6 +578,11 @@ export default {
     'Load earlier': 'Загрузить ранее',
     'Last 24 hours': 'Последние 24 часа',
     'Last {{count}} days': 'Последние {{count}} дней',
-    notes: 'заметки'
+    notes: 'заметки',
+    'Quick reaction': 'Быстрая реакция',
+    'If enabled, you can react with a single click. Click and hold for more options':
+      'Если включено, вы можете реагировать одним щелчком. Нажмите и удерживайте для дополнительных параметров',
+    'Quick reaction emoji': 'Эмодзи быстрой реакции',
+    'Select emoji': 'Выбрать эмодзи'
   }
 }

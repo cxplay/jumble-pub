@@ -558,6 +558,11 @@ export default {
     'Load earlier': '加载更早',
     'Last 24 hours': '最近 24 小时',
     'Last {{count}} days': '最近 {{count}} 天',
-    notes: '笔记'
+    notes: '笔记',
+    'Quick reaction': '快速点赞',
+    'If enabled, you can react with a single click. Click and hold for more options':
+      '启用后，您可以通过单击进行点赞。长按以获取更多选项',
+    'Quick reaction emoji': '快速点赞表情',
+    'Select emoji': '选择表情'
   }
 }

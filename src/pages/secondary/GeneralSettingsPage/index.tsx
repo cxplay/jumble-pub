@@ -1,3 +1,6 @@
+import Emoji from '@/components/Emoji'
+import EmojiPickerDialog from '@/components/EmojiPickerDialog'
+import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select'
 import { Switch } from '@/components/ui/switch'
@@ -6,9 +9,11 @@ import { LocalizedLanguageNames, TLanguage } from '@/i18n'
 import SecondaryPageLayout from '@/layouts/SecondaryPageLayout'
 import { cn, isSupportCheckConnectionType } from '@/lib/utils'
 import { useContentPolicy } from '@/providers/ContentPolicyProvider'
+import { useUserPreferences } from '@/providers/UserPreferencesProvider'
 import { useUserTrust } from '@/providers/UserTrustProvider'
 import { TMediaAutoLoadPolicy } from '@/types'
 import { SelectValue } from '@radix-ui/react-select'
+import { RotateCcw } from 'lucide-react'
 import { forwardRef, HTMLProps, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -26,6 +31,8 @@ const GeneralSettingsPage = forwardRef(({ index }: { index?: number }, ref) => {
     setMediaAutoLoadPolicy
   } = useContentPolicy()
   const { hideUntrustedNotes, updateHideUntrustedNotes } = useUserTrust()
+  const { quickReaction, updateQuickReaction, quickReactionEmoji, updateQuickReactionEmoji } =
+    useUserPreferences()
 
   const handleLanguageChange = (value: TLanguage) => {
     i18n.changeLanguage(value)
@@ -108,6 +115,46 @@ const GeneralSettingsPage = forwardRef(({ index }: { index?: number }, ref) => {
           </Label>
           <Switch id="show-nsfw" checked={defaultShowNsfw} onCheckedChange={setDefaultShowNsfw} />
         </SettingItem>
+        <SettingItem>
+          <Label htmlFor="quick-reaction" className="text-base font-normal">
+            <div>{t('Quick reaction')}</div>
+            <div className="text-muted-foreground">
+              {t('If enabled, you can react with a single click. Click and hold for more options')}
+            </div>
+          </Label>
+          <Switch
+            id="quick-reaction"
+            checked={quickReaction}
+            onCheckedChange={updateQuickReaction}
+          />
+        </SettingItem>
+        {quickReaction && (
+          <SettingItem>
+            <Label htmlFor="quick-reaction-emoji" className="text-base font-normal">
+              {t('Quick reaction emoji')}
+            </Label>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => updateQuickReactionEmoji('+')}
+                className="text-muted-foreground hover:text-foreground"
+              >
+                <RotateCcw />
+              </Button>
+              <EmojiPickerDialog
+                onEmojiClick={(emoji) => {
+                  if (!emoji) return
+                  updateQuickReactionEmoji(emoji)
+                }}
+              >
+                <Button variant="ghost" size="icon" className="border">
+                  <Emoji emoji={quickReactionEmoji} />
+                </Button>
+              </EmojiPickerDialog>
+            </div>
+          </SettingItem>
+        )}
       </div>
     </SecondaryPageLayout>
   )

@@ -41,6 +41,8 @@ export const StorageKey = {
   ENABLE_SINGLE_COLUMN_LAYOUT: 'enableSingleColumnLayout',
   FAVICON_URL_TEMPLATE: 'faviconUrlTemplate',
   FILTER_OUT_ONION_RELAYS: 'filterOutOnionRelays',
+  QUICK_REACTION: 'quickReaction',
+  QUICK_REACTION_EMOJI: 'quickReactionEmoji',
   PINNED_PUBKEYS: 'pinnedPubkeys', // deprecated
   MEDIA_UPLOAD_SERVICE: 'mediaUploadService', // deprecated
   HIDE_UNTRUSTED_EVENTS: 'hideUntrustedEvents', // deprecated
@@ -444,4 +446,4 @@ export const PRIMARY_COLORS = {
 } as const
 export type TPrimaryColor = keyof typeof PRIMARY_COLORS
 
-export const LONG_PRESS_THRESHOLD = 500
+export const LONG_PRESS_THRESHOLD = 400

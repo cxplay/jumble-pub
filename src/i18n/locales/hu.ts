@@ -567,6 +567,11 @@ export default {
     'Load earlier': 'Korábbi betöltése',
     'Last 24 hours': 'Utolsó 24 óra',
     'Last {{count}} days': 'Utolsó {{count}} nap',
-    notes: 'jegyzetek'
+    notes: 'jegyzetek',
+    'Quick reaction': 'Gyors reakció',
+    'If enabled, you can react with a single click. Click and hold for more options':
+      'Ha engedélyezve van, egy kattintással reagálhat. Tartsa lenyomva további lehetőségekért',
+    'Quick reaction emoji': 'Gyors reakció emoji',
+    'Select emoji': 'Emoji kiválasztása'
   }
 }

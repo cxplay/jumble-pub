@@ -14,6 +14,7 @@ import { isTorBrowser } from '@/lib/utils'
 import {
   TAccount,
   TAccountPointer,
+  TEmoji,
   TFeedInfo,
   TMediaAutoLoadPolicy,
   TMediaUploadServiceConfig,
@@ -57,6 +58,8 @@ class LocalStorageService {
   private enableSingleColumnLayout: boolean = true
   private faviconUrlTemplate: string = DEFAULT_FAVICON_URL_TEMPLATE
   private filterOutOnionRelays: boolean = !isTorBrowser()
+  private quickReaction: boolean = false
+  private quickReactionEmoji: string | TEmoji = '+'
 
   constructor() {
     if (!LocalStorageService.instance) {
@@ -228,6 +231,15 @@ class LocalStorageService {
     const filterOutOnionRelaysStr = window.localStorage.getItem(StorageKey.FILTER_OUT_ONION_RELAYS)
     if (filterOutOnionRelaysStr) {
       this.filterOutOnionRelays = filterOutOnionRelaysStr !== 'false'
+    }
+
+    this.quickReaction = window.localStorage.getItem(StorageKey.QUICK_REACTION) === 'true'
+    const quickReactionEmojiStr =
+      window.localStorage.getItem(StorageKey.QUICK_REACTION_EMOJI) ?? '+'
+    if (quickReactionEmojiStr.startsWith('{')) {
+      this.quickReactionEmoji = JSON.parse(quickReactionEmojiStr) as TEmoji
+    } else {
+      this.quickReactionEmoji = quickReactionEmojiStr
     }
 
     // Clean up deprecated data
@@ -558,6 +570,27 @@ class LocalStorageService {
   setFilterOutOnionRelays(filterOut: boolean) {
     this.filterOutOnionRelays = filterOut
     window.localStorage.setItem(StorageKey.FILTER_OUT_ONION_RELAYS, filterOut.toString())
+  }
+
+  getQuickReaction() {
+    return this.quickReaction
+  }
+
+  setQuickReaction(quickReaction: boolean) {
+    this.quickReaction = quickReaction
+    window.localStorage.setItem(StorageKey.QUICK_REACTION, quickReaction.toString())
+  }
+
+  getQuickReactionEmoji() {
+    return this.quickReactionEmoji
+  }
+
+  setQuickReactionEmoji(emoji: string | TEmoji) {
+    this.quickReactionEmoji = emoji
+    window.localStorage.setItem(
+      StorageKey.QUICK_REACTION_EMOJI,
+      typeof emoji === 'string' ? emoji : JSON.stringify(emoji)
+    )
   }
 }
 

@@ -2,8 +2,47 @@ import * as React from 'react'
 import * as PopoverPrimitive from '@radix-ui/react-popover'
 
 import { cn } from '@/lib/utils'
+import { createPortal } from 'react-dom'
 
-const Popover = PopoverPrimitive.Root
+const Popover = ({
+  open: controlledOpen,
+  onOpenChange: controlledOnOpenChange,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Root>) => {
+  const [uncontrolledOpen, setUncontrolledOpen] = React.useState(false)
+  const isControlled = controlledOpen !== undefined
+  const open = isControlled ? controlledOpen : uncontrolledOpen
+  const backdropRef = React.useRef<HTMLDivElement>(null)
+
+  const handleOpenChange = React.useCallback(
+    (newOpen: boolean) => {
+      if (!isControlled) {
+        setUncontrolledOpen(newOpen)
+      }
+      controlledOnOpenChange?.(newOpen)
+    },
+    [isControlled, controlledOnOpenChange]
+  )
+
+  return (
+    <>
+      {open &&
+        createPortal(
+          <div
+            ref={backdropRef}
+            className="fixed inset-0 z-40 pointer-events-auto"
+            onClick={(e) => {
+              e.stopPropagation()
+              handleOpenChange(false)
+            }}
+          />,
+          document.body
+        )}
+      <PopoverPrimitive.Root {...props} open={open} onOpenChange={handleOpenChange} modal={false} />
+    </>
+  )
+}
+Popover.displayName = 'Popover'
 
 const PopoverTrigger = PopoverPrimitive.Trigger
 

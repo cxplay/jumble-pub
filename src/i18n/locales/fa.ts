@@ -572,6 +572,11 @@ export default {
     'Load earlier': 'بارگذاری قدیمی‌تر',
     'Last 24 hours': '24 ساعت گذشته',
     'Last {{count}} days': '{{count}} روز گذشته',
-    notes: 'یادداشت‌ها'
+    notes: 'یادداشت‌ها',
+    'Quick reaction': 'واکنش سریع',
+    'If enabled, you can react with a single click. Click and hold for more options':
+      'اگر فعال باشد، می‌توانید با یک کلیک واکنش نشان دهید. برای گزینه‌های بیشتر کلیک کنید و نگه دارید',
+    'Quick reaction emoji': 'ایموجی واکنش سریع',
+    'Select emoji': 'انتخاب ایموجی'
   }
 }

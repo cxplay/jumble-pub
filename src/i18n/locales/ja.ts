@@ -572,6 +572,11 @@ export default {
     'Load earlier': '以前を読み込む',
     'Last 24 hours': '過去24時間',
     'Last {{count}} days': '過去{{count}}日間',
-    notes: 'ノート'
+    notes: 'ノート',
+    'Quick reaction': 'クイックリアクション',
+    'If enabled, you can react with a single click. Click and hold for more options':
+      '有効にすると、ワンクリックでリアクションできます。長押しで他のオプションを表示',
+    'Quick reaction emoji': 'クイックリアクション絵文字',
+    'Select emoji': '絵文字を選択'
   }
 }

@@ -1,5 +1,5 @@
 import storage from '@/services/local-storage.service'
-import { TNotificationStyle } from '@/types'
+import { TEmoji, TNotificationStyle } from '@/types'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { useScreenSize } from './ScreenSizeProvider'
 
@@ -15,6 +15,12 @@ type TUserPreferencesContext = {
 
   enableSingleColumnLayout: boolean
   updateEnableSingleColumnLayout: (enable: boolean) => void
+
+  quickReaction: boolean
+  updateQuickReaction: (enable: boolean) => void
+
+  quickReactionEmoji: string | TEmoji
+  updateQuickReactionEmoji: (emoji: string | TEmoji) => void
 }
 
 const UserPreferencesContext = createContext<TUserPreferencesContext | undefined>(undefined)
@@ -37,6 +43,8 @@ export function UserPreferencesProvider({ children }: { children: React.ReactNod
   const [enableSingleColumnLayout, setEnableSingleColumnLayout] = useState(
     storage.getEnableSingleColumnLayout()
   )
+  const [quickReaction, setQuickReaction] = useState(storage.getQuickReaction())
+  const [quickReactionEmoji, setQuickReactionEmoji] = useState(storage.getQuickReactionEmoji())
 
   useEffect(() => {
     if (!isSmallScreen && enableSingleColumnLayout) {
@@ -61,6 +69,16 @@ export function UserPreferencesProvider({ children }: { children: React.ReactNod
     storage.setEnableSingleColumnLayout(enable)
   }
 
+  const updateQuickReaction = (enable: boolean) => {
+    setQuickReaction(enable)
+    storage.setQuickReaction(enable)
+  }
+
+  const updateQuickReactionEmoji = (emoji: string | TEmoji) => {
+    setQuickReactionEmoji(emoji)
+    storage.setQuickReactionEmoji(emoji)
+  }
+
   return (
     <UserPreferencesContext.Provider
       value={{
@@ -71,7 +89,11 @@ export function UserPreferencesProvider({ children }: { children: React.ReactNod
         sidebarCollapse,
         updateSidebarCollapse,
         enableSingleColumnLayout: isSmallScreen ? true : enableSingleColumnLayout,
-        updateEnableSingleColumnLayout
+        updateEnableSingleColumnLayout,
+        quickReaction,
+        updateQuickReaction,
+        quickReactionEmoji,
+        updateQuickReactionEmoji
       }}
     >
       {children}

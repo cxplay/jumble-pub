@@ -566,6 +566,11 @@ export default {
     'Load earlier': 'تحميل سابق',
     'Last 24 hours': 'آخر 24 ساعة',
     'Last {{count}} days': 'آخر {{count}} أيام',
-    notes: 'ملاحظات'
+    notes: 'ملاحظات',
+    'Quick reaction': 'رد فعل سريع',
+    'If enabled, you can react with a single click. Click and hold for more options':
+      'إذا تم التمكين، يمكنك التفاعل بنقرة واحدة. اضغط مع الاستمرار للمزيد من الخيارات',
+    'Quick reaction emoji': 'رمز تعبيري للرد السريع',
+    'Select emoji': 'اختر رمز تعبيري'
   }
 }

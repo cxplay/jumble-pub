@@ -569,6 +569,11 @@ export default {
     'Load earlier': 'Load earlier',
     'Last 24 hours': 'Last 24 hours',
     'Last {{count}} days': 'Last {{count}} days',
-    notes: 'notes'
+    notes: 'notes',
+    'Quick reaction': 'Quick reaction',
+    'If enabled, you can react with a single click. Click and hold for more options':
+      'If enabled, you can react with a single click. Click and hold for more options',
+    'Quick reaction emoji': 'Quick reaction emoji',
+    'Select emoji': 'Select emoji'
   }
 }

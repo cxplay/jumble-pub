@@ -571,6 +571,11 @@ export default {
     'Load earlier': '이전 데이터 로드',
     'Last 24 hours': '최근 24시간',
     'Last {{count}} days': '최근 {{count}}일',
-    notes: '노트'
+    notes: '노트',
+    'Quick reaction': '빠른 반응',
+    'If enabled, you can react with a single click. Click and hold for more options':
+      '활성화하면 한 번의 클릭으로 반응할 수 있습니다. 더 많은 옵션을 보려면 길게 누르세요',
+    'Quick reaction emoji': '빠른 반응 이모지',
+    'Select emoji': '이모지 선택'
   }
 }

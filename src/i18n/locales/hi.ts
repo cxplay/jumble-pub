@@ -573,6 +573,11 @@ export default {
     'Load earlier': 'पहले लोड करें',
     'Last 24 hours': 'पिछले 24 घंटे',
     'Last {{count}} days': 'पिछले {{count}} दिन',
-    notes: 'नोट्स'
+    notes: 'नोट्स',
+    'Quick reaction': 'त्वरित प्रतिक्रिया',
+    'If enabled, you can react with a single click. Click and hold for more options':
+      'यदि सक्षम है, तो आप एक क्लिक से प्रतिक्रिया दे सकते हैं। अधिक विकल्पों के लिए क्लिक करें और रोकें',
+    'Quick reaction emoji': 'त्वरित प्रतिक्रिया इमोजी',
+    'Select emoji': 'इमोजी चुनें'
   }
 }
