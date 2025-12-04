@@ -47,10 +47,13 @@ export function ReactionNotification({
         )
       }
     }
+    if (notification.content.length > 4) {
+      return null
+    }
     return notification.content
   }, [notification])
 
-  if (!event || !eventId) {
+  if (!event || !eventId || !reaction) {
     return null
   }
 
