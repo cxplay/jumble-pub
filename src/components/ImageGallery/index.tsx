@@ -94,7 +94,7 @@ export default function ImageGallery({
       <ImageWithLightbox
         key={i}
         image={image}
-        className="max-h-[80vh] sm:max-h-[50vh] object-contain"
+        className="max-h-[80vh] sm:max-h-[50vh] object-contain border"
         classNames={{
           wrapper: cn('w-fit max-w-full', className)
         }}
@@ -107,7 +107,7 @@ export default function ImageGallery({
     imageContent = (
       <Image
         key={0}
-        className="max-h-[80vh] sm:max-h-[50vh] object-contain"
+        className="max-h-[80vh] sm:max-h-[50vh] object-contain border"
         classNames={{
           errorPlaceholder: 'aspect-square h-[30vh]',
           wrapper: 'cursor-zoom-in'
@@ -122,7 +122,7 @@ export default function ImageGallery({
         {displayImages.map((image, i) => (
           <Image
             key={i}
-            className="aspect-square w-full"
+            className="aspect-square w-full border"
             classNames={{ wrapper: 'cursor-zoom-in' }}
             image={image}
             onClick={(e) => handlePhotoClick(e, i)}
@@ -136,7 +136,7 @@ export default function ImageGallery({
         {displayImages.map((image, i) => (
           <Image
             key={i}
-            className="aspect-square w-full"
+            className="aspect-square w-full border"
             classNames={{ wrapper: 'cursor-zoom-in' }}
             image={image}
             onClick={(e) => handlePhotoClick(e, i)}

@@ -445,7 +445,7 @@ const UserAggregationList = forwardRef<
         ) : (
           list
         )}
-        <div className="h-40" />
+        <div className="h-20" />
         {filteredNewEvents.length > 0 && (
           <NewNotesButton newEvents={filteredNewEvents} onClick={showNewEvents} />
         )}

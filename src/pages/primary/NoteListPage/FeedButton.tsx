@@ -75,7 +75,7 @@ const FeedSwitcherTrigger = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivEle
 
     return (
       <div
-        className={cn('flex items-center gap-2 clickable px-3 h-full rounded-lg', className)}
+        className={cn('flex items-center gap-2 clickable px-3 h-full rounded-xl', className)}
         ref={ref}
         {...props}
       >

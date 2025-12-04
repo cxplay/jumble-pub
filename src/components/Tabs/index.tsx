@@ -87,7 +87,7 @@ export default function Tabs({
     <div
       ref={containerRef}
       className={cn(
-        'sticky flex justify-between top-12 bg-background z-30 px-1 w-full transition-transform border-b',
+        'sticky flex justify-between top-12 bg-background z-30 px-1 w-full transition-all duration-300 border-b',
         deepBrowsing && lastScrollTop > threshold ? '-translate-y-[calc(100%+12rem)]' : ''
       )}
     >
@@ -98,8 +98,10 @@ export default function Tabs({
               key={tab.value}
               ref={(el) => (tabRefs.current[index] = el)}
               className={cn(
-                `w-fit text-center py-2 px-6 my-1 font-semibold whitespace-nowrap clickable cursor-pointer rounded-lg`,
-                value === tab.value ? '' : 'text-muted-foreground'
+                `w-fit text-center py-2 px-6 my-1 font-semibold whitespace-nowrap clickable cursor-pointer rounded-xl transition-all duration-200`,
+                value === tab.value
+                  ? 'text-foreground'
+                  : 'text-muted-foreground hover:text-foreground'
               )}
               onClick={() => {
                 onTabChange?.(tab.value)
@@ -109,7 +111,7 @@ export default function Tabs({
             </div>
           ))}
           <div
-            className="absolute bottom-0 h-1 bg-primary rounded-full transition-all duration-500"
+            className="absolute bottom-0 h-1 bg-gradient-to-r from-primary to-primary-hover rounded-full transition-all duration-300"
             style={{
               width: `${indicatorStyle.width}px`,
               left: `${indicatorStyle.left}px`

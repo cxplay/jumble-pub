@@ -174,7 +174,7 @@ export default function YoutubeEmbeddedPlayer({
     <div
       ref={wrapperRef}
       className={cn(
-        'rounded-lg border overflow-hidden',
+        'rounded-xl border overflow-hidden',
         isShort ? 'aspect-[9/16] max-h-[80vh] sm:max-h-[60vh]' : 'aspect-video max-h-[60vh]',
         className
       )}

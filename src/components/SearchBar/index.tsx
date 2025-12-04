@@ -296,7 +296,7 @@ const SearchBar = forwardRef<
               'bg-surface-background rounded-b-lg shadow-lg z-50',
               isSmallScreen
                 ? 'fixed top-12 inset-x-0'
-                : 'absolute top-full -translate-y-1 inset-x-0 pt-1 '
+                : 'absolute top-full -translate-y-2 inset-x-0 pt-3.5 pb-1 border px-1'
             )}
             onMouseDown={(e) => e.preventDefault()}
           >
@@ -308,7 +308,7 @@ const SearchBar = forwardRef<
       <SearchInput
         ref={searchInputRef}
         className={cn(
-          'bg-surface-background shadow-inner h-full border-none',
+          'bg-surface-background shadow-inner h-full border-transparent',
           searching ? 'z-50' : ''
         )}
         placeholder={t('People, keywords, or relays')}
@@ -477,7 +477,7 @@ function Item({
   return (
     <div
       className={cn(
-        'flex gap-2 items-center px-2 py-3 hover:bg-accent rounded-md cursor-pointer',
+        'flex gap-2 items-center px-2 py-1.5 hover:bg-accent rounded-md cursor-pointer',
         selected ? 'bg-accent' : '',
         className
       )}

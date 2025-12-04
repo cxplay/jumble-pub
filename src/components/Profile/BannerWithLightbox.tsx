@@ -25,6 +25,7 @@ export default function BannerWithLightbox({
       image={{ url: bannerUrl, pubkey }}
       className="rounded-none w-full aspect-[3/1]"
       classNames={{
+        skeleton: 'rounded-none',
         wrapper: 'rounded-none border-none'
       }}
       errorPlaceholder={defaultBanner}

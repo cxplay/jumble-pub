@@ -21,6 +21,7 @@ export default function ImageWithLightbox({
   className?: string
   classNames?: {
     wrapper?: string
+    skeleton?: string
   }
   errorPlaceholder?: string
   ignoreAutoLoadPolicy?: boolean
@@ -67,7 +68,8 @@ export default function ImageWithLightbox({
         className={className}
         classNames={{
           wrapper: cn('rounded-lg border cursor-zoom-in', classNames.wrapper),
-          errorPlaceholder: 'aspect-square h-[30vh]'
+          errorPlaceholder: 'aspect-square h-[30vh]',
+          skeleton: classNames.skeleton
         }}
         image={image}
         onClick={(e) => handlePhotoClick(e)}

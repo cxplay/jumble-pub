@@ -40,7 +40,7 @@ export function ReactionNotification({
           <Image
             image={{ url: emojiUrl, pubkey: notification.pubkey }}
             alt={emojiName}
-            className="w-6 h-6"
+            className="w-6 h-6 rounded-md"
             classNames={{ errorPlaceholder: 'bg-transparent' }}
             errorPlaceholder={<Heart size={24} className="text-red-400" />}
           />

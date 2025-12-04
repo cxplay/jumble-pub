@@ -1,6 +1,6 @@
 import { Skeleton } from '@/components/ui/skeleton'
 import { toExternalContent } from '@/lib/link'
-import { cn } from '@/lib/utils'
+import { cn, isTouchDevice } from '@/lib/utils'
 import { useSecondaryPage } from '@/PageManager'
 import { useContentPolicy } from '@/providers/ContentPolicyProvider'
 import { useTheme } from '@/providers/ThemeProvider'
@@ -24,6 +24,7 @@ export default function XEmbeddedPost({
   const { theme } = useTheme()
   const { autoLoadMedia } = useContentPolicy()
   const { push } = useSecondaryPage()
+  const supportTouch = useMemo(() => isTouchDevice(), [])
   const [display, setDisplay] = useState(autoLoadMedia)
   const [loaded, setLoaded] = useState(false)
   const [error, setError] = useState(false)
@@ -120,11 +121,11 @@ export default function XEmbeddedPost({
       }}
     >
       <div ref={containerRef} className="cursor-pointer" onClick={handleViewComments} />
-      {!loaded && <Skeleton className="absolute inset-0 w-full h-full rounded-xl" />}
-      {loaded && embedded && (
+      {!loaded && <Skeleton className="absolute inset-0 w-full h-full rounded-lg" />}
+      {loaded && embedded && !supportTouch && (
         /* Hover overlay mask */
         <div
-          className="absolute inset-0 bg-muted/40 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center cursor-pointer rounded-xl"
+          className="absolute inset-0 bg-muted/40 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center cursor-pointer rounded-lg"
           onClick={handleViewComments}
         >
           <div className="flex flex-col items-center gap-3">

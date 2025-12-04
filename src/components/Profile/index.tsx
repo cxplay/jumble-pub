@@ -196,7 +196,7 @@ export default function Profile({ id }: { id?: string }) {
             </div>
           </div>
         </div>
-        <div className="px-4 pt-2 pb-0.5">
+        <div className="px-4 pt-3.5 pb-0.5">
           <SearchInput
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}

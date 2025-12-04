@@ -18,6 +18,7 @@ export default function Image({
   classNames?: {
     wrapper?: string
     errorPlaceholder?: string
+    skeleton?: string
   }
   image: TImetaInfo
   alt?: string
@@ -78,15 +79,16 @@ export default function Image({
             <BlurHashCanvas
               blurHash={blurHash}
               className={cn(
-                'absolute inset-0 transition-opacity rounded-lg',
+                'absolute inset-0 transition-opacity rounded-xl',
                 isLoading ? 'opacity-100' : 'opacity-0'
               )}
             />
           ) : (
             <Skeleton
               className={cn(
-                'absolute inset-0 transition-opacity rounded-lg',
-                isLoading ? 'opacity-100' : 'opacity-0'
+                'absolute inset-0 transition-opacity rounded-xl',
+                isLoading ? 'opacity-100' : 'opacity-0',
+                classNames.skeleton
               )}
             />
           )}
@@ -102,7 +104,7 @@ export default function Image({
           onLoad={handleLoad}
           onError={handleError}
           className={cn(
-            'object-cover rounded-lg w-full h-full transition-opacity pointer-events-none',
+            'object-cover rounded-xl w-full h-full transition-opacity pointer-events-none',
             isLoading ? 'opacity-0' : 'opacity-100',
             className
           )}
@@ -117,7 +119,7 @@ export default function Image({
             alt={alt}
             decoding="async"
             loading="lazy"
-            className={cn('object-cover rounded-lg w-full h-full transition-opacity', className)}
+            className={cn('object-cover rounded-xl w-full h-full transition-opacity', className)}
           />
         ) : (
           <div
@@ -168,7 +170,7 @@ function BlurHashCanvas({ blurHash, className = '' }: { blurHash: string; classN
       ref={canvasRef}
       width={blurHashWidth}
       height={blurHashHeight}
-      className={cn('w-full h-full object-cover rounded-lg', className)}
+      className={cn('w-full h-full object-cover rounded-xl', className)}
       style={{
         imageRendering: 'auto',
         filter: 'blur(0.5px)'

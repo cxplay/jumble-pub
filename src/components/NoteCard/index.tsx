@@ -58,7 +58,7 @@ export function NoteCardLoadingSkeleton({ className }: { className?: string }) {
             <Skeleton className="h-4 w-16" />
           </div>
           <div className="py-0.5">
-            <Skeleton className="h-3 w-12" />
+            <Skeleton className="h-4 w-12" />
           </div>
         </div>
       </div>

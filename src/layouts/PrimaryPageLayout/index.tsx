@@ -97,7 +97,7 @@ const PrimaryPageLayout = forwardRef(
       <DeepBrowsingProvider active={current === pageName && display} scrollAreaRef={scrollAreaRef}>
         <ScrollArea
           className="h-full overflow-auto"
-          scrollBarClassName="z-50 pt-12"
+          scrollBarClassName="z-30 pt-12"
           ref={scrollAreaRef}
         >
           <PrimaryPageTitlebar hideBottomBorder={hideTitlebarBottomBorder}>
