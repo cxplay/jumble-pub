@@ -50,9 +50,9 @@ export default function TrustScoreBadge({
 
   if (loading || percentile === null) return null
 
-  // percentile < 50: likely spam (red alert)
-  // percentile < 75: suspicious (yellow warning)
-  if (percentile < 50) {
+  // percentile < 40: likely spam (red alert)
+  // percentile < 60: suspicious (yellow warning)
+  if (percentile < 40) {
     return (
       <div title={t('Likely spam account (Trust score: {{percentile}}%)', { percentile })}>
         <ShieldAlert className={cn('!size-4 text-red-500', className)} />
@@ -60,7 +60,7 @@ export default function TrustScoreBadge({
     )
   }
 
-  if (percentile < 75) {
+  if (percentile < 60) {
     return (
       <div title={t('Suspicious account (Trust score: {{percentile}}%)', { percentile })}>
         <AlertTriangle className={cn('!size-4 text-yellow-600 dark:text-yellow-500', className)} />
