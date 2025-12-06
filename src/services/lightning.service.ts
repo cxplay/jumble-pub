@@ -48,7 +48,7 @@ class LightningService {
         : { recipient: recipientOrEvent.pubkey, event: recipientOrEvent }
 
     const [profile, receiptRelayList, senderRelayList] = await Promise.all([
-      client.fetchProfile(recipient, true),
+      client.fetchProfile(recipient),
       client.fetchRelayList(recipient),
       sender
         ? client.fetchRelayList(sender)
