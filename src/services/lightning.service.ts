@@ -216,6 +216,7 @@ class LightningService {
 
       // Some clients have incorrectly filled in the positions for lud06 and lud16
       if (!profile.lightningAddress) {
+        console.warn('Profile has no lightning address', profile)
         return null
       }
 
@@ -231,6 +232,7 @@ class LightningService {
       const res = await fetch(lnurl)
       const body = await res.json()
 
+      console.log('Zap endpoint:', body)
       if (body.allowsNostr !== false && body.callback) {
         return {
           callback: body.callback,
