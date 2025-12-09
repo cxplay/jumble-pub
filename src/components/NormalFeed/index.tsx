@@ -6,7 +6,6 @@ import { useKindFilter } from '@/providers/KindFilterProvider'
 import { useUserTrust } from '@/providers/UserTrustProvider'
 import storage from '@/services/local-storage.service'
 import { TFeedSubRequest, TNoteListMode } from '@/types'
-import { Event } from 'nostr-tools'
 import { useMemo, useRef, useState } from 'react'
 import KindFilter from '../KindFilter'
 import { RefreshButton } from '../RefreshButton'
@@ -16,14 +15,12 @@ export default function NormalFeed({
   areAlgoRelays = false,
   isMainFeed = false,
   showRelayCloseReason = false,
-  filterFn,
   disable24hMode = false
 }: {
   subRequests: TFeedSubRequest[]
   areAlgoRelays?: boolean
   isMainFeed?: boolean
   showRelayCloseReason?: boolean
-  filterFn?: (event: Event) => boolean
   disable24hMode?: boolean
 }) {
   const { hideUntrustedNotes } = useUserTrust()
@@ -91,7 +88,6 @@ export default function NormalFeed({
           ref={userAggregationListRef}
           showKinds={temporaryShowKinds}
           subRequests={subRequests}
-          filterFn={filterFn}
           areAlgoRelays={areAlgoRelays}
           showRelayCloseReason={showRelayCloseReason}
         />

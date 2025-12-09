@@ -1,4 +1,5 @@
 import client from '@/services/client.service'
+import fayan from '@/services/fayan.service'
 import storage from '@/services/local-storage.service'
 import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 import { useNostr } from './NostrProvider'
@@ -11,6 +12,7 @@ type TUserTrustContext = {
   updateHideUntrustedNotifications: (hide: boolean) => void
   updateHideUntrustedNotes: (hide: boolean) => void
   isUserTrusted: (pubkey: string) => boolean
+  isSpammer: (pubkey: string) => Promise<boolean>
 }
 
 const UserTrustContext = createContext<TUserTrustContext | undefined>(undefined)
@@ -69,6 +71,16 @@ export function UserTrustProvider({ children }: { children: React.ReactNode }) {
     [currentPubkey]
   )
 
+  const isSpammer = useCallback(
+    async (pubkey: string) => {
+      if (isUserTrusted(pubkey)) return false
+      const percentile = await fayan.fetchUserPercentile(pubkey)
+      if (percentile === null) return false
+      return percentile < 60
+    },
+    [isUserTrusted]
+  )
+
   const updateHideUntrustedInteractions = (hide: boolean) => {
     setHideUntrustedInteractions(hide)
     storage.setHideUntrustedInteractions(hide)
@@ -93,7 +105,8 @@ export function UserTrustProvider({ children }: { children: React.ReactNode }) {
         updateHideUntrustedInteractions,
         updateHideUntrustedNotifications,
         updateHideUntrustedNotes,
-        isUserTrusted
+        isUserTrusted,
+        isSpammer
       }}
     >
       {children}

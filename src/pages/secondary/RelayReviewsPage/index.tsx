@@ -28,6 +28,7 @@ const RelayReviewsPage = forwardRef(({ url, index }: { url?: string; index?: num
             filter: { '#d': [normalizedUrl] }
           }
         ]}
+        hideSpam
       />
     </SecondaryPageLayout>
   )

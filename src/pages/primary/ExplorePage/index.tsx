@@ -45,9 +45,9 @@ const ExplorePage = forwardRef<TPageRef>((_, ref) => {
       <NoteList
         showKinds={[ExtendedKind.RELAY_REVIEW]}
         subRequests={[{ urls: BIG_RELAY_URLS, filter: {} }]}
-        filterMutedNotes
-        hideUntrustedNotes={hideUntrustedNotes}
         filterFn={relayReviewFilterFn}
+        filterMutedNotes
+        hideSpam
       />
     ) : (
       <FollowingFavoriteRelayList />

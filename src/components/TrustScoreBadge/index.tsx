@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils'
 import { useNostr } from '@/providers/NostrProvider'
 import { useUserTrust } from '@/providers/UserTrustProvider'
-import trustScoreService from '@/services/trust-score.service'
+import fayan from '@/services/fayan.service'
 import { AlertTriangle, ShieldAlert } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -34,9 +34,9 @@ export default function TrustScoreBadge({
 
     const fetchScore = async () => {
       try {
-        const data = await trustScoreService.fetchTrustScore(pubkey)
-        if (data) {
-          setPercentile(data.percentile)
+        const percentile = await fayan.fetchUserPercentile(pubkey)
+        if (percentile !== null) {
+          setPercentile(percentile)
         }
       } catch (error) {
         console.error('Failed to fetch trust score:', error)

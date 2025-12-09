@@ -48,7 +48,6 @@ const UserAggregationList = forwardRef<
   {
     subRequests: TFeedSubRequest[]
     showKinds?: number[]
-    filterFn?: (event: Event) => boolean
     filterMutedNotes?: boolean
     areAlgoRelays?: boolean
     showRelayCloseReason?: boolean
@@ -58,7 +57,6 @@ const UserAggregationList = forwardRef<
     {
       subRequests,
       showKinds,
-      filterFn,
       filterMutedNotes = true,
       areAlgoRelays = false,
       showRelayCloseReason = false
@@ -242,9 +240,6 @@ const UserAggregationList = forwardRef<
         ) {
           return true
         }
-        if (filterFn && !filterFn(evt)) {
-          return true
-        }
 
         return false
       },
@@ -252,7 +247,6 @@ const UserAggregationList = forwardRef<
         hideUntrustedNotes,
         mutePubkeySet,
         isEventDeleted,
-        filterFn,
         currentPubkey,
         filterMutedNotes,
         isUserTrusted,

@@ -46,6 +46,7 @@ const NoteList = forwardRef<
     filterMutedNotes?: boolean
     hideReplies?: boolean
     hideUntrustedNotes?: boolean
+    hideSpam?: boolean
     areAlgoRelays?: boolean
     showRelayCloseReason?: boolean
     pinnedEventIds?: string[]
@@ -60,6 +61,7 @@ const NoteList = forwardRef<
       filterMutedNotes = true,
       hideReplies = false,
       hideUntrustedNotes = false,
+      hideSpam = false,
       areAlgoRelays = false,
       showRelayCloseReason = false,
       pinnedEventIds,
@@ -70,7 +72,7 @@ const NoteList = forwardRef<
   ) => {
     const { t } = useTranslation()
     const { startLogin } = useNostr()
-    const { isUserTrusted } = useUserTrust()
+    const { isUserTrusted, isSpammer } = useUserTrust()
     const { mutePubkeySet } = useMuteList()
     const { hideContentMentioningMutedUsers } = useContentPolicy()
     const { isEventDeleted } = useDeletedEvent()
@@ -79,7 +81,12 @@ const NoteList = forwardRef<
     const [newEvents, setNewEvents] = useState<Event[]>([])
     const [hasMore, setHasMore] = useState<boolean>(true)
     const [loading, setLoading] = useState(true)
+    const [filtering, setFiltering] = useState(false)
     const [timelineKey, setTimelineKey] = useState<string | undefined>(undefined)
+    const [filteredNotes, setFilteredNotes] = useState<
+      { key: string; event: Event; reposters: string[] }[]
+    >([])
+    const [filteredNewEvents, setFilteredNewEvents] = useState<Event[]>([])
     const [refreshCount, setRefreshCount] = useState(0)
     const [showCount, setShowCount] = useState(SHOW_COUNT)
     const supportTouch = useMemo(() => isTouchDevice(), [])
@@ -120,98 +127,132 @@ const NoteList = forwardRef<
       [hideUntrustedNotes, mutePubkeySet, JSON.stringify(pinnedEventIds), isEventDeleted, filterFn]
     )
 
-    const filteredNotes = useMemo(() => {
-      // Store processed event keys to avoid duplicates
-      const keySet = new Set<string>()
-      // Map to track reposters for each event key
-      const repostersMap = new Map<string, Set<string>>()
-      // Final list of filtered events
-      const filteredEvents: Event[] = []
-      const keys: string[] = []
+    useEffect(() => {
+      const processEvents = async () => {
+        // Store processed event keys to avoid duplicates
+        const keySet = new Set<string>()
+        // Map to track reposters for each event key
+        const repostersMap = new Map<string, Set<string>>()
+        // Final list of filtered events
+        const filteredEvents: Event[] = []
+        const keys: string[] = []
 
-      events.forEach((evt) => {
-        const key = getEventKey(evt)
-        if (keySet.has(key)) return
-        keySet.add(key)
+        events.forEach((evt) => {
+          const key = getEventKey(evt)
+          if (keySet.has(key)) return
+          keySet.add(key)
 
-        if (shouldHideEvent(evt)) return
-        if (hideReplies && isReplyNoteEvent(evt)) return
-        if (evt.kind !== kinds.Repost && evt.kind !== kinds.GenericRepost) {
-          filteredEvents.push(evt)
-          keys.push(key)
-          return
-        }
-
-        let targetEventKey: string | undefined
-        let eventFromContent: Event | null = null
-        const targetTag = evt.tags.find(tagNameEquals('a')) ?? evt.tags.find(tagNameEquals('e'))
-        if (targetTag) {
-          targetEventKey = getKeyFromTag(targetTag)
-        } else {
-          // Attempt to extract the target event from the repost content
-          if (evt.content) {
-            try {
-              eventFromContent = JSON.parse(evt.content) as Event
-            } catch {
-              eventFromContent = null
-            }
-          }
-          if (eventFromContent) {
-            if (
-              eventFromContent.kind === kinds.Repost ||
-              eventFromContent.kind === kinds.GenericRepost
-            ) {
-              return
-            }
-            if (shouldHideEvent(evt)) return
-
-            targetEventKey = getEventKey(eventFromContent)
-          }
-        }
-
-        if (targetEventKey) {
-          // Add to reposters map
-          const reposters = repostersMap.get(targetEventKey)
-          if (reposters) {
-            reposters.add(evt.pubkey)
-          } else {
-            repostersMap.set(targetEventKey, new Set([evt.pubkey]))
-          }
-
-          // If the target event is not already included, add it now
-          if (!keySet.has(targetEventKey)) {
+          if (shouldHideEvent(evt)) return
+          if (hideReplies && isReplyNoteEvent(evt)) return
+          if (evt.kind !== kinds.Repost && evt.kind !== kinds.GenericRepost) {
             filteredEvents.push(evt)
-            keys.push(targetEventKey)
-            keySet.add(targetEventKey)
+            keys.push(key)
+            return
           }
-        }
-      })
 
-      return filteredEvents.map((evt, i) => {
-        const key = keys[i]
-        return { key, event: evt, reposters: Array.from(repostersMap.get(key) ?? []) }
-      })
-    }, [events, shouldHideEvent, hideReplies])
+          let targetEventKey: string | undefined
+          let eventFromContent: Event | null = null
+          const targetTag = evt.tags.find(tagNameEquals('a')) ?? evt.tags.find(tagNameEquals('e'))
+          if (targetTag) {
+            targetEventKey = getKeyFromTag(targetTag)
+          } else {
+            // Attempt to extract the target event from the repost content
+            if (evt.content) {
+              try {
+                eventFromContent = JSON.parse(evt.content) as Event
+              } catch {
+                eventFromContent = null
+              }
+            }
+            if (eventFromContent) {
+              if (
+                eventFromContent.kind === kinds.Repost ||
+                eventFromContent.kind === kinds.GenericRepost
+              ) {
+                return
+              }
+              if (shouldHideEvent(evt)) return
+
+              targetEventKey = getEventKey(eventFromContent)
+            }
+          }
+
+          if (targetEventKey) {
+            // Add to reposters map
+            const reposters = repostersMap.get(targetEventKey)
+            if (reposters) {
+              reposters.add(evt.pubkey)
+            } else {
+              repostersMap.set(targetEventKey, new Set([evt.pubkey]))
+            }
+
+            // If the target event is not already included, add it now
+            if (!keySet.has(targetEventKey)) {
+              filteredEvents.push(evt)
+              keys.push(targetEventKey)
+              keySet.add(targetEventKey)
+            }
+          }
+        })
+
+        const _filteredNotes = (
+          await Promise.all(
+            filteredEvents.map(async (evt, i) => {
+              if (hideSpam && (await isSpammer(evt.pubkey))) {
+                return null
+              }
+              const key = keys[i]
+              return { key, event: evt, reposters: Array.from(repostersMap.get(key) ?? []) }
+            })
+          )
+        ).filter(Boolean) as {
+          key: string
+          event: Event
+          reposters: string[]
+        }[]
+
+        setFilteredNotes(_filteredNotes)
+      }
+
+      setFiltering(true)
+      processEvents().finally(() => setFiltering(false))
+    }, [events, shouldHideEvent, hideReplies, isSpammer, hideSpam])
 
     const slicedNotes = useMemo(() => {
       return filteredNotes.slice(0, showCount)
     }, [filteredNotes, showCount])
 
-    const filteredNewEvents = useMemo(() => {
-      const keySet = new Set<string>()
+    useEffect(() => {
+      const processNewEvents = async () => {
+        const keySet = new Set<string>()
+        const filteredEvents: Event[] = []
 
-      return newEvents.filter((event: Event) => {
-        if (shouldHideEvent(event)) return false
-        if (hideReplies && isReplyNoteEvent(event)) return false
+        newEvents.forEach((event) => {
+          if (shouldHideEvent(event)) return
+          if (hideReplies && isReplyNoteEvent(event)) return
 
-        const key = getEventKey(event)
-        if (keySet.has(key)) {
-          return false
-        }
-        keySet.add(key)
-        return true
-      })
-    }, [newEvents, shouldHideEvent])
+          const key = getEventKey(event)
+          if (keySet.has(key)) {
+            return
+          }
+          keySet.add(key)
+          filteredEvents.push(event)
+        })
+
+        const _filteredNotes = (
+          await Promise.all(
+            filteredEvents.map(async (evt) => {
+              if (hideSpam && (await isSpammer(evt.pubkey))) {
+                return null
+              }
+              return evt
+            })
+          )
+        ).filter(Boolean) as Event[]
+        setFilteredNewEvents(_filteredNotes)
+      }
+      processNewEvents()
+    }, [newEvents, shouldHideEvent, isSpammer, hideSpam])
 
     const scrollToTop = (behavior: ScrollBehavior = 'instant') => {
       setTimeout(() => {
@@ -381,7 +422,7 @@ const NoteList = forwardRef<
             reposters={reposters}
           />
         ))}
-        {hasMore || loading ? (
+        {hasMore || loading || filtering ? (
           <div ref={bottomRef}>
             <NoteCardLoadingSkeleton />
           </div>

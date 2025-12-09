@@ -29,7 +29,7 @@ export default function RelayReviewsPreview({ relayUrl }: { relayUrl: string }) 
   const { t } = useTranslation()
   const { push } = useSecondaryPage()
   const { pubkey, checkLogin } = useNostr()
-  const { hideUntrustedNotes, isUserTrusted } = useUserTrust()
+  const { hideUntrustedNotes, isUserTrusted, isSpammer } = useUserTrust()
   const { mutePubkeySet } = useMuteList()
   const [showEditor, setShowEditor] = useState(false)
   const [myReview, setMyReview] = useState<NostrEvent | null>(null)
@@ -69,12 +69,9 @@ export default function RelayReviewsPreview({ relayUrl }: { relayUrl: string }) 
       let myReview: NostrEvent | null = null
 
       events.sort((a, b) => compareEvents(b, a))
+
       for (const evt of events) {
-        if (
-          mutePubkeySet.has(evt.pubkey) ||
-          pubkeySet.has(evt.pubkey) ||
-          (hideUntrustedNotes && !isUserTrusted(evt.pubkey))
-        ) {
+        if (mutePubkeySet.has(evt.pubkey) || pubkeySet.has(evt.pubkey)) {
           continue
         }
         const stars = getStarsFromRelayReviewEvent(evt)
@@ -90,8 +87,19 @@ export default function RelayReviewsPreview({ relayUrl }: { relayUrl: string }) 
         }
       }
 
+      const filteredReviews = (
+        await Promise.all(
+          reviews.map(async (evt) => {
+            if (await isSpammer(evt.pubkey)) {
+              return null
+            }
+            return evt
+          })
+        )
+      ).filter(Boolean) as NostrEvent[]
+
       setMyReview(myReview)
-      setReviews(reviews)
+      setReviews(filteredReviews)
       setInitialized(true)
     }
     init()
