@@ -178,12 +178,20 @@ export type TSearchType =
   | 'hashtag'
   | 'relay'
   | 'externalContent'
+  | 'nak'
 
-export type TSearchParams = {
-  type: TSearchType
-  search: string
-  input?: string
-}
+export type TSearchParams =
+  | {
+      type: Exclude<TSearchType, 'nak'>
+      search: string
+      input?: string
+    }
+  | {
+      type: 'nak'
+      search: string
+      request: TFeedSubRequest
+      input?: string
+    }
 
 export type TNotificationStyle =
   (typeof NOTIFICATION_LIST_STYLE)[keyof typeof NOTIFICATION_LIST_STYLE]

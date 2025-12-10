@@ -129,15 +129,22 @@ const UserAggregationList = forwardRef<
           return () => {}
         }
 
-        const { closer, timelineKey } = await client.subscribeTimeline(
-          subRequests.map(({ urls, filter }) => ({
-            urls,
-            filter: {
-              kinds: showKinds ?? [],
-              ...filter,
-              limit: LIMIT
+        const preprocessedSubRequests = await Promise.all(
+          subRequests.map(async ({ urls, filter }) => {
+            const relays = urls.length ? urls : await client.determineRelaysByFilter(filter)
+            return {
+              urls: relays,
+              filter: {
+                kinds: showKinds ?? [],
+                ...filter,
+                limit: LIMIT
+              }
             }
-          })),
+          })
+        )
+
+        const { closer, timelineKey } = await client.subscribeTimeline(
+          preprocessedSubRequests,
           {
             onEvents: (events, eosed) => {
               if (events.length > 0) {

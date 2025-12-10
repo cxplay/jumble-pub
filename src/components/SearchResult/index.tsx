@@ -32,5 +32,8 @@ export default function SearchResult({ searchParams }: { searchParams: TSearchPa
       />
     )
   }
+  if (searchParams.type === 'nak') {
+    return <NormalFeed subRequests={[searchParams.request]} showRelayCloseReason />
+  }
   return <Relay url={searchParams.search} />
 }

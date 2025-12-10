@@ -1,4 +1,4 @@
-import { BIG_RELAY_URLS, ExtendedKind } from '@/constants'
+import { BIG_RELAY_URLS, ExtendedKind, SEARCHABLE_RELAY_URLS } from '@/constants'
 import {
   compareEvents,
   getReplaceableCoordinate,
@@ -149,6 +149,19 @@ class ClientService extends EventTarget {
     }
 
     return Array.from(relaySet)
+  }
+
+  async determineRelaysByFilter(filter: Filter) {
+    if (filter.search) {
+      return SEARCHABLE_RELAY_URLS
+    } else if (filter.authors?.length) {
+      const relayLists = await this.fetchRelayLists(filter.authors)
+      return Array.from(new Set(relayLists.flatMap((list) => list.write.slice(0, 5))))
+    } else if (filter['#p']?.length) {
+      const relayLists = await this.fetchRelayLists(filter['#p'])
+      return Array.from(new Set(relayLists.flatMap((list) => list.read.slice(0, 5))))
+    }
+    return BIG_RELAY_URLS
   }
 
   async publishEvent(relayUrls: string[], event: NEvent) {

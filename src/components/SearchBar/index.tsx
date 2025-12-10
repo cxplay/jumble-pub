@@ -1,6 +1,7 @@
 import SearchInput from '@/components/SearchInput'
 import { useSearchProfiles } from '@/hooks'
 import { toExternalContent, toNote } from '@/lib/link'
+import { formatFeedRequest, parseNakReqCommand } from '@/lib/nak-parser'
 import { randomString } from '@/lib/random'
 import { normalizeUrl } from '@/lib/url'
 import { cn } from '@/lib/utils'
@@ -8,7 +9,7 @@ import { useSecondaryPage } from '@/PageManager'
 import { useScreenSize } from '@/providers/ScreenSizeProvider'
 import modalManager from '@/services/modal-manager.service'
 import { TSearchParams } from '@/types'
-import { Hash, MessageSquare, Notebook, Search, Server } from 'lucide-react'
+import { Hash, MessageSquare, Notebook, Search, Server, Terminal } from 'lucide-react'
 import { nip19 } from 'nostr-tools'
 import {
   forwardRef,
@@ -102,6 +103,20 @@ const SearchBar = forwardRef<
   useEffect(() => {
     const search = input.trim()
     if (!search) return
+
+    // Check if input is a nak req command
+    const request = parseNakReqCommand(search)
+    if (request) {
+      setSelectableOptions([
+        {
+          type: 'nak',
+          search: formatFeedRequest(request),
+          request,
+          input: search
+        }
+      ])
+      return
+    }
 
     if (/^[0-9a-f]{64}$/.test(search)) {
       setSelectableOptions([
@@ -209,6 +224,16 @@ const SearchBar = forwardRef<
                 key={index}
                 selected={selectedIndex === index}
                 search={option.search}
+                onClick={() => updateSearch(option)}
+              />
+            )
+          }
+          if (option.type === 'nak') {
+            return (
+              <NakItem
+                key={index}
+                selected={selectedIndex === index}
+                description={option.search}
                 onClick={() => updateSearch(option)}
               />
             )
@@ -463,6 +488,28 @@ function ExternalContentItem({
       <div className="flex flex-col min-w-0 flex-1">
         <div className="font-semibold truncate">{search}</div>
         <div className="text-sm text-muted-foreground">{t('View discussions about this')}</div>
+      </div>
+    </Item>
+  )
+}
+
+function NakItem({
+  description,
+  onClick,
+  selected
+}: {
+  description: string
+  onClick?: () => void
+  selected?: boolean
+}) {
+  return (
+    <Item onClick={onClick} selected={selected}>
+      <div className="size-10 flex justify-center items-center">
+        <Terminal className="text-muted-foreground flex-shrink-0" />
+      </div>
+      <div className="flex flex-col min-w-0 flex-1">
+        <div className="font-semibold truncate">REQ</div>
+        <div className="text-sm text-muted-foreground truncate">{description}</div>
       </div>
     </Item>
   )

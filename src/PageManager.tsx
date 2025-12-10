@@ -82,6 +82,21 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
   const ignorePopStateRef = useRef(false)
 
   useEffect(() => {
+    if (isSmallScreen) return
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault()
+        navigatePrimaryPage('search')
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isSmallScreen])
+
+  useEffect(() => {
     if (['/npub1', '/nprofile1'].some((prefix) => window.location.pathname.startsWith(prefix))) {
       window.history.replaceState(
         null,
