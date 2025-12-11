@@ -118,11 +118,14 @@ export default function PostContent({
     )
   }, [defaultContent, parentStuff, isNsfw, isPoll, pollCreateData, addClientTag])
 
+  const postingRef = useRef(false)
+
   const post = async (e?: React.MouseEvent) => {
     e?.stopPropagation()
     checkLogin(async () => {
-      if (!canPost) return
+      if (!canPost || postingRef.current) return
 
+      postingRef.current = true
       setPosting(true)
       try {
         const draftEvent =
@@ -158,6 +161,7 @@ export default function PostContent({
         postEditorCache.clearPostCache({ defaultContent, parentStuff })
         deleteDraftEventCache(draftEvent)
         addReplies([newEvent])
+        toast.success(t('Post successful'), { duration: 2000 })
         close()
       } catch (error) {
         const errors = error instanceof AggregateError ? error.errors : [error]
@@ -171,8 +175,8 @@ export default function PostContent({
         return
       } finally {
         setPosting(false)
+        postingRef.current = false
       }
-      toast.success(t('Post successful'), { duration: 2000 })
     })
   }
 
