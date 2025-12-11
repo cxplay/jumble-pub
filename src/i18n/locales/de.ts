@@ -587,6 +587,11 @@ export default {
     'If enabled, you can react with a single click. Click and hold for more options':
       'Wenn aktiviert, können Sie mit einem Klick reagieren. Klicken und halten Sie für weitere Optionen',
     'Quick reaction emoji': 'Schnellreaktions-Emoji',
-    'Select emoji': 'Emoji auswählen'
+    'Select emoji': 'Emoji auswählen',
+    'NSFW content display': 'NSFW content display',
+    'Hide completely': 'Hide completely',
+    'Show but hide content': 'Show but hide content',
+    'Show directly': 'Show directly',
+    'Click to view': 'Click to view'
   }
 }

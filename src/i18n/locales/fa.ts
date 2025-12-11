@@ -577,6 +577,11 @@ export default {
     'If enabled, you can react with a single click. Click and hold for more options':
       'اگر فعال باشد، می‌توانید با یک کلیک واکنش نشان دهید. برای گزینه‌های بیشتر کلیک کنید و نگه دارید',
     'Quick reaction emoji': 'ایموجی واکنش سریع',
-    'Select emoji': 'انتخاب ایموجی'
+    'Select emoji': 'انتخاب ایموجی',
+    'NSFW content display': 'NSFW content display',
+    'Hide completely': 'Hide completely',
+    'Show but hide content': 'Show but hide content',
+    'Show directly': 'Show directly',
+    'Click to view': 'Click to view'
   }
 }

@@ -563,6 +563,11 @@ export default {
     'If enabled, you can react with a single click. Click and hold for more options':
       '启用后，您可以通过单击进行点赞。长按以获取更多选项',
     'Quick reaction emoji': '快速点赞表情',
-    'Select emoji': '选择表情'
+    'Select emoji': '选择表情',
+    'NSFW content display': 'NSFW 内容显示',
+    'Hide completely': '完全隐藏',
+    'Show but hide content': '显示但隐藏内容',
+    'Show directly': '直接显示',
+    'Click to view': '点击查看'
   }
 }

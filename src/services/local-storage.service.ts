@@ -5,6 +5,7 @@ import {
   ExtendedKind,
   MEDIA_AUTO_LOAD_POLICY,
   NOTIFICATION_LIST_STYLE,
+  NSFW_DISPLAY_POLICY,
   StorageKey,
   TPrimaryColor
 } from '@/constants'
@@ -19,6 +20,7 @@ import {
   TMediaAutoLoadPolicy,
   TMediaUploadServiceConfig,
   TNoteListMode,
+  TNsfwDisplayPolicy,
   TNotificationStyle,
   TRelaySet,
   TThemeSetting,
@@ -46,7 +48,6 @@ class LocalStorageService {
   private hideUntrustedNotes: boolean = false
   private translationServiceConfigMap: Record<string, TTranslationServiceConfig> = {}
   private mediaUploadServiceConfigMap: Record<string, TMediaUploadServiceConfig> = {}
-  private defaultShowNsfw: boolean = false
   private dismissedTooManyRelaysAlert: boolean = false
   private showKinds: number[] = []
   private hideContentMentioningMutedUsers: boolean = false
@@ -60,6 +61,7 @@ class LocalStorageService {
   private filterOutOnionRelays: boolean = !isTorBrowser()
   private quickReaction: boolean = false
   private quickReactionEmoji: string | TEmoji = '+'
+  private nsfwDisplayPolicy: TNsfwDisplayPolicy = NSFW_DISPLAY_POLICY.HIDE_CONTENT
 
   constructor() {
     if (!LocalStorageService.instance) {
@@ -161,7 +163,20 @@ class LocalStorageService {
       this.mediaUploadServiceConfigMap = JSON.parse(mediaUploadServiceConfigMapStr)
     }
 
-    this.defaultShowNsfw = window.localStorage.getItem(StorageKey.DEFAULT_SHOW_NSFW) === 'true'
+    // Migrate old boolean setting to new policy
+    const nsfwDisplayPolicyStr = window.localStorage.getItem(StorageKey.NSFW_DISPLAY_POLICY)
+    if (
+      nsfwDisplayPolicyStr &&
+      Object.values(NSFW_DISPLAY_POLICY).includes(nsfwDisplayPolicyStr as TNsfwDisplayPolicy)
+    ) {
+      this.nsfwDisplayPolicy = nsfwDisplayPolicyStr as TNsfwDisplayPolicy
+    } else {
+      // Migration: convert old boolean to new policy
+      const defaultShowNsfwStr = window.localStorage.getItem(StorageKey.DEFAULT_SHOW_NSFW)
+      this.nsfwDisplayPolicy =
+        defaultShowNsfwStr === 'true' ? NSFW_DISPLAY_POLICY.SHOW : NSFW_DISPLAY_POLICY.HIDE_CONTENT
+      window.localStorage.setItem(StorageKey.NSFW_DISPLAY_POLICY, this.nsfwDisplayPolicy)
+    }
 
     this.dismissedTooManyRelaysAlert =
       window.localStorage.getItem(StorageKey.DISMISSED_TOO_MANY_RELAYS_ALERT) === 'true'
@@ -458,15 +473,6 @@ class LocalStorageService {
     return config
   }
 
-  getDefaultShowNsfw() {
-    return this.defaultShowNsfw
-  }
-
-  setDefaultShowNsfw(defaultShowNsfw: boolean) {
-    this.defaultShowNsfw = defaultShowNsfw
-    window.localStorage.setItem(StorageKey.DEFAULT_SHOW_NSFW, defaultShowNsfw.toString())
-  }
-
   getDismissedTooManyRelaysAlert() {
     return this.dismissedTooManyRelaysAlert
   }
@@ -591,6 +597,15 @@ class LocalStorageService {
       StorageKey.QUICK_REACTION_EMOJI,
       typeof emoji === 'string' ? emoji : JSON.stringify(emoji)
     )
+  }
+
+  getNsfwDisplayPolicy() {
+    return this.nsfwDisplayPolicy
+  }
+
+  setNsfwDisplayPolicy(policy: TNsfwDisplayPolicy) {
+    this.nsfwDisplayPolicy = policy
+    window.localStorage.setItem(StorageKey.NSFW_DISPLAY_POLICY, policy)
   }
 }
 

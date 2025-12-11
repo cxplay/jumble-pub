@@ -577,6 +577,11 @@ export default {
     'If enabled, you can react with a single click. Click and hold for more options':
       '有効にすると、ワンクリックでリアクションできます。長押しで他のオプションを表示',
     'Quick reaction emoji': 'クイックリアクション絵文字',
-    'Select emoji': '絵文字を選択'
+    'Select emoji': '絵文字を選択',
+    'NSFW content display': 'NSFWコンテンツの表示',
+    'Hide completely': '完全に非表示',
+    'Show but hide content': '表示するがコンテンツを非表示',
+    'Show directly': '直接表示',
+    'Click to view': 'クリックして表示'
   }
 }

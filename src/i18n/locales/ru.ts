@@ -583,6 +583,11 @@ export default {
     'If enabled, you can react with a single click. Click and hold for more options':
       'Если включено, вы можете реагировать одним щелчком. Нажмите и удерживайте для дополнительных параметров',
     'Quick reaction emoji': 'Эмодзи быстрой реакции',
-    'Select emoji': 'Выбрать эмодзи'
+    'Select emoji': 'Выбрать эмодзи',
+    'NSFW content display': 'NSFW content display',
+    'Hide completely': 'Hide completely',
+    'Show but hide content': 'Show but hide content',
+    'Show directly': 'Show directly',
+    'Click to view': 'Click to view'
   }
 }

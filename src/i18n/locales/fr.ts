@@ -584,8 +584,13 @@ export default {
     notes: 'notes',
     'Quick reaction': 'Réaction rapide',
     'If enabled, you can react with a single click. Click and hold for more options':
-      'Si activé, vous pouvez réagir en un seul clic. Maintenez enfoncé pour plus d\'options',
+      "Si activé, vous pouvez réagir en un seul clic. Maintenez enfoncé pour plus d'options",
     'Quick reaction emoji': 'Emoji de réaction rapide',
-    'Select emoji': 'Sélectionner un emoji'
+    'Select emoji': 'Sélectionner un emoji',
+    'NSFW content display': 'NSFW content display',
+    'Hide completely': 'Hide completely',
+    'Show but hide content': 'Show but hide content',
+    'Show directly': 'Show directly',
+    'Click to view': 'Click to view'
   }
 }

@@ -4,14 +4,14 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select'
 import { Switch } from '@/components/ui/switch'
-import { MEDIA_AUTO_LOAD_POLICY } from '@/constants'
+import { MEDIA_AUTO_LOAD_POLICY, NSFW_DISPLAY_POLICY } from '@/constants'
 import { LocalizedLanguageNames, TLanguage } from '@/i18n'
 import SecondaryPageLayout from '@/layouts/SecondaryPageLayout'
 import { cn, isSupportCheckConnectionType } from '@/lib/utils'
 import { useContentPolicy } from '@/providers/ContentPolicyProvider'
 import { useUserPreferences } from '@/providers/UserPreferencesProvider'
 import { useUserTrust } from '@/providers/UserTrustProvider'
-import { TMediaAutoLoadPolicy } from '@/types'
+import { TMediaAutoLoadPolicy, TNsfwDisplayPolicy } from '@/types'
 import { SelectValue } from '@radix-ui/react-select'
 import { RotateCcw } from 'lucide-react'
 import { forwardRef, HTMLProps, useState } from 'react'
@@ -23,8 +23,8 @@ const GeneralSettingsPage = forwardRef(({ index }: { index?: number }, ref) => {
   const {
     autoplay,
     setAutoplay,
-    defaultShowNsfw,
-    setDefaultShowNsfw,
+    nsfwDisplayPolicy,
+    setNsfwDisplayPolicy,
     hideContentMentioningMutedUsers,
     setHideContentMentioningMutedUsers,
     mediaAutoLoadPolicy,
@@ -110,10 +110,24 @@ const GeneralSettingsPage = forwardRef(({ index }: { index?: number }, ref) => {
           />
         </SettingItem>
         <SettingItem>
-          <Label htmlFor="show-nsfw" className="text-base font-normal">
-            {t('Show NSFW content by default')}
+          <Label htmlFor="nsfw-display-policy" className="text-base font-normal">
+            {t('NSFW content display')}
           </Label>
-          <Switch id="show-nsfw" checked={defaultShowNsfw} onCheckedChange={setDefaultShowNsfw} />
+          <Select
+            value={nsfwDisplayPolicy}
+            onValueChange={(value: TNsfwDisplayPolicy) => setNsfwDisplayPolicy(value)}
+          >
+            <SelectTrigger id="nsfw-display-policy" className="w-48">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value={NSFW_DISPLAY_POLICY.HIDE}>{t('Hide completely')}</SelectItem>
+              <SelectItem value={NSFW_DISPLAY_POLICY.HIDE_CONTENT}>
+                {t('Show but hide content')}
+              </SelectItem>
+              <SelectItem value={NSFW_DISPLAY_POLICY.SHOW}>{t('Show directly')}</SelectItem>
+            </SelectContent>
+          </Select>
         </SettingItem>
         <SettingItem>
           <Label htmlFor="quick-reaction" className="text-base font-normal">

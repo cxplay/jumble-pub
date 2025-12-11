@@ -1,14 +1,14 @@
 import { MEDIA_AUTO_LOAD_POLICY } from '@/constants'
 import storage from '@/services/local-storage.service'
-import { TMediaAutoLoadPolicy } from '@/types'
+import { TMediaAutoLoadPolicy, TNsfwDisplayPolicy } from '@/types'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 
 type TContentPolicyContext = {
   autoplay: boolean
   setAutoplay: (autoplay: boolean) => void
 
-  defaultShowNsfw: boolean
-  setDefaultShowNsfw: (showNsfw: boolean) => void
+  nsfwDisplayPolicy: TNsfwDisplayPolicy
+  setNsfwDisplayPolicy: (policy: TNsfwDisplayPolicy) => void
 
   hideContentMentioningMutedUsers?: boolean
   setHideContentMentioningMutedUsers?: (hide: boolean) => void
@@ -33,7 +33,7 @@ export const useContentPolicy = () => {
 
 export function ContentPolicyProvider({ children }: { children: React.ReactNode }) {
   const [autoplay, setAutoplay] = useState(storage.getAutoplay())
-  const [defaultShowNsfw, setDefaultShowNsfw] = useState(storage.getDefaultShowNsfw())
+  const [nsfwDisplayPolicy, setNsfwDisplayPolicy] = useState(storage.getNsfwDisplayPolicy())
   const [hideContentMentioningMutedUsers, setHideContentMentioningMutedUsers] = useState(
     storage.getHideContentMentioningMutedUsers()
   )
@@ -72,9 +72,9 @@ export function ContentPolicyProvider({ children }: { children: React.ReactNode 
     setAutoplay(autoplay)
   }
 
-  const updateDefaultShowNsfw = (defaultShowNsfw: boolean) => {
-    storage.setDefaultShowNsfw(defaultShowNsfw)
-    setDefaultShowNsfw(defaultShowNsfw)
+  const updateNsfwDisplayPolicy = (policy: TNsfwDisplayPolicy) => {
+    storage.setNsfwDisplayPolicy(policy)
+    setNsfwDisplayPolicy(policy)
   }
 
   const updateHideContentMentioningMutedUsers = (hide: boolean) => {
@@ -97,8 +97,8 @@ export function ContentPolicyProvider({ children }: { children: React.ReactNode 
       value={{
         autoplay,
         setAutoplay: updateAutoplay,
-        defaultShowNsfw,
-        setDefaultShowNsfw: updateDefaultShowNsfw,
+        nsfwDisplayPolicy,
+        setNsfwDisplayPolicy: updateNsfwDisplayPolicy,
         hideContentMentioningMutedUsers,
         setHideContentMentioningMutedUsers: updateHideContentMentioningMutedUsers,
         autoLoadMedia,

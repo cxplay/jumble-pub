@@ -571,6 +571,11 @@ export default {
     'If enabled, you can react with a single click. Click and hold for more options':
       'إذا تم التمكين، يمكنك التفاعل بنقرة واحدة. اضغط مع الاستمرار للمزيد من الخيارات',
     'Quick reaction emoji': 'رمز تعبيري للرد السريع',
-    'Select emoji': 'اختر رمز تعبيري'
+    'Select emoji': 'اختر رمز تعبيري',
+    'NSFW content display': 'NSFW content display',
+    'Hide completely': 'Hide completely',
+    'Show but hide content': 'Show but hide content',
+    'Show directly': 'Show directly',
+    'Click to view': 'Click to view'
   }
 }

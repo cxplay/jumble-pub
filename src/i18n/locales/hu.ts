@@ -572,6 +572,11 @@ export default {
     'If enabled, you can react with a single click. Click and hold for more options':
       'Ha engedélyezve van, egy kattintással reagálhat. Tartsa lenyomva további lehetőségekért',
     'Quick reaction emoji': 'Gyors reakció emoji',
-    'Select emoji': 'Emoji kiválasztása'
+    'Select emoji': 'Emoji kiválasztása',
+    'NSFW content display': 'NSFW content display',
+    'Hide completely': 'Hide completely',
+    'Show but hide content': 'Show but hide content',
+    'Show directly': 'Show directly',
+    'Click to view': 'Click to view'
   }
 }

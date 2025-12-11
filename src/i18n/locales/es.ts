@@ -583,6 +583,11 @@ export default {
     'If enabled, you can react with a single click. Click and hold for more options':
       'Si está habilitado, puedes reaccionar con un solo clic. Mantén presionado para más opciones',
     'Quick reaction emoji': 'Emoji de reacción rápida',
-    'Select emoji': 'Seleccionar emoji'
+    'Select emoji': 'Seleccionar emoji',
+    'NSFW content display': 'NSFW content display',
+    'Hide completely': 'Hide completely',
+    'Show but hide content': 'Show but hide content',
+    'Show directly': 'Show directly',
+    'Click to view': 'Click to view'
   }
 }

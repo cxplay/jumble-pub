@@ -28,7 +28,6 @@ export const StorageKey = {
   TRANSLATION_SERVICE_CONFIG_MAP: 'translationServiceConfigMap',
   MEDIA_UPLOAD_SERVICE_CONFIG_MAP: 'mediaUploadServiceConfigMap',
   HIDE_UNTRUSTED_NOTES: 'hideUntrustedNotes',
-  DEFAULT_SHOW_NSFW: 'defaultShowNsfw',
   DISMISSED_TOO_MANY_RELAYS_ALERT: 'dismissedTooManyRelaysAlert',
   SHOW_KINDS: 'showKinds',
   SHOW_KINDS_VERSION: 'showKindsVersion',
@@ -43,6 +42,8 @@ export const StorageKey = {
   FILTER_OUT_ONION_RELAYS: 'filterOutOnionRelays',
   QUICK_REACTION: 'quickReaction',
   QUICK_REACTION_EMOJI: 'quickReactionEmoji',
+  NSFW_DISPLAY_POLICY: 'nsfwDisplayPolicy',
+  DEFAULT_SHOW_NSFW: 'defaultShowNsfw', // deprecated
   PINNED_PUBKEYS: 'pinnedPubkeys', // deprecated
   MEDIA_UPLOAD_SERVICE: 'mediaUploadService', // deprecated
   HIDE_UNTRUSTED_EVENTS: 'hideUntrustedEvents', // deprecated
@@ -168,6 +169,12 @@ export const MEDIA_AUTO_LOAD_POLICY = {
   ALWAYS: 'always',
   WIFI_ONLY: 'wifi-only',
   NEVER: 'never'
+} as const
+
+export const NSFW_DISPLAY_POLICY = {
+  HIDE: 'hide',
+  HIDE_CONTENT: 'hide_content',
+  SHOW: 'show'
 } as const
 
 export const MAX_PINNED_NOTES = 10

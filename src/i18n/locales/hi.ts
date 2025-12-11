@@ -578,6 +578,11 @@ export default {
     'If enabled, you can react with a single click. Click and hold for more options':
       'यदि सक्षम है, तो आप एक क्लिक से प्रतिक्रिया दे सकते हैं। अधिक विकल्पों के लिए क्लिक करें और रोकें',
     'Quick reaction emoji': 'त्वरित प्रतिक्रिया इमोजी',
-    'Select emoji': 'इमोजी चुनें'
+    'Select emoji': 'इमोजी चुनें',
+    'NSFW content display': 'NSFW content display',
+    'Hide completely': 'Hide completely',
+    'Show but hide content': 'Show but hide content',
+    'Show directly': 'Show directly',
+    'Click to view': 'Click to view'
   }
 }

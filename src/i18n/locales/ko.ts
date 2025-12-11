@@ -576,6 +576,11 @@ export default {
     'If enabled, you can react with a single click. Click and hold for more options':
       '활성화하면 한 번의 클릭으로 반응할 수 있습니다. 더 많은 옵션을 보려면 길게 누르세요',
     'Quick reaction emoji': '빠른 반응 이모지',
-    'Select emoji': '이모지 선택'
+    'Select emoji': '이모지 선택',
+    'NSFW content display': 'NSFW content display',
+    'Hide completely': 'Hide completely',
+    'Show but hide content': 'Show but hide content',
+    'Show directly': 'Show directly',
+    'Click to view': 'Click to view'
   }
 }
