@@ -26,7 +26,7 @@ export default function BannerWithLightbox({
       className="rounded-none w-full aspect-[3/1]"
       classNames={{
         skeleton: 'rounded-none',
-        wrapper: 'rounded-none border-none'
+        wrapper: 'rounded-none border-none aspect-[3/1]'
       }}
       errorPlaceholder={defaultBanner}
       ignoreAutoLoadPolicy
