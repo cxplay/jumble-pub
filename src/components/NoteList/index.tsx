@@ -310,7 +310,6 @@ const NoteList = forwardRef<
               }
               if (eosed) {
                 setLoading(false)
-                setHasMore(events.length > 0)
                 addReplies(events)
               }
             },
