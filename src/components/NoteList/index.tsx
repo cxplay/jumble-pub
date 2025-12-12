@@ -428,7 +428,7 @@ const NoteList = forwardRef<
             reposters={reposters}
           />
         ))}
-        {hasMore || loading || filtering ? (
+        {hasMore || showCount < events.length || loading || filtering ? (
           <div ref={bottomRef}>
             <NoteCardLoadingSkeleton />
           </div>
