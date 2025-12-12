@@ -124,7 +124,7 @@ export default {
     Mailbox: '邮箱',
     'Read & Write Relays': '读写服务器',
     'read relays description':
-      '读服务器用于寻找与您有关的事件。其他用户会将想要你看到的事件发布到您的读服务器。',
+      '读服务器用于寻找与您有关的事件。其他用户会将想要您看到的事件发布到您的读服务器，比如回复、点赞转发……',
     'write relays description':
       '写服务器用于发布您的事件。其他用户会从您的写服务器寻找您发布的事件。',
     'read & write relays notice': '读服务器和写服务器的数量都应尽量保持在 2 到 4 个之间。',
