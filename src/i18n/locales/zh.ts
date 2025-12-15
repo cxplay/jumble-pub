@@ -571,6 +571,8 @@ export default {
     'Hide completely': '完全隐藏',
     'Show but hide content': '显示但隐藏内容',
     'Show directly': '直接显示',
-    'Click to view': '点击查看'
+    'Click to view': '点击查看',
+    'Special Follow': '特别关注',
+    'Unfollow Special': '取消特别关注'
   }
 }

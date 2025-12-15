@@ -582,6 +582,8 @@ export default {
     'Hide completely': 'Hide completely',
     'Show but hide content': 'Show but hide content',
     'Show directly': 'Show directly',
-    'Click to view': 'Click to view'
+    'Click to view': 'Click to view',
+    'Special Follow': 'Special Follow',
+    'Unfollow Special': 'Unfollow Special'
   }
 }

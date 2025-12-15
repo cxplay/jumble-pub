@@ -591,6 +591,8 @@ export default {
     'Hide completely': 'Ukryj całkowicie',
     'Show but hide content': 'Pokaż, ale ukryj treść',
     'Show directly': 'Pokaż bezpośrednio',
-    'Click to view': 'Wyświetl'
+    'Click to view': 'Wyświetl',
+    'Special Follow': 'Specjalne Śledzenie',
+    'Unfollow Special': 'Cofnij Specjalne Śledzenie'
   }
 }

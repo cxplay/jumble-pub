@@ -18,7 +18,7 @@ import client from '@/services/client.service'
 import userAggregationService, { TUserAggregation } from '@/services/user-aggregation.service'
 import { TFeedSubRequest } from '@/types'
 import dayjs from 'dayjs'
-import { History, Loader, Pin, PinOff } from 'lucide-react'
+import { History, Loader, Star } from 'lucide-react'
 import { Event, kinds } from 'nostr-tools'
 import {
   forwardRef,
@@ -563,9 +563,13 @@ function UserAggregationItem({
             ? 'text-primary hover:text-primary/80'
             : 'text-muted-foreground hover:text-foreground'
         }`}
-        title={pinned ? t('Unpin') : t('Pin')}
+        title={pinned ? t('Unfollow Special') : t('Special Follow')}
       >
-        {loading ? <Loader className="animate-spin" /> : pinned ? <PinOff /> : <Pin />}
+        {loading ? (
+          <Loader className="animate-spin" />
+        ) : (
+          <Star className={pinned ? 'fill-primary stroke-primary' : ''} />
+        )}
       </Button>
 
       <button

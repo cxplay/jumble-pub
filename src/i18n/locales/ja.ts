@@ -585,6 +585,8 @@ export default {
     'Hide completely': '完全に非表示',
     'Show but hide content': '表示するがコンテンツを非表示',
     'Show directly': '直接表示',
-    'Click to view': 'クリックして表示'
+    'Click to view': 'クリックして表示',
+    'Special Follow': '特別フォロー',
+    'Unfollow Special': '特別フォロー解除'
   }
 }
