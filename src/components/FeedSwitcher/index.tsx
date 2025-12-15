@@ -5,7 +5,8 @@ import { SecondaryPageLink } from '@/PageManager'
 import { useFavoriteRelays } from '@/providers/FavoriteRelaysProvider'
 import { useFeed } from '@/providers/FeedProvider'
 import { useNostr } from '@/providers/NostrProvider'
-import { UsersRound } from 'lucide-react'
+import { usePinnedUsers } from '@/providers/PinnedUsersProvider'
+import { Star, UsersRound } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import RelayIcon from '../RelayIcon'
 import RelaySetCard from '../RelaySetCard'
@@ -15,6 +16,7 @@ export default function FeedSwitcher({ close }: { close?: () => void }) {
   const { pubkey } = useNostr()
   const { relaySets, favoriteRelays } = useFavoriteRelays()
   const { feedInfo, switchFeed } = useFeed()
+  const { pinnedPubkeySet } = usePinnedUsers()
 
   return (
     <div className="space-y-2">
@@ -32,6 +34,23 @@ export default function FeedSwitcher({ close }: { close?: () => void }) {
             <UsersRound className="size-4" />
           </div>
           <div>{t('Following')}</div>
+        </div>
+      </FeedSwitcherItem>
+
+      <FeedSwitcherItem
+        isActive={feedInfo?.feedType === 'pinned'}
+        disabled={!pubkey || pinnedPubkeySet.size === 0}
+        onClick={() => {
+          if (!pubkey) return
+          switchFeed('pinned', { pubkey })
+          close?.()
+        }}
+      >
+        <div className="flex gap-2 items-center">
+          <div className="flex justify-center items-center w-6 h-6 shrink-0">
+            <Star className="size-4" />
+          </div>
+          <div>{t('Special Follow')}</div>
         </div>
       </FeedSwitcherItem>
 

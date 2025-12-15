@@ -27,6 +27,7 @@ import FollowedBy from './FollowedBy'
 import Followings from './Followings'
 import ProfileFeed from './ProfileFeed'
 import Relays from './Relays'
+import SpecialFollowButton from './SpecialFollowButton'
 
 export default function Profile({ id }: { id?: string }) {
   const { t } = useTranslation()
@@ -133,6 +134,7 @@ export default function Profile({ id }: { id?: string }) {
             ) : (
               <>
                 {!!lightningAddress && <ProfileZapButton pubkey={pubkey} />}
+                <SpecialFollowButton pubkey={pubkey} />
                 <FollowButton pubkey={pubkey} />
               </>
             )}
