@@ -236,10 +236,17 @@ class StuffStatsService {
   }
 
   private addLikeByEvent(evt: Event) {
-    const targetEventId = evt.tags.findLast(tagNameEquals('e'))?.[1]
-    if (!targetEventId) return
+    let targetEventKey
+    targetEventKey = evt.tags.findLast(tagNameEquals('a'))?.[1]
+    if (!targetEventKey) {
+      targetEventKey = evt.tags.findLast(tagNameEquals('e'))?.[1]
+    }
 
-    const old = this.stuffStatsMap.get(targetEventId) || {}
+    if (!targetEventKey) {
+      return
+    }
+
+    const old = this.stuffStatsMap.get(targetEventKey) || {}
     const likeIdSet = old.likeIdSet || new Set()
     const likes = old.likes || []
     if (likeIdSet.has(evt.id)) return
@@ -260,8 +267,8 @@ class StuffStatsService {
 
     likeIdSet.add(evt.id)
     likes.push({ id: evt.id, pubkey: evt.pubkey, created_at: evt.created_at, emoji })
-    this.stuffStatsMap.set(targetEventId, { ...old, likeIdSet, likes })
-    return targetEventId
+    this.stuffStatsMap.set(targetEventKey, { ...old, likeIdSet, likes })
+    return targetEventKey
   }
 
   private addExternalContentLikeByEvent(evt: Event) {
