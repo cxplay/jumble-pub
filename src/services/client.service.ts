@@ -100,7 +100,10 @@ class ClientService extends EventTarget {
       specifiedRelayUrls.forEach((url) => relaySet.add(url))
     } else {
       additionalRelayUrls?.forEach((url) => relaySet.add(url))
-      if (!specifiedRelayUrls?.length && ![kinds.Contacts, kinds.Mutelist].includes(event.kind)) {
+      if (
+        !specifiedRelayUrls?.length &&
+        ![kinds.Contacts, kinds.Mutelist, ExtendedKind.PINNED_USERS].includes(event.kind)
+      ) {
         const mentions: string[] = []
         event.tags.forEach(([tagName, tagValue]) => {
           if (
