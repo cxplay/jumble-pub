@@ -390,6 +390,7 @@ export default {
     'reacted to your note': 'zareagował na twój wpis',
     'reposted your note': 'repostował twój wpis',
     'zapped your note': 'zappował twój wpis',
+    'highlighted your note': 'wyróżnił twój wpis',
     'zapped you': 'zappował cię',
     'Mark as read': 'Oznacz jako przeczytane',
     Report: 'Zgłoś',
@@ -595,6 +596,10 @@ export default {
     'Special Follow': 'Specjalne Śledzenie',
     'Unfollow Special': 'Cofnij Specjalne Śledzenie',
     'Personal Feeds': 'Osobiste Kanały',
-    'Relay Feeds': 'Kanały Przekaźników'
+    'Relay Feeds': 'Kanały Przekaźników',
+    'Create Highlight': 'Utwórz Podświetlenie',
+    'Write your thoughts about this highlight...':
+      'Napisz swoje przemyślenia na temat tego podświetlenia...',
+    'Publish Highlight': 'Opublikuj Podświetlenie'
   }
 }

@@ -386,6 +386,7 @@ export default {
     'reacted to your note': '당신의 노트에 반응했습니다',
     'reposted your note': '당신의 노트를 리포스트했습니다',
     'zapped your note': '당신의 노트를 잽했습니다',
+    'highlighted your note': '당신의 노트를 하이라이트했습니다',
     'zapped you': '당신을 잽했습니다',
     'Mark as read': '읽음으로 표시',
     Report: '신고',
@@ -588,6 +589,9 @@ export default {
     'Special Follow': '특별 팔로우',
     'Unfollow Special': '특별 팔로우 해제',
     'Personal Feeds': '개인 피드',
-    'Relay Feeds': '릴레이 피드'
+    'Relay Feeds': '릴레이 피드',
+    'Create Highlight': '하이라이트 만들기',
+    'Write your thoughts about this highlight...': '이 하이라이트에 대한 생각을 작성하세요...',
+    'Publish Highlight': '하이라이트 게시'
   }
 }

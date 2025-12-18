@@ -382,6 +382,7 @@ export default {
     'reacted to your note': 'ได้แสดงปฏิกิริยาต่อโน้ตของคุณ',
     'reposted your note': 'ได้รีโพสต์โน้ตของคุณ',
     'zapped your note': 'ได้แซปโน้ตของคุณ',
+    'highlighted your note': 'ได้ไฮไลต์โน้ตของคุณ',
     'zapped you': 'ได้แซปคุณ',
     'Mark as read': 'ทำเครื่องหมายว่าอ่านแล้ว',
     Report: 'รายงาน',
@@ -582,6 +583,9 @@ export default {
     'Special Follow': 'ติดตามพิเศษ',
     'Unfollow Special': 'ยกเลิกติดตามพิเศษ',
     'Personal Feeds': 'ฟีดส่วนตัว',
-    'Relay Feeds': 'ฟีดรีเลย์'
+    'Relay Feeds': 'ฟีดรีเลย์',
+    'Create Highlight': 'สร้างไฮไลท์',
+    'Write your thoughts about this highlight...': 'เขียนความคิดของคุณเกี่ยวกับไฮไลท์นี้...',
+    'Publish Highlight': 'เผยแพร่ไฮไลท์'
   }
 }

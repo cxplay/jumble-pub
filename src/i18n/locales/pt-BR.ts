@@ -386,6 +386,7 @@ export default {
     'reacted to your note': 'reagiu à sua nota',
     'reposted your note': 'republicou sua nota',
     'zapped your note': 'zappeou sua nota',
+    'highlighted your note': 'destacou sua nota',
     'zapped you': 'zappeou você',
     'Mark as read': 'Marcar como lida',
     Report: 'Denunciar',
@@ -590,6 +591,10 @@ export default {
     'Special Follow': 'Favoritos',
     'Unfollow Special': 'Desfavoritar',
     'Personal Feeds': 'Meus feeds',
-    'Relay Feeds': 'Feeds de relays'
+    'Relay Feeds': 'Feeds de relays',
+    'Create Highlight': 'Criar Destaque',
+    'Write your thoughts about this highlight...':
+      'Escreva seus pensamentos sobre este destaque...',
+    'Publish Highlight': 'Publicar Destaque'
   }
 }

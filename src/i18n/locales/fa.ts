@@ -385,6 +385,7 @@ export default {
     'reacted to your note': 'به یادداشت شما واکنش نشان داد',
     'reposted your note': 'یادداشت شما را بازنشر کرد',
     'zapped your note': 'یادداشت شما را زپ کرد',
+    'highlighted your note': 'یادداشت شما را برجسته کرد',
     'zapped you': 'شما را زپ کرد',
     'Mark as read': 'علامت‌گذاری به عنوان خوانده شده',
     Report: 'گزارش',
@@ -589,6 +590,9 @@ export default {
     'Special Follow': 'دنبال کردن ویژه',
     'Unfollow Special': 'لغو دنبال کردن ویژه',
     'Personal Feeds': 'فیدهای شخصی',
-    'Relay Feeds': 'فیدهای رله'
+    'Relay Feeds': 'فیدهای رله',
+    'Create Highlight': 'ایجاد برجسته‌سازی',
+    'Write your thoughts about this highlight...': 'نظرات خود را درباره این برجسته‌سازی بنویسید...',
+    'Publish Highlight': 'انتشار برجسته‌سازی'
   }
 }

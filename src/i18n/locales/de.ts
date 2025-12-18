@@ -393,6 +393,7 @@ export default {
     'reacted to your note': 'hat auf Ihre Notiz reagiert',
     'reposted your note': 'hat Ihre Notiz geteilt',
     'zapped your note': 'hat Ihre Notiz gezappt',
+    'highlighted your note': 'hat Ihre Notiz hervorgehoben',
     'zapped you': 'hat Sie gezappt',
     'Mark as read': 'Als gelesen markieren',
     Report: 'Melden',
@@ -599,6 +600,10 @@ export default {
     'Special Follow': 'Besonders Folgen',
     'Unfollow Special': 'Besonders Entfolgen',
     'Personal Feeds': 'Persönliche Feeds',
-    'Relay Feeds': 'Relay-Feeds'
+    'Relay Feeds': 'Relay-Feeds',
+    'Create Highlight': 'Markierung Erstellen',
+    'Write your thoughts about this highlight...':
+      'Schreiben Sie Ihre Gedanken zu dieser Markierung...',
+    'Publish Highlight': 'Markierung Veröffentlichen'
   }
 }

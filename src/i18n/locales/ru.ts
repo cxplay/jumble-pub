@@ -390,6 +390,7 @@ export default {
     'reacted to your note': 'отреагировал на вашу заметку',
     'reposted your note': 'репостнул вашу заметку',
     'zapped your note': 'заппил вашу заметку',
+    'highlighted your note': 'выделил вашу заметку',
     'zapped you': 'заппил вас',
     'Mark as read': 'Отметить как прочитанное',
     Report: 'Пожаловаться',
@@ -595,6 +596,9 @@ export default {
     'Special Follow': 'Особая Подписка',
     'Unfollow Special': 'Отменить Особую Подписку',
     'Personal Feeds': 'Личные Ленты',
-    'Relay Feeds': 'Ленты Релеев'
+    'Relay Feeds': 'Ленты Релеев',
+    'Create Highlight': 'Создать Выделение',
+    'Write your thoughts about this highlight...': 'Напишите свои мысли об этом выделении...',
+    'Publish Highlight': 'Опубликовать Выделение'
   }
 }

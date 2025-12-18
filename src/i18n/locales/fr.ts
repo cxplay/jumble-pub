@@ -393,6 +393,7 @@ export default {
     'reacted to your note': 'a réagi à votre note',
     'reposted your note': 'a repartagé votre note',
     'zapped your note': 'a zappé votre note',
+    'highlighted your note': 'a mis en évidence votre note',
     'zapped you': 'vous a zappé',
     'Mark as read': 'Marquer comme lu',
     Report: 'Signaler',
@@ -598,6 +599,9 @@ export default {
     'Special Follow': 'Suivre Spécial',
     'Unfollow Special': 'Ne Plus Suivre Spécial',
     'Personal Feeds': 'Flux Personnels',
-    'Relay Feeds': 'Flux de Relais'
+    'Relay Feeds': 'Flux de Relais',
+    'Create Highlight': 'Créer un Surlignage',
+    'Write your thoughts about this highlight...': 'Écrivez vos pensées sur ce surlignage...',
+    'Publish Highlight': 'Publier le Surlignage'
   }
 }

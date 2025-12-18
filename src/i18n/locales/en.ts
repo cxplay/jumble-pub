@@ -383,6 +383,7 @@ export default {
     'reacted to your note': 'reacted to your note',
     'reposted your note': 'reposted your note',
     'zapped your note': 'zapped your note',
+    'highlighted your note': 'highlighted your note',
     'zapped you': 'zapped you',
     'Mark as read': 'Mark as read',
     Report: 'Report',
@@ -586,6 +587,9 @@ export default {
     'Special Follow': 'Special Follow',
     'Unfollow Special': 'Unfollow Special',
     'Personal Feeds': 'Personal Feeds',
-    'Relay Feeds': 'Relay Feeds'
+    'Relay Feeds': 'Relay Feeds',
+    'Create Highlight': 'Create Highlight',
+    'Write your thoughts about this highlight...': 'Write your thoughts about this highlight...',
+    'Publish Highlight': 'Publish Highlight'
   }
 }

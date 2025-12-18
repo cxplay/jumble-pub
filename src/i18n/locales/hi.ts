@@ -388,6 +388,7 @@ export default {
     'reacted to your note': 'ने आपके नोट पर प्रतिक्रिया दी',
     'reposted your note': 'ने आपके नोट को रीपोस्ट किया',
     'zapped your note': 'ने आपके नोट को जैप किया',
+    'highlighted your note': 'ने आपके नोट को हाइलाइट किया',
     'zapped you': 'ने आपको जैप किया',
     'Mark as read': 'पढ़ा हुआ मार्क करें',
     Report: 'रिपोर्ट करें',
@@ -590,6 +591,9 @@ export default {
     'Special Follow': 'विशेष फ़ॉलो',
     'Unfollow Special': 'विशेष अनफ़ॉलो',
     'Personal Feeds': 'व्यक्तिगत फ़ीड',
-    'Relay Feeds': 'रिले फ़ीड'
+    'Relay Feeds': 'रिले फ़ीड',
+    'Create Highlight': 'हाइलाइट बनाएं',
+    'Write your thoughts about this highlight...': 'इस हाइलाइट के बारे में अपने विचार लिखें...',
+    'Publish Highlight': 'हाइलाइट प्रकाशित करें'
   }
 }

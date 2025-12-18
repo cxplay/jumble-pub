@@ -385,6 +385,7 @@ export default {
     'reacted to your note': 'reagált a posztodra',
     'reposted your note': 'újraposztolta a posztodat',
     'zapped your note': 'zappolta a posztodat',
+    'highlighted your note': 'kiemelte a posztodat',
     'zapped you': 'zappolt téged',
     'Mark as read': 'Megjelölés olvasottként',
     Report: 'Jelentés',
@@ -584,6 +585,9 @@ export default {
     'Special Follow': 'Különleges Követés',
     'Unfollow Special': 'Különleges Követés Megszüntetése',
     'Personal Feeds': 'Személyes Feedek',
-    'Relay Feeds': 'Relay Feedek'
+    'Relay Feeds': 'Relay Feedek',
+    'Create Highlight': 'Kiemelés Létrehozása',
+    'Write your thoughts about this highlight...': 'Írd le a gondolataidat erről a kiemelésről...',
+    'Publish Highlight': 'Kiemelés Közzététele'
   }
 }

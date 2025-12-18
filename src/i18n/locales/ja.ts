@@ -386,6 +386,7 @@ export default {
     'reacted to your note': 'あなたのノートにリアクションしました',
     'reposted your note': 'あなたのノートをリポストしました',
     'zapped your note': 'あなたのノートにザップしました',
+    'highlighted your note': 'あなたのノートをハイライトしました',
     'zapped you': 'あなたにザップしました',
     'Mark as read': '既読にする',
     Report: '報告',
@@ -589,6 +590,10 @@ export default {
     'Special Follow': '特別フォロー',
     'Unfollow Special': '特別フォロー解除',
     'Personal Feeds': '個人フィード',
-    'Relay Feeds': 'リレーフィード'
+    'Relay Feeds': 'リレーフィード',
+    'Create Highlight': 'ハイライトを作成',
+    'Write your thoughts about this highlight...':
+      'このハイライトについての考えを書いてください...',
+    'Publish Highlight': 'ハイライトを公開'
   }
 }
