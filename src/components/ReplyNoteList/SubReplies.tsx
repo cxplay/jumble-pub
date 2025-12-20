@@ -3,6 +3,7 @@ import { Separator } from '@/components/ui/separator'
 import { getEventKey, getKeyFromTag, getParentTag, isMentioningMutedUsers } from '@/lib/event'
 import { toNote } from '@/lib/link'
 import { generateBech32IdFromETag } from '@/lib/tag'
+import { cn } from '@/lib/utils'
 import { useContentPolicy } from '@/providers/ContentPolicyProvider'
 import { useMuteList } from '@/providers/MuteListProvider'
 import { useReply } from '@/providers/ReplyProvider'
@@ -12,7 +13,6 @@ import { NostrEvent } from 'nostr-tools'
 import { useCallback, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import ReplyNote from '../ReplyNote'
-import { cn } from '@/lib/utils'
 
 export default function SubReplies({ parentKey }: { parentKey: string }) {
   const { t } = useTranslation()
@@ -131,7 +131,7 @@ export default function SubReplies({ parentKey }: { parentKey: string }) {
                 <div className="w-3 flex-shrink-0 bg-border" />
                 <ReplyNote
                   className={cn(
-                    'border-l flex-1 max-w-full border-t',
+                    'border-l flex-1 w-0 border-t',
                     index === replies.length - 1 && 'border-b'
                   )}
                   event={reply}
