@@ -600,6 +600,8 @@ export default {
     'Create Highlight': 'Utwórz Podświetlenie',
     'Write your thoughts about this highlight...':
       'Napisz swoje przemyślenia na temat tego podświetlenia...',
-    'Publish Highlight': 'Opublikuj Podświetlenie'
+    'Publish Highlight': 'Opublikuj Podświetlenie',
+    'Show replies': 'Pokaż odpowiedzi',
+    'Hide replies': 'Ukryj odpowiedzi'
   }
 }
