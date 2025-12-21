@@ -1,5 +1,4 @@
 import { useSecondaryPage } from '@/PageManager'
-import { Separator } from '@/components/ui/separator'
 import { getEventKey, getKeyFromTag, getParentTag, isMentioningMutedUsers } from '@/lib/event'
 import { toNote } from '@/lib/link'
 import { generateBech32IdFromETag } from '@/lib/tag'
@@ -82,7 +81,7 @@ export default function SubReplies({ parentKey }: { parentKey: string }) {
     }, 1500)
   }, [])
 
-  if (replies.length === 0) return <Separator />
+  if (replies.length === 0) return <div className="border-b w-full" />
 
   return (
     <div>
