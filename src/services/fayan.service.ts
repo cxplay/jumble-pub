@@ -3,28 +3,28 @@ import DataLoader from 'dataloader'
 class FayanService {
   static instance: FayanService
 
-  private userPercentileDataLoader = new DataLoader<string, number | null>(async (userIds) => {
-    return await Promise.all(
-      userIds.map(async (userId) => {
-        try {
-          const res = await fetch(`https://fayan.jumble.social/${userId}`)
-          if (!res.ok) {
-            if (res.status === 404) {
-              return 0
-            }
-            return null
-          }
-          const data = await res.json()
-          if (typeof data.percentile === 'number') {
-            return data.percentile
-          }
-          return null
-        } catch {
-          return null
+  private userPercentileDataLoader = new DataLoader<string, number | null>(
+    async (pubkeys) => {
+      try {
+        const res = await fetch(`https://fayan.jumble.social/users`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ pubkeys })
+        })
+        if (!res.ok) {
+          return new Array(pubkeys.length).fill(null)
         }
-      })
-    )
-  })
+        const data = await res.json()
+        console.log('FayanService fetched user percentiles:', data)
+        return pubkeys.map((pubkey) => data[pubkey] ?? null)
+      } catch {
+        return new Array(pubkeys.length).fill(null)
+      }
+    },
+    { maxBatchSize: 50 }
+  )
 
   constructor() {
     if (!FayanService.instance) {
