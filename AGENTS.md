@@ -151,7 +151,7 @@ Jumble is a multi-language application. When you add new text content, please en
 
 - Translation files located in `src/i18n/locales/`
 - Using `react-i18next` for internationalization
-- Supported languages: ar, de, en, es, fa, fr, hi, hu, it, ja, ko, pl, pt-BR, pt-PT, ru, th, zh
+- Supported languages: ar, de, en, es, fa, fr, hi, hu, it, ja, ko, pl, pt-BR, pt-PT, ru, th, zh, zh-TW
 
 #### Adding New Language
 
