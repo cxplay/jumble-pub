@@ -600,6 +600,53 @@ export default {
       'Escreva os seus pensamentos sobre este destaque...',
     'Publish Highlight': 'Publicar Destaque',
     'Show replies': 'Mostrar respostas',
-    'Hide replies': 'Ocultar respostas'
+    'Hide replies': 'Ocultar respostas',
+    'Welcome to Jumble!': 'Bem-vindo ao Jumble!',
+    'Your feed is empty because you are not following anyone yet. Start by exploring interesting content and following users you like!':
+      'O seu feed está vazio porque ainda não está a seguir ninguém. Comece por explorar conteúdo interessante e siga utilizadores de que gosta!',
+    'Search Users': 'Procurar Utilizadores',
+    'Create New Account': 'Criar nova conta',
+    Important: 'Importante',
+    'Generate Your Account': 'Gerar a sua conta',
+    'Your private key IS your account. Keep it safe!':
+      'A sua chave privada É a sua conta. Mantenha-a segura!',
+    'In Nostr, your private key IS your account. If you lose your private key, you lose your account forever.':
+      'No Nostr, a sua chave privada É a sua conta. Se perder a sua chave privada, perde a sua conta para sempre.',
+    'Your Private Key': 'A sua chave privada',
+    'Generate new key': 'Gerar nova chave',
+    'Download Backup File': 'Transferir ficheiro de cópia de segurança',
+    'Copied to Clipboard': 'Copiado para a área de transferência',
+    'Copy to Clipboard': 'Copiar para a área de transferência',
+    'I already saved my private key securely.': 'Já guardei a minha chave privada de forma segura.',
+    'Almost Done!': 'Quase pronto!',
+    'Set a password to encrypt your key, or skip to finish':
+      'Defina uma palavra-passe para encriptar a sua chave ou ignore para finalizar',
+    'Password Protection (Optional)': 'Proteção por palavra-passe (opcional)',
+    'Setting a password encrypts your private key in this browser. You can skip this step, but we recommend setting one for added security.':
+      'Definir uma palavra-passe encripta a sua chave privada neste navegador. Pode ignorar este passo, mas recomendamos que defina uma para maior segurança.',
+    'Password (Optional)': 'Palavra-passe (opcional)',
+    'Enter password or leave empty to skip':
+      'Introduza a palavra-passe ou deixe vazio para ignorar',
+    'Confirm Password': 'Confirmar palavra-passe',
+    'Re-enter password': 'Introduza novamente a palavra-passe',
+    'Passwords do not match': 'As palavras-passe não coincidem',
+    'Finish Signup': 'Concluir registo',
+    // New improved signup copy
+    'Create Your Nostr Account': 'Crie a sua conta Nostr',
+    'Generate your unique private key. This is your digital identity.':
+      'Gere a sua chave privada única. Esta é a sua identidade digital.',
+    'Critical: Save Your Private Key': 'Crítico: Guarde a sua chave privada',
+    'Your private key IS your account. There is no password recovery. If you lose it, you lose your account forever. Please save it in a secure location.':
+      'A sua chave privada É a sua conta. Não há recuperação de palavra-passe. Se a perder, perderá a sua conta para sempre. Por favor, guarde-a num local seguro.',
+    'I have safely backed up my private key': 'Fiz uma cópia de segurança da minha chave privada',
+    'Secure Your Account': 'Proteja a sua conta',
+    'Add an extra layer of protection with a password':
+      'Adicione uma camada extra de proteção com uma palavra-passe',
+    'Password Protection (Recommended)': 'Proteção por palavra-passe (recomendado)',
+    'Add a password to encrypt your private key in this browser. This is optional but strongly recommended for better security.':
+      'Adicione uma palavra-passe para encriptar a sua chave privada neste navegador. Isto é opcional, mas fortemente recomendado para melhor segurança.',
+    'Create a password (or skip)': 'Crie uma palavra-passe (ou ignore)',
+    'Enter your password again': 'Introduza novamente a sua palavra-passe',
+    'Complete Signup': 'Concluir registo'
   }
 }

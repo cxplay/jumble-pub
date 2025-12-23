@@ -161,7 +161,8 @@ export default {
     'calculating...': 'Calculando...',
     'Calculate optimal read relays': 'Calcular relays de leitura ideais',
     'Login to set': 'Entrar no conjunto',
-    'Please login to view following feed': 'Por favor, faça login para ver o conteúdo das pessoas que você segue',
+    'Please login to view following feed':
+      'Por favor, faça login para ver o conteúdo das pessoas que você segue',
     'Send only to r': 'Enviar apenas para {{r}}',
     'Send only to these relays': 'Enviar apenas para estes relays',
     Explore: 'Explorar',
@@ -597,6 +598,52 @@ export default {
       'Escreva seus pensamentos sobre este destaque...',
     'Publish Highlight': 'Publicar Destaque',
     'Show replies': 'Mostrar respostas',
-    'Hide replies': 'Ocultar respostas'
+    'Hide replies': 'Ocultar respostas',
+    'Welcome to Jumble!': 'Bem-vindo ao Jumble!',
+    'Your feed is empty because you are not following anyone yet. Start by exploring interesting content and following users you like!':
+      'Seu feed está vazio porque você ainda não está seguindo ninguém. Comece explorando conteúdo interessante e seguindo usuários que você gosta!',
+    'Search Users': 'Buscar Usuários',
+    'Create New Account': 'Criar nova conta',
+    Important: 'Importante',
+    'Generate Your Account': 'Gerar sua conta',
+    'Your private key IS your account. Keep it safe!':
+      'Sua chave privada É sua conta. Mantenha-a segura!',
+    'In Nostr, your private key IS your account. If you lose your private key, you lose your account forever.':
+      'No Nostr, sua chave privada É sua conta. Se você perder sua chave privada, perderá sua conta para sempre.',
+    'Your Private Key': 'Sua chave privada',
+    'Generate new key': 'Gerar nova chave',
+    'Download Backup File': 'Baixar arquivo de backup',
+    'Copied to Clipboard': 'Copiado para a área de transferência',
+    'Copy to Clipboard': 'Copiar para a área de transferência',
+    'I already saved my private key securely.': 'Já salvei minha chave privada com segurança.',
+    'Almost Done!': 'Quase pronto!',
+    'Set a password to encrypt your key, or skip to finish':
+      'Defina uma senha para criptografar sua chave ou pule para finalizar',
+    'Password Protection (Optional)': 'Proteção por senha (opcional)',
+    'Setting a password encrypts your private key in this browser. You can skip this step, but we recommend setting one for added security.':
+      'Definir uma senha criptografa sua chave privada neste navegador. Você pode pular esta etapa, mas recomendamos definir uma para maior segurança.',
+    'Password (Optional)': 'Senha (opcional)',
+    'Enter password or leave empty to skip': 'Digite a senha ou deixe em branco para pular',
+    'Confirm Password': 'Confirmar senha',
+    'Re-enter password': 'Digite a senha novamente',
+    'Passwords do not match': 'As senhas não coincidem',
+    'Finish Signup': 'Concluir cadastro',
+    // New improved signup copy
+    'Create Your Nostr Account': 'Crie sua conta Nostr',
+    'Generate your unique private key. This is your digital identity.':
+      'Gere sua chave privada única. Esta é sua identidade digital.',
+    'Critical: Save Your Private Key': 'Crítico: Salve sua chave privada',
+    'Your private key IS your account. There is no password recovery. If you lose it, you lose your account forever. Please save it in a secure location.':
+      'Sua chave privada É sua conta. Não há recuperação de senha. Se você perdê-la, perderá sua conta para sempre. Por favor, salve-a em um local seguro.',
+    'I have safely backed up my private key': 'Fiz backup seguro da minha chave privada',
+    'Secure Your Account': 'Proteja sua conta',
+    'Add an extra layer of protection with a password':
+      'Adicione uma camada extra de proteção com uma senha',
+    'Password Protection (Recommended)': 'Proteção por senha (recomendado)',
+    'Add a password to encrypt your private key in this browser. This is optional but strongly recommended for better security.':
+      'Adicione uma senha para criptografar sua chave privada neste navegador. Isso é opcional, mas fortemente recomendado para melhor segurança.',
+    'Create a password (or skip)': 'Crie uma senha (ou pule)',
+    'Enter your password again': 'Digite sua senha novamente',
+    'Complete Signup': 'Concluir cadastro'
   }
 }

@@ -596,6 +596,52 @@ export default {
       'このハイライトについての考えを書いてください...',
     'Publish Highlight': 'ハイライトを公開',
     'Show replies': '返信を表示',
-    'Hide replies': '返信を非表示'
+    'Hide replies': '返信を非表示',
+    'Welcome to Jumble!': 'Jumbleへようこそ！',
+    'Your feed is empty because you are not following anyone yet. Start by exploring interesting content and following users you like!':
+      'まだ誰もフォローしていないため、フィードが空です。興味深いコンテンツを探索して、好きなユーザーをフォローしてみましょう！',
+    'Search Users': 'ユーザーを検索',
+    'Create New Account': '新しいアカウントを作成',
+    Important: '重要',
+    'Generate Your Account': 'アカウントを生成',
+    'Your private key IS your account. Keep it safe!':
+      '秘密鍵があなたのアカウントです。安全に保管してください！',
+    'In Nostr, your private key IS your account. If you lose your private key, you lose your account forever.':
+      'Nostrでは、秘密鍵があなたのアカウントです。秘密鍵を紛失すると、アカウントを永久に失います。',
+    'Your Private Key': 'あなたの秘密鍵',
+    'Generate new key': '新しい鍵を生成',
+    'Download Backup File': 'バックアップファイルをダウンロード',
+    'Copied to Clipboard': 'クリップボードにコピーしました',
+    'Copy to Clipboard': 'クリップボードにコピー',
+    'I already saved my private key securely.': '秘密鍵を安全に保存しました。',
+    'Almost Done!': 'もう少しで完了です！',
+    'Set a password to encrypt your key, or skip to finish':
+      '鍵を暗号化するためのパスワードを設定するか、スキップして完了してください',
+    'Password Protection (Optional)': 'パスワード保護（オプション）',
+    'Setting a password encrypts your private key in this browser. You can skip this step, but we recommend setting one for added security.':
+      'パスワードを設定すると、このブラウザで秘密鍵が暗号化されます。この手順はスキップできますが、セキュリティ強化のために設定することをお勧めします。',
+    'Password (Optional)': 'パスワード（オプション）',
+    'Enter password or leave empty to skip':
+      'パスワードを入力するか、空のままにしてスキップしてください',
+    'Confirm Password': 'パスワードを確認',
+    'Re-enter password': 'パスワードを再入力',
+    'Passwords do not match': 'パスワードが一致しません',
+    'Finish Signup': '登録を完了',
+    // New improved signup copy
+    'Create Your Nostr Account': 'Nostrアカウントを作成',
+    'Generate your unique private key. This is your digital identity.':
+      'あなた専用の秘密鍵を生成します。これがあなたのデジタルアイデンティティです。',
+    'Critical: Save Your Private Key': '重要：秘密鍵を保存してください',
+    'Your private key IS your account. There is no password recovery. If you lose it, you lose your account forever. Please save it in a secure location.':
+      'あなたの秘密鍵があなたのアカウントそのものです。パスワード復旧機能はありません。紛失すると、アカウントを永久に失います。安全な場所に保存してください。',
+    'I have safely backed up my private key': '秘密鍵を安全にバックアップしました',
+    'Secure Your Account': 'アカウントを保護',
+    'Add an extra layer of protection with a password': 'パスワードで追加の保護層を追加',
+    'Password Protection (Recommended)': 'パスワード保護（推奨）',
+    'Add a password to encrypt your private key in this browser. This is optional but strongly recommended for better security.':
+      'このブラウザで秘密鍵を暗号化するパスワードを追加します。オプションですが、より良いセキュリティのために強くお勧めします。',
+    'Create a password (or skip)': 'パスワードを作成（またはスキップ）',
+    'Enter your password again': 'パスワードをもう一度入力',
+    'Complete Signup': '登録を完了'
   }
 }

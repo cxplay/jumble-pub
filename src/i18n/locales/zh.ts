@@ -581,6 +581,49 @@ export default {
     'Write your thoughts about this highlight...': '写下你对这段高亮的想法...',
     'Publish Highlight': '发布高亮',
     'Show replies': '显示回复',
-    'Hide replies': '隐藏回复'
+    'Hide replies': '隐藏回复',
+    'Welcome to Jumble!': '欢迎来到 Jumble！',
+    'Your feed is empty because you are not following anyone yet. Start by exploring interesting content and following users you like!':
+      '你的动态是空的，因为你还没有关注任何人。开始探索有趣的内容并关注你喜欢的用户吧！',
+    'Search Users': '搜索用户',
+    'Create New Account': '创建新账户',
+    Important: '重要',
+    'Generate Your Account': '生成你的账户',
+    'Your private key IS your account. Keep it safe!': '你的私钥就是你的账户。请妥善保管！',
+    'In Nostr, your private key IS your account. If you lose your private key, you lose your account forever.':
+      '在 Nostr 中，你的私钥就是你的账户。如果你丢失了私钥，你将永远失去你的账户。',
+    'Your Private Key': '你的私钥',
+    'Generate new key': '生成新密钥',
+    'Download Backup File': '下载备份文件',
+    'Copied to Clipboard': '已复制到剪贴板',
+    'Copy to Clipboard': '复制到剪贴板',
+    'I already saved my private key securely.': '我已经安全地保存了我的私钥。',
+    'Almost Done!': '即将完成！',
+    'Set a password to encrypt your key, or skip to finish': '设置密码来加密你的密钥，或跳过以完成',
+    'Password Protection (Optional)': '密码保护（可选）',
+    'Setting a password encrypts your private key in this browser. You can skip this step, but we recommend setting one for added security.':
+      '设置密码会在此浏览器中加密你的私钥。你可以跳过此步骤，但我们建议设置密码以增强安全性。',
+    'Password (Optional)': '密码（可选）',
+    'Enter password or leave empty to skip': '输入密码或留空以跳过',
+    'Confirm Password': '确认密码',
+    'Re-enter password': '重新输入密码',
+    'Passwords do not match': '密码不匹配',
+    'Finish Signup': '完成注册',
+    // New improved signup copy
+    'Create Your Nostr Account': '创建你的 Nostr 账户',
+    'Generate your unique private key. This is your digital identity.':
+      '生成你的专属私钥。这是你的数字身份。',
+    'Critical: Save Your Private Key': '重要：保存你的私钥',
+    'Your private key IS your account. There is no password recovery. If you lose it, you lose your account forever. Please save it in a secure location.':
+      '你的私钥就是你的账户。没有密码找回功能。如果丢失，你将永远失去你的账户。请将其保存在安全的地方。',
+    'I have safely backed up my private key': '我已安全备份我的私钥',
+    'Secure Your Account': '保护你的账户',
+    'Add an extra layer of protection with a password': '使用密码添加额外的保护层',
+    'Password Protection (Recommended)': '密码保护（推荐）',
+    'Add a password to encrypt your private key in this browser. This is optional but strongly recommended for better security.':
+      '添加密码以在此浏览器中加密你的私钥。这是可选的，但强烈建议设置以获得更好的安全性。',
+    'Create a password (or skip)': '创建密码（或跳过）',
+    'Enter your password again': '再次输入你的密码',
+    'Complete Signup': '完成注册'
   }
 }

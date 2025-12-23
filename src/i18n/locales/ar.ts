@@ -589,6 +589,50 @@ export default {
     'Write your thoughts about this highlight...': 'اكتب أفكارك حول هذا التمييز...',
     'Publish Highlight': 'نشر التمييز',
     'Show replies': 'إظهار الردود',
-    'Hide replies': 'إخفاء الردود'
+    'Hide replies': 'إخفاء الردود',
+    'Welcome to Jumble!': 'مرحبًا بك في Jumble!',
+    'Your feed is empty because you are not following anyone yet. Start by exploring interesting content and following users you like!':
+      'خلاصتك فارغة لأنك لا تتابع أي شخص بعد. ابدأ باستكشاف محتوى مثير للاهتمام ومتابعة المستخدمين الذين تحبهم!',
+    'Search Users': 'البحث عن المستخدمين',
+    'Create New Account': 'إنشاء حساب جديد',
+    Important: 'مهم',
+    'Generate Your Account': 'إنشاء حسابك',
+    'Your private key IS your account. Keep it safe!': 'مفتاحك الخاص هو حسابك. احتفظ به بأمان!',
+    'In Nostr, your private key IS your account. If you lose your private key, you lose your account forever.':
+      'في Nostr، مفتاحك الخاص هو حسابك. إذا فقدت مفتاحك الخاص، ستفقد حسابك إلى الأبد.',
+    'Your Private Key': 'مفتاحك الخاص',
+    'Generate new key': 'إنشاء مفتاح جديد',
+    'Download Backup File': 'تنزيل ملف النسخ الاحتياطي',
+    'Copied to Clipboard': 'تم النسخ إلى الحافظة',
+    'Copy to Clipboard': 'نسخ إلى الحافظة',
+    'I already saved my private key securely.': 'لقد حفظت مفتاحي الخاص بشكل آمن بالفعل.',
+    'Almost Done!': 'على وشك الانتهاء!',
+    'Set a password to encrypt your key, or skip to finish':
+      'قم بتعيين كلمة مرور لتشفير مفتاحك، أو تخطى للانتهاء',
+    'Password Protection (Optional)': 'الحماية بكلمة مرور (اختياري)',
+    'Setting a password encrypts your private key in this browser. You can skip this step, but we recommend setting one for added security.':
+      'يؤدي تعيين كلمة مرور إلى تشفير مفتاحك الخاص في هذا المتصفح. يمكنك تخطي هذه الخطوة، لكننا نوصي بتعيين واحدة لمزيد من الأمان.',
+    'Password (Optional)': 'كلمة المرور (اختياري)',
+    'Enter password or leave empty to skip': 'أدخل كلمة المرور أو اتركها فارغة للتخطي',
+    'Confirm Password': 'تأكيد كلمة المرور',
+    'Re-enter password': 'أعد إدخال كلمة المرور',
+    'Passwords do not match': 'كلمات المرور غير متطابقة',
+    'Finish Signup': 'إنهاء التسجيل',
+    // New improved signup copy
+    'Create Your Nostr Account': 'أنشئ حساب Nostr الخاص بك',
+    'Generate your unique private key. This is your digital identity.':
+      'أنشئ مفتاحك الخاص الفريد. هذه هي هويتك الرقمية.',
+    'Critical: Save Your Private Key': 'حرج: احفظ مفتاحك الخاص',
+    'Your private key IS your account. There is no password recovery. If you lose it, you lose your account forever. Please save it in a secure location.':
+      'مفتاحك الخاص هو حسابك. لا يوجد استرداد لكلمة المرور. إذا فقدته، ستفقد حسابك للأبد. يرجى حفظه في مكان آمن.',
+    'I have safely backed up my private key': 'لقد قمت بعمل نسخة احتياطية آمنة لمفتاحي الخاص',
+    'Secure Your Account': 'أمّن حسابك',
+    'Add an extra layer of protection with a password': 'أضف طبقة إضافية من الحماية بكلمة مرور',
+    'Password Protection (Recommended)': 'الحماية بكلمة مرور (موصى به)',
+    'Add a password to encrypt your private key in this browser. This is optional but strongly recommended for better security.':
+      'أضف كلمة مرور لتشفير مفتاحك الخاص في هذا المتصفح. هذا اختياري لكنه موصى به بشدة لأمان أفضل.',
+    'Create a password (or skip)': 'أنشئ كلمة مرور (أو تخطى)',
+    'Enter your password again': 'أدخل كلمة المرور مرة أخرى',
+    'Complete Signup': 'إكمال التسجيل'
   }
 }

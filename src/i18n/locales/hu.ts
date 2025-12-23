@@ -590,6 +590,52 @@ export default {
     'Write your thoughts about this highlight...': 'Írd le a gondolataidat erről a kiemelésről...',
     'Publish Highlight': 'Kiemelés Közzététele',
     'Show replies': 'Válaszok megjelenítése',
-    'Hide replies': 'Válaszok elrejtése'
+    'Hide replies': 'Válaszok elrejtése',
+    'Welcome to Jumble!': 'Üdvözlünk a Jumble-ban!',
+    'Your feed is empty because you are not following anyone yet. Start by exploring interesting content and following users you like!':
+      'A hírcsatornád üres, mert még nem követsz senkit. Kezdd el érdekes tartalmak felfedezésével és kövesd azokat a felhasználókat, akik tetszenek!',
+    'Search Users': 'Felhasználók keresése',
+    'Create New Account': 'Új fiók létrehozása',
+    Important: 'Fontos',
+    'Generate Your Account': 'Fiók létrehozása',
+    'Your private key IS your account. Keep it safe!':
+      'A privát kulcsod A fiókodat jelenti. Tartsd biztonságban!',
+    'In Nostr, your private key IS your account. If you lose your private key, you lose your account forever.':
+      'A Nostr-ban a privát kulcsod A fiókodat jelenti. Ha elveszíted a privát kulcsodat, örökre elveszíted a fiókodat.',
+    'Your Private Key': 'Privát kulcsod',
+    'Generate new key': 'Új kulcs generálása',
+    'Download Backup File': 'Biztonsági mentés letöltése',
+    'Copied to Clipboard': 'Vágólapra másolva',
+    'Copy to Clipboard': 'Másolás vágólapra',
+    'I already saved my private key securely.': 'Már biztonságosan elmentettem a privát kulcsomat.',
+    'Almost Done!': 'Majdnem kész!',
+    'Set a password to encrypt your key, or skip to finish':
+      'Állíts be jelszót a kulcsod titkosításához, vagy hagyd ki a befejezéshez',
+    'Password Protection (Optional)': 'Jelszavas védelem (opcionális)',
+    'Setting a password encrypts your private key in this browser. You can skip this step, but we recommend setting one for added security.':
+      'A jelszó beállítása titkosítja a privát kulcsodat ebben a böngészőben. Kihagyhatod ezt a lépést, de javasoljuk a beállítását a nagyobb biztonság érdekében.',
+    'Password (Optional)': 'Jelszó (opcionális)',
+    'Enter password or leave empty to skip': 'Írj be jelszót, vagy hagyd üresen a kihagyáshoz',
+    'Confirm Password': 'Jelszó megerősítése',
+    'Re-enter password': 'Jelszó újbóli megadása',
+    'Passwords do not match': 'A jelszavak nem egyeznek',
+    'Finish Signup': 'Regisztráció befejezése',
+    // New improved signup copy
+    'Create Your Nostr Account': 'Hozd létre Nostr fiókodat',
+    'Generate your unique private key. This is your digital identity.':
+      'Generáld le egyedi privát kulcsodat. Ez a digitális identitásod.',
+    'Critical: Save Your Private Key': 'Kritikus: Mentsd el a privát kulcsodat',
+    'Your private key IS your account. There is no password recovery. If you lose it, you lose your account forever. Please save it in a secure location.':
+      'A privát kulcsod A fiókod. Nincs jelszó-visszaállítás. Ha elveszíted, örökre elveszíted a fiókodat. Kérjük, mentsd el biztonságos helyre.',
+    'I have safely backed up my private key': 'Biztonságosan elmentettem a privát kulcsomat',
+    'Secure Your Account': 'Védd meg a fiókodat',
+    'Add an extra layer of protection with a password':
+      'Adj hozzá egy extra védelmi réteget jelszóval',
+    'Password Protection (Recommended)': 'Jelszavas védelem (ajánlott)',
+    'Add a password to encrypt your private key in this browser. This is optional but strongly recommended for better security.':
+      'Adj hozzá jelszót a privát kulcsod titkosításához ebben a böngészőben. Ez opcionális, de erősen ajánlott a jobb biztonság érdekében.',
+    'Create a password (or skip)': 'Hozz létre jelszót (vagy hagyd ki)',
+    'Enter your password again': 'Add meg újra a jelszavad',
+    'Complete Signup': 'Regisztráció befejezése'
   }
 }

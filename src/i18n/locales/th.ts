@@ -588,6 +588,51 @@ export default {
     'Write your thoughts about this highlight...': 'เขียนความคิดของคุณเกี่ยวกับไฮไลท์นี้...',
     'Publish Highlight': 'เผยแพร่ไฮไลท์',
     'Show replies': 'แสดงการตอบกลับ',
-    'Hide replies': 'ซ่อนการตอบกลับ'
+    'Hide replies': 'ซ่อนการตอบกลับ',
+    'Welcome to Jumble!': 'ยินดีต้อนรับสู่ Jumble!',
+    'Your feed is empty because you are not following anyone yet. Start by exploring interesting content and following users you like!':
+      'ฟีดของคุณว่างเปล่าเพราะคุณยังไม่ได้ติดตามใครเลย เริ่มต้นด้วยการสำรวจเนื้อหาที่น่าสนใจและติดตามผู้ใช้ที่คุณชอบ!',
+    'Search Users': 'ค้นหาผู้ใช้',
+    'Create New Account': 'สร้างบัญชีใหม่',
+    Important: 'สำคัญ',
+    'Generate Your Account': 'สร้างบัญชีของคุณ',
+    'Your private key IS your account. Keep it safe!':
+      'คีย์ส่วนตัวของคุณคือบัญชีของคุณ เก็บไว้ให้ปลอดภัย!',
+    'In Nostr, your private key IS your account. If you lose your private key, you lose your account forever.':
+      'ใน Nostr คีย์ส่วนตัวของคุณคือบัญชีของคุณ หากคุณสูญเสียคีย์ส่วนตัว คุณจะสูญเสียบัญชีของคุณตลอดไป',
+    'Your Private Key': 'คีย์ส่วนตัวของคุณ',
+    'Generate new key': 'สร้างคีย์ใหม่',
+    'Download Backup File': 'ดาวน์โหลดไฟล์สำรอง',
+    'Copied to Clipboard': 'คัดลอกไปยังคลิปบอร์ดแล้ว',
+    'Copy to Clipboard': 'คัดลอกไปยังคลิปบอร์ด',
+    'I already saved my private key securely.': 'ฉันได้บันทึกคีย์ส่วนตัวของฉันอย่างปลอดภัยแล้ว',
+    'Almost Done!': 'เกือบเสร็จแล้ว!',
+    'Set a password to encrypt your key, or skip to finish':
+      'ตั้งรหัสผ่านเพื่อเข้ารหัสคีย์ของคุณ หรือข้ามเพื่อเสร็จสิ้น',
+    'Password Protection (Optional)': 'การป้องกันด้วยรหัสผ่าน (ไม่บังคับ)',
+    'Setting a password encrypts your private key in this browser. You can skip this step, but we recommend setting one for added security.':
+      'การตั้งรหัสผ่านจะเข้ารหัสคีย์ส่วนตัวของคุณในเบราว์เซอร์นี้ คุณสามารถข้ามขั้นตอนนี้ได้ แต่เราแนะนำให้ตั้งรหัสผ่านเพื่อความปลอดภัยเพิ่มเติม',
+    'Password (Optional)': 'รหัสผ่าน (ไม่บังคับ)',
+    'Enter password or leave empty to skip': 'ป้อนรหัสผ่านหรือเว้นว่างเพื่อข้าม',
+    'Confirm Password': 'ยืนยันรหัสผ่าน',
+    'Re-enter password': 'ป้อนรหัสผ่านอีกครั้ง',
+    'Passwords do not match': 'รหัสผ่านไม่ตรงกัน',
+    'Finish Signup': 'เสร็จสิ้นการลงทะเบียน',
+    // New improved signup copy
+    'Create Your Nostr Account': 'สร้างบัญชี Nostr ของคุณ',
+    'Generate your unique private key. This is your digital identity.':
+      'สร้างคีย์ส่วนตัวที่ไม่ซ้ำของคุณ นี่คือตัวตนดิจิทัลของคุณ',
+    'Critical: Save Your Private Key': 'สำคัญมาก: บันทึกคีย์ส่วนตัวของคุณ',
+    'Your private key IS your account. There is no password recovery. If you lose it, you lose your account forever. Please save it in a secure location.':
+      'คีย์ส่วนตัวของคุณคือบัญชีของคุณ ไม่มีการกู้คืนรหัสผ่าน หากคุณทำหาย คุณจะสูญเสียบัญชีของคุณตลอดไป โปรดบันทึกไว้ในที่ปลอดภัย',
+    'I have safely backed up my private key': 'ฉันได้สำรองคีย์ส่วนตัวของฉันอย่างปลอดภัยแล้ว',
+    'Secure Your Account': 'รักษาความปลอดภัยบัญชีของคุณ',
+    'Add an extra layer of protection with a password': 'เพิ่มชั้นความปลอดภัยเพิ่มเติมด้วยรหัสผ่าน',
+    'Password Protection (Recommended)': 'การป้องกันด้วยรหัสผ่าน (แนะนำ)',
+    'Add a password to encrypt your private key in this browser. This is optional but strongly recommended for better security.':
+      'เพิ่มรหัสผ่านเพื่อเข้ารหัสคีย์ส่วนตัวของคุณในเบราว์เซอร์นี้ เป็นตัวเลือก แต่แนะนำอย่างยิ่งเพื่อความปลอดภัยที่ดีขึ้น',
+    'Create a password (or skip)': 'สร้างรหัสผ่าน (หรือข้าม)',
+    'Enter your password again': 'ป้อนรหัสผ่านของคุณอีกครั้ง',
+    'Complete Signup': 'เสร็จสิ้นการลงทะเบียน'
   }
 }
