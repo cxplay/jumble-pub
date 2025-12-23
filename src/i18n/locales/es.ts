@@ -648,6 +648,7 @@ export default {
       'Añade una contraseña para cifrar tu clave privada en este navegador. Esto es opcional pero muy recomendado para mayor seguridad.',
     'Create a password (or skip)': 'Crear una contraseña (o saltar)',
     'Enter your password again': 'Ingresa tu contraseña nuevamente',
-    'Complete Signup': 'Completar registro'
+    'Complete Signup': 'Completar registro',
+    Recommended: 'Recomendado'
   }
 }

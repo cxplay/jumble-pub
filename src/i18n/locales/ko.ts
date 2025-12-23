@@ -639,6 +639,7 @@ export default {
       '이 브라우저에서 개인 키를 암호화할 비밀번호를 추가합니다. 선택사항이지만 더 나은 보안을 위해 강력히 권장합니다.',
     'Create a password (or skip)': '비밀번호 생성(또는 건너뛰기)',
     'Enter your password again': '비밀번호를 다시 입력하세요',
-    'Complete Signup': '가입 완료'
+    'Complete Signup': '가입 완료',
+    Recommended: '추천'
   }
 }

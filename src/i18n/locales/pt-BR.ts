@@ -644,6 +644,7 @@ export default {
       'Adicione uma senha para criptografar sua chave privada neste navegador. Isso é opcional, mas fortemente recomendado para melhor segurança.',
     'Create a password (or skip)': 'Crie uma senha (ou pule)',
     'Enter your password again': 'Digite sua senha novamente',
-    'Complete Signup': 'Concluir cadastro'
+    'Complete Signup': 'Concluir cadastro',
+    Recommended: 'Recomendado'
   }
 }

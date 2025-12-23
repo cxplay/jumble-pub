@@ -633,6 +633,7 @@ export default {
       'أضف كلمة مرور لتشفير مفتاحك الخاص في هذا المتصفح. هذا اختياري لكنه موصى به بشدة لأمان أفضل.',
     'Create a password (or skip)': 'أنشئ كلمة مرور (أو تخطى)',
     'Enter your password again': 'أدخل كلمة المرور مرة أخرى',
-    'Complete Signup': 'إكمال التسجيل'
+    'Complete Signup': 'إكمال التسجيل',
+    Recommended: 'موصى به'
   }
 }

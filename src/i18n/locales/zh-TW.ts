@@ -619,6 +619,7 @@ export default {
       '新增密碼以在此瀏覽器中加密你的私鑰。這是可選的，但強烈建議設定以獲得更好的安全性。',
     'Create a password (or skip)': '建立密碼（或跳過）',
     'Enter your password again': '再次輸入你的密碼',
-    'Complete Signup': '完成註冊'
+    'Complete Signup': '完成註冊',
+    Recommended: '推薦'
   }
 }

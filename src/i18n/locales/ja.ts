@@ -642,6 +642,7 @@ export default {
       'このブラウザで秘密鍵を暗号化するパスワードを追加します。オプションですが、より良いセキュリティのために強くお勧めします。',
     'Create a password (or skip)': 'パスワードを作成（またはスキップ）',
     'Enter your password again': 'パスワードをもう一度入力',
-    'Complete Signup': '登録を完了'
+    'Complete Signup': '登録を完了',
+    Recommended: 'おすすめ'
   }
 }

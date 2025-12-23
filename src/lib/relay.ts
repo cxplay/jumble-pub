@@ -16,3 +16,27 @@ export function checkNip43Support(relayInfo: TRelayInfo | undefined) {
 export function filterOutBigRelays(relayUrls: string[]) {
   return relayUrls.filter((url) => !BIG_RELAY_URLS.includes(url))
 }
+
+export function recommendRelaysByLanguage(i18nLanguage: string) {
+  if (i18nLanguage.startsWith('zh')) {
+    return [
+      'wss://relay.nostrzh.org/',
+      'wss://relay.nostr.moe/',
+      'wss://lang.relays.land/zh',
+      'wss://relay.stream/'
+    ]
+  }
+  if (i18nLanguage.startsWith('ja')) {
+    return ['wss://yabu.me/', 'wss://lang.relays.land/ja']
+  }
+  if (i18nLanguage.startsWith('es')) {
+    return ['wss://lang.relays.land/es']
+  }
+  if (i18nLanguage.startsWith('it')) {
+    return ['wss://lang.relays.land/it']
+  }
+  if (i18nLanguage.startsWith('pt')) {
+    return ['wss://lang.relays.land/pt']
+  }
+  return []
+}

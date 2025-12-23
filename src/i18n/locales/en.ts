@@ -638,6 +638,7 @@ export default {
       'Add a password to encrypt your private key in this browser. This is optional but strongly recommended for better security.',
     'Create a password (or skip)': 'Create a password (or skip)',
     'Enter your password again': 'Enter your password again',
-    'Complete Signup': 'Complete Signup'
+    'Complete Signup': 'Complete Signup',
+    Recommended: 'Recommended'
   }
 }

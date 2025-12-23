@@ -636,6 +636,7 @@ export default {
       'Adj hozzá jelszót a privát kulcsod titkosításához ebben a böngészőben. Ez opcionális, de erősen ajánlott a jobb biztonság érdekében.',
     'Create a password (or skip)': 'Hozz létre jelszót (vagy hagyd ki)',
     'Enter your password again': 'Add meg újra a jelszavad',
-    'Complete Signup': 'Regisztráció befejezése'
+    'Complete Signup': 'Regisztráció befejezése',
+    Recommended: 'Ajánlott'
   }
 }

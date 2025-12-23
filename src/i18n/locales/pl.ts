@@ -649,6 +649,7 @@ export default {
       'Dodaj hasło, aby zaszyfrować swój klucz prywatny w tej przeglądarce. Jest to opcjonalne, ale zdecydowanie zalecane dla lepszego bezpieczeństwa.',
     'Create a password (or skip)': 'Utwórz hasło (lub pomiń)',
     'Enter your password again': 'Wprowadź hasło ponownie',
-    'Complete Signup': 'Zakończ rejestrację'
+    'Complete Signup': 'Zakończ rejestrację',
+    Recommended: 'Polecane'
   }
 }

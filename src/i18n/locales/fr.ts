@@ -651,6 +651,7 @@ export default {
       "Ajoutez un mot de passe pour chiffrer votre clé privée dans ce navigateur. C'est facultatif mais fortement recommandé pour une meilleure sécurité.",
     'Create a password (or skip)': 'Créez un mot de passe (ou ignorez)',
     'Enter your password again': 'Entrez à nouveau votre mot de passe',
-    'Complete Signup': "Terminer l'inscription"
+    'Complete Signup': "Terminer l'inscription",
+    Recommended: 'Recommandé'
   }
 }

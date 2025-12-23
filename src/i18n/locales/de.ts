@@ -654,6 +654,7 @@ export default {
       'Fügen Sie ein Passwort hinzu, um Ihren privaten Schlüssel in diesem Browser zu verschlüsseln. Dies ist optional, aber für bessere Sicherheit dringend empfohlen.',
     'Create a password (or skip)': 'Erstellen Sie ein Passwort (oder überspringen)',
     'Enter your password again': 'Geben Sie Ihr Passwort erneut ein',
-    'Complete Signup': 'Registrierung abschließen'
+    'Complete Signup': 'Registrierung abschließen',
+    Recommended: 'Empfohlen'
   }
 }

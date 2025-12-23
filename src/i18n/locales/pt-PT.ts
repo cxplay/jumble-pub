@@ -647,6 +647,7 @@ export default {
       'Adicione uma palavra-passe para encriptar a sua chave privada neste navegador. Isto é opcional, mas fortemente recomendado para melhor segurança.',
     'Create a password (or skip)': 'Crie uma palavra-passe (ou ignore)',
     'Enter your password again': 'Introduza novamente a sua palavra-passe',
-    'Complete Signup': 'Concluir registo'
+    'Complete Signup': 'Concluir registo',
+    Recommended: 'Recomendado'
   }
 }

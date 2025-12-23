@@ -1,5 +1,10 @@
 import { Event, Filter, VerifiedEvent } from 'nostr-tools'
-import { MEDIA_AUTO_LOAD_POLICY, NOTIFICATION_LIST_STYLE, NSFW_DISPLAY_POLICY, POLL_TYPE } from '../constants'
+import {
+  MEDIA_AUTO_LOAD_POLICY,
+  NOTIFICATION_LIST_STYLE,
+  NSFW_DISPLAY_POLICY,
+  POLL_TYPE
+} from '../constants'
 
 export type TSubRequestFilter = Omit<Filter, 'since' | 'until'> & { limit: number }
 
@@ -200,12 +205,10 @@ export type TNotificationStyle =
 export type TAwesomeRelayCollection = {
   id: string
   name: string
-  description: string
   relays: string[]
 }
 
 export type TMediaAutoLoadPolicy =
   (typeof MEDIA_AUTO_LOAD_POLICY)[keyof typeof MEDIA_AUTO_LOAD_POLICY]
 
-export type TNsfwDisplayPolicy =
-  (typeof NSFW_DISPLAY_POLICY)[keyof typeof NSFW_DISPLAY_POLICY]
+export type TNsfwDisplayPolicy = (typeof NSFW_DISPLAY_POLICY)[keyof typeof NSFW_DISPLAY_POLICY]

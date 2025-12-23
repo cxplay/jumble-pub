@@ -624,6 +624,7 @@ export default {
       '添加密码以在此浏览器中加密你的私钥。这是可选的，但强烈建议设置以获得更好的安全性。',
     'Create a password (or skip)': '创建密码（或跳过）',
     'Enter your password again': '再次输入你的密码',
-    'Complete Signup': '完成注册'
+    'Complete Signup': '完成注册',
+    Recommended: '推荐'
   }
 }

@@ -648,6 +648,7 @@ export default {
       'Aggiungi una password per crittografare la tua chiave privata in questo browser. È facoltativo ma fortemente consigliato per una migliore sicurezza.',
     'Create a password (or skip)': 'Crea una password (o salta)',
     'Enter your password again': 'Inserisci di nuovo la tua password',
-    'Complete Signup': 'Completa registrazione'
+    'Complete Signup': 'Completa registrazione',
+    Recommended: 'Consigliato'
   }
 }
