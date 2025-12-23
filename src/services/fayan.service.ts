@@ -17,7 +17,6 @@ class FayanService {
           return new Array(pubkeys.length).fill(null)
         }
         const data = await res.json()
-        console.log('FayanService fetched user percentiles:', data)
         return pubkeys.map((pubkey) => data[pubkey] ?? null)
       } catch {
         return new Array(pubkeys.length).fill(null)

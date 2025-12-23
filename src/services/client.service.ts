@@ -842,6 +842,10 @@ class ClientService extends EventTarget {
     }
   }
 
+  getReplaeableEventFromCache(coordinate: string): NEvent | undefined {
+    return this.replaceableEventCacheMap.get(coordinate)
+  }
+
   private async fetchEventById(relayUrls: string[], id: string): Promise<NEvent | undefined> {
     const event = await this.fetchEventFromBigRelaysDataloader.load(id)
     if (event) {

@@ -16,7 +16,7 @@ import { Event, kinds, nip19 } from 'nostr-tools'
 import {
   getReplaceableCoordinate,
   getReplaceableCoordinateFromEvent,
-  getRootETag,
+  getRootTag,
   isProtectedEvent,
   isReplaceableEvent
 } from './event'
@@ -153,7 +153,7 @@ export async function createShortTextNoteDraftEvent(
   } = {}
 ): Promise<TDraftEvent> {
   const { content: transformedEmojisContent, emojiTags } = transformCustomEmojisInContent(content)
-  const { quoteTags, rootETag, parentETag } = await extractRelatedEventIds(
+  const { quoteTags, rootTag, parentTag } = await extractRelatedEventIds(
     transformedEmojisContent,
     options.parentEvent
   )
@@ -170,13 +170,13 @@ export async function createShortTextNoteDraftEvent(
   // q tags
   tags.push(...quoteTags)
 
-  // e tags
-  if (rootETag.length) {
-    tags.push(rootETag)
+  // thread tags
+  if (rootTag) {
+    tags.push(rootTag)
   }
 
-  if (parentETag.length) {
-    tags.push(parentETag)
+  if (parentTag) {
+    tags.push(parentTag)
   }
 
   // p tags
@@ -640,36 +640,42 @@ function generateImetaTags(imageUrls: string[]) {
 }
 
 async function extractRelatedEventIds(content: string, parentEvent?: Event) {
-  let rootETag: string[] = []
-  let parentETag: string[] = []
+  let rootTag: string[] | null = null
+  let parentTag: string[] | null = null
 
   const quoteTags = extractQuoteTags(content)
 
   if (parentEvent) {
-    const _rootETag = getRootETag(parentEvent)
-    if (_rootETag) {
-      parentETag = buildETagWithMarker(parentEvent.id, parentEvent.pubkey, '', 'reply')
+    const _rootTag = getRootTag(parentEvent)
+    if (_rootTag?.type === 'e') {
+      parentTag = buildETagWithMarker(parentEvent.id, parentEvent.pubkey, '', 'reply')
 
-      const [, rootEventHexId, hint, , rootEventPubkey] = _rootETag
+      const [, rootEventHexId, hint, , rootEventPubkey] = _rootTag.tag
       if (rootEventPubkey) {
-        rootETag = buildETagWithMarker(rootEventHexId, rootEventPubkey, hint, 'root')
+        rootTag = buildETagWithMarker(rootEventHexId, rootEventPubkey, hint, 'root')
       } else {
-        const rootEventId = generateBech32IdFromETag(_rootETag)
+        const rootEventId = generateBech32IdFromETag(_rootTag.tag)
         const rootEvent = rootEventId ? await client.fetchEvent(rootEventId) : undefined
-        rootETag = rootEvent
+        rootTag = rootEvent
           ? buildETagWithMarker(rootEvent.id, rootEvent.pubkey, hint, 'root')
           : buildETagWithMarker(rootEventHexId, rootEventPubkey, hint, 'root')
       }
+    }
+    if (_rootTag?.type === 'a') {
+      // Legacy
+      parentTag = buildETagWithMarker(parentEvent.id, parentEvent.pubkey, '', 'reply')
+      const [, coordinate, hint] = _rootTag.tag
+      rootTag = buildLegacyRootATag(coordinate, hint)
     } else {
       // reply to root event
-      rootETag = buildETagWithMarker(parentEvent.id, parentEvent.pubkey, '', 'root')
+      rootTag = buildETagWithMarker(parentEvent.id, parentEvent.pubkey, '', 'root')
     }
   }
 
   return {
     quoteTags,
-    rootETag,
-    parentETag
+    rootTag,
+    parentTag
   }
 }
 
@@ -821,6 +827,16 @@ function buildETagWithMarker(
     hint = client.getEventHint(eventHexId)
   }
   return trimTagEnd(['e', eventHexId, hint, marker, pubkey])
+}
+
+function buildLegacyRootATag(coordinate: string, hint: string = '') {
+  if (!hint) {
+    const evt = client.getReplaeableEventFromCache(coordinate)
+    if (evt) {
+      hint = client.getEventHint(evt.id)
+    }
+  }
+  return trimTagEnd(['a', coordinate, hint, 'root'])
 }
 
 function buildITag(url: string, upperCase: boolean = false) {
