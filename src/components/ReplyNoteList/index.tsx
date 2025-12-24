@@ -243,7 +243,12 @@ export default function ReplyNoteList({
       setLoading(true)
       const events = await client.loadMoreTimeline(timelineKey, until, LIMIT)
       addReplies(events)
-      setUntil(events.length ? events[events.length - 1].created_at - 1 : undefined)
+
+      let newUntil = events.length ? events[events.length - 1].created_at - 1 : undefined
+      if (newUntil && event && newUntil < event.created_at) {
+        newUntil = undefined
+      }
+      setUntil(newUntil)
       loadingRef.current = false
       setLoading(false)
     }
@@ -265,7 +270,7 @@ export default function ReplyNoteList({
         observerInstance.unobserve(currentBottomRef)
       }
     }
-  }, [replies, showCount, until, timelineKey, loading])
+  }, [replies, showCount, until, timelineKey, loading, event])
 
   return (
     <div className="min-h-[80vh]">
