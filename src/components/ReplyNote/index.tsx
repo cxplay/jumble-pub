@@ -1,12 +1,14 @@
 import { useSecondaryPage } from '@/PageManager'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
-import { isMentioningMutedUsers } from '@/lib/event'
+import { getEventKey, isMentioningMutedUsers } from '@/lib/event'
 import { toNote } from '@/lib/link'
 import { cn } from '@/lib/utils'
 import { useContentPolicy } from '@/providers/ContentPolicyProvider'
 import { useMuteList } from '@/providers/MuteListProvider'
+import { useReply } from '@/providers/ReplyProvider'
 import { useScreenSize } from '@/providers/ScreenSizeProvider'
+import { useUserTrust } from '@/providers/UserTrustProvider'
 import { Event } from 'nostr-tools'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -40,7 +42,9 @@ export default function ReplyNote({
   const { isSmallScreen } = useScreenSize()
   const { push } = useSecondaryPage()
   const { mutePubkeySet } = useMuteList()
+  const { hideUntrustedInteractions, isUserTrusted } = useUserTrust()
   const { hideContentMentioningMutedUsers } = useContentPolicy()
+  const { repliesMap } = useReply()
   const [showMuted, setShowMuted] = useState(false)
   const show = useMemo(() => {
     if (showMuted) {
@@ -54,16 +58,37 @@ export default function ReplyNote({
     }
     return true
   }, [showMuted, mutePubkeySet, event, hideContentMentioningMutedUsers])
+  const hasReplies = useMemo(() => {
+    const key = getEventKey(event)
+    const replies = repliesMap.get(key)?.events
+    if (!replies || replies.length === 0) {
+      return false
+    }
+
+    for (const reply of replies) {
+      if (hideUntrustedInteractions && !isUserTrusted(reply.pubkey)) {
+        continue
+      }
+      if (mutePubkeySet.has(reply.pubkey)) {
+        continue
+      }
+      if (hideContentMentioningMutedUsers && isMentioningMutedUsers(reply, mutePubkeySet)) {
+        continue
+      }
+      return true
+    }
+  }, [event, repliesMap])
 
   return (
     <div
       className={cn(
-        'pb-3 transition-colors duration-500 clickable',
+        'relative pb-3 transition-colors duration-500 clickable',
         highlight ? 'bg-primary/40' : '',
         className
       )}
       onClick={() => push(toNote(event))}
     >
+      {hasReplies && <div className="absolute left-[34px] top-14 bottom-0 border-l" />}
       <Collapsible>
         <div className="flex space-x-2 items-start px-4 pt-3">
           <UserAvatar userId={event.pubkey} size="medium" className="shrink-0 mt-0.5" />

@@ -81,7 +81,7 @@ export default function SubReplies({ parentKey }: { parentKey: string }) {
     }, 1500)
   }, [])
 
-  if (replies.length === 0) return <div className="border-b w-full" />
+  if (replies.length === 0) return null
 
   return (
     <div>
@@ -91,11 +91,16 @@ export default function SubReplies({ parentKey }: { parentKey: string }) {
             e.stopPropagation()
             setIsExpanded(!isExpanded)
           }}
-          className={cn(
-            'w-full flex items-center gap-1.5 pl-14 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors clickable',
-            !isExpanded && 'border-b'
-          )}
+          className="relative w-full flex items-center gap-1.5 pl-14 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors clickable"
         >
+          <div
+            className={cn('absolute left-[34px] top-0 bottom-0 w-px text-border')}
+            style={{
+              background: isExpanded
+                ? 'currentColor'
+                : 'repeating-linear-gradient(to bottom, currentColor 0 3px, transparent 3px 7px)'
+            }}
+          />
           {isExpanded ? (
             <>
               <ChevronUp className="size-3.5" />
@@ -125,14 +130,14 @@ export default function SubReplies({ parentKey }: { parentKey: string }) {
               <div
                 ref={(el) => (replyRefs.current[currentReplyKey] = el)}
                 key={currentReplyKey}
-                className="scroll-mt-12 flex"
+                className="scroll-mt-12 flex relative"
               >
-                <div className="w-3 flex-shrink-0 bg-border" />
+                <div className="absolute left-[34px] top-0 h-8 w-4 rounded-bl-lg border-l border-b" />
+                {index < replies.length - 1 && (
+                  <div className="absolute left-[34px] top-0 bottom-0 border-l" />
+                )}
                 <ReplyNote
-                  className={cn(
-                    'border-l flex-1 w-0 border-t',
-                    index === replies.length - 1 && 'border-b'
-                  )}
+                  className="flex-1 w-0 pl-10"
                   event={reply}
                   parentEventId={_parentKey !== parentKey ? _parentEventId : undefined}
                   onClickParent={() => {

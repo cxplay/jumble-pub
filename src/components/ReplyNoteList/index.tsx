@@ -272,15 +272,9 @@ export default function ReplyNoteList({
         </div>
       )}
       <div>
-        {replies.slice(0, showCount).map((reply) => {
-          const key = getEventKey(reply)
-          return (
-            <div key={key}>
-              <ReplyNote event={reply} />
-              <SubReplies parentKey={key} />
-            </div>
-          )
-        })}
+        {replies.slice(0, showCount).map((reply) => (
+          <Item key={reply.id} reply={reply} />
+        ))}
       </div>
       {!loading && (
         <div className="text-sm mt-2 mb-3 text-center text-muted-foreground">
@@ -289,6 +283,17 @@ export default function ReplyNoteList({
       )}
       <div ref={bottomRef} />
       {loading && <ReplyNoteSkeleton />}
+    </div>
+  )
+}
+
+function Item({ reply }: { reply: NEvent }) {
+  const key = useMemo(() => getEventKey(reply), [reply])
+
+  return (
+    <div className="relative border-b">
+      <ReplyNote event={reply} />
+      <SubReplies parentKey={key} />
     </div>
   )
 }
