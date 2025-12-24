@@ -92,6 +92,7 @@ const NoteList = forwardRef<
     const supportTouch = useMemo(() => isTouchDevice(), [])
     const bottomRef = useRef<HTMLDivElement | null>(null)
     const topRef = useRef<HTMLDivElement | null>(null)
+    const loadingRef = useRef(false)
 
     const shouldHideEvent = useCallback(
       (evt: Event) => {
@@ -273,12 +274,14 @@ const NoteList = forwardRef<
       if (!subRequests.length) return
 
       async function init() {
+        loadingRef.current = true
         setLoading(true)
         setEvents([])
         setNewEvents([])
         setHasMore(true)
 
         if (showKinds?.length === 0 && subRequests.every(({ filter }) => !filter.kinds)) {
+          loadingRef.current = false
           setLoading(false)
           setHasMore(false)
           return () => {}
@@ -309,6 +312,7 @@ const NoteList = forwardRef<
                 setHasMore(false)
               }
               if (eosed) {
+                loadingRef.current = false
                 setLoading(false)
                 addReplies(events)
               }
@@ -374,13 +378,15 @@ const NoteList = forwardRef<
           }
         }
 
-        if (!timelineKey || loading || !hasMore) return
+        if (!timelineKey || loadingRef.current || !hasMore) return
+        loadingRef.current = true
         setLoading(true)
         const newEvents = await client.loadMoreTimeline(
           timelineKey,
           events.length ? events[events.length - 1].created_at - 1 : dayjs().unix(),
           LIMIT
         )
+        loadingRef.current = false
         setLoading(false)
         if (newEvents.length === 0) {
           setHasMore(false)
@@ -406,7 +412,7 @@ const NoteList = forwardRef<
           observerInstance.unobserve(currentBottomRef)
         }
       }
-    }, [loading, hasMore, events, showCount, timelineKey])
+    }, [hasMore, events, showCount, timelineKey])
 
     const showNewEvents = () => {
       setEvents((oldEvents) => [...newEvents, ...oldEvents])

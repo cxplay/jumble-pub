@@ -88,7 +88,7 @@ export default function ReplyNote({
       )}
       onClick={() => push(toNote(event))}
     >
-      {hasReplies && <div className="absolute left-[34px] top-14 bottom-0 border-l" />}
+      {hasReplies && <div className="absolute left-[34px] top-14 bottom-0 border-l z-20" />}
       <Collapsible>
         <div className="flex space-x-2 items-start px-4 pt-3">
           <UserAvatar userId={event.pubkey} size="medium" className="shrink-0 mt-0.5" />

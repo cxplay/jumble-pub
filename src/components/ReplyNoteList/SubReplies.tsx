@@ -94,7 +94,7 @@ export default function SubReplies({ parentKey }: { parentKey: string }) {
           className="relative w-full flex items-center gap-1.5 pl-14 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors clickable"
         >
           <div
-            className={cn('absolute left-[34px] top-0 bottom-0 w-px text-border')}
+            className={cn('absolute left-[34px] top-0 bottom-0 w-px text-border z-20')}
             style={{
               background: isExpanded
                 ? 'currentColor'
@@ -132,9 +132,9 @@ export default function SubReplies({ parentKey }: { parentKey: string }) {
                 key={currentReplyKey}
                 className="scroll-mt-12 flex relative"
               >
-                <div className="absolute left-[34px] top-0 h-8 w-4 rounded-bl-lg border-l border-b" />
+                <div className="absolute left-[34px] top-0 h-8 w-4 rounded-bl-lg border-l border-b z-20" />
                 {index < replies.length - 1 && (
-                  <div className="absolute left-[34px] top-0 bottom-0 border-l" />
+                  <div className="absolute left-[34px] top-0 bottom-0 border-l z-20" />
                 )}
                 <ReplyNote
                   className="flex-1 w-0 pl-10"

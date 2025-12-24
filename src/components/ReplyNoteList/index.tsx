@@ -16,7 +16,7 @@ import { useReply } from '@/providers/ReplyProvider'
 import { useUserTrust } from '@/providers/UserTrustProvider'
 import client from '@/services/client.service'
 import { Filter, Event as NEvent, kinds } from 'nostr-tools'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LoadingBar } from '../LoadingBar'
 import ReplyNote, { ReplyNoteSkeleton } from '../ReplyNote'
@@ -69,7 +69,7 @@ export default function ReplyNoteList({
       replyKeySet.add(key)
       return true
     })
-    return replyEvents.sort((a, b) => a.created_at - b.created_at)
+    return replyEvents.sort((a, b) => b.created_at - a.created_at)
   }, [
     stuffKey,
     repliesMap,
@@ -79,8 +79,9 @@ export default function ReplyNoteList({
   ])
   const [timelineKey, setTimelineKey] = useState<string | undefined>(undefined)
   const [until, setUntil] = useState<number | undefined>(undefined)
-  const [loading, setLoading] = useState<boolean>(false)
   const [showCount, setShowCount] = useState(SHOW_COUNT)
+  const [loading, setLoading] = useState<boolean>(false)
+  const loadingRef = useRef(false)
   const bottomRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
@@ -125,9 +126,10 @@ export default function ReplyNoteList({
   }, [event])
 
   useEffect(() => {
-    if (loading || !rootInfo || currentIndex !== index) return
+    if (loadingRef.current || !rootInfo || currentIndex !== index) return
 
     const init = async () => {
+      loadingRef.current = true
       setLoading(true)
 
       try {
@@ -195,6 +197,7 @@ export default function ReplyNoteList({
                 addReplies(evts)
               }
               if (eosed) {
+                loadingRef.current = false
                 setUntil(evts.length >= LIMIT ? evts[evts.length - 1].created_at - 1 : undefined)
                 setLoading(false)
               }
@@ -207,6 +210,7 @@ export default function ReplyNoteList({
         setTimelineKey(timelineKey)
         return closer
       } catch {
+        loadingRef.current = false
         setLoading(false)
       }
       return
@@ -219,21 +223,34 @@ export default function ReplyNoteList({
   }, [rootInfo, currentIndex, index])
 
   useEffect(() => {
-    if (replies.length === 0) {
-      loadMore()
-    }
-  }, [replies])
-
-  useEffect(() => {
     const options = {
       root: null,
       rootMargin: '10px',
       threshold: 0.1
     }
 
-    const observerInstance = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting && showCount < replies.length) {
+    const loadMore = async () => {
+      if (showCount < replies.length) {
         setShowCount((prev) => prev + SHOW_COUNT)
+        // preload more
+        if (replies.length - showCount > LIMIT / 2) {
+          return
+        }
+      }
+
+      if (loadingRef.current || !until || !timelineKey) return
+      loadingRef.current = true
+      setLoading(true)
+      const events = await client.loadMoreTimeline(timelineKey, until, LIMIT)
+      addReplies(events)
+      setUntil(events.length ? events[events.length - 1].created_at - 1 : undefined)
+      loadingRef.current = false
+      setLoading(false)
+    }
+
+    const observerInstance = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && !!until) {
+        loadMore()
       }
     }, options)
 
@@ -248,41 +265,24 @@ export default function ReplyNoteList({
         observerInstance.unobserve(currentBottomRef)
       }
     }
-  }, [replies, showCount])
-
-  const loadMore = useCallback(async () => {
-    if (loading || !until || !timelineKey) return
-
-    setLoading(true)
-    const events = await client.loadMoreTimeline(timelineKey, until, LIMIT)
-    addReplies(events)
-    setUntil(events.length ? events[events.length - 1].created_at - 1 : undefined)
-    setLoading(false)
-  }, [loading, until, timelineKey])
+  }, [replies, showCount, until, timelineKey])
 
   return (
     <div className="min-h-[80vh]">
       {loading && <LoadingBar />}
-      {!loading && until && (!event || until > event.created_at) && (
-        <div
-          className={`text-sm text-center text-muted-foreground border-b py-2 ${!loading ? 'hover:text-foreground cursor-pointer' : ''}`}
-          onClick={loadMore}
-        >
-          {t('load more older replies')}
-        </div>
-      )}
       <div>
         {replies.slice(0, showCount).map((reply) => (
           <Item key={reply.id} reply={reply} />
         ))}
       </div>
-      {!loading && (
+      {!!until || showCount < replies.length || loading ? (
+        <ReplyNoteSkeleton />
+      ) : (
         <div className="text-sm mt-2 mb-3 text-center text-muted-foreground">
           {replies.length > 0 ? t('no more replies') : t('no replies')}
         </div>
       )}
       <div ref={bottomRef} />
-      {loading && <ReplyNoteSkeleton />}
     </div>
   )
 }
