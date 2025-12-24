@@ -110,7 +110,7 @@ export default function Signup({
           </div>
         </div>
 
-        <div className="w-full flex gap-2 items-center">
+        <div className="w-full flex flex-col sm:flex-row gap-2 items-stretch">
           <Button onClick={handleDownload} className="w-full">
             <Download />
             {t('Download Backup File')}
