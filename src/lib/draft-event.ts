@@ -660,8 +660,7 @@ async function extractRelatedEventIds(content: string, parentEvent?: Event) {
           ? buildETagWithMarker(rootEvent.id, rootEvent.pubkey, hint, 'root')
           : buildETagWithMarker(rootEventHexId, rootEventPubkey, hint, 'root')
       }
-    }
-    if (_rootTag?.type === 'a') {
+    } else if (_rootTag?.type === 'a') {
       // Legacy
       parentTag = buildETagWithMarker(parentEvent.id, parentEvent.pubkey, '', 'reply')
       const [, coordinate, hint] = _rootTag.tag
