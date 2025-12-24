@@ -36,9 +36,9 @@ export default function RelayInfo({ url, className }: { url: string; className?:
       <div className="px-4 space-y-4">
         <div className="space-y-2">
           <div className="flex items-center gap-2 justify-between">
-            <div className="flex gap-2 items-center truncate">
+            <div className="flex gap-2 items-center flex-1">
               <RelayIcon url={url} className="w-8 h-8" />
-              <div className="text-2xl font-semibold truncate select-text">
+              <div className="text-2xl font-semibold truncate select-text flex-1 w-0">
                 {relayInfo.name || relayInfo.shortUrl}
               </div>
             </div>

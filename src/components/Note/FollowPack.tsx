@@ -26,7 +26,7 @@ export default function FollowPack({ event, className }: { event: Event; classNa
         {image && (
           <Image
             image={{ url: image, pubkey: event.pubkey }}
-            className="w-24 h-20 object-cover rounded-lg"
+            className="w-24 h-20 object-cover"
             classNames={{
               wrapper: 'w-24 h-20 flex-shrink-0',
               errorPlaceholder: 'w-24 h-20'

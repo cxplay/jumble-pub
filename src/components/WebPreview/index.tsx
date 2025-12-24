@@ -68,9 +68,9 @@ export default function WebPreview({
       {image && (
         <Image
           image={{ url: image }}
-          className="aspect-[4/3] xl:aspect-video bg-foreground h-44 rounded-none border-r"
+          className="aspect-[4/3] xl:aspect-video bg-foreground h-44"
           classNames={{
-            skeleton: 'rounded-none border-r'
+            wrapper: 'rounded-none border-r'
           }}
           hideIfError
         />

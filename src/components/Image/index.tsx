@@ -73,13 +73,13 @@ export default function Image({
   }
 
   return (
-    <div className={cn('relative overflow-hidden', classNames.wrapper)} {...props}>
+    <div className={cn('relative overflow-hidden rounded-xl', classNames.wrapper)} {...props}>
       {/* Spacer: transparent image to maintain dimensions when image is loading */}
       {isLoading && dim?.width && dim?.height && (
         <img
           src={`data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='${dim.width}' height='${dim.height}'%3E%3C/svg%3E`}
           className={cn(
-            'object-cover rounded-xl transition-opacity pointer-events-none w-full h-full',
+            'object-cover transition-opacity pointer-events-none w-full h-full',
             className
           )}
           alt=""
@@ -91,7 +91,7 @@ export default function Image({
             <ThumbHashPlaceholder
               thumbHash={thumbHash}
               className={cn(
-                'w-full h-full transition-opacity rounded-xl',
+                'w-full h-full transition-opacity',
                 isLoading ? 'opacity-100' : 'opacity-0'
               )}
             />
@@ -99,14 +99,14 @@ export default function Image({
             <BlurHashCanvas
               blurHash={blurHash}
               className={cn(
-                'w-full h-full transition-opacity rounded-xl',
+                'w-full h-full transition-opacity',
                 isLoading ? 'opacity-100' : 'opacity-0'
               )}
             />
           ) : (
             <Skeleton
               className={cn(
-                'w-full h-full transition-opacity rounded-xl',
+                'w-full h-full transition-opacity',
                 isLoading ? 'opacity-100' : 'opacity-0',
                 classNames.skeleton
               )}
@@ -124,7 +124,7 @@ export default function Image({
           onLoad={handleLoad}
           onError={handleError}
           className={cn(
-            'object-cover rounded-xl transition-opacity pointer-events-none w-full h-full',
+            'object-cover transition-opacity pointer-events-none w-full h-full',
             isLoading ? 'opacity-0 absolute inset-0' : '',
             className
           )}
@@ -137,7 +137,7 @@ export default function Image({
             alt={alt}
             decoding="async"
             loading="lazy"
-            className={cn('object-cover rounded-xl w-full h-full transition-opacity', className)}
+            className={cn('object-cover w-full h-full transition-opacity', className)}
           />
         ) : (
           <div
