@@ -265,7 +265,7 @@ export default function ReplyNoteList({
         observerInstance.unobserve(currentBottomRef)
       }
     }
-  }, [replies, showCount, until, timelineKey])
+  }, [replies, showCount, until, timelineKey, loading])
 
   return (
     <div className="min-h-[80vh]">

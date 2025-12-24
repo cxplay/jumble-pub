@@ -412,7 +412,7 @@ const NoteList = forwardRef<
           observerInstance.unobserve(currentBottomRef)
         }
       }
-    }, [hasMore, events, showCount, timelineKey])
+    }, [hasMore, events, showCount, timelineKey, loading])
 
     const showNewEvents = () => {
       setEvents((oldEvents) => [...newEvents, ...oldEvents])
