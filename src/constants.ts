@@ -1,5 +1,4 @@
 import { kinds } from 'nostr-tools'
-import { TMailboxRelay } from './types'
 
 export const JUMBLE_API_BASE_URL = 'https://api.jumble.social'
 
@@ -63,21 +62,19 @@ export const ApplicationDataKey = {
 
 export const BIG_RELAY_URLS = [
   'wss://relay.damus.io/',
-  'wss://relay.nostr.band/',
+  'wss://nos.lol/',
   'wss://relay.primal.net/',
-  'wss://nos.lol/'
+  'wss://offchain.pub/'
 ]
 
-export const SEARCHABLE_RELAY_URLS = ['wss://relay.nostr.band/', 'wss://search.nos.today/']
+export const SEARCHABLE_RELAY_URLS = [
+  'wss://search.nos.today/',
+  'wss://relay.ditto.pub/',
+  'wss://relay.nostrcheck.me/',
+  'wss://relay.nostr.band/'
+]
 
 export const TRENDING_NOTES_RELAY_URLS = ['wss://trending.relays.land/']
-
-export const NEW_USER_RELAY_LIST: TMailboxRelay[] = [
-  { url: 'wss://nos.lol/', scope: 'both' },
-  { url: 'wss://offchain.pub/', scope: 'both' },
-  { url: 'wss://relay.damus.io/', scope: 'both' },
-  { url: 'wss://nostr.mom/', scope: 'both' }
-]
 
 export const GROUP_METADATA_EVENT_KIND = 39000
 
