@@ -612,9 +612,9 @@ export default {
       'No Nostr, sua chave privada É sua conta. Se você perder sua chave privada, perderá sua conta para sempre.',
     'Your Private Key': 'Sua chave privada',
     'Generate new key': 'Gerar nova chave',
-    'Download Backup File': 'Baixar backup',
+    'Download Backup File': 'Baixar arquivo de backup',
     'Copied to Clipboard': 'Copiado para a área de transferência',
-    'Copy to Clipboard': 'Copiar texto',
+    'Copy to Clipboard': 'Copiar para a área de transferência',
     'I already saved my private key securely.': 'Já salvei minha chave privada com segurança.',
     'Almost Done!': 'Quase pronto!',
     'Set a password to encrypt your key, or skip to finish':
@@ -642,7 +642,7 @@ export default {
     'Password Protection (Recommended)': 'Proteção por senha (recomendado)',
     'Add a password to encrypt your private key in this browser. This is optional but strongly recommended for better security.':
       'Adicione uma senha para criptografar sua chave privada neste navegador. Isso é opcional, mas fortemente recomendado para melhor segurança.',
-    'Create a password (or skip)': 'Crie uma senha (ou pule)',
+    'Create a password (or skip)': 'Crie uma senha (opcional)',
     'Enter your password again': 'Digite sua senha novamente',
     'Complete Signup': 'Concluir cadastro',
     Recommended: 'Recomendado'
