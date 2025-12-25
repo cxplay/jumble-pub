@@ -1,5 +1,6 @@
 import NewNotesButton from '@/components/NewNotesButton'
 import { Button } from '@/components/ui/button'
+import { useInfiniteScroll } from '@/hooks/useInfiniteScroll'
 import { getEventKey, getKeyFromTag, isMentioningMutedUsers, isReplyNoteEvent } from '@/lib/event'
 import { tagNameEquals } from '@/lib/tag'
 import { isTouchDevice } from '@/lib/utils'
@@ -7,9 +8,9 @@ import { useContentPolicy } from '@/providers/ContentPolicyProvider'
 import { useDeletedEvent } from '@/providers/DeletedEventProvider'
 import { useMuteList } from '@/providers/MuteListProvider'
 import { useNostr } from '@/providers/NostrProvider'
-import { useReply } from '@/providers/ReplyProvider'
 import { useUserTrust } from '@/providers/UserTrustProvider'
 import client from '@/services/client.service'
+import threadService from '@/services/thread.service'
 import { TFeedSubRequest } from '@/types'
 import dayjs from 'dayjs'
 import { Event, kinds } from 'nostr-tools'
@@ -76,11 +77,9 @@ const NoteList = forwardRef<
     const { mutePubkeySet } = useMuteList()
     const { hideContentMentioningMutedUsers } = useContentPolicy()
     const { isEventDeleted } = useDeletedEvent()
-    const { addReplies } = useReply()
     const [events, setEvents] = useState<Event[]>([])
     const [newEvents, setNewEvents] = useState<Event[]>([])
-    const [hasMore, setHasMore] = useState<boolean>(true)
-    const [loading, setLoading] = useState(true)
+    const [initialLoading, setInitialLoading] = useState(false)
     const [filtering, setFiltering] = useState(false)
     const [timelineKey, setTimelineKey] = useState<string | undefined>(undefined)
     const [filteredNotes, setFilteredNotes] = useState<
@@ -88,11 +87,8 @@ const NoteList = forwardRef<
     >([])
     const [filteredNewEvents, setFilteredNewEvents] = useState<Event[]>([])
     const [refreshCount, setRefreshCount] = useState(0)
-    const [showCount, setShowCount] = useState(SHOW_COUNT)
     const supportTouch = useMemo(() => isTouchDevice(), [])
-    const bottomRef = useRef<HTMLDivElement | null>(null)
     const topRef = useRef<HTMLDivElement | null>(null)
-    const loadingRef = useRef(false)
 
     const shouldHideEvent = useCallback(
       (evt: Event) => {
@@ -219,10 +215,6 @@ const NoteList = forwardRef<
       processEvents().finally(() => setFiltering(false))
     }, [events, shouldHideEvent, hideReplies, isSpammer, hideSpam])
 
-    const slicedNotes = useMemo(() => {
-      return filteredNotes.slice(0, showCount)
-    }, [filteredNotes, showCount])
-
     useEffect(() => {
       const processNewEvents = async () => {
         const keySet = new Set<string>()
@@ -274,16 +266,11 @@ const NoteList = forwardRef<
       if (!subRequests.length) return
 
       async function init() {
-        loadingRef.current = true
-        setLoading(true)
+        setInitialLoading(true)
         setEvents([])
         setNewEvents([])
-        setHasMore(true)
 
         if (showKinds?.length === 0 && subRequests.every(({ filter }) => !filter.kinds)) {
-          loadingRef.current = false
-          setLoading(false)
-          setHasMore(false)
           return () => {}
         }
 
@@ -308,13 +295,9 @@ const NoteList = forwardRef<
               if (events.length > 0) {
                 setEvents(events)
               }
-              if (areAlgoRelays) {
-                setHasMore(false)
-              }
               if (eosed) {
-                loadingRef.current = false
-                setLoading(false)
-                addReplies(events)
+                threadService.addRepliesToThread(events)
+                setInitialLoading(false)
               }
             },
             onNew: (event) => {
@@ -327,7 +310,7 @@ const NoteList = forwardRef<
                   [event, ...oldEvents].sort((a, b) => b.created_at - a.created_at)
                 )
               }
-              addReplies([event])
+              threadService.addRepliesToThread([event])
             },
             onClose: (url, reason) => {
               if (!showRelayCloseReason) return
@@ -362,57 +345,26 @@ const NoteList = forwardRef<
       }
     }, [JSON.stringify(subRequests), refreshCount, JSON.stringify(showKinds)])
 
-    useEffect(() => {
-      const options = {
-        root: null,
-        rootMargin: '10px',
-        threshold: 0.1
+    const handleLoadMore = useCallback(async () => {
+      if (!timelineKey || areAlgoRelays) return false
+      const newEvents = await client.loadMoreTimeline(
+        timelineKey,
+        events.length ? events[events.length - 1].created_at - 1 : dayjs().unix(),
+        LIMIT
+      )
+      if (newEvents.length === 0) {
+        return false
       }
+      setEvents((oldEvents) => [...oldEvents, ...newEvents])
+      return true
+    }, [timelineKey, events, areAlgoRelays])
 
-      const loadMore = async () => {
-        if (showCount < events.length) {
-          setShowCount((prev) => prev + SHOW_COUNT)
-          // preload more
-          if (events.length - showCount > LIMIT / 2) {
-            return
-          }
-        }
-
-        if (!timelineKey || loadingRef.current || !hasMore) return
-        loadingRef.current = true
-        setLoading(true)
-        const newEvents = await client.loadMoreTimeline(
-          timelineKey,
-          events.length ? events[events.length - 1].created_at - 1 : dayjs().unix(),
-          LIMIT
-        )
-        loadingRef.current = false
-        setLoading(false)
-        if (newEvents.length === 0) {
-          setHasMore(false)
-          return
-        }
-        setEvents((oldEvents) => [...oldEvents, ...newEvents])
-      }
-
-      const observerInstance = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasMore) {
-          loadMore()
-        }
-      }, options)
-
-      const currentBottomRef = bottomRef.current
-
-      if (currentBottomRef) {
-        observerInstance.observe(currentBottomRef)
-      }
-
-      return () => {
-        if (observerInstance && currentBottomRef) {
-          observerInstance.unobserve(currentBottomRef)
-        }
-      }
-    }, [hasMore, events, showCount, timelineKey, loading])
+    const { visibleItems, shouldShowLoadingIndicator, bottomRef } = useInfiniteScroll({
+      items: filteredNotes,
+      showCount: SHOW_COUNT,
+      onLoadMore: handleLoadMore,
+      initialLoading
+    })
 
     const showNewEvents = () => {
       setEvents((oldEvents) => [...newEvents, ...oldEvents])
@@ -425,7 +377,7 @@ const NoteList = forwardRef<
     const list = (
       <div className="min-h-screen">
         {pinnedEventIds?.map((id) => <PinnedNoteCard key={id} eventId={id} className="w-full" />)}
-        {slicedNotes.map(({ key, event, reposters }) => (
+        {visibleItems.map(({ key, event, reposters }) => (
           <NoteCard
             key={key}
             className="w-full"
@@ -434,10 +386,9 @@ const NoteList = forwardRef<
             reposters={reposters}
           />
         ))}
-        {hasMore || showCount < events.length || loading || filtering ? (
-          <div ref={bottomRef}>
-            <NoteCardLoadingSkeleton />
-          </div>
+        <div ref={bottomRef} />
+        {shouldShowLoadingIndicator || filtering || initialLoading ? (
+          <NoteCardLoadingSkeleton />
         ) : events.length ? (
           <div className="text-center text-sm text-muted-foreground mt-2">{t('no more notes')}</div>
         ) : (
