@@ -17,7 +17,7 @@ class FayanService {
           return new Array(pubkeys.length).fill(null)
         }
         const data = await res.json()
-        return pubkeys.map((pubkey) => data[pubkey] ?? null)
+        return pubkeys.map((pubkey) => data[pubkey] ?? 0)
       } catch {
         return new Array(pubkeys.length).fill(null)
       }
