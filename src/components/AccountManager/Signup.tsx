@@ -110,8 +110,8 @@ export default function Signup({
           </div>
         </div>
 
-        <div className="w-full flex flex-col sm:flex-row gap-2 items-stretch">
-          <Button onClick={handleDownload} className="w-full">
+        <div className="w-full flex flex-wrap gap-2">
+          <Button onClick={handleDownload} className="flex-1">
             <Download />
             {t('Download Backup File')}
           </Button>
@@ -122,7 +122,7 @@ export default function Signup({
               setTimeout(() => setCopied(false), 2000)
             }}
             variant="secondary"
-            className="w-full"
+            className="flex-1"
           >
             {copied ? <Check /> : <Copy />}
             {copied ? t('Copied to Clipboard') : t('Copy to Clipboard')}
