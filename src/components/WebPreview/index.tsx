@@ -48,7 +48,14 @@ export default function WebPreview({
           window.open(url, '_blank')
         }}
       >
-        <Image image={{ url: image }} className="w-full h-44 rounded-none" hideIfError />
+        <Image
+          image={{ url: image }}
+          className="w-full h-44"
+          classNames={{
+            wrapper: 'rounded-none'
+          }}
+          hideIfError
+        />
         <div className="bg-muted p-2 w-full">
           <div className="text-xs text-muted-foreground">{hostname}</div>
           <div className="font-semibold line-clamp-1">{title}</div>
