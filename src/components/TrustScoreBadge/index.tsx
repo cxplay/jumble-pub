@@ -8,10 +8,14 @@ import { useTranslation } from 'react-i18next'
 
 export default function TrustScoreBadge({
   pubkey,
-  className
+  className,
+  classNames
 }: {
   pubkey: string
   className?: string
+  classNames?: {
+    container?: string
+  }
 }) {
   const { t } = useTranslation()
   const { isUserTrusted } = useUserTrust()
@@ -54,7 +58,10 @@ export default function TrustScoreBadge({
   // percentile < 60: suspicious (yellow warning)
   if (percentile < 40) {
     return (
-      <div title={t('Likely spam account (Trust score: {{percentile}}%)', { percentile })}>
+      <div
+        title={t('Likely spam account (Trust score: {{percentile}}%)', { percentile })}
+        className={classNames?.container}
+      >
         <ShieldAlert className={cn('!size-4 text-red-500', className)} />
       </div>
     )
@@ -62,7 +69,10 @@ export default function TrustScoreBadge({
 
   if (percentile < 60) {
     return (
-      <div title={t('Suspicious account (Trust score: {{percentile}}%)', { percentile })}>
+      <div
+        title={t('Suspicious account (Trust score: {{percentile}}%)', { percentile })}
+        className={classNames?.container}
+      >
         <AlertTriangle className={cn('!size-4 text-yellow-600 dark:text-yellow-500', className)} />
       </div>
     )
