@@ -98,8 +98,9 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
       try {
         let eosed = false
         const relayList = await client.fetchRelayList(pubkey)
+        const relays = relayList.read.length > 0 ? relayList.read.slice(0, 5) : BIG_RELAY_URLS
         const subCloser = client.subscribe(
-          relayList.read.length > 0 ? relayList.read.slice(0, 5) : BIG_RELAY_URLS,
+          relays,
           [
             {
               kinds: [
@@ -135,7 +136,7 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
                     return prev
                   }
 
-                  client.emitNewEvent(evt)
+                  client.emitNewEvent(evt, relays)
                   return [evt, ...prev]
                 })
               }

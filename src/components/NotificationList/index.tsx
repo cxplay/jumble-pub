@@ -166,18 +166,18 @@ const NotificationList = forwardRef((_, ref) => {
     if (!active || !pubkey) return
 
     const handler = (data: Event) => {
-      const customEvent = data as CustomEvent<NostrEvent>
-      const evt = customEvent.detail
+      const customEvent = data as CustomEvent<{ event: NostrEvent; relays: string[] }>
+      const { event } = customEvent.detail
       if (
         matchFilter(
           {
             kinds: filterKinds,
             '#p': [pubkey]
           },
-          evt
+          event
         )
       ) {
-        handleNewEvent(evt)
+        handleNewEvent(event)
       }
     }
 

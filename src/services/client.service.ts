@@ -178,7 +178,7 @@ class ClientService extends EventTarget {
 
       const checkCompletion = () => {
         if (successCount >= successThreshold) {
-          this.emitNewEvent(event)
+          this.emitNewEvent(event, uniqueRelayUrls)
           resolve()
         }
         if (++finishedCount >= uniqueRelayUrls.length) {
@@ -240,8 +240,8 @@ class ClientService extends EventTarget {
     })
   }
 
-  emitNewEvent(event: NEvent) {
-    this.dispatchEvent(new CustomEvent('newEvent', { detail: event }))
+  emitNewEvent(event: NEvent, relays: string[] = []) {
+    this.dispatchEvent(new CustomEvent('newEvent', { detail: { event, relays } }))
   }
 
   async signHttpAuth(url: string, method: string, description = '') {
@@ -531,9 +531,13 @@ class ClientService extends EventTarget {
     })
 
     const handleNewEventFromInternal = (data: Event) => {
-      const customEvent = data as CustomEvent<NEvent>
-      const evt = customEvent.detail
-      if (!matchFilters(filters, evt)) return
+      const customEvent = data as CustomEvent<{ event: NEvent; relays: string[] }>
+      const { event: evt, relays: _relays } = customEvent.detail
+      if (!_relays.some((url) => relays.includes(url))) {
+        return
+      }
+      const _filters = filters.filter((f) => !f.search)
+      if (_filters.length === 0 || !matchFilters(_filters, evt)) return
 
       const id = evt.id
       const have = _knownIds.has(id)
