@@ -70,7 +70,7 @@ export default function TrustScoreFilter() {
       variant="ghost"
       size="titlebar-icon"
       className={cn(
-        'relative w-fit px-3',
+        'relative',
         minTrustScore === 0
           ? 'text-muted-foreground hover:text-foreground'
           : 'text-primary hover:text-primary-hover'
