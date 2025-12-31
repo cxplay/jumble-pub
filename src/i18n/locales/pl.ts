@@ -667,7 +667,7 @@ export default {
     'trust-filter.hide-bottom-percent':
       'Filtruj dolne {{score}}% użytkowników według rankingu zaufania',
     'trust-filter.trust-score-description':
-      'Wynik zaufania klasyfikuje użytkowników według percentyla reputacji',
+      'Obliczany na podstawie reputacji użytkownika i percentyla sieci społecznościowej',
     'Auto-load profile pictures': 'Automatyczne ładowanie zdjęć profilowych'
   }
 }

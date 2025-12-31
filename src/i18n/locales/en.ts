@@ -655,7 +655,7 @@ export default {
     'trust-filter.only-show-wot': 'Only show your Web of Trust (follows + their follows)',
     'trust-filter.hide-bottom-percent':
       'Filter out bottom {{score}}% of users by trust rank',
-    'trust-filter.trust-score-description': 'Trust score ranks users by reputation percentile',
+    'trust-filter.trust-score-description': 'Calculated based on user reputation and social network percentile',
     'Auto-load profile pictures': 'Auto-load profile pictures'
   }
 }

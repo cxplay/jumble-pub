@@ -662,7 +662,7 @@ export default {
     'trust-filter.hide-bottom-percent':
       'فیلتر کردن {{score}}٪ پایین‌ترین کاربران بر اساس رتبه اعتماد',
     'trust-filter.trust-score-description':
-      'امتیاز اعتماد کاربران را بر اساس صدک شهرت رتبه‌بندی می‌کند',
+      'بر اساس شهرت کاربر و صدک شبکه اجتماعی محاسبه می‌شود',
     'Auto-load profile pictures': 'بارگذاری خودکار تصاویر پروفایل'
   }
 }

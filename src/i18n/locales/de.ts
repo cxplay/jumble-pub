@@ -672,7 +672,7 @@ export default {
     'trust-filter.hide-bottom-percent':
       'Untere {{score}}% der Benutzer nach Vertrauensrang filtern',
     'trust-filter.trust-score-description':
-      'Der Vertrauenswert ordnet Benutzer nach Reputationsperzentil',
+      'Berechnet basierend auf Benutzerreputation und sozialem Netzwerk-Perzentil',
     'Auto-load profile pictures': 'Profilbilder automatisch laden'
   }
 }

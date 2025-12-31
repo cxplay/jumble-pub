@@ -655,7 +655,7 @@ export default {
     'trust-filter.hide-bottom-percent':
       'Alsó {{score}}% felhasználók szűrése bizalmi rangsor szerint',
     'trust-filter.trust-score-description':
-      'A bizalmi pontszám a felhasználókat hírnév percentilis szerint rangsorolja',
+      'A felhasználó hírneve és a közösségi hálózat percentilise alapján számítva',
     'Auto-load profile pictures': 'Profilképek automatikus betöltése'
   }
 }

@@ -650,7 +650,7 @@ export default {
     'trust-filter.only-show-wot': 'إظهار شبكة الثقة الخاصة بك فقط (المتابَعون + متابَعوهم)',
     'trust-filter.hide-bottom-percent':
       'تصفية أدنى {{score}}٪ من المستخدمين حسب تصنيف الثقة',
-    'trust-filter.trust-score-description': 'تصنف درجة الثقة المستخدمين حسب النسبة المئوية للسمعة',
+    'trust-filter.trust-score-description': 'محسوبة بناءً على سمعة المستخدم والنسبة المئوية للشبكة الاجتماعية',
     'Auto-load profile pictures': 'تحميل صور الملف الشخصي تلقائيًا'
   }
 }

@@ -670,7 +670,7 @@ export default {
     'trust-filter.hide-bottom-percent':
       'Filtrer les {{score}}% inférieurs des utilisateurs par classement de confiance',
     'trust-filter.trust-score-description':
-      'Le score de confiance classe les utilisateurs par percentile de réputation',
+      "Calculé en fonction de la réputation et du réseau social de l'utilisateur",
     'Auto-load profile pictures': 'Charger les images de profil automatiquement'
   }
 }

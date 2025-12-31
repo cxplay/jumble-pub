@@ -655,7 +655,7 @@ export default {
     'trust-filter.show-all-content': '모든 콘텐츠 표시',
     'trust-filter.only-show-wot': '신뢰 네트워크만 표시 (팔로우 + 팔로우의 팔로우)',
     'trust-filter.hide-bottom-percent': '신뢰도 하위 {{score}}% 사용자 필터링',
-    'trust-filter.trust-score-description': '신뢰 점수는 평판 백분위수로 사용자를 순위 매깁니다',
+    'trust-filter.trust-score-description': '사용자의 평판과 소셜 네트워크를 기반으로 신뢰도 백분위수 계산',
     'Auto-load profile pictures': '프로필 사진 자동 로드'
   }
 }

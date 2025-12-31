@@ -666,7 +666,7 @@ export default {
     'trust-filter.hide-bottom-percent':
       'Filtra il {{score}}% inferiore degli utenti per classifica di fiducia',
     'trust-filter.trust-score-description':
-      'Il punteggio di fiducia classifica gli utenti per percentile di reputazione',
+      "Calcolato in base alla reputazione dell'utente e al percentile del social network",
     'Auto-load profile pictures': 'Caricamento automatico immagini di profilo'
   }
 }

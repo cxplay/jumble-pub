@@ -635,7 +635,7 @@ export default {
     'trust-filter.show-all-content': '顯示所有內容',
     'trust-filter.only-show-wot': '僅顯示你的信任網路（關注的人 + 他們關注的人）',
     'trust-filter.hide-bottom-percent': '過濾掉信任度排名後 {{score}}% 的使用者',
-    'trust-filter.trust-score-description': '信任分數按聲譽百分位對使用者進行排名',
+    'trust-filter.trust-score-description': '基於使用者的聲譽和社交網路計算信任度百分位',
     'Auto-load profile pictures': '自動載入大頭照'
   }
 }

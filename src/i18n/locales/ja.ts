@@ -661,7 +661,7 @@ export default {
     'trust-filter.hide-bottom-percent':
       '信頼ランク下位 {{score}}% のユーザーをフィルタリング',
     'trust-filter.trust-score-description':
-      '信頼スコアは評判パーセンタイルでユーザーをランク付けします',
+      'ユーザーの評判とソーシャルネットワークに基づいて信頼度パーセンタイルを計算',
     'Auto-load profile pictures': 'プロフィール画像を自動読み込み'
   }
 }
