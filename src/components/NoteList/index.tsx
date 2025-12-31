@@ -1,5 +1,6 @@
 import NewNotesButton from '@/components/NewNotesButton'
 import { Button } from '@/components/ui/button'
+import { SPAMMER_PERCENTILE_THRESHOLD } from '@/constants'
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll'
 import { getEventKey, getKeyFromTag, isMentioningMutedUsers, isReplyNoteEvent } from '@/lib/event'
 import { tagNameEquals } from '@/lib/tag'
@@ -46,7 +47,6 @@ const NoteList = forwardRef<
     showKinds?: number[]
     filterMutedNotes?: boolean
     hideReplies?: boolean
-    hideUntrustedNotes?: boolean
     hideSpam?: boolean
     areAlgoRelays?: boolean
     showRelayCloseReason?: boolean
@@ -61,7 +61,6 @@ const NoteList = forwardRef<
       showKinds,
       filterMutedNotes = true,
       hideReplies = false,
-      hideUntrustedNotes = false,
       hideSpam = false,
       areAlgoRelays = false,
       showRelayCloseReason = false,
@@ -73,7 +72,7 @@ const NoteList = forwardRef<
   ) => {
     const { t } = useTranslation()
     const { startLogin } = useNostr()
-    const { isUserTrusted, isSpammer } = useUserTrust()
+    const { isSpammer, meetsMinTrustScore } = useUserTrust()
     const { mutePubkeySet } = useMuteList()
     const { hideContentMentioningMutedUsers } = useContentPolicy()
     const { isEventDeleted } = useDeletedEvent()
@@ -106,7 +105,6 @@ const NoteList = forwardRef<
 
         if (pinnedEventHexIdSet.has(evt.id)) return true
         if (isEventDeleted(evt)) return true
-        if (hideUntrustedNotes && !isUserTrusted(evt.pubkey)) return true
         if (filterMutedNotes && mutePubkeySet.has(evt.pubkey)) return true
         if (
           filterMutedNotes &&
@@ -121,7 +119,7 @@ const NoteList = forwardRef<
 
         return false
       },
-      [hideUntrustedNotes, mutePubkeySet, JSON.stringify(pinnedEventIds), isEventDeleted, filterFn]
+      [mutePubkeySet, JSON.stringify(pinnedEventIds), isEventDeleted, filterFn]
     )
 
     useEffect(() => {
@@ -195,7 +193,13 @@ const NoteList = forwardRef<
         const _filteredNotes = (
           await Promise.all(
             filteredEvents.map(async (evt, i) => {
-              if (hideSpam && (await isSpammer(evt.pubkey))) {
+              // Check trust score filter
+              if (
+                !(await meetsMinTrustScore(
+                  evt.pubkey,
+                  hideSpam ? SPAMMER_PERCENTILE_THRESHOLD : undefined
+                ))
+              ) {
                 return null
               }
               const key = keys[i]
@@ -213,7 +217,7 @@ const NoteList = forwardRef<
 
       setFiltering(true)
       processEvents().finally(() => setFiltering(false))
-    }, [events, shouldHideEvent, hideReplies, isSpammer, hideSpam])
+    }, [events, shouldHideEvent, hideReplies, hideSpam, meetsMinTrustScore])
 
     useEffect(() => {
       const processNewEvents = async () => {
@@ -238,6 +242,10 @@ const NoteList = forwardRef<
               if (hideSpam && (await isSpammer(evt.pubkey))) {
                 return null
               }
+              // Check trust score filter
+              if (!(await meetsMinTrustScore(evt.pubkey))) {
+                return null
+              }
               return evt
             })
           )
@@ -245,7 +253,7 @@ const NoteList = forwardRef<
         setFilteredNewEvents(_filteredNotes)
       }
       processNewEvents()
-    }, [newEvents, shouldHideEvent, isSpammer, hideSpam])
+    }, [newEvents, shouldHideEvent, isSpammer, hideSpam, meetsMinTrustScore])
 
     const scrollToTop = (behavior: ScrollBehavior = 'instant') => {
       setTimeout(() => {

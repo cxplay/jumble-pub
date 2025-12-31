@@ -653,6 +653,20 @@ export default {
     'Enter Password': 'Ingresar contraseña',
     Password: 'Contraseña',
     Confirm: 'Confirmar',
+    'trust-filter.title': 'Filtro de puntuación de confianza',
+    'trust-filter.off': 'Desactivado',
+    'trust-filter.low': 'Bajo',
+    'trust-filter.medium': 'Medio',
+    'trust-filter.high': 'Alto',
+    'trust-filter.wot': 'WoT',
+    'trust-filter.filter-threshold': 'Umbral de filtro',
+    'trust-filter.quick-presets': 'Ajustes rápidos',
+    'trust-filter.show-all-content': 'Mostrar todo el contenido',
+    'trust-filter.only-show-wot': 'Mostrar solo tu red de confianza (seguidos + sus seguidos)',
+    'trust-filter.hide-bottom-percent':
+      'Filtrar el {{score}}% inferior de usuarios por clasificación de confianza',
+    'trust-filter.trust-score-description':
+      'La puntuación de confianza clasifica a los usuarios por percentil de reputación',
     'Auto-load profile pictures': 'Cargar imágenes de perfil automáticamente'
   }
 }

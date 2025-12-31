@@ -34,6 +34,7 @@ import PullToRefresh from 'react-simple-pull-to-refresh'
 import { toast } from 'sonner'
 import { LoadingBar } from '../LoadingBar'
 import NewNotesButton from '../NewNotesButton'
+import TrustScoreBadge from '../TrustScoreBadge'
 
 const LIMIT = 500
 const SHOW_COUNT = 20
@@ -66,14 +67,16 @@ const UserAggregationList = forwardRef<
     const { t } = useTranslation()
     const { pubkey: currentPubkey, startLogin } = useNostr()
     const { push } = useSecondaryPage()
-    const { hideUntrustedNotes, isUserTrusted } = useUserTrust()
     const { mutePubkeySet } = useMuteList()
     const { pinnedPubkeySet } = usePinnedUsers()
+    const { meetsMinTrustScore } = useUserTrust()
     const { hideContentMentioningMutedUsers } = useContentPolicy()
     const { isEventDeleted } = useDeletedEvent()
     const [since, setSince] = useState(() => dayjs().subtract(1, 'day').unix())
     const [events, setEvents] = useState<Event[]>([])
+    const [filteredEvents, setFilteredEvents] = useState<Event[]>([])
     const [newEvents, setNewEvents] = useState<Event[]>([])
+    const [filteredNewEvents, setFilteredNewEvents] = useState<Event[]>([])
     const [newEventPubkeys, setNewEventPubkeys] = useState<Set<string>>(new Set())
     const [timelineKey, setTimelineKey] = useState<string | undefined>(undefined)
     const [loading, setLoading] = useState(true)
@@ -233,31 +236,40 @@ const UserAggregationList = forwardRef<
       return () => clearTimeout(timeout)
     }, [loading])
 
-    const shouldHideEvent = useCallback(
-      (evt: Event) => {
-        if (evt.pubkey === currentPubkey) return true
-        if (isEventDeleted(evt)) return true
-        if (hideUntrustedNotes && !isUserTrusted(evt.pubkey)) return true
-        if (filterMutedNotes && mutePubkeySet.has(evt.pubkey)) return true
-        if (
-          filterMutedNotes &&
-          hideContentMentioningMutedUsers &&
-          isMentioningMutedUsers(evt, mutePubkeySet)
-        ) {
-          return true
-        }
+    const filterEvents = useCallback(
+      async (events: Event[]) => {
+        const results = await Promise.allSettled(
+          events.map(async (evt) => {
+            if (evt.pubkey === currentPubkey) return null
+            if (evt.created_at < since) return null
+            if (isEventDeleted(evt)) return null
+            if (filterMutedNotes && mutePubkeySet.has(evt.pubkey)) return null
+            if (
+              filterMutedNotes &&
+              hideContentMentioningMutedUsers &&
+              isMentioningMutedUsers(evt, mutePubkeySet)
+            ) {
+              return null
+            }
+            if (!(await meetsMinTrustScore(evt.pubkey))) {
+              return null
+            }
 
-        return false
+            return evt
+          })
+        )
+        return results
+          .filter((res) => res.status === 'fulfilled' && res.value !== null)
+          .map((res) => (res as PromiseFulfilledResult<Event>).value)
       },
       [
-        hideUntrustedNotes,
         mutePubkeySet,
         isEventDeleted,
         currentPubkey,
         filterMutedNotes,
-        isUserTrusted,
         hideContentMentioningMutedUsers,
-        isMentioningMutedUsers
+        isMentioningMutedUsers,
+        meetsMinTrustScore
       ]
     )
 
@@ -265,13 +277,17 @@ const UserAggregationList = forwardRef<
       return dayjs().diff(dayjs.unix(since), 'day')
     }, [since])
 
-    const filteredEvents = useMemo(() => {
-      return events.filter((evt) => evt.created_at >= since && !shouldHideEvent(evt))
-    }, [events, since, shouldHideEvent])
+    useEffect(() => {
+      filterEvents(events).then((filtered) => {
+        setFilteredEvents(filtered)
+      })
+    }, [events, filterEvents])
 
-    const filteredNewEvents = useMemo(() => {
-      return newEvents.filter((evt) => evt.created_at >= since && !shouldHideEvent(evt))
-    }, [newEvents, since, shouldHideEvent])
+    useEffect(() => {
+      filterEvents(newEvents).then((filtered) => {
+        setFilteredNewEvents(filtered)
+      })
+    }, [newEvents, filterEvents])
 
     const aggregations = useMemo(() => {
       const aggs = userAggregationService.aggregateByUser(filteredEvents)
@@ -528,25 +544,28 @@ function UserAggregationItem({
       )}
 
       <div className="flex-1 min-w-0 flex flex-col">
-        {supportTouch ? (
-          <SimpleUsername
-            userId={aggregation.pubkey}
-            className={cn(
-              'font-semibold text-base truncate max-w-fit',
-              !hasNewEvents && 'text-muted-foreground'
-            )}
-            skeletonClassName="h-4"
-          />
-        ) : (
-          <Username
-            userId={aggregation.pubkey}
-            className={cn(
-              'font-semibold text-base truncate max-w-fit',
-              !hasNewEvents && 'text-muted-foreground'
-            )}
-            skeletonClassName="h-4"
-          />
-        )}
+        <div className="flex items-center gap-2">
+          {supportTouch ? (
+            <SimpleUsername
+              userId={aggregation.pubkey}
+              className={cn(
+                'font-semibold text-base truncate max-w-fit',
+                !hasNewEvents && 'text-muted-foreground'
+              )}
+              skeletonClassName="h-4"
+            />
+          ) : (
+            <Username
+              userId={aggregation.pubkey}
+              className={cn(
+                'font-semibold text-base truncate max-w-fit',
+                !hasNewEvents && 'text-muted-foreground'
+              )}
+              skeletonClassName="h-4"
+            />
+          )}
+          <TrustScoreBadge pubkey={aggregation.pubkey} />
+        </div>
         <FormattedTimestamp
           timestamp={aggregation.lastEventTime}
           className="text-sm text-muted-foreground"

@@ -1,9 +1,9 @@
 import NoteList, { TNoteListRef } from '@/components/NoteList'
 import Tabs from '@/components/Tabs'
+import TrustScoreFilter from '@/components/TrustScoreFilter'
 import UserAggregationList, { TUserAggregationListRef } from '@/components/UserAggregationList'
 import { isTouchDevice } from '@/lib/utils'
 import { useKindFilter } from '@/providers/KindFilterProvider'
-import { useUserTrust } from '@/providers/UserTrustProvider'
 import storage from '@/services/local-storage.service'
 import { TFeedSubRequest, TNoteListMode } from '@/types'
 import { useMemo, useRef, useState } from 'react'
@@ -25,7 +25,6 @@ export default function NormalFeed({
   disable24hMode?: boolean
   onRefresh?: () => void
 }) {
-  const { hideUntrustedNotes } = useUserTrust()
   const { showKinds } = useKindFilter()
   const [temporaryShowKinds, setTemporaryShowKinds] = useState(showKinds)
   const [listMode, setListMode] = useState<TNoteListMode>(() => storage.getNoteListMode())
@@ -79,6 +78,7 @@ export default function NormalFeed({
                 }}
               />
             )}
+            <TrustScoreFilter />
             {showKindsFilter && (
               <KindFilter
                 showKinds={temporaryShowKinds}
@@ -103,7 +103,6 @@ export default function NormalFeed({
           showKinds={temporaryShowKinds}
           subRequests={subRequests}
           hideReplies={listMode === 'posts'}
-          hideUntrustedNotes={hideUntrustedNotes}
           areAlgoRelays={areAlgoRelays}
           showRelayCloseReason={showRelayCloseReason}
         />
