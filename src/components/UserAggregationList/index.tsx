@@ -5,6 +5,7 @@ import UserAvatar, { SimpleUserAvatar } from '@/components/UserAvatar'
 import Username, { SimpleUsername } from '@/components/Username'
 import { isMentioningMutedUsers } from '@/lib/event'
 import { toNote, toUserAggregationDetail } from '@/lib/link'
+import { mergeTimelines } from '@/lib/timeline'
 import { cn, isTouchDevice } from '@/lib/utils'
 import { useSecondaryPage } from '@/PageManager'
 import { useContentPolicy } from '@/providers/ContentPolicyProvider'
@@ -75,6 +76,7 @@ const UserAggregationList = forwardRef<
     const { hideContentMentioningMutedUsers } = useContentPolicy()
     const { isEventDeleted } = useDeletedEvent()
     const [since, setSince] = useState(() => dayjs().subtract(1, 'day').unix())
+    const [storedEvents, setStoredEvents] = useState<Event[]>([])
     const [events, setEvents] = useState<Event[]>([])
     const [filteredEvents, setFilteredEvents] = useState<Event[]>([])
     const [newEvents, setNewEvents] = useState<Event[]>([])
@@ -123,6 +125,7 @@ const UserAggregationList = forwardRef<
 
       async function init() {
         setLoading(true)
+        setStoredEvents([])
         setEvents([])
         setNewEvents([])
         setHasMore(true)
@@ -131,6 +134,15 @@ const UserAggregationList = forwardRef<
           setLoading(false)
           setHasMore(false)
           return () => {}
+        }
+
+        if (isPubkeyFeed) {
+          const storedEvents = await client.getEventsFromIndexed({
+            authors: subRequests.flatMap(({ filter }) => filter.authors ?? []),
+            kinds: showKinds ?? [],
+            since: dayjs().subtract(1, 'day').unix()
+          })
+          setStoredEvents(storedEvents)
         }
 
         const preprocessedSubRequests = await Promise.all(
@@ -281,10 +293,11 @@ const UserAggregationList = forwardRef<
     }, [since])
 
     useEffect(() => {
-      filterEvents(events).then((filtered) => {
+      const mergedEvents = mergeTimelines([events, storedEvents], LIMIT)
+      filterEvents(mergedEvents).then((filtered) => {
         setFilteredEvents(filtered)
       })
-    }, [events, filterEvents])
+    }, [events, storedEvents, filterEvents])
 
     useEffect(() => {
       filterEvents(newEvents).then((filtered) => {

@@ -1,6 +1,7 @@
 import { BIG_RELAY_URLS, ExtendedKind, NOTIFICATION_LIST_STYLE } from '@/constants'
 import { useInfiniteScroll } from '@/hooks'
 import { compareEvents } from '@/lib/event'
+import { mergeTimelines } from '@/lib/timeline'
 import { isTouchDevice } from '@/lib/utils'
 import { usePrimaryPage } from '@/PageManager'
 import { useNostr } from '@/providers/NostrProvider'
@@ -44,7 +45,8 @@ const NotificationList = forwardRef((_, ref) => {
   const [refreshCount, setRefreshCount] = useState(0)
   const [timelineKey, setTimelineKey] = useState<string | undefined>(undefined)
   const [initialLoading, setInitialLoading] = useState(true)
-  const [notifications, setNotifications] = useState<NostrEvent[]>([])
+  const [storedEvents, setStoredEvents] = useState<NostrEvent[]>([])
+  const [events, setEvents] = useState<NostrEvent[]>([])
   const [until, setUntil] = useState<number | undefined>(dayjs().unix())
   const supportTouch = useMemo(() => isTouchDevice(), [])
   const topRef = useRef<HTMLDivElement | null>(null)
@@ -91,7 +93,7 @@ const NotificationList = forwardRef((_, ref) => {
   const handleNewEvent = useCallback(
     (event: NostrEvent) => {
       if (event.pubkey === pubkey) return
-      setNotifications((oldEvents) => {
+      setEvents((oldEvents) => {
         const index = oldEvents.findIndex((oldEvent) => compareEvents(oldEvent, event) <= 0)
         if (index !== -1 && oldEvents[index].id === event.id) {
           return oldEvents
@@ -117,26 +119,32 @@ const NotificationList = forwardRef((_, ref) => {
 
     const init = async () => {
       setInitialLoading(true)
-      setNotifications([])
+      setStoredEvents([])
+      setEvents([])
       setRefreshCount(SHOW_COUNT)
       setLastReadTime(getNotificationsSeenAt())
+
+      const filter = {
+        '#p': [pubkey],
+        kinds: filterKinds,
+        limit: LIMIT
+      }
+      const storedEvents = await client.getEventsFromIndexed(filter)
+      setStoredEvents(storedEvents)
+
       const relayList = await client.fetchRelayList(pubkey)
 
       const { closer, timelineKey } = await client.subscribeTimeline(
         [
           {
             urls: relayList.read.length > 0 ? relayList.read.slice(0, 5) : BIG_RELAY_URLS,
-            filter: {
-              '#p': [pubkey],
-              kinds: filterKinds,
-              limit: LIMIT
-            }
+            filter
           }
         ],
         {
           onEvents: (events, eosed) => {
             if (events.length > 0) {
-              setNotifications(events.filter((event) => event.pubkey !== pubkey))
+              setEvents(events)
             }
             if (eosed) {
               setInitialLoading(false)
@@ -194,13 +202,23 @@ const NotificationList = forwardRef((_, ref) => {
       return false
     }
 
-    setNotifications((oldNotifications) => [
-      ...oldNotifications,
+    setEvents((oldEvents) => [
+      ...oldEvents,
       ...newEvents.filter((event) => event.pubkey !== pubkey)
     ])
     setUntil(newEvents[newEvents.length - 1].created_at - 1)
     return true
-  }, [timelineKey, until, pubkey, setNotifications, setUntil])
+  }, [timelineKey, until, pubkey, setEvents, setUntil])
+
+  const notifications = useMemo(() => {
+    return mergeTimelines(
+      [
+        events.filter((evt) => evt.pubkey !== pubkey),
+        storedEvents.filter((evt) => evt.pubkey !== pubkey)
+      ],
+      LIMIT
+    )
+  }, [events, storedEvents, pubkey])
 
   const { visibleItems, shouldShowLoadingIndicator, bottomRef, setShowCount } = useInfiniteScroll({
     items: notifications,

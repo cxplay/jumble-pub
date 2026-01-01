@@ -9,6 +9,7 @@ import { getProfileFromEvent, getRelayListFromEvent } from '@/lib/event-metadata
 import { formatPubkey, isValidPubkey, pubkeyToNpub, userIdToPubkey } from '@/lib/pubkey'
 import { filterOutBigRelays } from '@/lib/relay'
 import { getPubkeysFromPTags, getServersFromServerTags, tagNameEquals } from '@/lib/tag'
+import { mergeTimelines } from '@/lib/timeline'
 import { isLocalNetworkUrl, isWebsocketUrl, normalizeUrl } from '@/lib/url'
 import { isSafari } from '@/lib/utils'
 import { ISigner, TProfile, TPublishOptions, TRelayList, TSubRequestFilter } from '@/types'
@@ -294,6 +295,17 @@ class ClientService extends EventTarget {
     return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('')
   }
 
+  async getEventsFromIndexed(filter: Filter) {
+    const items = await indexedDb.getEvents(filter)
+    const storedEvents: NEvent[] = []
+    items.forEach((item) => {
+      storedEvents.push(item.event)
+      this.trackEventExternalSeenOn(item.event.id, item.relays)
+      this.addEventToCache(item.event)
+    })
+    return storedEvents
+  }
+
   async subscribeTimeline(
     subRequests: { urls: string[]; filter: TSubRequestFilter }[],
     {
@@ -317,6 +329,7 @@ class ClientService extends EventTarget {
   ) {
     const newEventIdSet = new Set<string>()
     const requestCount = subRequests.length
+    const threshold = Math.floor(requestCount / 2)
     const timelines: NEvent[][] = new Array(requestCount).fill(0).map(() => [])
     let eosedCount = 0
 
@@ -332,8 +345,10 @@ class ClientService extends EventTarget {
               }
 
               timelines[i] = _events
-              const events = this.mergeTimelines(timelines, filter.limit)
-              onEvents(events, eosedCount >= requestCount)
+              if (eosedCount >= threshold) {
+                const events = mergeTimelines(timelines, filter.limit)
+                onEvents(events, eosedCount >= requestCount)
+              }
             },
             onNew: (evt) => {
               if (newEventIdSet.has(evt.id)) return
@@ -360,51 +375,6 @@ class ClientService extends EventTarget {
       },
       timelineKey: key
     }
-  }
-
-  private mergeTimelines(timelines: NEvent[][], limit: number) {
-    if (timelines.length === 0) return []
-    if (timelines.length === 1) return timelines[0].slice(0, limit)
-    return timelines.reduce((merged, current) => this._mergeTimelines(merged, current, limit), [])
-  }
-
-  private _mergeTimelines(a: NEvent[], b: NEvent[], limit: number): NEvent[] {
-    if (a.length === 0) return b.slice(0, limit)
-    if (b.length === 0) return a.slice(0, limit)
-
-    const result: NEvent[] = []
-    let i = 0
-    let j = 0
-    while (i < a.length && j < b.length && result.length < limit) {
-      const cmp = compareEvents(a[i], b[j])
-      if (cmp > 0) {
-        result.push(a[i])
-        i++
-      } else if (cmp < 0) {
-        result.push(b[j])
-        j++
-      } else {
-        result.push(a[i])
-        i++
-        j++
-      }
-    }
-
-    if (result.length >= limit) {
-      return result
-    }
-
-    while (i < a.length) {
-      result.push(a[i])
-      i++
-    }
-
-    while (j < b.length) {
-      result.push(b[j])
-      j++
-    }
-
-    return result
   }
 
   async loadMoreTimeline(key: string, until: number, limit: number) {
@@ -620,15 +590,6 @@ class ClientService extends EventTarget {
         onEvents([...cachedEvents], false)
         since = cachedEvents[0].created_at + 1
       }
-    } else if (needSaveToDb) {
-      const storedEvents: NEvent[] = []
-      const items = await indexedDb.getEvents(filter)
-      items.forEach((item) => {
-        this.trackEventExternalSeenOn(item.event.id, item.relays)
-        storedEvents.push(item.event)
-        this.addEventToCache(item.event)
-      })
-      onEvents([...storedEvents], false)
     }
 
     // eslint-disable-next-line @typescript-eslint/no-this-alias

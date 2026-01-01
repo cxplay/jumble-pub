@@ -4,6 +4,7 @@ import { SPAMMER_PERCENTILE_THRESHOLD } from '@/constants'
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll'
 import { getEventKey, getKeyFromTag, isMentioningMutedUsers, isReplyNoteEvent } from '@/lib/event'
 import { tagNameEquals } from '@/lib/tag'
+import { mergeTimelines } from '@/lib/timeline'
 import { isTouchDevice } from '@/lib/utils'
 import { useContentPolicy } from '@/providers/ContentPolicyProvider'
 import { useDeletedEvent } from '@/providers/DeletedEventProvider'
@@ -79,6 +80,7 @@ const NoteList = forwardRef<
     const { mutePubkeySet } = useMuteList()
     const { hideContentMentioningMutedUsers } = useContentPolicy()
     const { isEventDeleted } = useDeletedEvent()
+    const [storedEvents, setStoredEvents] = useState<Event[]>([])
     const [events, setEvents] = useState<Event[]>([])
     const [newEvents, setNewEvents] = useState<Event[]>([])
     const [initialLoading, setInitialLoading] = useState(true)
@@ -135,7 +137,8 @@ const NoteList = forwardRef<
         const filteredEvents: Event[] = []
         const keys: string[] = []
 
-        events.forEach((evt) => {
+        const mergedEvents = mergeTimelines([events, storedEvents], LIMIT)
+        mergedEvents.forEach((evt) => {
           const key = getEventKey(evt)
           if (keySet.has(key)) return
           keySet.add(key)
@@ -220,7 +223,7 @@ const NoteList = forwardRef<
 
       setFiltering(true)
       processEvents().finally(() => setFiltering(false))
-    }, [events, shouldHideEvent, hideReplies, hideSpam, meetsMinTrustScore])
+    }, [events, storedEvents, shouldHideEvent, hideReplies, hideSpam, meetsMinTrustScore])
 
     useEffect(() => {
       const processNewEvents = async () => {
@@ -279,10 +282,20 @@ const NoteList = forwardRef<
       async function init() {
         setInitialLoading(true)
         setEvents([])
+        setStoredEvents([])
         setNewEvents([])
 
         if (showKinds?.length === 0 && subRequests.every(({ filter }) => !filter.kinds)) {
           return () => {}
+        }
+
+        if (isPubkeyFeed) {
+          const storedEvents = await client.getEventsFromIndexed({
+            authors: subRequests.flatMap(({ filter }) => filter.authors ?? []),
+            kinds: showKinds,
+            limit: LIMIT
+          })
+          setStoredEvents(storedEvents)
         }
 
         const preprocessedSubRequests = await Promise.all(
