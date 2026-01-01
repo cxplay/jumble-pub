@@ -35,6 +35,7 @@ export default function NormalFeed({
   const showKindsFilter = useMemo(() => {
     return subRequests.every((req) => !req.filter.kinds?.length)
   }, [subRequests])
+  const [trustFilterOpen, setTrustFilterOpen] = useState(false)
 
   const handleListModeChange = (mode: TNoteListMode) => {
     setListMode(mode)
@@ -47,6 +48,10 @@ export default function NormalFeed({
   const handleShowKindsChange = (newShowKinds: number[]) => {
     setTemporaryShowKinds(newShowKinds)
     noteListRef.current?.scrollToTop()
+  }
+
+  const handleTrustFilterOpenChange = (open: boolean) => {
+    setTrustFilterOpen(open)
   }
 
   return (
@@ -78,7 +83,7 @@ export default function NormalFeed({
                 }}
               />
             )}
-            <TrustScoreFilter />
+            <TrustScoreFilter onOpenChange={handleTrustFilterOpenChange} />
             {showKindsFilter && (
               <KindFilter
                 showKinds={temporaryShowKinds}
@@ -87,6 +92,7 @@ export default function NormalFeed({
             )}
           </>
         }
+        active={trustFilterOpen}
       />
       <div ref={topRef} className="scroll-mt-[calc(6rem+1px)]" />
       {listMode === '24h' && !disable24hMode ? (

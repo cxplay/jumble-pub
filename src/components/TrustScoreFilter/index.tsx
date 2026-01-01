@@ -27,7 +27,11 @@ function getDescription(score: number, t: (key: string, options?: any) => string
   }
 }
 
-export default function TrustScoreFilter() {
+export default function TrustScoreFilter({
+  onOpenChange
+}: {
+  onOpenChange?: (open: boolean) => void
+}) {
   const { t } = useTranslation()
   const { isSmallScreen } = useScreenSize()
   const { minTrustScore, updateMinTrustScore } = useUserTrust()
@@ -63,6 +67,12 @@ export default function TrustScoreFilter() {
     }
   }, [])
 
+  useEffect(() => {
+    if (onOpenChange) {
+      onOpenChange(open)
+    }
+  }, [open, onOpenChange])
+
   const description = getDescription(temporaryScore, t)
 
   const trigger = (
@@ -76,9 +86,7 @@ export default function TrustScoreFilter() {
           : 'text-primary hover:text-primary-hover'
       )}
       onClick={() => {
-        if (isSmallScreen) {
-          setOpen(true)
-        }
+        setOpen(true)
       }}
     >
       {minTrustScore < 100 ? <Shield size={16} /> : <ShieldCheck size={16} />}
