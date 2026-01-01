@@ -52,6 +52,7 @@ const UserAggregationList = forwardRef<
     filterMutedNotes?: boolean
     areAlgoRelays?: boolean
     showRelayCloseReason?: boolean
+    isPubkeyFeed?: boolean
   }
 >(
   (
@@ -60,7 +61,8 @@ const UserAggregationList = forwardRef<
       showKinds,
       filterMutedNotes = true,
       areAlgoRelays = false,
-      showRelayCloseReason = false
+      showRelayCloseReason = false,
+      isPubkeyFeed = false
     },
     ref
   ) => {
@@ -187,7 +189,8 @@ const UserAggregationList = forwardRef<
           },
           {
             startLogin,
-            needSort: !areAlgoRelays
+            needSort: !areAlgoRelays,
+            needSaveToDb: isPubkeyFeed
           }
         )
         setTimelineKey(timelineKey)

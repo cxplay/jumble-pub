@@ -28,6 +28,7 @@ import {
 import { useTranslation } from 'react-i18next'
 import PullToRefresh from 'react-simple-pull-to-refresh'
 import { toast } from 'sonner'
+import { LoadingBar } from '../LoadingBar'
 import NoteCard, { NoteCardLoadingSkeleton } from '../NoteCard'
 import PinnedNoteCard from '../PinnedNoteCard'
 
@@ -53,6 +54,7 @@ const NoteList = forwardRef<
     pinnedEventIds?: string[]
     filterFn?: (event: Event) => boolean
     showNewNotesDirectly?: boolean
+    isPubkeyFeed?: boolean
   }
 >(
   (
@@ -66,7 +68,8 @@ const NoteList = forwardRef<
       showRelayCloseReason = false,
       pinnedEventIds,
       filterFn,
-      showNewNotesDirectly = false
+      showNewNotesDirectly = false,
+      isPubkeyFeed = false
     },
     ref
   ) => {
@@ -78,7 +81,7 @@ const NoteList = forwardRef<
     const { isEventDeleted } = useDeletedEvent()
     const [events, setEvents] = useState<Event[]>([])
     const [newEvents, setNewEvents] = useState<Event[]>([])
-    const [initialLoading, setInitialLoading] = useState(false)
+    const [initialLoading, setInitialLoading] = useState(true)
     const [filtering, setFiltering] = useState(false)
     const [timelineKey, setTimelineKey] = useState<string | undefined>(undefined)
     const [filteredNotes, setFilteredNotes] = useState<
@@ -340,7 +343,8 @@ const NoteList = forwardRef<
           },
           {
             startLogin,
-            needSort: !areAlgoRelays
+            needSort: !areAlgoRelays,
+            needSaveToDb: isPubkeyFeed
           }
         )
         setTimelineKey(timelineKey)
@@ -384,6 +388,7 @@ const NoteList = forwardRef<
 
     const list = (
       <div className="min-h-screen">
+        {initialLoading && shouldShowLoadingIndicator && <LoadingBar />}
         {pinnedEventIds?.map((id) => <PinnedNoteCard key={id} eventId={id} className="w-full" />)}
         {visibleItems.map(({ key, event, reposters }) => (
           <NoteCard

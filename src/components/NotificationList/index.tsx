@@ -1,4 +1,5 @@
 import { BIG_RELAY_URLS, ExtendedKind, NOTIFICATION_LIST_STYLE } from '@/constants'
+import { useInfiniteScroll } from '@/hooks'
 import { compareEvents } from '@/lib/event'
 import { isTouchDevice } from '@/lib/utils'
 import { usePrimaryPage } from '@/PageManager'
@@ -22,6 +23,7 @@ import {
 } from 'react'
 import { useTranslation } from 'react-i18next'
 import PullToRefresh from 'react-simple-pull-to-refresh'
+import { LoadingBar } from '../LoadingBar'
 import { RefreshButton } from '../RefreshButton'
 import Tabs from '../Tabs'
 import { NotificationItem } from './NotificationItem'
@@ -41,14 +43,11 @@ const NotificationList = forwardRef((_, ref) => {
   const [lastReadTime, setLastReadTime] = useState(0)
   const [refreshCount, setRefreshCount] = useState(0)
   const [timelineKey, setTimelineKey] = useState<string | undefined>(undefined)
-  const [loading, setLoading] = useState(true)
+  const [initialLoading, setInitialLoading] = useState(true)
   const [notifications, setNotifications] = useState<NostrEvent[]>([])
-  const [visibleNotifications, setVisibleNotifications] = useState<NostrEvent[]>([])
-  const [showCount, setShowCount] = useState(SHOW_COUNT)
   const [until, setUntil] = useState<number | undefined>(dayjs().unix())
   const supportTouch = useMemo(() => isTouchDevice(), [])
   const topRef = useRef<HTMLDivElement | null>(null)
-  const bottomRef = useRef<HTMLDivElement | null>(null)
   const filterKinds = useMemo(() => {
     switch (notificationType) {
       case 'mentions':
@@ -82,11 +81,11 @@ const NotificationList = forwardRef((_, ref) => {
     ref,
     () => ({
       refresh: () => {
-        if (loading) return
+        if (initialLoading) return
         setRefreshCount((count) => count + 1)
       }
     }),
-    [loading]
+    [initialLoading]
   )
 
   const handleNewEvent = useCallback(
@@ -117,9 +116,9 @@ const NotificationList = forwardRef((_, ref) => {
     }
 
     const init = async () => {
-      setLoading(true)
+      setInitialLoading(true)
       setNotifications([])
-      setShowCount(SHOW_COUNT)
+      setRefreshCount(SHOW_COUNT)
       setLastReadTime(getNotificationsSeenAt())
       const relayList = await client.fetchRelayList(pubkey)
 
@@ -140,7 +139,7 @@ const NotificationList = forwardRef((_, ref) => {
               setNotifications(events.filter((event) => event.pubkey !== pubkey))
             }
             if (eosed) {
-              setLoading(false)
+              setInitialLoading(false)
               setUntil(events.length > 0 ? events[events.length - 1].created_at - 1 : undefined)
               threadService.addRepliesToThread(events)
               stuffStatsService.updateStuffStatsByEvents(events)
@@ -150,7 +149,8 @@ const NotificationList = forwardRef((_, ref) => {
             handleNewEvent(event)
             threadService.addRepliesToThread([event])
           }
-        }
+        },
+        { needSaveToDb: true }
       )
       setTimelineKey(timelineKey)
       return closer
@@ -187,63 +187,27 @@ const NotificationList = forwardRef((_, ref) => {
     }
   }, [pubkey, active, filterKinds, handleNewEvent])
 
-  useEffect(() => {
-    setVisibleNotifications(notifications.slice(0, showCount))
-  }, [notifications, showCount])
-
-  useEffect(() => {
-    const options = {
-      root: null,
-      rootMargin: '10px',
-      threshold: 1
+  const handleLoadMore = useCallback(async () => {
+    if (!timelineKey || !until) return false
+    const newEvents = await client.loadMoreTimeline(timelineKey, until, LIMIT)
+    if (newEvents.length === 0) {
+      return false
     }
 
-    const loadMore = async () => {
-      if (showCount < notifications.length) {
-        setShowCount((count) => count + SHOW_COUNT)
-        // preload more
-        if (notifications.length - showCount > LIMIT / 2) {
-          return
-        }
-      }
+    setNotifications((oldNotifications) => [
+      ...oldNotifications,
+      ...newEvents.filter((event) => event.pubkey !== pubkey)
+    ])
+    setUntil(newEvents[newEvents.length - 1].created_at - 1)
+    return true
+  }, [timelineKey, until, pubkey, setNotifications, setUntil])
 
-      if (!pubkey || !timelineKey || !until || loading) return
-      setLoading(true)
-      const newNotifications = await client.loadMoreTimeline(timelineKey, until, LIMIT)
-      setLoading(false)
-      if (newNotifications.length === 0) {
-        setUntil(undefined)
-        return
-      }
-
-      if (newNotifications.length > 0) {
-        setNotifications((oldNotifications) => [
-          ...oldNotifications,
-          ...newNotifications.filter((event) => event.pubkey !== pubkey)
-        ])
-      }
-
-      setUntil(newNotifications[newNotifications.length - 1].created_at - 1)
-    }
-
-    const observerInstance = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        loadMore()
-      }
-    }, options)
-
-    const currentBottomRef = bottomRef.current
-
-    if (currentBottomRef) {
-      observerInstance.observe(currentBottomRef)
-    }
-
-    return () => {
-      if (observerInstance && currentBottomRef) {
-        observerInstance.unobserve(currentBottomRef)
-      }
-    }
-  }, [pubkey, timelineKey, until, loading, showCount, notifications])
+  const { visibleItems, shouldShowLoadingIndicator, bottomRef, setShowCount } = useInfiniteScroll({
+    items: notifications,
+    showCount: SHOW_COUNT,
+    onLoadMore: handleLoadMore,
+    initialLoading
+  })
 
   const refresh = () => {
     topRef.current?.scrollIntoView({ behavior: 'instant', block: 'start' })
@@ -253,19 +217,20 @@ const NotificationList = forwardRef((_, ref) => {
   }
 
   const list = (
-    <div className={notificationListStyle === NOTIFICATION_LIST_STYLE.COMPACT ? 'pt-2' : ''}>
-      {visibleNotifications.map((notification) => (
+    <div>
+      {initialLoading && shouldShowLoadingIndicator && <LoadingBar />}
+      <div className={notificationListStyle === NOTIFICATION_LIST_STYLE.COMPACT ? 'mb-2' : ''} />
+      {visibleItems.map((notification) => (
         <NotificationItem
           key={notification.id}
           notification={notification}
           isNew={notification.created_at > lastReadTime}
         />
       ))}
+      <div ref={bottomRef} />
       <div className="text-center text-sm text-muted-foreground">
-        {until || loading ? (
-          <div ref={bottomRef}>
-            <NotificationSkeleton />
-          </div>
+        {!!until || shouldShowLoadingIndicator ? (
+          <NotificationSkeleton />
         ) : (
           t('no more notifications')
         )}

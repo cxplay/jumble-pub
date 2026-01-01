@@ -40,6 +40,7 @@ class ClientService extends EventTarget {
   pubkey?: string
   currentRelays: string[] = []
   private pool: SimplePool
+  private externalSeenOn = new Map<string, Set<string>>()
 
   private timelines: Record<
     string,
@@ -306,20 +307,21 @@ class ClientService extends EventTarget {
     },
     {
       startLogin,
-      needSort = true
+      needSort = true,
+      needSaveToDb = false
     }: {
       startLogin?: () => void
       needSort?: boolean
+      needSaveToDb?: boolean
     } = {}
   ) {
     const newEventIdSet = new Set<string>()
     const requestCount = subRequests.length
-    const threshold = Math.floor(requestCount / 2)
-    let events: NEvent[] = []
+    const timelines: NEvent[][] = new Array(requestCount).fill(0).map(() => [])
     let eosedCount = 0
 
     const subs = await Promise.all(
-      subRequests.map(({ urls, filter }) => {
+      subRequests.map(({ urls, filter }, i) => {
         return this._subscribeTimeline(
           urls,
           filter,
@@ -329,11 +331,9 @@ class ClientService extends EventTarget {
                 eosedCount++
               }
 
-              events = this.mergeTimelines(events, _events)
-
-              if (eosedCount >= threshold) {
-                onEvents(events, eosedCount >= requestCount)
-              }
+              timelines[i] = _events
+              const events = this.mergeTimelines(timelines, filter.limit)
+              onEvents(events, eosedCount >= requestCount)
             },
             onNew: (evt) => {
               if (newEventIdSet.has(evt.id)) return
@@ -342,7 +342,7 @@ class ClientService extends EventTarget {
             },
             onClose
           },
-          { startLogin, needSort }
+          { startLogin, needSort, needSaveToDb }
         )
       })
     )
@@ -362,14 +362,20 @@ class ClientService extends EventTarget {
     }
   }
 
-  private mergeTimelines(a: NEvent[], b: NEvent[]): NEvent[] {
-    if (a.length === 0) return [...b]
-    if (b.length === 0) return [...a]
+  private mergeTimelines(timelines: NEvent[][], limit: number) {
+    if (timelines.length === 0) return []
+    if (timelines.length === 1) return timelines[0].slice(0, limit)
+    return timelines.reduce((merged, current) => this._mergeTimelines(merged, current, limit), [])
+  }
+
+  private _mergeTimelines(a: NEvent[], b: NEvent[], limit: number): NEvent[] {
+    if (a.length === 0) return b.slice(0, limit)
+    if (b.length === 0) return a.slice(0, limit)
 
     const result: NEvent[] = []
     let i = 0
     let j = 0
-    while (i < a.length && j < b.length) {
+    while (i < a.length && j < b.length && result.length < limit) {
       const cmp = compareEvents(a[i], b[j])
       if (cmp > 0) {
         result.push(a[i])
@@ -382,6 +388,20 @@ class ClientService extends EventTarget {
         i++
         j++
       }
+    }
+
+    if (result.length >= limit) {
+      return result
+    }
+
+    while (i < a.length) {
+      result.push(a[i])
+      i++
+    }
+
+    while (j < b.length) {
+      result.push(b[j])
+      j++
     }
 
     return result
@@ -579,10 +599,12 @@ class ClientService extends EventTarget {
     },
     {
       startLogin,
-      needSort = true
+      needSort = true,
+      needSaveToDb = false
     }: {
       startLogin?: () => void
       needSort?: boolean
+      needSaveToDb?: boolean
     } = {}
   ) {
     const relays = Array.from(new Set(urls))
@@ -598,6 +620,15 @@ class ClientService extends EventTarget {
         onEvents([...cachedEvents], false)
         since = cachedEvents[0].created_at + 1
       }
+    } else if (needSaveToDb) {
+      const storedEvents: NEvent[] = []
+      const items = await indexedDb.getEvents(filter)
+      items.forEach((item) => {
+        this.trackEventExternalSeenOn(item.event.id, item.relays)
+        storedEvents.push(item.event)
+        this.addEventToCache(item.event)
+      })
+      onEvents([...storedEvents], false)
     }
 
     // eslint-disable-next-line @typescript-eslint/no-this-alias
@@ -615,6 +646,9 @@ class ClientService extends EventTarget {
         // new event
         if (evt.created_at > eosedAt) {
           onNew(evt)
+          if (needSaveToDb) {
+            indexedDb.putEvents([{ event: evt, relays: that.getEventHints(evt.id) }])
+          }
         }
 
         const timeline = that.timelines[key]
@@ -654,6 +688,11 @@ class ClientService extends EventTarget {
         }
 
         events = events.sort((a, b) => b.created_at - a.created_at).slice(0, filter.limit)
+        if (needSaveToDb) {
+          indexedDb.putEvents(
+            events.map((evt) => ({ event: evt, relays: this.getEventHints(evt.id) }))
+          )
+        }
         const timeline = that.timelines[key]
         // no cache yet
         if (!timeline || Array.isArray(timeline) || !timeline.refs.length) {
@@ -675,6 +714,9 @@ class ClientService extends EventTarget {
           // if new refs are more than limit, means old refs are too old, replace them
           timeline.refs = newRefs
           onEvents([...events], true)
+          if (needSaveToDb) {
+            indexedDb.deleteEvents({ ...filter, until: events[events.length - 1].created_at })
+          }
         } else {
           // merge new refs with old refs
           timeline.refs = newRefs.concat(timeline.refs)
@@ -737,7 +779,12 @@ class ClientService extends EventTarget {
   }
 
   getSeenEventRelayUrls(eventId: string) {
-    return this.getSeenEventRelays(eventId).map((relay) => relay.url)
+    return Array.from(
+      new Set([
+        ...this.getSeenEventRelays(eventId).map((relay) => relay.url),
+        ...(this.externalSeenOn.get(eventId) || [])
+      ])
+    )
   }
 
   getEventHints(eventId: string) {
@@ -755,6 +802,15 @@ class ClientService extends EventTarget {
       this.pool.seenOn.set(eventId, set)
     }
     set.add(relay)
+  }
+
+  trackEventExternalSeenOn(eventId: string, relayUrls: string[]) {
+    let set = this.externalSeenOn.get(eventId)
+    if (!set) {
+      set = new Set()
+      this.externalSeenOn.set(eventId, set)
+    }
+    relayUrls.forEach((url) => set.add(url))
   }
 
   private async query(urls: string[], filter: Filter | Filter[], onevent?: (evt: NEvent) => void) {

@@ -16,7 +16,8 @@ export default function NormalFeed({
   isMainFeed = false,
   showRelayCloseReason = false,
   disable24hMode = false,
-  onRefresh
+  onRefresh,
+  isPubkeyFeed = false
 }: {
   subRequests: TFeedSubRequest[]
   areAlgoRelays?: boolean
@@ -24,6 +25,7 @@ export default function NormalFeed({
   showRelayCloseReason?: boolean
   disable24hMode?: boolean
   onRefresh?: () => void
+  isPubkeyFeed?: boolean
 }) {
   const { showKinds } = useKindFilter()
   const [temporaryShowKinds, setTemporaryShowKinds] = useState(showKinds)
@@ -102,6 +104,7 @@ export default function NormalFeed({
           subRequests={subRequests}
           areAlgoRelays={areAlgoRelays}
           showRelayCloseReason={showRelayCloseReason}
+          isPubkeyFeed={isPubkeyFeed}
         />
       ) : (
         <NoteList
@@ -111,6 +114,7 @@ export default function NormalFeed({
           hideReplies={listMode === 'posts'}
           areAlgoRelays={areAlgoRelays}
           showRelayCloseReason={showRelayCloseReason}
+          isPubkeyFeed={isPubkeyFeed}
         />
       )}
     </>
