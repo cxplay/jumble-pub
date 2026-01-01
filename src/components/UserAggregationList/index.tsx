@@ -293,7 +293,7 @@ const UserAggregationList = forwardRef<
     }, [since])
 
     useEffect(() => {
-      const mergedEvents = mergeTimelines([events, storedEvents], LIMIT)
+      const mergedEvents = mergeTimelines([events, storedEvents])
       filterEvents(mergedEvents).then((filtered) => {
         setFilteredEvents(filtered)
       })

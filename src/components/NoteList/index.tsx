@@ -137,7 +137,13 @@ const NoteList = forwardRef<
         const filteredEvents: Event[] = []
         const keys: string[] = []
 
-        const mergedEvents = mergeTimelines([events, storedEvents], LIMIT)
+        let mergedEvents: Event[] = events
+        if (
+          storedEvents.length &&
+          (!events.length || storedEvents[0].created_at >= events[events.length - 1].created_at)
+        ) {
+          mergedEvents = mergeTimelines([storedEvents, events])
+        }
         mergedEvents.forEach((evt) => {
           const key = getEventKey(evt)
           if (keySet.has(key)) return

@@ -211,14 +211,23 @@ const NotificationList = forwardRef((_, ref) => {
   }, [timelineKey, until, pubkey, setEvents, setUntil])
 
   const notifications = useMemo(() => {
-    return mergeTimelines(
-      [
-        events.filter((evt) => evt.pubkey !== pubkey),
-        storedEvents.filter((evt) => evt.pubkey !== pubkey)
-      ],
-      LIMIT
-    )
-  }, [events, storedEvents, pubkey])
+    const filteredEvents = events.filter((evt) => evt.pubkey !== pubkey)
+    if (storedEvents.length === 0) return filteredEvents
+
+    const filteredStoredEvents = storedEvents.filter((evt) => evt.pubkey !== pubkey)
+    if (!initialLoading) {
+      return mergeTimelines([filteredEvents, filteredStoredEvents])
+    }
+
+    if (
+      !filteredEvents.length ||
+      storedEvents[0].created_at >= filteredEvents[filteredEvents.length - 1].created_at
+    ) {
+      return mergeTimelines([filteredEvents, filteredStoredEvents])
+    }
+    // Stored events are too old
+    return filteredEvents
+  }, [events, storedEvents, pubkey, initialLoading])
 
   const { visibleItems, shouldShowLoadingIndicator, bottomRef, setShowCount } = useInfiniteScroll({
     items: notifications,
