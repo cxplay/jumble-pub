@@ -653,6 +653,8 @@ export default {
       'กรอง {{score}}% ล่างสุดของผู้ใช้ตามอันดับความไว้วางใจ',
     'trust-filter.trust-score-description':
       'คำนวณจากชื่อเสียงของผู้ใช้และเปอร์เซ็นไทล์ของเครือข่ายสังคม',
-    'Auto-load profile pictures': 'โหลดรูปโปรไฟล์อัตโนมัติ'
+    'Auto-load profile pictures': 'โหลดรูปโปรไฟล์อัตโนมัติ',
+    'Disable live feed': 'ปิดฟีดสด',
+    'Enable live feed': 'เปิดฟีดสด'
   }
 }

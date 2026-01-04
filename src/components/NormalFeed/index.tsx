@@ -9,6 +9,8 @@ import { TFeedSubRequest, TNoteListMode } from '@/types'
 import { useMemo, useRef, useState } from 'react'
 import KindFilter from '../KindFilter'
 import { RefreshButton } from '../RefreshButton'
+import { LiveFeedToggle } from '../LiveFeedToggle'
+import { useUserPreferences } from '@/providers/UserPreferencesProvider'
 
 export default function NormalFeed({
   subRequests,
@@ -28,6 +30,7 @@ export default function NormalFeed({
   isPubkeyFeed?: boolean
 }) {
   const { showKinds } = useKindFilter()
+  const { enableLiveFeed } = useUserPreferences()
   const [temporaryShowKinds, setTemporaryShowKinds] = useState(showKinds)
   const [listMode, setListMode] = useState<TNoteListMode>(() => storage.getNoteListMode())
   const supportTouch = useMemo(() => isTouchDevice(), [])
@@ -85,7 +88,8 @@ export default function NormalFeed({
                 }}
               />
             )}
-            <TrustScoreFilter onOpenChange={handleTrustFilterOpenChange} />
+            <LiveFeedToggle />
+            {!isPubkeyFeed && <TrustScoreFilter onOpenChange={handleTrustFilterOpenChange} />}
             {showKindsFilter && (
               <KindFilter
                 showKinds={temporaryShowKinds}
@@ -105,6 +109,7 @@ export default function NormalFeed({
           areAlgoRelays={areAlgoRelays}
           showRelayCloseReason={showRelayCloseReason}
           isPubkeyFeed={isPubkeyFeed}
+          showNewNotesDirectly={enableLiveFeed}
         />
       ) : (
         <NoteList
@@ -115,6 +120,7 @@ export default function NormalFeed({
           areAlgoRelays={areAlgoRelays}
           showRelayCloseReason={showRelayCloseReason}
           isPubkeyFeed={isPubkeyFeed}
+          showNewNotesDirectly={enableLiveFeed}
         />
       )}
     </>

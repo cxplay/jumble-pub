@@ -656,6 +656,8 @@ export default {
       'Alsó {{score}}% felhasználók szűrése bizalmi rangsor szerint',
     'trust-filter.trust-score-description':
       'A felhasználó hírneve és a közösségi hálózat percentilise alapján számítva',
-    'Auto-load profile pictures': 'Profilképek automatikus betöltése'
+    'Auto-load profile pictures': 'Profilképek automatikus betöltése',
+    'Disable live feed': 'Élő hírfolyam letiltása',
+    'Enable live feed': 'Élő hírfolyam engedélyezése'
   }
 }

@@ -667,6 +667,8 @@ export default {
       'Filtrar os {{score}}% inferiores de utilizadores por classificação de confiança',
     'trust-filter.trust-score-description':
       'Calculado com base na reputação do utilizador e no percentil da rede social',
-    'Auto-load profile pictures': 'Carregar fotos de perfil automaticamente'
+    'Auto-load profile pictures': 'Carregar fotos de perfil automaticamente',
+    'Disable live feed': 'Desativar feed ao vivo',
+    'Enable live feed': 'Ativar feed ao vivo'
   }
 }

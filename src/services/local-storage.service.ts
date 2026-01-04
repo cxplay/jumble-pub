@@ -64,6 +64,7 @@ class LocalStorageService {
   private quickReactionEmoji: string | TEmoji = '+'
   private nsfwDisplayPolicy: TNsfwDisplayPolicy = NSFW_DISPLAY_POLICY.HIDE_CONTENT
   private minTrustScore: number = 40
+  private enableLiveFeed: boolean = false
 
   constructor() {
     if (!LocalStorageService.instance) {
@@ -274,6 +275,8 @@ class LocalStorageService {
         this.minTrustScore = 100 // set to max if any of the old settings were true
       }
     }
+
+    this.enableLiveFeed = window.localStorage.getItem(StorageKey.ENABLE_LIVE_FEED) === 'true'
 
     // Clean up deprecated data
     window.localStorage.removeItem(StorageKey.PINNED_PUBKEYS)
@@ -611,6 +614,15 @@ class LocalStorageService {
       this.minTrustScore = score
       window.localStorage.setItem(StorageKey.MIN_TRUST_SCORE, score.toString())
     }
+  }
+
+  getEnableLiveFeed() {
+    return this.enableLiveFeed
+  }
+
+  setEnableLiveFeed(enable: boolean) {
+    this.enableLiveFeed = enable
+    window.localStorage.setItem(StorageKey.ENABLE_LIVE_FEED, enable.toString())
   }
 }
 

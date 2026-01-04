@@ -656,6 +656,8 @@ export default {
     'trust-filter.hide-bottom-percent':
       'Filter out bottom {{score}}% of users by trust rank',
     'trust-filter.trust-score-description': 'Calculated based on user reputation and social network percentile',
-    'Auto-load profile pictures': 'Auto-load profile pictures'
+    'Auto-load profile pictures': 'Auto-load profile pictures',
+    'Disable live feed': 'Disable live feed',
+    'Enable live feed': 'Enable live feed'
   }
 }

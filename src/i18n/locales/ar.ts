@@ -651,6 +651,8 @@ export default {
     'trust-filter.hide-bottom-percent':
       'تصفية أدنى {{score}}٪ من المستخدمين حسب تصنيف الثقة',
     'trust-filter.trust-score-description': 'محسوبة بناءً على سمعة المستخدم والنسبة المئوية للشبكة الاجتماعية',
-    'Auto-load profile pictures': 'تحميل صور الملف الشخصي تلقائيًا'
+    'Auto-load profile pictures': 'تحميل صور الملف الشخصي تلقائيًا',
+    'Disable live feed': 'تعطيل التغذية المباشرة',
+    'Enable live feed': 'تفعيل التغذية المباشرة'
   }
 }

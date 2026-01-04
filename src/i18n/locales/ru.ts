@@ -667,6 +667,8 @@ export default {
       'Отфильтровать нижние {{score}}% пользователей по рейтингу доверия',
     'trust-filter.trust-score-description':
       'Рассчитывается на основе репутации пользователя и процентиля социальной сети',
-    'Auto-load profile pictures': 'Автозагрузка аватаров'
+    'Auto-load profile pictures': 'Автозагрузка аватаров',
+    'Disable live feed': 'Отключить прямую трансляцию',
+    'Enable live feed': 'Включить прямую трансляцию'
   }
 }

@@ -673,6 +673,8 @@ export default {
       'Untere {{score}}% der Benutzer nach Vertrauensrang filtern',
     'trust-filter.trust-score-description':
       'Berechnet basierend auf Benutzerreputation und sozialem Netzwerk-Perzentil',
-    'Auto-load profile pictures': 'Profilbilder automatisch laden'
+    'Auto-load profile pictures': 'Profilbilder automatisch laden',
+    'Disable live feed': 'Live-Feed deaktivieren',
+    'Enable live feed': 'Live-Feed aktivieren'
   }
 }

@@ -663,6 +663,8 @@ export default {
       'विश्वास रैंक द्वारा निचले {{score}}% उपयोगकर्ताओं को फ़िल्टर करें',
     'trust-filter.trust-score-description':
       'उपयोगकर्ता की प्रतिष्ठा और सामाजिक नेटवर्क प्रतिशतक के आधार पर गणना की गई',
-    'Auto-load profile pictures': 'प्रोफ़ाइल चित्र स्वतः लोड करें'
+    'Auto-load profile pictures': 'प्रोफ़ाइल चित्र स्वतः लोड करें',
+    'Disable live feed': 'लाइव फ़ीड अक्षम करें',
+    'Enable live feed': 'लाइव फ़ीड सक्षम करें'
   }
 }

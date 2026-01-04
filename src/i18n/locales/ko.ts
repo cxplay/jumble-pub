@@ -656,6 +656,8 @@ export default {
     'trust-filter.only-show-wot': '신뢰 네트워크만 표시 (팔로우 + 팔로우의 팔로우)',
     'trust-filter.hide-bottom-percent': '신뢰도 하위 {{score}}% 사용자 필터링',
     'trust-filter.trust-score-description': '사용자의 평판과 소셜 네트워크를 기반으로 신뢰도 백분위수 계산',
-    'Auto-load profile pictures': '프로필 사진 자동 로드'
+    'Auto-load profile pictures': '프로필 사진 자동 로드',
+    'Disable live feed': '라이브 피드 비활성화',
+    'Enable live feed': '라이브 피드 활성화'
   }
 }

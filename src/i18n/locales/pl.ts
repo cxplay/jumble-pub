@@ -668,6 +668,8 @@ export default {
       'Filtruj dolne {{score}}% użytkowników według rankingu zaufania',
     'trust-filter.trust-score-description':
       'Obliczany na podstawie reputacji użytkownika i percentyla sieci społecznościowej',
-    'Auto-load profile pictures': 'Automatyczne ładowanie zdjęć profilowych'
+    'Auto-load profile pictures': 'Automatyczne ładowanie zdjęć profilowych',
+    'Disable live feed': 'Wyłącz kanał na żywo',
+    'Enable live feed': 'Włącz kanał na żywo'
   }
 }

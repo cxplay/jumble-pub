@@ -663,6 +663,8 @@ export default {
       'فیلتر کردن {{score}}٪ پایین‌ترین کاربران بر اساس رتبه اعتماد',
     'trust-filter.trust-score-description':
       'بر اساس شهرت کاربر و صدک شبکه اجتماعی محاسبه می‌شود',
-    'Auto-load profile pictures': 'بارگذاری خودکار تصاویر پروفایل'
+    'Auto-load profile pictures': 'بارگذاری خودکار تصاویر پروفایل',
+    'Disable live feed': 'غیرفعال کردن فید زنده',
+    'Enable live feed': 'فعال کردن فید زنده'
   }
 }

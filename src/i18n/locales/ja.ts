@@ -662,6 +662,8 @@ export default {
       '信頼ランク下位 {{score}}% のユーザーをフィルタリング',
     'trust-filter.trust-score-description':
       'ユーザーの評判とソーシャルネットワークに基づいて信頼度パーセンタイルを計算',
-    'Auto-load profile pictures': 'プロフィール画像を自動読み込み'
+    'Auto-load profile pictures': 'プロフィール画像を自動読み込み',
+    'Disable live feed': 'ライブフィードを無効にする',
+    'Enable live feed': 'ライブフィードを有効にする'
   }
 }

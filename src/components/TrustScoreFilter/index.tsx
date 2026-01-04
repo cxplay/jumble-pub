@@ -91,7 +91,7 @@ export default function TrustScoreFilter({
     >
       {minTrustScore < 100 ? <Shield size={16} /> : <ShieldCheck size={16} />}
       {minTrustScore > 0 && minTrustScore < 100 && (
-        <div className="absolute inset-0 w-full h-full flex flex-col items-center justify-center text-[0.55rem] font-mono font-bold">
+        <div className="absolute inset-0 w-full h-full flex flex-col items-center justify-center text-[0.5rem] font-mono font-bold">
           {minTrustScore}
         </div>
       )}

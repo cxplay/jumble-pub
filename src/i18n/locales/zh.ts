@@ -641,6 +641,8 @@ export default {
     'trust-filter.only-show-wot': '仅显示你的信任网络（关注的人 + 他们关注的人）',
     'trust-filter.hide-bottom-percent': '过滤掉信任度排名后 {{score}}% 的用户',
     'trust-filter.trust-score-description': '基于用户的声誉和社交网络计算信任度百分位',
-    'Auto-load profile pictures': '自动加载头像'
+    'Auto-load profile pictures': '自动加载头像',
+    'Disable live feed': '禁用实时推送',
+    'Enable live feed': '启用实时推送'
   }
 }
