@@ -225,7 +225,7 @@ export default {
     'Remove bookmark': 'ブックマークを削除',
     'no bookmarks found': 'ブックマークが見つかりません',
     'no more bookmarks': 'これ以上ブックマークはありません',
-    Bookmarks: 'ブックマーク一覧',
+    Bookmarks: 'ブックマーク',
     'Show more': 'もっと見る',
     General: '一般',
     Autoplay: '自動再生',
@@ -658,8 +658,7 @@ export default {
     'trust-filter.show-all-content': 'すべてのコンテンツを表示',
     'trust-filter.only-show-wot':
       'あなたの信頼ネットワークのみを表示（フォロー + フォローのフォロー）',
-    'trust-filter.hide-bottom-percent':
-      '信頼ランク下位 {{score}}% のユーザーをフィルタリング',
+    'trust-filter.hide-bottom-percent': '信頼ランク下位 {{score}}% のユーザーをフィルタリング',
     'trust-filter.trust-score-description':
       'ユーザーの評判とソーシャルネットワークに基づいて信頼度パーセンタイルを計算',
     'Auto-load profile pictures': 'プロフィール画像を自動読み込み',
