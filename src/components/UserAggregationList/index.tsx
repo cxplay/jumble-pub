@@ -97,6 +97,8 @@ const UserAggregationList = forwardRef<
     const bottomRef = useRef<HTMLDivElement | null>(null)
     const topRef = useRef<HTMLDivElement | null>(null)
     const nonPinnedTopRef = useRef<HTMLDivElement | null>(null)
+    const showNewNotesDirectlyRef = useRef(showNewNotesDirectly)
+    showNewNotesDirectlyRef.current = showNewNotesDirectly
 
     const scrollToTop = (behavior: ScrollBehavior = 'instant') => {
       setTimeout(() => {
@@ -178,7 +180,7 @@ const UserAggregationList = forwardRef<
               }
             },
             onNew: (event) => {
-              if (showNewNotesDirectly) {
+              if (showNewNotesDirectlyRef.current) {
                 setEvents((oldEvents) => [event, ...oldEvents])
               } else {
                 setNewEvents((oldEvents) =>

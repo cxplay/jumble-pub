@@ -93,6 +93,8 @@ const NoteList = forwardRef<
     const [refreshCount, setRefreshCount] = useState(0)
     const supportTouch = useMemo(() => isTouchDevice(), [])
     const topRef = useRef<HTMLDivElement | null>(null)
+    const showNewNotesDirectlyRef = useRef(showNewNotesDirectly)
+    showNewNotesDirectlyRef.current = showNewNotesDirectly
 
     const shouldHideEvent = useCallback(
       (evt: Event) => {
@@ -331,7 +333,7 @@ const NoteList = forwardRef<
               }
             },
             onNew: (event) => {
-              if (showNewNotesDirectly) {
+              if (showNewNotesDirectlyRef.current) {
                 setEvents((oldEvents) =>
                   oldEvents.some((e) => e.id === event.id) ? oldEvents : [event, ...oldEvents]
                 )
