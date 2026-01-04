@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils'
 import { useNostr } from '@/providers/NostrProvider'
 import { useUserTrust } from '@/providers/UserTrustProvider'
 import fayan from '@/services/fayan.service'
-import { AlertTriangle, ShieldAlert } from 'lucide-react'
+import { ShieldAlert } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -55,7 +55,6 @@ export default function TrustScoreBadge({
   if (loading || percentile === null) return null
 
   // percentile < 40: likely spam (red alert)
-  // percentile < 60: suspicious (yellow warning)
   if (percentile < 40) {
     return (
       <div
@@ -63,17 +62,6 @@ export default function TrustScoreBadge({
         className={classNames?.container}
       >
         <ShieldAlert className={cn('!size-4 text-red-500', className)} />
-      </div>
-    )
-  }
-
-  if (percentile < 60) {
-    return (
-      <div
-        title={t('Suspicious account (Trust score: {{percentile}}%)', { percentile })}
-        className={classNames?.container}
-      >
-        <AlertTriangle className={cn('!size-4 text-yellow-600 dark:text-yellow-500', className)} />
       </div>
     )
   }
