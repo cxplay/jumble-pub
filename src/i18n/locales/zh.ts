@@ -643,6 +643,11 @@ export default {
     'trust-filter.trust-score-description': '基于用户的声誉和社交网络计算信任度百分位',
     'Auto-load profile pictures': '自动加载头像',
     'Disable live feed': '禁用实时推送',
-    'Enable live feed': '启用实时推送'
+    'Enable live feed': '启用实时推送',
+    'Default relays': '默认中继',
+    'Reset to default': '重置为默认',
+    'Default relays description': '用于查询其他用户的中继配置，并在用户没有配置中继时作为回退策略。',
+    'Default relays warning': '警告：请不要随意修改这些设置，可能会影响基础体验。',
+    'Invalid relay URL': '无效的中继地址'
   }
 }

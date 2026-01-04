@@ -1,8 +1,8 @@
 import EmojiPackList from '@/components/EmojiPackList'
 import NoteList from '@/components/NoteList'
 import Tabs from '@/components/Tabs'
-import { BIG_RELAY_URLS } from '@/constants'
 import SecondaryPageLayout from '@/layouts/SecondaryPageLayout'
+import { getDefaultRelayUrls } from '@/lib/relay'
 import { kinds } from 'nostr-tools'
 import { forwardRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -30,7 +30,7 @@ const EmojiPackSettingsPage = forwardRef(({ index }: { index?: number }, ref) =>
       ) : (
         <NoteList
           showKinds={[kinds.Emojisets]}
-          subRequests={[{ urls: BIG_RELAY_URLS, filter: {} }]}
+          subRequests={[{ urls: getDefaultRelayUrls(), filter: {} }]}
         />
       )}
     </SecondaryPageLayout>

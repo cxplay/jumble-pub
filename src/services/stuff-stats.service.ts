@@ -1,6 +1,7 @@
-import { BIG_RELAY_URLS, ExtendedKind } from '@/constants'
+import { ExtendedKind } from '@/constants'
 import { getEventKey, getReplaceableCoordinateFromEvent, isReplaceableEvent } from '@/lib/event'
 import { getZapInfoFromEvent } from '@/lib/event-metadata'
+import { getDefaultRelayUrls } from '@/lib/relay'
 import { getEmojiInfosFromEmojiTags, tagNameEquals } from '@/lib/tag'
 import client from '@/services/client.service'
 import { TEmoji } from '@/types'
@@ -150,7 +151,9 @@ class StuffStatsService {
       })
     }
 
-    const relays = relayList ? relayList.read.concat(BIG_RELAY_URLS).slice(0, 5) : BIG_RELAY_URLS
+    const relays = relayList
+      ? relayList.read.concat(getDefaultRelayUrls()).slice(0, 5)
+      : getDefaultRelayUrls()
 
     const events: Event[] = []
     await client.fetchEvents(relays, filters, {

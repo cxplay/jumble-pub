@@ -663,6 +663,11 @@ export default {
       'ユーザーの評判とソーシャルネットワークに基づいて信頼度パーセンタイルを計算',
     'Auto-load profile pictures': 'プロフィール画像を自動読み込み',
     'Disable live feed': 'ライブフィードを無効にする',
-    'Enable live feed': 'ライブフィードを有効にする'
+    'Enable live feed': 'ライブフィードを有効にする',
+    'Default relays': 'デフォルトリレー',
+    'Reset to default': 'デフォルトにリセット',
+    'Default relays description': '他のユーザーのリレー設定を照会するために使用され、ユーザーがリレーを設定していない場合のフォールバックとして機能します。',
+    'Default relays warning': '警告：これらの設定を無闇に変更しないでください。基本的な体験に影響を与える可能性があります。',
+    'Invalid relay URL': '無効なリレーURL'
   }
 }

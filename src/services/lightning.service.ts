@@ -1,5 +1,6 @@
-import { BIG_RELAY_URLS, CODY_PUBKEY, JUMBLE_PUBKEY } from '@/constants'
+import { CODY_PUBKEY, JUMBLE_PUBKEY } from '@/constants'
 import { getZapInfoFromEvent } from '@/lib/event-metadata'
+import { getDefaultRelayUrls } from '@/lib/relay'
 import { TProfile } from '@/types'
 import { init, launchPaymentModal } from '@getalby/bitcoin-connect-react'
 import { Invoice } from '@getalby/lightning-tools'
@@ -52,7 +53,7 @@ class LightningService {
       client.fetchRelayList(recipient),
       sender
         ? client.fetchRelayList(sender)
-        : Promise.resolve({ read: BIG_RELAY_URLS, write: BIG_RELAY_URLS })
+        : Promise.resolve({ read: getDefaultRelayUrls(), write: getDefaultRelayUrls() })
     ])
     if (!profile) {
       throw new Error('Recipient not found')
@@ -69,7 +70,7 @@ class LightningService {
       relays: receiptRelayList.read
         .slice(0, 4)
         .concat(senderRelayList.write.slice(0, 3))
-        .concat(BIG_RELAY_URLS),
+        .concat(getDefaultRelayUrls()),
       comment
     })
     const zapRequest = await client.signer.signEvent(zapRequestDraft)
@@ -134,7 +135,7 @@ class LightningService {
           filter['#e'] = [event.id]
         }
         subCloser = client.subscribe(
-          senderRelayList.write.concat(BIG_RELAY_URLS).slice(0, 4),
+          senderRelayList.write.concat(getDefaultRelayUrls()).slice(0, 4),
           filter,
           {
             onevent: (evt) => {

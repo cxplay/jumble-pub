@@ -1,5 +1,6 @@
 import {
   ALLOWED_FILTER_KINDS,
+  BIG_RELAY_URLS,
   DEFAULT_FAVICON_URL_TEMPLATE,
   DEFAULT_NIP_96_SERVICE,
   ExtendedKind,
@@ -21,9 +22,9 @@ import {
   TMediaAutoLoadPolicy,
   TMediaUploadServiceConfig,
   TNoteListMode,
-  TProfilePictureAutoLoadPolicy,
-  TNsfwDisplayPolicy,
   TNotificationStyle,
+  TNsfwDisplayPolicy,
+  TProfilePictureAutoLoadPolicy,
   TRelaySet,
   TThemeSetting,
   TTranslationServiceConfig
@@ -65,6 +66,7 @@ class LocalStorageService {
   private nsfwDisplayPolicy: TNsfwDisplayPolicy = NSFW_DISPLAY_POLICY.HIDE_CONTENT
   private minTrustScore: number = 40
   private enableLiveFeed: boolean = false
+  private defaultRelayUrls: string[] = BIG_RELAY_URLS
 
   constructor() {
     if (!LocalStorageService.instance) {
@@ -277,6 +279,22 @@ class LocalStorageService {
     }
 
     this.enableLiveFeed = window.localStorage.getItem(StorageKey.ENABLE_LIVE_FEED) === 'true'
+
+    const defaultRelayUrlsStr = window.localStorage.getItem(StorageKey.DEFAULT_RELAY_URLS)
+    if (defaultRelayUrlsStr) {
+      try {
+        const urls = JSON.parse(defaultRelayUrlsStr)
+        if (
+          Array.isArray(urls) &&
+          urls.length > 0 &&
+          urls.every((url) => typeof url === 'string')
+        ) {
+          this.defaultRelayUrls = urls
+        }
+      } catch {
+        // Invalid JSON, use default
+      }
+    }
 
     // Clean up deprecated data
     window.localStorage.removeItem(StorageKey.PINNED_PUBKEYS)
@@ -623,6 +641,15 @@ class LocalStorageService {
   setEnableLiveFeed(enable: boolean) {
     this.enableLiveFeed = enable
     window.localStorage.setItem(StorageKey.ENABLE_LIVE_FEED, enable.toString())
+  }
+
+  getDefaultRelayUrls() {
+    return this.defaultRelayUrls
+  }
+
+  setDefaultRelayUrls(urls: string[]) {
+    this.defaultRelayUrls = urls
+    window.localStorage.setItem(StorageKey.DEFAULT_RELAY_URLS, JSON.stringify(urls))
   }
 }
 

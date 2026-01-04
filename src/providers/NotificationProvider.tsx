@@ -1,6 +1,7 @@
-import { BIG_RELAY_URLS, ExtendedKind } from '@/constants'
+import { ExtendedKind } from '@/constants'
 import { compareEvents } from '@/lib/event'
 import { notificationFilter } from '@/lib/notification'
+import { getDefaultRelayUrls } from '@/lib/relay'
 import { usePrimaryPage } from '@/PageManager'
 import client from '@/services/client.service'
 import storage from '@/services/local-storage.service'
@@ -103,7 +104,8 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
       try {
         let eosed = false
         const relayList = await client.fetchRelayList(pubkey)
-        const relays = relayList.read.length > 0 ? relayList.read.slice(0, 5) : BIG_RELAY_URLS
+        const relays =
+          relayList.read.length > 0 ? relayList.read.slice(0, 5) : getDefaultRelayUrls()
         const subCloser = client.subscribe(
           relays,
           [

@@ -653,6 +653,11 @@ export default {
     'trust-filter.trust-score-description': 'محسوبة بناءً على سمعة المستخدم والنسبة المئوية للشبكة الاجتماعية',
     'Auto-load profile pictures': 'تحميل صور الملف الشخصي تلقائيًا',
     'Disable live feed': 'تعطيل التغذية المباشرة',
-    'Enable live feed': 'تفعيل التغذية المباشرة'
+    'Enable live feed': 'تفعيل التغذية المباشرة',
+    'Default relays': 'المرحلات الافتراضية',
+    'Reset to default': 'إعادة تعيين إلى الافتراضي',
+    'Default relays description': 'تُستخدم للاستعلام عن تكوينات المرحلات للمستخدمين الآخرين وكبديل احتياطي عندما لا يكون لدى المستخدمين مرحلات مكوّنة.',
+    'Default relays warning': 'تحذير: يرجى عدم تعديل هذه الإعدادات بشكل عشوائي، فقد يؤثر ذلك على تجربتك الأساسية.',
+    'Invalid relay URL': 'عنوان URL للمرحل غير صالح'
   }
 }

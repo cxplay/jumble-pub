@@ -658,6 +658,11 @@ export default {
     'trust-filter.trust-score-description': 'Calculated based on user reputation and social network percentile',
     'Auto-load profile pictures': 'Auto-load profile pictures',
     'Disable live feed': 'Disable live feed',
-    'Enable live feed': 'Enable live feed'
+    'Enable live feed': 'Enable live feed',
+    'Default relays': 'Default relays',
+    'Reset to default': 'Reset to default',
+    'Default relays description': 'Used to query other users\' relay configurations and as a fallback when users have no relays configured.',
+    'Default relays warning': 'Warning: Please do not modify these settings casually, as it may affect your basic experience.',
+    'Invalid relay URL': 'Invalid relay URL'
   }
 }

@@ -1,7 +1,6 @@
 import Note from '@/components/Note'
 import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { BIG_RELAY_URLS } from '@/constants'
 import {
   createCommentDraftEvent,
   createHighlightDraftEvent,
@@ -9,6 +8,7 @@ import {
   createShortTextNoteDraftEvent,
   deleteDraftEventCache
 } from '@/lib/draft-event'
+import { getDefaultRelayUrls } from '@/lib/relay'
 import { isTouchDevice } from '@/lib/utils'
 import { useNostr } from '@/providers/NostrProvider'
 import postEditorCache from '@/services/post-editor-cache.service'
@@ -146,7 +146,7 @@ export default function PostContent({
 
         const _additionalRelayUrls = [...additionalRelayUrls]
         if (parentStuff && typeof parentStuff === 'string') {
-          _additionalRelayUrls.push(...BIG_RELAY_URLS)
+          _additionalRelayUrls.push(...getDefaultRelayUrls())
         }
 
         const newEvent = await publish(draftEvent, {

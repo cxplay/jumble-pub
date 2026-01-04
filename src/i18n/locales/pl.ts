@@ -670,6 +670,11 @@ export default {
       'Obliczany na podstawie reputacji użytkownika i percentyla sieci społecznościowej',
     'Auto-load profile pictures': 'Automatyczne ładowanie zdjęć profilowych',
     'Disable live feed': 'Wyłącz kanał na żywo',
-    'Enable live feed': 'Włącz kanał na żywo'
+    'Enable live feed': 'Włącz kanał na żywo',
+    'Default relays': 'Domyślne przekaźniki',
+    'Reset to default': 'Przywróć domyślne',
+    'Default relays description': 'Używane do odpytywania konfiguracji przekaźników innych użytkowników i jako rozwiązanie awaryjne, gdy użytkownicy nie mają skonfigurowanych przekaźników.',
+    'Default relays warning': 'Ostrzeżenie: Nie modyfikuj tych ustawień pochopnie, może to wpłynąć na podstawowe doświadczenie.',
+    'Invalid relay URL': 'Nieprawidłowy adres URL przekaźnika'
   }
 }

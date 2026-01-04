@@ -1,4 +1,4 @@
-import { BIG_RELAY_URLS, ExtendedKind } from '@/constants'
+import { ExtendedKind } from '@/constants'
 import {
   getEventKey,
   getKeyFromTag,
@@ -9,6 +9,7 @@ import {
   isReplaceableEvent,
   isReplyNoteEvent
 } from '@/lib/event'
+import { getDefaultRelayUrls } from '@/lib/relay'
 import { generateBech32IdFromETag } from '@/lib/tag'
 import client from '@/services/client.service'
 import dayjs from 'dayjs'
@@ -69,7 +70,7 @@ class ThreadService {
         const relayList = await client.fetchRelayList(rootPubkey)
         relayUrls = relayList.read
       }
-      relayUrls = relayUrls.concat(BIG_RELAY_URLS).slice(0, 4)
+      relayUrls = relayUrls.concat(getDefaultRelayUrls()).slice(0, 4)
 
       // If current event is protected, we can assume its replies are also protected and stored on the same relays
       if (event && isProtectedEvent(event)) {

@@ -1,6 +1,6 @@
 import LoginDialog from '@/components/LoginDialog'
 import PasswordInputDialog from '@/components/PasswordInputDialog'
-import { ApplicationDataKey, BIG_RELAY_URLS, ExtendedKind } from '@/constants'
+import { ApplicationDataKey, ExtendedKind } from '@/constants'
 import {
   createDeletionRequestDraftEvent,
   createFollowListDraftEvent,
@@ -16,6 +16,7 @@ import {
 } from '@/lib/event'
 import { getProfileFromEvent, getRelayListFromEvent } from '@/lib/event-metadata'
 import { formatPubkey, pubkeyToNpub } from '@/lib/pubkey'
+import { getDefaultRelayUrls } from '@/lib/relay'
 import client from '@/services/client.service'
 import customEmojiService from '@/services/custom-emoji.service'
 import indexedDb from '@/services/indexed-db.service'
@@ -246,7 +247,8 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
         setPinnedUsersEvent(storedPinnedUsersEvent)
       }
 
-      const relayListEvents = await client.fetchEvents(BIG_RELAY_URLS, {
+      const defaultRelays = getDefaultRelayUrls()
+      const relayListEvents = await client.fetchEvents(defaultRelays, {
         kinds: [kinds.RelayList],
         authors: [account.pubkey]
       })
@@ -258,7 +260,7 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
       }
       setRelayList(relayList)
 
-      const events = await client.fetchEvents(relayList.write.concat(BIG_RELAY_URLS).slice(0, 4), [
+      const events = await client.fetchEvents(relayList.write.concat(defaultRelays).slice(0, 4), [
         {
           kinds: [
             kinds.Metadata,
@@ -637,13 +639,14 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
   }
 
   const setupNewUser = async (signer: ISigner) => {
+    const defaultRelays = getDefaultRelayUrls()
     await Promise.allSettled([
-      client.publishEvent(BIG_RELAY_URLS, await signer.signEvent(createFollowListDraftEvent([]))),
-      client.publishEvent(BIG_RELAY_URLS, await signer.signEvent(createMuteListDraftEvent([]))),
+      client.publishEvent(defaultRelays, await signer.signEvent(createFollowListDraftEvent([]))),
+      client.publishEvent(defaultRelays, await signer.signEvent(createMuteListDraftEvent([]))),
       client.publishEvent(
-        BIG_RELAY_URLS,
+        defaultRelays,
         await signer.signEvent(
-          createRelayListDraftEvent(BIG_RELAY_URLS.map((url) => ({ url, scope: 'both' })))
+          createRelayListDraftEvent(defaultRelays.map((url) => ({ url, scope: 'both' })))
         )
       )
     ])

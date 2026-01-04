@@ -3,9 +3,10 @@ import FollowingFavoriteRelayList from '@/components/FollowingFavoriteRelayList'
 import NoteList from '@/components/NoteList'
 import Tabs from '@/components/Tabs'
 import { Button } from '@/components/ui/button'
-import { BIG_RELAY_URLS, ExtendedKind } from '@/constants'
+import { ExtendedKind } from '@/constants'
 import PrimaryPageLayout from '@/layouts/PrimaryPageLayout'
 import { getReplaceableEventIdentifier } from '@/lib/event'
+import { getDefaultRelayUrls } from '@/lib/relay'
 import { isLocalNetworkUrl, isOnionUrl, isWebsocketUrl } from '@/lib/url'
 import storage from '@/services/local-storage.service'
 import { TPageRef } from '@/types'
@@ -42,7 +43,7 @@ const ExplorePage = forwardRef<TPageRef>((_, ref) => {
     ) : tab === 'reviews' ? (
       <NoteList
         showKinds={[ExtendedKind.RELAY_REVIEW]}
-        subRequests={[{ urls: BIG_RELAY_URLS, filter: {} }]}
+        subRequests={[{ urls: getDefaultRelayUrls(), filter: {} }]}
         filterFn={relayReviewFilterFn}
         filterMutedNotes
         hideSpam

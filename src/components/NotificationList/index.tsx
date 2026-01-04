@@ -1,6 +1,7 @@
-import { BIG_RELAY_URLS, ExtendedKind, NOTIFICATION_LIST_STYLE } from '@/constants'
+import { ExtendedKind, NOTIFICATION_LIST_STYLE } from '@/constants'
 import { useInfiniteScroll } from '@/hooks'
 import { compareEvents } from '@/lib/event'
+import { getDefaultRelayUrls } from '@/lib/relay'
 import { mergeTimelines } from '@/lib/timeline'
 import { isTouchDevice } from '@/lib/utils'
 import { usePrimaryPage } from '@/PageManager'
@@ -137,7 +138,7 @@ const NotificationList = forwardRef((_, ref) => {
       const { closer, timelineKey } = await client.subscribeTimeline(
         [
           {
-            urls: relayList.read.length > 0 ? relayList.read.slice(0, 5) : BIG_RELAY_URLS,
+            urls: relayList.read.length > 0 ? relayList.read.slice(0, 5) : getDefaultRelayUrls(),
             filter
           }
         ],

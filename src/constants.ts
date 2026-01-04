@@ -43,6 +43,7 @@ export const StorageKey = {
   NSFW_DISPLAY_POLICY: 'nsfwDisplayPolicy',
   MIN_TRUST_SCORE: 'minTrustScore',
   ENABLE_LIVE_FEED: 'enableLiveFeed',
+  DEFAULT_RELAY_URLS: 'defaultRelayUrls',
   HIDE_UNTRUSTED_NOTES: 'hideUntrustedNotes', // deprecated
   HIDE_UNTRUSTED_INTERACTIONS: 'hideUntrustedInteractions', // deprecated
   HIDE_UNTRUSTED_NOTIFICATIONS: 'hideUntrustedNotifications', // deprecated

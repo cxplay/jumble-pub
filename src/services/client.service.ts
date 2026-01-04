@@ -1,4 +1,4 @@
-import { BIG_RELAY_URLS, ExtendedKind, SEARCHABLE_RELAY_URLS } from '@/constants'
+import { ExtendedKind, SEARCHABLE_RELAY_URLS } from '@/constants'
 import {
   compareEvents,
   getReplaceableCoordinate,
@@ -7,7 +7,7 @@ import {
 } from '@/lib/event'
 import { getProfileFromEvent, getRelayListFromEvent } from '@/lib/event-metadata'
 import { formatPubkey, isValidPubkey, pubkeyToNpub, userIdToPubkey } from '@/lib/pubkey'
-import { filterOutBigRelays } from '@/lib/relay'
+import { filterOutBigRelays, getDefaultRelayUrls } from '@/lib/relay'
 import { getPubkeysFromPTags, getServersFromServerTags, tagNameEquals } from '@/lib/tag'
 import { mergeTimelines } from '@/lib/timeline'
 import { isLocalNetworkUrl, isWebsocketUrl, normalizeUrl } from '@/lib/url'
@@ -97,6 +97,7 @@ class ClientService extends EventTarget {
       }
     }
 
+    const defaultRelays = getDefaultRelayUrls()
     const relaySet = new Set<string>()
     if (specifiedRelayUrls?.length) {
       specifiedRelayUrls.forEach((url) => relaySet.add(url))
@@ -137,20 +138,20 @@ class ClientService extends EventTarget {
           ExtendedKind.RELAY_REVIEW
         ].includes(event.kind)
       ) {
-        BIG_RELAY_URLS.forEach((url) => relaySet.add(url))
+        defaultRelays.forEach((url) => relaySet.add(url))
       }
 
       if (event.kind === ExtendedKind.COMMENT) {
         const rootITag = event.tags.find(tagNameEquals('I'))
         if (rootITag) {
-          // For external content comments, always publish to big relays
-          BIG_RELAY_URLS.forEach((url) => relaySet.add(url))
+          // For external content comments, always publish to default relays
+          defaultRelays.forEach((url) => relaySet.add(url))
         }
       }
     }
 
     if (!relaySet.size) {
-      BIG_RELAY_URLS.forEach((url) => relaySet.add(url))
+      defaultRelays.forEach((url) => relaySet.add(url))
     }
 
     return Array.from(relaySet)
@@ -166,7 +167,7 @@ class ClientService extends EventTarget {
       const relayLists = await this.fetchRelayLists(filter['#p'])
       return Array.from(new Set(relayLists.flatMap((list) => list.read.slice(0, 5))))
     }
-    return BIG_RELAY_URLS
+    return getDefaultRelayUrls()
   }
 
   async publishEvent(relayUrls: string[], event: NEvent) {
@@ -807,7 +808,11 @@ class ClientService extends EventTarget {
     } = {}
   ) {
     const relays = Array.from(new Set(urls))
-    const events = await this.query(relays.length > 0 ? relays : BIG_RELAY_URLS, filter, onevent)
+    const events = await this.query(
+      relays.length > 0 ? relays : getDefaultRelayUrls(),
+      filter,
+      onevent
+    )
     if (cache) {
       events.forEach((evt) => {
         this.addEventToCache(evt)
@@ -935,7 +940,7 @@ class ClientService extends EventTarget {
   }
 
   private async fetchEventsFromBigRelays(ids: readonly string[]) {
-    const events = await this.query(BIG_RELAY_URLS, {
+    const events = await this.query(getDefaultRelayUrls(), {
       ids: Array.from(new Set(ids)),
       limit: ids.length
     })
@@ -961,7 +966,7 @@ class ClientService extends EventTarget {
   private async _fetchFollowingFavoriteRelays(pubkey: string) {
     const fetchNewData = async () => {
       const followings = await this.fetchFollowings(pubkey)
-      const events = await this.fetchEvents(BIG_RELAY_URLS, {
+      const events = await this.fetchEvents(getDefaultRelayUrls(), {
         authors: followings,
         kinds: [ExtendedKind.FAVORITE_RELAYS, kinds.Relaysets],
         limit: 1000
@@ -1182,9 +1187,10 @@ class ClientService extends EventTarget {
       if (event) {
         return getRelayListFromEvent(event, storage.getFilterOutOnionRelays())
       }
+      const defaultRelays = getDefaultRelayUrls()
       return {
-        write: BIG_RELAY_URLS,
-        read: BIG_RELAY_URLS,
+        write: defaultRelays,
+        read: defaultRelays,
         originalRelays: []
       }
     })
@@ -1224,7 +1230,7 @@ class ClientService extends EventTarget {
     const eventsMap = new Map<string, NEvent>()
     await Promise.allSettled(
       Array.from(groups.entries()).map(async ([kind, pubkeys]) => {
-        const events = await this.query(BIG_RELAY_URLS, {
+        const events = await this.query(getDefaultRelayUrls(), {
           authors: pubkeys,
           kinds: [kind]
         })
@@ -1340,7 +1346,7 @@ class ClientService extends EventTarget {
               : { authors: [pubkey], kinds: [kind] }) as Filter
         )
         const relayList = await this.fetchRelayList(pubkey)
-        const relays = relayList.write.concat(BIG_RELAY_URLS).slice(0, 5)
+        const relays = relayList.write.concat(getDefaultRelayUrls()).slice(0, 5)
         const events = await this.query(relays, filters)
 
         for (const event of events) {
@@ -1471,10 +1477,10 @@ class ClientService extends EventTarget {
     // If many websocket connections are initiated simultaneously, it will be
     // very slow on Safari (for unknown reason)
     if (isSafari()) {
-      let urls = BIG_RELAY_URLS
+      let urls = getDefaultRelayUrls()
       if (myPubkey) {
         const relayList = await this.fetchRelayList(myPubkey)
-        urls = relayList.read.concat(BIG_RELAY_URLS).slice(0, 5)
+        urls = relayList.read.concat(getDefaultRelayUrls()).slice(0, 5)
       }
       return [{ urls, filter: { authors: pubkeys } }]
     }

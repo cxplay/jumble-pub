@@ -1,10 +1,11 @@
 import { Favicon } from '@/components/Favicon'
 import NormalFeed from '@/components/NormalFeed'
 import { Button } from '@/components/ui/button'
-import { BIG_RELAY_URLS, SEARCHABLE_RELAY_URLS } from '@/constants'
+import { SEARCHABLE_RELAY_URLS } from '@/constants'
 import SecondaryPageLayout from '@/layouts/SecondaryPageLayout'
 import { toProfileList } from '@/lib/link'
 import { fetchPubkeysFromDomain, getWellKnownNip05Url } from '@/lib/nip05'
+import { getDefaultRelayUrls } from '@/lib/relay'
 import { useSecondaryPage } from '@/PageManager'
 import { useNostr } from '@/providers/NostrProvider'
 import client from '@/services/client.service'
@@ -47,7 +48,7 @@ const NoteListPage = forwardRef(({ index }: { index?: number }, ref) => {
         setSubRequests([
           {
             filter: { '#t': [hashtag], ...(kinds.length > 0 ? { kinds } : {}) },
-            urls: BIG_RELAY_URLS
+            urls: getDefaultRelayUrls()
           }
         ])
         return

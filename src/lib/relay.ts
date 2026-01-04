@@ -1,5 +1,9 @@
-import { BIG_RELAY_URLS } from '@/constants'
+import storage from '@/services/local-storage.service'
 import { TRelayInfo } from '@/types'
+
+export function getDefaultRelayUrls() {
+  return storage.getDefaultRelayUrls()
+}
 
 export function checkAlgoRelay(relayInfo: TRelayInfo | undefined) {
   return relayInfo?.software === 'https://github.com/bitvora/algo-relay' // hardcode for now
@@ -14,7 +18,8 @@ export function checkNip43Support(relayInfo: TRelayInfo | undefined) {
 }
 
 export function filterOutBigRelays(relayUrls: string[]) {
-  return relayUrls.filter((url) => !BIG_RELAY_URLS.includes(url))
+  const defaultRelays = getDefaultRelayUrls()
+  return relayUrls.filter((url) => !defaultRelays.includes(url))
 }
 
 export function recommendRelaysByLanguage(i18nLanguage: string) {

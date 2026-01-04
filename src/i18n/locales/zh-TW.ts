@@ -638,6 +638,11 @@ export default {
     'trust-filter.trust-score-description': '基於使用者的聲譽和社交網路計算信任度百分位',
     'Auto-load profile pictures': '自動載入大頭照',
     'Disable live feed': '停用即時推送',
-    'Enable live feed': '啟用即時推送'
+    'Enable live feed': '啟用即時推送',
+    'Default relays': '預設中繼',
+    'Reset to default': '重置為預設',
+    'Default relays description': '用於查詢其他使用者的中繼配置，並在使用者沒有配置中繼時作為回退策略。',
+    'Default relays warning': '警告：請不要隨意修改這些設定，可能會影響基礎體驗。',
+    'Invalid relay URL': '無效的中繼地址'
   }
 }

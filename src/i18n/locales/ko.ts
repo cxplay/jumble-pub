@@ -658,6 +658,11 @@ export default {
     'trust-filter.trust-score-description': '사용자의 평판과 소셜 네트워크를 기반으로 신뢰도 백분위수 계산',
     'Auto-load profile pictures': '프로필 사진 자동 로드',
     'Disable live feed': '라이브 피드 비활성화',
-    'Enable live feed': '라이브 피드 활성화'
+    'Enable live feed': '라이브 피드 활성화',
+    'Default relays': '기본 릴레이',
+    'Reset to default': '기본값으로 재설정',
+    'Default relays description': '다른 사용자의 릴레이 구성을 조회하는 데 사용되며, 사용자가 릴레이를 구성하지 않은 경우 대체 수단으로 사용됩니다.',
+    'Default relays warning': '경고: 이러한 설정을 임의로 수정하지 마십시오. 기본 경험에 영향을 줄 수 있습니다.',
+    'Invalid relay URL': '유효하지 않은 릴레이 URL'
   }
 }

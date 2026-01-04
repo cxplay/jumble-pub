@@ -1,12 +1,13 @@
 import { Drawer, DrawerContent, DrawerOverlay } from '@/components/ui/drawer'
 import { Popover, PopoverAnchor, PopoverContent } from '@/components/ui/popover'
-import { BIG_RELAY_URLS, LONG_PRESS_THRESHOLD } from '@/constants'
+import { LONG_PRESS_THRESHOLD } from '@/constants'
 import { useStuff } from '@/hooks/useStuff'
 import { useStuffStatsById } from '@/hooks/useStuffStatsById'
 import {
   createExternalContentReactionDraftEvent,
   createReactionDraftEvent
 } from '@/lib/draft-event'
+import { getDefaultRelayUrls } from '@/lib/relay'
 import { useNostr } from '@/providers/NostrProvider'
 import { useScreenSize } from '@/providers/ScreenSizeProvider'
 import { useUserPreferences } from '@/providers/UserPreferencesProvider'
@@ -79,7 +80,7 @@ export default function LikeButton({ stuff }: { stuff: Event | string }) {
         const reaction = event
           ? createReactionDraftEvent(event, emoji)
           : createExternalContentReactionDraftEvent(externalContent, emoji)
-        const seenOn = event ? client.getSeenEventRelayUrls(event.id) : BIG_RELAY_URLS
+        const seenOn = event ? client.getSeenEventRelayUrls(event.id) : getDefaultRelayUrls()
         const evt = await publish(reaction, { additionalRelayUrls: seenOn })
         stuffStatsService.updateStuffStatsByEvents([evt])
       } catch (error) {

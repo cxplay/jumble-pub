@@ -669,6 +669,11 @@ export default {
       'Calculado com base na reputação do utilizador e no percentil da rede social',
     'Auto-load profile pictures': 'Carregar fotos de perfil automaticamente',
     'Disable live feed': 'Desativar feed ao vivo',
-    'Enable live feed': 'Ativar feed ao vivo'
+    'Enable live feed': 'Ativar feed ao vivo',
+    'Default relays': 'Relays predefinidos',
+    'Reset to default': 'Repor predefinições',
+    'Default relays description': 'Utilizados para consultar as configurações de relays de outros utilizadores e como alternativa quando os utilizadores não têm relays configurados.',
+    'Default relays warning': 'Aviso: Não modifique estas configurações casualmente, pois pode afetar a sua experiência básica.',
+    'Invalid relay URL': 'URL de relay inválido'
   }
 }
