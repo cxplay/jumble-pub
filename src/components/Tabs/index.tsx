@@ -1,8 +1,9 @@
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
+import { Separator } from '@/components/ui/separator'
 import { cn } from '@/lib/utils'
 import { useDeepBrowsing } from '@/providers/DeepBrowsingProvider'
 import { ReactNode, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ScrollArea, ScrollBar } from '../ui/scroll-area'
 
 type TabDefinition = {
   value: string
@@ -124,7 +125,12 @@ export default function Tabs({
         </div>
         <ScrollBar orientation="horizontal" className="opacity-0 pointer-events-none" />
       </ScrollArea>
-      {options && <div className="py-1 flex items-center">{options}</div>}
+      {options && (
+        <div className="py-1 flex items-center gap-1">
+          <Separator orientation="vertical" className="h-8" />
+          {options}
+        </div>
+      )}
     </div>
   )
 }

@@ -54,7 +54,6 @@ const UserAggregationList = forwardRef<
     areAlgoRelays?: boolean
     showRelayCloseReason?: boolean
     isPubkeyFeed?: boolean
-    showNewNotesDirectly?: boolean
   }
 >(
   (
@@ -64,8 +63,7 @@ const UserAggregationList = forwardRef<
       filterMutedNotes = true,
       areAlgoRelays = false,
       showRelayCloseReason = false,
-      isPubkeyFeed = false,
-      showNewNotesDirectly = false
+      isPubkeyFeed = false
     },
     ref
   ) => {
@@ -97,8 +95,6 @@ const UserAggregationList = forwardRef<
     const bottomRef = useRef<HTMLDivElement | null>(null)
     const topRef = useRef<HTMLDivElement | null>(null)
     const nonPinnedTopRef = useRef<HTMLDivElement | null>(null)
-    const showNewNotesDirectlyRef = useRef(showNewNotesDirectly)
-    showNewNotesDirectlyRef.current = showNewNotesDirectly
 
     const scrollToTop = (behavior: ScrollBehavior = 'instant') => {
       setTimeout(() => {
@@ -180,13 +176,9 @@ const UserAggregationList = forwardRef<
               }
             },
             onNew: (event) => {
-              if (showNewNotesDirectlyRef.current) {
-                setEvents((oldEvents) => [event, ...oldEvents])
-              } else {
-                setNewEvents((oldEvents) =>
-                  [event, ...oldEvents].sort((a, b) => b.created_at - a.created_at)
-                )
-              }
+              setNewEvents((oldEvents) =>
+                [event, ...oldEvents].sort((a, b) => b.created_at - a.created_at)
+              )
               threadService.addRepliesToThread([event])
             },
             onClose: (url, reason) => {

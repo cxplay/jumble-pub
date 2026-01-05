@@ -42,8 +42,8 @@ export const StorageKey = {
   QUICK_REACTION_EMOJI: 'quickReactionEmoji',
   NSFW_DISPLAY_POLICY: 'nsfwDisplayPolicy',
   MIN_TRUST_SCORE: 'minTrustScore',
-  ENABLE_LIVE_FEED: 'enableLiveFeed',
   DEFAULT_RELAY_URLS: 'defaultRelayUrls',
+  ENABLE_LIVE_FEED: 'enableLiveFeed', // deprecated
   HIDE_UNTRUSTED_NOTES: 'hideUntrustedNotes', // deprecated
   HIDE_UNTRUSTED_INTERACTIONS: 'hideUntrustedInteractions', // deprecated
   HIDE_UNTRUSTED_NOTIFICATIONS: 'hideUntrustedNotifications', // deprecated

@@ -338,9 +338,21 @@ const NoteList = forwardRef<
                   oldEvents.some((e) => e.id === event.id) ? oldEvents : [event, ...oldEvents]
                 )
               } else {
-                setNewEvents((oldEvents) =>
-                  [event, ...oldEvents].sort((a, b) => b.created_at - a.created_at)
-                )
+                const isAtTop = (() => {
+                  if (!topRef.current) return true
+                  const rect = topRef.current.getBoundingClientRect()
+                  return rect.top >= 50
+                })()
+
+                if (isAtTop) {
+                  setEvents((oldEvents) =>
+                    oldEvents.some((e) => e.id === event.id) ? oldEvents : [event, ...oldEvents]
+                  )
+                } else {
+                  setNewEvents((oldEvents) =>
+                    [event, ...oldEvents].sort((a, b) => b.created_at - a.created_at)
+                  )
+                }
               }
               threadService.addRepliesToThread([event])
             },

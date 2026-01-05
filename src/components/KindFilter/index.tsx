@@ -84,7 +84,7 @@ export default function KindFilter({
       variant="ghost"
       size="titlebar-icon"
       className={cn(
-        'relative w-fit px-3 hover:text-foreground',
+        'relative hover:text-foreground',
         !isDifferentFromSaved && 'text-muted-foreground'
       )}
       onClick={() => {

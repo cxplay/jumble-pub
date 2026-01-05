@@ -65,7 +65,6 @@ class LocalStorageService {
   private quickReactionEmoji: string | TEmoji = '+'
   private nsfwDisplayPolicy: TNsfwDisplayPolicy = NSFW_DISPLAY_POLICY.HIDE_CONTENT
   private minTrustScore: number = 40
-  private enableLiveFeed: boolean = false
   private defaultRelayUrls: string[] = BIG_RELAY_URLS
 
   constructor() {
@@ -278,8 +277,6 @@ class LocalStorageService {
       }
     }
 
-    this.enableLiveFeed = window.localStorage.getItem(StorageKey.ENABLE_LIVE_FEED) === 'true'
-
     const defaultRelayUrlsStr = window.localStorage.getItem(StorageKey.DEFAULT_RELAY_URLS)
     if (defaultRelayUrlsStr) {
       try {
@@ -305,6 +302,7 @@ class LocalStorageService {
     window.localStorage.removeItem(StorageKey.ACCOUNT_MUTE_DECRYPTED_TAGS_MAP)
     window.localStorage.removeItem(StorageKey.ACTIVE_RELAY_SET_ID)
     window.localStorage.removeItem(StorageKey.FEED_TYPE)
+    window.localStorage.removeItem(StorageKey.ENABLE_LIVE_FEED)
   }
 
   getRelaySets() {
@@ -632,15 +630,6 @@ class LocalStorageService {
       this.minTrustScore = score
       window.localStorage.setItem(StorageKey.MIN_TRUST_SCORE, score.toString())
     }
-  }
-
-  getEnableLiveFeed() {
-    return this.enableLiveFeed
-  }
-
-  setEnableLiveFeed(enable: boolean) {
-    this.enableLiveFeed = enable
-    window.localStorage.setItem(StorageKey.ENABLE_LIVE_FEED, enable.toString())
   }
 
   getDefaultRelayUrls() {

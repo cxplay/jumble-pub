@@ -7,14 +7,12 @@ import { generateBech32IdFromETag } from '@/lib/tag'
 import { isTouchDevice } from '@/lib/utils'
 import { useKindFilter } from '@/providers/KindFilterProvider'
 import { useNostr } from '@/providers/NostrProvider'
-import { useUserPreferences } from '@/providers/UserPreferencesProvider'
 import client from '@/services/client.service'
 import storage from '@/services/local-storage.service'
 import relayInfoService from '@/services/relay-info.service'
 import { TFeedSubRequest, TNoteListMode } from '@/types'
 import { NostrEvent } from 'nostr-tools'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { LiveFeedToggle } from '../LiveFeedToggle'
 import { RefreshButton } from '../RefreshButton'
 
 export default function ProfileFeed({
@@ -27,7 +25,6 @@ export default function ProfileFeed({
   search?: string
 }) {
   const { pubkey: myPubkey, pinListEvent: myPinListEvent } = useNostr()
-  const { enableLiveFeed } = useUserPreferences()
   const { showKinds } = useKindFilter()
   const [temporaryShowKinds, setTemporaryShowKinds] = useState(showKinds)
   const [listMode, setListMode] = useState<TNoteListMode>(() => {
@@ -168,7 +165,6 @@ export default function ProfileFeed({
         options={
           <>
             {!supportTouch && <RefreshButton onClick={() => noteListRef.current?.refresh()} />}
-            <LiveFeedToggle />
             <KindFilter showKinds={temporaryShowKinds} onShowKindsChange={handleShowKindsChange} />
           </>
         }
@@ -180,7 +176,7 @@ export default function ProfileFeed({
         hideReplies={listMode === 'posts'}
         filterMutedNotes={false}
         pinnedEventIds={listMode === 'you' || !!search ? [] : pinnedEventIds}
-        showNewNotesDirectly={myPubkey === pubkey || enableLiveFeed}
+        showNewNotesDirectly={myPubkey === pubkey}
       />
     </>
   )
