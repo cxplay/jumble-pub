@@ -8,6 +8,7 @@ import {
 import { getProfileFromEvent, getRelayListFromEvent } from '@/lib/event-metadata'
 import { formatPubkey, isValidPubkey, pubkeyToNpub, userIdToPubkey } from '@/lib/pubkey'
 import { filterOutBigRelays, getDefaultRelayUrls } from '@/lib/relay'
+import { SmartPool } from '@/lib/smart-pool'
 import { getPubkeysFromPTags, getServersFromServerTags, tagNameEquals } from '@/lib/tag'
 import { mergeTimelines } from '@/lib/timeline'
 import { isLocalNetworkUrl, isWebsocketUrl, normalizeUrl } from '@/lib/url'
@@ -25,7 +26,6 @@ import {
   matchFilters,
   Event as NEvent,
   nip19,
-  SimplePool,
   VerifiedEvent
 } from 'nostr-tools'
 import { AbstractRelay } from 'nostr-tools/abstract-relay'
@@ -40,7 +40,7 @@ class ClientService extends EventTarget {
   signer?: ISigner
   pubkey?: string
   currentRelays: string[] = []
-  private pool: SimplePool
+  private pool: SmartPool
   private externalSeenOn = new Map<string, Set<string>>()
 
   private timelines: Record<
@@ -70,7 +70,7 @@ class ClientService extends EventTarget {
 
   constructor() {
     super()
-    this.pool = new SimplePool()
+    this.pool = new SmartPool()
     this.pool.trackRelays = true
   }
 
@@ -200,7 +200,7 @@ class ClientService extends EventTarget {
         uniqueRelayUrls.map(async (url) => {
           // eslint-disable-next-line @typescript-eslint/no-this-alias
           const that = this
-          const relay = await this.pool.ensureRelay(url, { connectionTimeout: 5_000 }).catch(() => {
+          const relay = await this.pool.ensureRelay(url).catch(() => {
             return undefined
           })
           if (!relay) {
@@ -436,7 +436,7 @@ class ClientService extends EventTarget {
       subPromises.push(startSub())
 
       async function startSub() {
-        const relay = await that.pool.ensureRelay(url, { connectionTimeout: 5_000 }).catch(() => {
+        const relay = await that.pool.ensureRelay(url).catch(() => {
           return undefined
         })
         // cannot connect to relay
