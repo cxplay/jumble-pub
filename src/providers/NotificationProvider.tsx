@@ -6,7 +6,6 @@ import { usePrimaryPage } from '@/PageManager'
 import client from '@/services/client.service'
 import storage from '@/services/local-storage.service'
 import { kinds, NostrEvent } from 'nostr-tools'
-import { SubCloser } from 'nostr-tools/abstract-pool'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { useContentPolicy } from './ContentPolicyProvider'
 import { useMuteList } from './MuteListProvider'
@@ -88,110 +87,61 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
     setNewNotifications([])
     setReadNotificationIdSet(new Set())
 
-    // Track if component is mounted
-    const isMountedRef = { current: true }
-    const subCloserRef: {
-      current: SubCloser | null
-    } = { current: null }
-
     const subscribe = async () => {
-      if (subCloserRef.current) {
-        subCloserRef.current.close()
-        subCloserRef.current = null
-      }
-      if (!isMountedRef.current) return null
-
-      try {
-        let eosed = false
-        const relayList = await client.fetchRelayList(pubkey)
-        const relays =
-          relayList.read.length > 0 ? relayList.read.slice(0, 5) : getDefaultRelayUrls()
-        const subCloser = client.subscribe(
-          relays,
-          [
-            {
-              kinds: [
-                kinds.ShortTextNote,
-                kinds.Repost,
-                kinds.Reaction,
-                kinds.Zap,
-                ExtendedKind.COMMENT,
-                ExtendedKind.POLL_RESPONSE,
-                ExtendedKind.VOICE_COMMENT,
-                ExtendedKind.POLL
-              ],
-              '#p': [pubkey],
-              limit: 20
-            }
-          ],
+      let eosed = false
+      const relayList = await client.fetchRelayList(pubkey)
+      const relays = relayList.read.length > 0 ? relayList.read.slice(0, 5) : getDefaultRelayUrls()
+      return client.subscribe(
+        relays,
+        [
           {
-            oneose: (e) => {
-              if (e) {
-                eosed = e
-                setNewNotifications((prev) => {
-                  return [...prev.sort((a, b) => compareEvents(b, a))]
-                })
-              }
-            },
-            onevent: (evt) => {
-              if (evt.pubkey !== pubkey) {
-                setNewNotifications((prev) => {
-                  if (!eosed) {
-                    return [evt, ...prev]
-                  }
-                  if (prev.length && compareEvents(prev[0], evt) >= 0) {
-                    return prev
-                  }
-
-                  client.emitNewEvent(evt, relays)
+            kinds: [
+              kinds.ShortTextNote,
+              kinds.Repost,
+              kinds.GenericRepost,
+              kinds.Reaction,
+              kinds.Zap,
+              kinds.Highlights,
+              ExtendedKind.COMMENT,
+              ExtendedKind.POLL_RESPONSE,
+              ExtendedKind.VOICE_COMMENT,
+              ExtendedKind.POLL
+            ],
+            '#p': [pubkey],
+            limit: 20
+          }
+        ],
+        {
+          oneose: (e) => {
+            if (e) {
+              eosed = e
+              setNewNotifications((prev) => {
+                return [...prev.sort((a, b) => compareEvents(b, a))]
+              })
+            }
+          },
+          onevent: (evt) => {
+            if (evt.pubkey !== pubkey) {
+              setNewNotifications((prev) => {
+                if (!eosed) {
                   return [evt, ...prev]
-                })
-              }
-            },
-            onAllClose: (reasons) => {
-              if (reasons.every((reason) => reason === 'closed by caller')) {
-                return
-              }
+                }
+                if (prev.length && compareEvents(prev[0], evt) >= 0) {
+                  return prev
+                }
 
-              // Only reconnect if still mounted and not a manual close
-              if (isMountedRef.current) {
-                setTimeout(() => {
-                  if (isMountedRef.current) {
-                    subscribe()
-                  }
-                }, 5_000)
-              }
+                client.emitNewEvent(evt, relays)
+                return [evt, ...prev]
+              })
             }
           }
-        )
-
-        subCloserRef.current = subCloser
-        return subCloser
-      } catch (error) {
-        console.error('Subscription error:', error)
-
-        // Retry on error if still mounted
-        if (isMountedRef.current) {
-          setTimeout(() => {
-            if (isMountedRef.current) {
-              subscribe()
-            }
-          }, 5_000)
         }
-        return null
-      }
+      )
     }
 
-    // Initial subscription
-    subscribe()
-
-    // Cleanup function
+    const promise = subscribe()
     return () => {
-      isMountedRef.current = false
-      if (subCloserRef.current) {
-        subCloserRef.current.close()
-        subCloserRef.current = null
-      }
+      promise.then((closer) => closer.close())
     }
   }, [pubkey])
 

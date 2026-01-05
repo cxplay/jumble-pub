@@ -10,6 +10,7 @@ import { useContentPolicy } from '@/providers/ContentPolicyProvider'
 import { useDeletedEvent } from '@/providers/DeletedEventProvider'
 import { useMuteList } from '@/providers/MuteListProvider'
 import { useNostr } from '@/providers/NostrProvider'
+import { usePageActive } from '@/providers/PageActiveProvider'
 import { useUserTrust } from '@/providers/UserTrustProvider'
 import client from '@/services/client.service'
 import threadService from '@/services/thread.service'
@@ -75,6 +76,7 @@ const NoteList = forwardRef<
     ref
   ) => {
     const { t } = useTranslation()
+    const active = usePageActive()
     const { startLogin } = useNostr()
     const { isSpammer, meetsMinTrustScore } = useUserTrust()
     const { mutePubkeySet } = useMuteList()
@@ -93,6 +95,12 @@ const NoteList = forwardRef<
     const [refreshCount, setRefreshCount] = useState(0)
     const supportTouch = useMemo(() => isTouchDevice(), [])
     const topRef = useRef<HTMLDivElement | null>(null)
+    const sinceRef = useRef<number | undefined>(undefined)
+    sinceRef.current = newEvents.length
+      ? newEvents[0].created_at + 1
+      : events.length
+        ? events[0].created_at + 1
+        : undefined
     const showNewNotesDirectlyRef = useRef(showNewNotesDirectly)
     showNewNotesDirectlyRef.current = showNewNotesDirectly
 
@@ -287,15 +295,23 @@ const NoteList = forwardRef<
     useEffect(() => {
       if (!subRequests.length) return
 
+      sinceRef.current = undefined
+      setEvents([])
+      setStoredEvents([])
+      setNewEvents([])
+    }, [JSON.stringify(subRequests), refreshCount, JSON.stringify(showKinds)])
+
+    useEffect(() => {
+      if (!subRequests.length || !active) return
+
       async function init() {
         setInitialLoading(true)
-        setEvents([])
-        setStoredEvents([])
-        setNewEvents([])
 
         if (showKinds?.length === 0 && subRequests.every(({ filter }) => !filter.kinds)) {
           return () => {}
         }
+
+        const since = sinceRef.current
 
         if (isPubkeyFeed) {
           const storedEvents = await client.getEventsFromIndexed({
@@ -320,12 +336,35 @@ const NoteList = forwardRef<
           })
         )
 
+        const handleNewEvents = (newEvents: Event[]) => {
+          if (showNewNotesDirectlyRef.current) {
+            setEvents((oldEvents) => mergeTimelines([newEvents, oldEvents]))
+          } else {
+            const isAtTop = (() => {
+              if (!topRef.current) return true
+              const rect = topRef.current.getBoundingClientRect()
+              return rect.top >= 50
+            })()
+
+            if (isAtTop) {
+              setEvents((oldEvents) => mergeTimelines([newEvents, oldEvents]))
+            } else {
+              setNewEvents((oldEvents) => mergeTimelines([newEvents, oldEvents]))
+            }
+          }
+        }
+
         const { closer, timelineKey } = await client.subscribeTimeline(
           preprocessedSubRequests,
           {
             onEvents: (events, eosed) => {
               if (events.length > 0) {
-                setEvents(events)
+                if (!since) {
+                  setEvents(events)
+                } else {
+                  const newEvents = events.filter((evt) => evt.created_at >= since)
+                  handleNewEvents(newEvents)
+                }
               }
               if (eosed) {
                 threadService.addRepliesToThread(events)
@@ -333,27 +372,7 @@ const NoteList = forwardRef<
               }
             },
             onNew: (event) => {
-              if (showNewNotesDirectlyRef.current) {
-                setEvents((oldEvents) =>
-                  oldEvents.some((e) => e.id === event.id) ? oldEvents : [event, ...oldEvents]
-                )
-              } else {
-                const isAtTop = (() => {
-                  if (!topRef.current) return true
-                  const rect = topRef.current.getBoundingClientRect()
-                  return rect.top >= 50
-                })()
-
-                if (isAtTop) {
-                  setEvents((oldEvents) =>
-                    oldEvents.some((e) => e.id === event.id) ? oldEvents : [event, ...oldEvents]
-                  )
-                } else {
-                  setNewEvents((oldEvents) =>
-                    [event, ...oldEvents].sort((a, b) => b.created_at - a.created_at)
-                  )
-                }
-              }
+              handleNewEvents([event])
               threadService.addRepliesToThread([event])
             },
             onClose: (url, reason) => {
@@ -388,7 +407,7 @@ const NoteList = forwardRef<
       return () => {
         promise.then((closer) => closer())
       }
-    }, [JSON.stringify(subRequests), refreshCount, JSON.stringify(showKinds)])
+    }, [JSON.stringify(subRequests), refreshCount, JSON.stringify(showKinds), active])
 
     const handleLoadMore = useCallback(async () => {
       if (!timelineKey || areAlgoRelays) return false
@@ -412,7 +431,7 @@ const NoteList = forwardRef<
     })
 
     const showNewEvents = () => {
-      setEvents((oldEvents) => [...newEvents, ...oldEvents])
+      setEvents((oldEvents) => mergeTimelines([newEvents, oldEvents]))
       setNewEvents([])
       setTimeout(() => {
         scrollToTop('smooth')

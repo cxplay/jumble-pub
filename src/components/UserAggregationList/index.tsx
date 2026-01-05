@@ -12,6 +12,7 @@ import { useContentPolicy } from '@/providers/ContentPolicyProvider'
 import { useDeletedEvent } from '@/providers/DeletedEventProvider'
 import { useMuteList } from '@/providers/MuteListProvider'
 import { useNostr } from '@/providers/NostrProvider'
+import { usePageActive } from '@/providers/PageActiveProvider'
 import { usePinnedUsers } from '@/providers/PinnedUsersProvider'
 import { useUserTrust } from '@/providers/UserTrustProvider'
 import client from '@/services/client.service'
@@ -68,6 +69,7 @@ const UserAggregationList = forwardRef<
     ref
   ) => {
     const { t } = useTranslation()
+    const active = usePageActive()
     const { pubkey: currentPubkey, startLogin } = useNostr()
     const { push } = useSecondaryPage()
     const { mutePubkeySet } = useMuteList()
@@ -95,6 +97,12 @@ const UserAggregationList = forwardRef<
     const bottomRef = useRef<HTMLDivElement | null>(null)
     const topRef = useRef<HTMLDivElement | null>(null)
     const nonPinnedTopRef = useRef<HTMLDivElement | null>(null)
+    const sinceRef = useRef<number | undefined>(undefined)
+    sinceRef.current = newEvents.length
+      ? newEvents[0].created_at + 1
+      : events.length
+        ? events[0].created_at + 1
+        : undefined
 
     const scrollToTop = (behavior: ScrollBehavior = 'instant') => {
       setTimeout(() => {
@@ -120,21 +128,27 @@ const UserAggregationList = forwardRef<
     useEffect(() => {
       if (!subRequests.length) return
 
+      sinceRef.current = undefined
       setSince(dayjs().subtract(1, 'day').unix())
+      setStoredEvents([])
+      setEvents([])
+      setNewEvents([])
       setHasMore(true)
+    }, [feedId, refreshCount])
+
+    useEffect(() => {
+      if (!subRequests.length || !active) return
 
       async function init() {
         setLoading(true)
-        setStoredEvents([])
-        setEvents([])
-        setNewEvents([])
-        setHasMore(true)
 
         if (showKinds?.length === 0 && subRequests.every(({ filter }) => !filter.kinds)) {
           setLoading(false)
           setHasMore(false)
           return () => {}
         }
+
+        const since = sinceRef.current
 
         if (isPubkeyFeed) {
           const storedEvents = await client.getEventsFromIndexed({
@@ -164,21 +178,23 @@ const UserAggregationList = forwardRef<
           {
             onEvents: (events, eosed) => {
               if (events.length > 0) {
-                setEvents(events)
+                if (!since) {
+                  setEvents(events)
+                } else {
+                  const newEvents = events.filter((evt) => evt.created_at >= since)
+                  setNewEvents((oldEvents) => mergeTimelines([newEvents, oldEvents]))
+                }
               }
               if (areAlgoRelays) {
                 setHasMore(false)
               }
               if (eosed) {
                 setLoading(false)
-                setHasMore(events.length > 0)
                 threadService.addRepliesToThread(events)
               }
             },
             onNew: (event) => {
-              setNewEvents((oldEvents) =>
-                [event, ...oldEvents].sort((a, b) => b.created_at - a.created_at)
-              )
+              setNewEvents((oldEvents) => mergeTimelines([[event], oldEvents]))
               threadService.addRepliesToThread([event])
             },
             onClose: (url, reason) => {
@@ -214,7 +230,7 @@ const UserAggregationList = forwardRef<
       return () => {
         promise.then((closer) => closer())
       }
-    }, [feedId, refreshCount])
+    }, [feedId, refreshCount, active])
 
     useEffect(() => {
       if (loading || !hasMore || !timelineKey || !events.length) {
