@@ -42,7 +42,7 @@ export function NotificationItem({
       }
 
       // Check trust score
-      if (!(await meetsMinTrustScore(notification.pubkey))) {
+      if (notification.kind !== kinds.Zap && !(await meetsMinTrustScore(notification.pubkey))) {
         setCanShow(false)
         return
       }
