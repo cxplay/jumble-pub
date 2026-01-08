@@ -661,8 +661,12 @@ export default {
     'Enable live feed': 'Élő hírfolyam engedélyezése',
     'Default relays': 'Alapértelmezett továbbítók',
     'Reset to default': 'Visszaállítás alapértelmezettre',
-    'Default relays description': 'Más felhasználók továbbító konfigurációinak lekérdezésére használatos, és tartalékként szolgál, ha a felhasználóknak nincsenek továbbítóik beállítva.',
-    'Default relays warning': 'Figyelmeztetés: Ne módosítsa ezeket a beállításokat meggondolatlanul, mert ez befolyásolhatja az alapvető élményt.',
-    'Invalid relay URL': 'Érvénytelen továbbító URL'
+    'Default relays description':
+      'Más felhasználók továbbító konfigurációinak lekérdezésére használatos, és tartalékként szolgál, ha a felhasználóknak nincsenek továbbítóik beállítva.',
+    'Default relays warning':
+      'Figyelmeztetés: Ne módosítsa ezeket a beállításokat meggondolatlanul, mert ez befolyásolhatja az alapvető élményt.',
+    'Invalid relay URL': 'Érvénytelen továbbító URL',
+    'Muted words': 'Némított szavak',
+    'Add muted word': 'Némított szó hozzáadása'
   }
 }

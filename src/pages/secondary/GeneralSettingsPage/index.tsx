@@ -11,14 +11,16 @@ import {
 } from '@/constants'
 import { LocalizedLanguageNames, TLanguage } from '@/i18n'
 import SecondaryPageLayout from '@/layouts/SecondaryPageLayout'
-import { cn, isSupportCheckConnectionType } from '@/lib/utils'
+import { isSupportCheckConnectionType } from '@/lib/utils'
 import { useContentPolicy } from '@/providers/ContentPolicyProvider'
 import { useUserPreferences } from '@/providers/UserPreferencesProvider'
 import { TMediaAutoLoadPolicy, TNsfwDisplayPolicy, TProfilePictureAutoLoadPolicy } from '@/types'
 import { SelectValue } from '@radix-ui/react-select'
 import { RotateCcw } from 'lucide-react'
-import { forwardRef, HTMLProps, useState } from 'react'
+import { forwardRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import MutedWords from './MutedWords'
+import SettingItem from './SettingItem'
 
 const GeneralSettingsPage = forwardRef(({ index }: { index?: number }, ref) => {
   const { t, i18n } = useTranslation()
@@ -188,27 +190,10 @@ const GeneralSettingsPage = forwardRef(({ index }: { index?: number }, ref) => {
             </div>
           </SettingItem>
         )}
+        <MutedWords />
       </div>
     </SecondaryPageLayout>
   )
 })
 GeneralSettingsPage.displayName = 'GeneralSettingsPage'
 export default GeneralSettingsPage
-
-const SettingItem = forwardRef<HTMLDivElement, HTMLProps<HTMLDivElement>>(
-  ({ children, className, ...props }, ref) => {
-    return (
-      <div
-        className={cn(
-          'flex justify-between select-none items-center px-4 min-h-9 [&_svg]:size-4 [&_svg]:shrink-0',
-          className
-        )}
-        {...props}
-        ref={ref}
-      >
-        {children}
-      </div>
-    )
-  }
-)
-SettingItem.displayName = 'SettingItem'

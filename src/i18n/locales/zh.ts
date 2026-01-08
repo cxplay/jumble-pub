@@ -646,8 +646,11 @@ export default {
     'Enable live feed': '启用实时推送',
     'Default relays': '默认中继',
     'Reset to default': '重置为默认',
-    'Default relays description': '用于查询其他用户的中继配置，并在用户没有配置中继时作为回退策略。',
-    'Default relays warning': '警告：请不要随意修改这些设置，可能会影响基础体验。',
-    'Invalid relay URL': '无效的中继地址'
+    'Default relays description':
+      '用于查询其他用户的中继配置，以及当用户没有配置中继时的备用选项。',
+    'Default relays warning': '警告：请不要随意修改这些设置，可能会影响您的基本体验。',
+    'Invalid relay URL': '无效的中继地址',
+    'Muted words': '屏蔽词',
+    'Add muted word': '添加屏蔽词'
   }
 }

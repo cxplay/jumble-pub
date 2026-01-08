@@ -669,8 +669,12 @@ export default {
     'Enable live feed': 'Ativar feed ao vivo',
     'Default relays': 'Relays padrão',
     'Reset to default': 'Redefinir para padrão',
-    'Default relays description': 'Usados para consultar as configurações de relays de outros usuários e como alternativa quando os usuários não têm relays configurados.',
-    'Default relays warning': 'Aviso: Não modifique essas configurações casualmente, pois pode afetar sua experiência básica.',
-    'Invalid relay URL': 'URL de relay inválida'
+    'Default relays description':
+      'Usados para consultar as configurações de relays de outros usuários e como alternativa quando os usuários não têm relays configurados.',
+    'Default relays warning':
+      'Aviso: Não modifique essas configurações casualmente, pois pode afetar sua experiência básica.',
+    'Invalid relay URL': 'URL de relé inválida',
+    'Muted words': 'Palavras silenciadas',
+    'Add muted word': 'Adicionar palavra silenciada'
   }
 }

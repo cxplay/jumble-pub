@@ -672,8 +672,12 @@ export default {
     'Enable live feed': 'Attiva feed live',
     'Default relays': 'Relay predefiniti',
     'Reset to default': 'Ripristina predefiniti',
-    'Default relays description': 'Utilizzati per interrogare le configurazioni dei relay di altri utenti e come fallback quando gli utenti non hanno relay configurati.',
-    'Default relays warning': 'Attenzione: Non modificare queste impostazioni alla leggera, potrebbe influire sull\'esperienza di base.',
-    'Invalid relay URL': 'URL relay non valido'
+    'Default relays description':
+      'Utilizzati per interrogare le configurazioni dei relay di altri utenti e come fallback quando gli utenti non hanno relay configurati.',
+    'Default relays warning':
+      "Attenzione: Non modificare queste impostazioni alla leggera, potrebbe influire sull'esperienza di base.",
+    'Invalid relay URL': 'URL relay non valido',
+    'Muted words': 'Parole silenziate',
+    'Add muted word': 'Aggiungi parola silenziata'
   }
 }

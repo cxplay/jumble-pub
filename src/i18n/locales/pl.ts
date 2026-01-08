@@ -673,8 +673,12 @@ export default {
     'Enable live feed': 'Włącz kanał na żywo',
     'Default relays': 'Domyślne przekaźniki',
     'Reset to default': 'Przywróć domyślne',
-    'Default relays description': 'Używane do odpytywania konfiguracji przekaźników innych użytkowników i jako rozwiązanie awaryjne, gdy użytkownicy nie mają skonfigurowanych przekaźników.',
-    'Default relays warning': 'Ostrzeżenie: Nie modyfikuj tych ustawień pochopnie, może to wpłynąć na podstawowe doświadczenie.',
-    'Invalid relay URL': 'Nieprawidłowy adres URL przekaźnika'
+    'Default relays description':
+      'Używane do odpytywania konfiguracji przekaźników innych użytkowników i jako rozwiązanie awaryjne, gdy użytkownicy nie mają skonfigurowanych przekaźników.',
+    'Default relays warning':
+      'Ostrzeżenie: Nie modyfikuj tych ustawień pochopnie, może to wpłynąć na podstawowe doświadczenie.',
+    'Invalid relay URL': 'Nieprawidłowy adres URL przekaźnika',
+    'Muted words': 'Wyciszone słowa',
+    'Add muted word': 'Dodaj wyciszone słowo'
   }
 }

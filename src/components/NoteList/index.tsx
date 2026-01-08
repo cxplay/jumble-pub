@@ -80,7 +80,7 @@ const NoteList = forwardRef<
     const { startLogin } = useNostr()
     const { isSpammer, meetsMinTrustScore } = useUserTrust()
     const { mutePubkeySet } = useMuteList()
-    const { hideContentMentioningMutedUsers } = useContentPolicy()
+    const { hideContentMentioningMutedUsers, mutedWords } = useContentPolicy()
     const { isEventDeleted } = useDeletedEvent()
     const [storedEvents, setStoredEvents] = useState<Event[]>([])
     const [events, setEvents] = useState<Event[]>([])
@@ -131,10 +131,18 @@ const NoteList = forwardRef<
         if (filterFn && !filterFn(evt)) {
           return true
         }
+        if (mutedWords.length > 0) {
+          const contentLower = evt.content.toLowerCase()
+          for (const word of mutedWords) {
+            if (contentLower.includes(word)) {
+              return true
+            }
+          }
+        }
 
         return false
       },
-      [mutePubkeySet, JSON.stringify(pinnedEventIds), isEventDeleted, filterFn]
+      [mutePubkeySet, JSON.stringify(pinnedEventIds), isEventDeleted, filterFn, mutedWords]
     )
 
     useEffect(() => {

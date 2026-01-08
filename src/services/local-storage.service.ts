@@ -66,6 +66,7 @@ class LocalStorageService {
   private nsfwDisplayPolicy: TNsfwDisplayPolicy = NSFW_DISPLAY_POLICY.HIDE_CONTENT
   private minTrustScore: number = 40
   private defaultRelayUrls: string[] = BIG_RELAY_URLS
+  private mutedWords: string[] = []
 
   constructor() {
     if (!LocalStorageService.instance) {
@@ -287,6 +288,18 @@ class LocalStorageService {
           urls.every((url) => typeof url === 'string')
         ) {
           this.defaultRelayUrls = urls
+        }
+      } catch {
+        // Invalid JSON, use default
+      }
+    }
+
+    const mutedWordsStr = window.localStorage.getItem(StorageKey.MUTED_WORDS)
+    if (mutedWordsStr) {
+      try {
+        const words = JSON.parse(mutedWordsStr)
+        if (Array.isArray(words) && words.every((word) => typeof word === 'string')) {
+          this.mutedWords = words
         }
       } catch {
         // Invalid JSON, use default
@@ -639,6 +652,15 @@ class LocalStorageService {
   setDefaultRelayUrls(urls: string[]) {
     this.defaultRelayUrls = urls
     window.localStorage.setItem(StorageKey.DEFAULT_RELAY_URLS, JSON.stringify(urls))
+  }
+
+  getMutedWords() {
+    return this.mutedWords
+  }
+
+  setMutedWords(words: string[]) {
+    this.mutedWords = words
+    window.localStorage.setItem(StorageKey.MUTED_WORDS, JSON.stringify(this.mutedWords))
   }
 }
 

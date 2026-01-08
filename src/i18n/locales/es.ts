@@ -672,8 +672,12 @@ export default {
     'Enable live feed': 'Activar feed en vivo',
     'Default relays': 'Relés predeterminados',
     'Reset to default': 'Restablecer valores predeterminados',
-    'Default relays description': 'Se utilizan para consultar las configuraciones de relés de otros usuarios y como respaldo cuando los usuarios no tienen relés configurados.',
-    'Default relays warning': 'Advertencia: No modifiques estas configuraciones a la ligera, ya que puede afectar tu experiencia básica.',
-    'Invalid relay URL': 'URL de relé no válida'
+    'Default relays description':
+      'Se utilizan para consultar las configuraciones de relés de otros usuarios y como respaldo cuando los usuarios no tienen relés configurados.',
+    'Default relays warning':
+      'Advertencia: No modifiques estas configuraciones a la ligera, ya que puede afectar tu experiencia básica.',
+    'Invalid relay URL': 'URL de relé no válida',
+    'Muted words': 'Palabras silenciadas',
+    'Add muted word': 'Agregar palabra silenciada'
   }
 }
