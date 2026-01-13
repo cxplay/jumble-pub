@@ -57,6 +57,7 @@ const NoteList = forwardRef<
     filterFn?: (event: Event) => boolean
     showNewNotesDirectly?: boolean
     isPubkeyFeed?: boolean
+    disableTrustFilter?: boolean
   }
 >(
   (
@@ -71,7 +72,8 @@ const NoteList = forwardRef<
       pinnedEventIds,
       filterFn,
       showNewNotesDirectly = false,
-      isPubkeyFeed = false
+      isPubkeyFeed = false,
+      disableTrustFilter = false
     },
     ref
   ) => {
@@ -220,6 +222,16 @@ const NoteList = forwardRef<
           }
         })
 
+        if (disableTrustFilter) {
+          setFilteredNotes(
+            filteredEvents.map((evt, i) => {
+              const key = keys[i]
+              return { key, event: evt, reposters: Array.from(repostersMap.get(key) ?? []) }
+            })
+          )
+          return
+        }
+
         const _filteredNotes = (
           await Promise.all(
             filteredEvents.map(async (evt, i) => {
@@ -247,7 +259,15 @@ const NoteList = forwardRef<
 
       setFiltering(true)
       processEvents().finally(() => setFiltering(false))
-    }, [events, storedEvents, shouldHideEvent, hideReplies, hideSpam, meetsMinTrustScore])
+    }, [
+      events,
+      storedEvents,
+      shouldHideEvent,
+      hideReplies,
+      hideSpam,
+      meetsMinTrustScore,
+      disableTrustFilter
+    ])
 
     useEffect(() => {
       const processNewEvents = async () => {

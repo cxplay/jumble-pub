@@ -31,6 +31,7 @@ const EmojiPackSettingsPage = forwardRef(({ index }: { index?: number }, ref) =>
         <NoteList
           showKinds={[kinds.Emojisets]}
           subRequests={[{ urls: getDefaultRelayUrls(), filter: {} }]}
+          hideSpam
         />
       )}
     </SecondaryPageLayout>
