@@ -680,6 +680,7 @@ export default {
     'Invalid relay URL': 'Nieprawidłowy adres URL przekaźnika',
     'Muted words': 'Wyciszone słowa',
     'Add muted word': 'Dodaj wyciszone słowo',
-    'Zap Details': 'Szczegóły zapu'
+    'Zap Details': 'Szczegóły zapu',
+    'Default trust score filter threshold ({{n}}%)': 'Domyślny próg filtra wyniku zaufania ({{n}}%)'
   }
 }

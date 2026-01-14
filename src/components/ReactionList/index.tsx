@@ -1,4 +1,5 @@
 import { useSecondaryPage } from '@/PageManager'
+import { SPECIAL_TRUST_SCORE_FILTER_ID } from '@/constants'
 import { useStuff } from '@/hooks/useStuff'
 import { useStuffStatsById } from '@/hooks/useStuffStatsById'
 import { toProfile } from '@/lib/link'
@@ -20,7 +21,7 @@ export default function ReactionList({ stuff }: { stuff: Event | string }) {
   const { t } = useTranslation()
   const { push } = useSecondaryPage()
   const { isSmallScreen } = useScreenSize()
-  const { minTrustScore, meetsMinTrustScore } = useUserTrust()
+  const { getMinTrustScore, meetsMinTrustScore } = useUserTrust()
   const { stuffKey } = useStuff(stuff)
   const noteStats = useStuffStatsById(stuffKey)
   const [filteredLikes, setFilteredLikes] = useState<
@@ -41,18 +42,23 @@ export default function ReactionList({ stuff }: { stuff: Event | string }) {
         created_at: number
         emoji: string | TEmoji
       }[] = []
-      await Promise.all(
-        likes.map(async (like) => {
-          if (await meetsMinTrustScore(like.pubkey)) {
-            filtered.push(like)
-          }
-        })
-      )
+      const threshold = getMinTrustScore(SPECIAL_TRUST_SCORE_FILTER_ID.INTERACTIONS)
+      if (threshold) {
+        await Promise.all(
+          likes.map(async (like) => {
+            if (await meetsMinTrustScore(like.pubkey, threshold)) {
+              filtered.push(like)
+            }
+          })
+        )
+      } else {
+        filtered.push(...likes)
+      }
       filtered.sort((a, b) => b.created_at - a.created_at)
       setFilteredLikes(filtered)
     }
     filterLikes()
-  }, [noteStats, stuffKey, minTrustScore, meetsMinTrustScore])
+  }, [noteStats, stuffKey, getMinTrustScore, meetsMinTrustScore])
 
   const [showCount, setShowCount] = useState(SHOW_COUNT)
   const bottomRef = useRef<HTMLDivElement | null>(null)

@@ -673,6 +673,7 @@ export default {
     'Invalid relay URL': '無効なリレーURL',
     'Muted words': 'ミュートワード',
     'Add muted word': 'ミュートワードを追加',
-    'Zap Details': 'Zapの詳細'
+    'Zap Details': 'Zapの詳細',
+    'Default trust score filter threshold ({{n}}%)': 'デフォルトの信頼スコアフィルター閾値 ({{n}}%)'
   }
 }

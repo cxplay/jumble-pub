@@ -1,4 +1,4 @@
-import { ExtendedKind } from '@/constants'
+import { ExtendedKind, SPECIAL_TRUST_SCORE_FILTER_ID } from '@/constants'
 import { compareEvents } from '@/lib/event'
 import { notificationFilter } from '@/lib/notification'
 import { getDefaultRelayUrls } from '@/lib/relay'
@@ -34,7 +34,7 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
   const active = useMemo(() => current === 'notifications', [current])
   const { pubkey, notificationsSeenAt, updateNotificationsSeenAt } = useNostr()
   const { mutePubkeySet } = useMuteList()
-  const { meetsMinTrustScore } = useUserTrust()
+  const { getMinTrustScore, meetsMinTrustScore } = useUserTrust()
   const { hideContentMentioningMutedUsers } = useContentPolicy()
   const [newNotifications, setNewNotifications] = useState<NostrEvent[]>([])
   const [readNotificationIdSet, setReadNotificationIdSet] = useState<Set<string>>(new Set())
@@ -47,6 +47,7 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
     }
     const filterNotifications = async () => {
       const filtered: NostrEvent[] = []
+      const trustScoreThreshold = getMinTrustScore(SPECIAL_TRUST_SCORE_FILTER_ID.NOTIFICATIONS)
       await Promise.allSettled(
         newNotifications.map(async (notification) => {
           if (notification.created_at <= notificationsSeenAt || filtered.length >= 10) {
@@ -57,7 +58,10 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
               pubkey,
               mutePubkeySet,
               hideContentMentioningMutedUsers,
-              meetsMinTrustScore
+              meetsMinTrustScore: async (pubkey: string) => {
+                if (trustScoreThreshold === 0) return true
+                return meetsMinTrustScore(pubkey, trustScoreThreshold)
+              }
             }))
           ) {
             return

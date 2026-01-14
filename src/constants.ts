@@ -41,9 +41,10 @@ export const StorageKey = {
   QUICK_REACTION: 'quickReaction',
   QUICK_REACTION_EMOJI: 'quickReactionEmoji',
   NSFW_DISPLAY_POLICY: 'nsfwDisplayPolicy',
-  MIN_TRUST_SCORE: 'minTrustScore',
   DEFAULT_RELAY_URLS: 'defaultRelayUrls',
   MUTED_WORDS: 'mutedWords',
+  MIN_TRUST_SCORE: 'minTrustScore',
+  MIN_TRUST_SCORE_MAP: 'minTrustScoreMap',
   ENABLE_LIVE_FEED: 'enableLiveFeed', // deprecated
   HIDE_UNTRUSTED_NOTES: 'hideUntrustedNotes', // deprecated
   HIDE_UNTRUSTED_INTERACTIONS: 'hideUntrustedInteractions', // deprecated
@@ -472,3 +473,13 @@ export type TPrimaryColor = keyof typeof PRIMARY_COLORS
 export const LONG_PRESS_THRESHOLD = 400
 
 export const SPAMMER_PERCENTILE_THRESHOLD = 60
+
+export const SPECIAL_TRUST_SCORE_FILTER_ID = {
+  DEFAULT: 'default',
+  INTERACTIONS: 'interactions',
+  NOTIFICATIONS: 'notifications',
+  SEARCH: 'search',
+  HASHTAG: 'hashtag',
+  NAK: 'nak',
+  TRENDING: 'trending'
+}

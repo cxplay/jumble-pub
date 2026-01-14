@@ -652,6 +652,7 @@ export default {
     'Invalid relay URL': '无效的中继地址',
     'Muted words': '屏蔽词',
     'Add muted word': '添加屏蔽词',
-    'Zap Details': '打闪详情'
+    'Zap Details': '打闪详情',
+    'Default trust score filter threshold ({{n}}%)': '默认信任分数过滤阈值 ({{n}}%)'
   }
 }

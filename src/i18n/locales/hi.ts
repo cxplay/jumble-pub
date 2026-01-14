@@ -675,6 +675,7 @@ export default {
     'Invalid relay URL': 'अमान्य रिले URL',
     'Muted words': 'म्यूट किए गए शब्द',
     'Add muted word': 'म्यूट शब्द जोड़ें',
-    'Zap Details': 'जैप विवरण'
+    'Zap Details': 'जैप विवरण',
+    'Default trust score filter threshold ({{n}}%)': 'डिफ़ॉल्ट विश्वास स्कोर फ़िल्टर सीमा ({{n}}%)'
   }
 }

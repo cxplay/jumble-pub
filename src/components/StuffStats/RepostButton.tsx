@@ -21,11 +21,12 @@ import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import PostEditor from '../PostEditor'
 import { formatCount } from './utils'
+import { SPECIAL_TRUST_SCORE_FILTER_ID } from '@/constants'
 
 export default function RepostButton({ stuff }: { stuff: Event | string }) {
   const { t } = useTranslation()
   const { isSmallScreen } = useScreenSize()
-  const { meetsMinTrustScore } = useUserTrust()
+  const { getMinTrustScore, meetsMinTrustScore } = useUserTrust()
   const { publish, checkLogin, pubkey } = useNostr()
   const { event, stuffKey } = useStuff(stuff)
   const noteStats = useStuffStatsById(stuffKey)
@@ -46,9 +47,15 @@ export default function RepostButton({ stuff }: { stuff: Event | string }) {
 
       const reposts = noteStats?.reposts || []
       let count = 0
+
+      const trustScoreThreshold = getMinTrustScore(SPECIAL_TRUST_SCORE_FILTER_ID.INTERACTIONS)
+      if (!trustScoreThreshold) {
+        setRepostCount(reposts.length)
+        return
+      }
       await Promise.all(
         reposts.map(async (repost) => {
-          if (await meetsMinTrustScore(repost.pubkey)) {
+          if (await meetsMinTrustScore(repost.pubkey, trustScoreThreshold)) {
             count++
           }
         })
@@ -56,7 +63,7 @@ export default function RepostButton({ stuff }: { stuff: Event | string }) {
       setRepostCount(count)
     }
     filterReposts()
-  }, [noteStats, event, meetsMinTrustScore])
+  }, [noteStats, event, meetsMinTrustScore, getMinTrustScore])
   const canRepost = !hasReposted && !reposting && !!event
 
   const repost = async () => {

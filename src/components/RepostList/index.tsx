@@ -1,4 +1,5 @@
 import { useSecondaryPage } from '@/PageManager'
+import { SPECIAL_TRUST_SCORE_FILTER_ID } from '@/constants'
 import { useStuffStatsById } from '@/hooks/useStuffStatsById'
 import { getEventKey } from '@/lib/event'
 import { toProfile } from '@/lib/link'
@@ -19,7 +20,7 @@ export default function RepostList({ event }: { event: Event }) {
   const { t } = useTranslation()
   const { push } = useSecondaryPage()
   const { isSmallScreen } = useScreenSize()
-  const { minTrustScore, meetsMinTrustScore } = useUserTrust()
+  const { getMinTrustScore, meetsMinTrustScore } = useUserTrust()
   const noteStats = useStuffStatsById(getEventKey(event))
   const [filteredReposts, setFilteredReposts] = useState<
     Array<{ id: string; pubkey: string; created_at: number }>
@@ -28,10 +29,15 @@ export default function RepostList({ event }: { event: Event }) {
   useEffect(() => {
     const filterReposts = async () => {
       const reposts = noteStats?.reposts ?? []
+      const trustScoreThreshold = getMinTrustScore(SPECIAL_TRUST_SCORE_FILTER_ID.INTERACTIONS)
+      if (!trustScoreThreshold) {
+        setFilteredReposts([...reposts].sort((a, b) => b.created_at - a.created_at))
+        return
+      }
       const filtered = (
         await Promise.all(
           reposts.map(async (repost) => {
-            if (await meetsMinTrustScore(repost.pubkey)) {
+            if (await meetsMinTrustScore(repost.pubkey, trustScoreThreshold)) {
               return repost
             }
           })
@@ -45,7 +51,7 @@ export default function RepostList({ event }: { event: Event }) {
       setFilteredReposts(filtered)
     }
     filterReposts()
-  }, [noteStats, event.id, minTrustScore, meetsMinTrustScore])
+  }, [noteStats, event.id, getMinTrustScore, meetsMinTrustScore])
 
   const [showCount, setShowCount] = useState(SHOW_COUNT)
   const bottomRef = useRef<HTMLDivElement | null>(null)

@@ -1,4 +1,4 @@
-import { ExtendedKind } from '@/constants'
+import { ExtendedKind, SPECIAL_TRUST_SCORE_FILTER_ID } from '@/constants'
 import { isMentioningMutedUsers } from '@/lib/event'
 import { tagNameEquals } from '@/lib/tag'
 import { useContentPolicy } from '@/providers/ContentPolicyProvider'
@@ -24,7 +24,7 @@ export function NotificationItem({
   const { pubkey } = useNostr()
   const { mutePubkeySet } = useMuteList()
   const { hideContentMentioningMutedUsers } = useContentPolicy()
-  const { minTrustScore, meetsMinTrustScore } = useUserTrust()
+  const { getMinTrustScore, meetsMinTrustScore } = useUserTrust()
   const [canShow, setCanShow] = useState(false)
 
   useEffect(() => {
@@ -42,9 +42,12 @@ export function NotificationItem({
       }
 
       // Check trust score
-      if (notification.kind !== kinds.Zap && !(await meetsMinTrustScore(notification.pubkey))) {
-        setCanShow(false)
-        return
+      if (notification.kind !== kinds.Zap) {
+        const threshold = getMinTrustScore(SPECIAL_TRUST_SCORE_FILTER_ID.NOTIFICATIONS)
+        if (!(await meetsMinTrustScore(notification.pubkey, threshold))) {
+          setCanShow(false)
+          return
+        }
       }
 
       // Check reaction target for kind 7
@@ -65,7 +68,7 @@ export function NotificationItem({
     pubkey,
     mutePubkeySet,
     hideContentMentioningMutedUsers,
-    minTrustScore,
+    getMinTrustScore,
     meetsMinTrustScore
   ])
 

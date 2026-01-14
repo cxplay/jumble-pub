@@ -52,6 +52,7 @@ export default function Relay({ url, className }: { url?: string; className?: st
         </div>
       )}
       <NormalFeed
+        trustScoreFilterId={`relay-${normalizedUrl}`}
         subRequests={[
           { urls: [normalizedUrl], filter: debouncedInput ? { search: debouncedInput } : {} }
         ]}

@@ -663,6 +663,7 @@ export default {
     'Invalid relay URL': 'عنوان URL للمرحل غير صالح',
     'Muted words': 'الكلمات المحظورة',
     'Add muted word': 'إضافة كلمة محظورة',
-    'Zap Details': 'تفاصيل Zap'
+    'Zap Details': 'تفاصيل Zap',
+    'Default trust score filter threshold ({{n}}%)': 'عتبة مرشح درجة الثقة الافتراضية ({{n}}%)'
   }
 }

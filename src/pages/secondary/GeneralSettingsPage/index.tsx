@@ -19,6 +19,7 @@ import { SelectValue } from '@radix-ui/react-select'
 import { RotateCcw } from 'lucide-react'
 import { forwardRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import DefaultTrustScoreFilter from './DefaultTrustScoreFilter'
 import MutedWords from './MutedWords'
 import SettingItem from './SettingItem'
 
@@ -150,6 +151,7 @@ const GeneralSettingsPage = forwardRef(({ index }: { index?: number }, ref) => {
             </SelectContent>
           </Select>
         </SettingItem>
+        <DefaultTrustScoreFilter />
         <SettingItem>
           <Label htmlFor="quick-reaction" className="text-base font-normal">
             <div>{t('Quick reaction')}</div>

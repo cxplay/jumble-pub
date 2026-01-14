@@ -664,6 +664,8 @@ export default {
     'Invalid relay URL': 'URL รีเลย์ไม่ถูกต้อง',
     'Muted words': 'คำที่ถูกปิดเสียง',
     'Add muted word': 'เพิ่มคำที่ถูกปิดเสียง',
-    'Zap Details': 'รายละเอียดซาตส์'
+    'Zap Details': 'รายละเอียดซาตส์',
+    'Default trust score filter threshold ({{n}}%)':
+      'เกณฑ์ตัวกรองคะแนนความไว้วางใจเริ่มต้น ({{n}}%)'
   }
 }

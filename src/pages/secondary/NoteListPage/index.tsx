@@ -108,7 +108,22 @@ const NoteListPage = forwardRef(({ index }: { index?: number }, ref) => {
       </div>
     )
   } else if (data) {
-    content = <NormalFeed subRequests={subRequests} disable24hMode={data.type !== 'domain'} />
+    let trustScoreFilterId: string
+    if (data.type === 'hashtag') {
+      trustScoreFilterId = 'hashtag'
+    } else if (data.type === 'domain') {
+      trustScoreFilterId = `domain-${data.domain}`
+    } else {
+      trustScoreFilterId = 'search'
+    }
+
+    content = (
+      <NormalFeed
+        trustScoreFilterId={trustScoreFilterId}
+        subRequests={subRequests}
+        disable24hMode={data.type !== 'domain'}
+      />
+    )
   }
 
   return (

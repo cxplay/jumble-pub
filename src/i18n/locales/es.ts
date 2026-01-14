@@ -679,6 +679,8 @@ export default {
     'Invalid relay URL': 'URL de relé no válida',
     'Muted words': 'Palabras silenciadas',
     'Add muted word': 'Agregar palabra silenciada',
-    'Zap Details': 'Detalles del Zap'
+    'Zap Details': 'Detalles del Zap',
+    'Default trust score filter threshold ({{n}}%)':
+      'Umbral predeterminado del filtro de puntuación de confianza ({{n}}%)'
   }
 }

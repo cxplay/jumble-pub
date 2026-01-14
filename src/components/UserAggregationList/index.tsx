@@ -55,6 +55,7 @@ const UserAggregationList = forwardRef<
     areAlgoRelays?: boolean
     showRelayCloseReason?: boolean
     isPubkeyFeed?: boolean
+    trustScoreThreshold?: number
   }
 >(
   (
@@ -64,7 +65,8 @@ const UserAggregationList = forwardRef<
       filterMutedNotes = true,
       areAlgoRelays = false,
       showRelayCloseReason = false,
-      isPubkeyFeed = false
+      isPubkeyFeed = false,
+      trustScoreThreshold
     },
     ref
   ) => {
@@ -282,7 +284,10 @@ const UserAggregationList = forwardRef<
             ) {
               return null
             }
-            if (!(await meetsMinTrustScore(evt.pubkey))) {
+            if (
+              trustScoreThreshold &&
+              !(await meetsMinTrustScore(evt.pubkey, trustScoreThreshold))
+            ) {
               return null
             }
 
@@ -300,7 +305,8 @@ const UserAggregationList = forwardRef<
         filterMutedNotes,
         hideContentMentioningMutedUsers,
         isMentioningMutedUsers,
-        meetsMinTrustScore
+        meetsMinTrustScore,
+        trustScoreThreshold
       ]
     )
 

@@ -4,6 +4,7 @@ import TrustScoreFilter from '@/components/TrustScoreFilter'
 import UserAggregationList, { TUserAggregationListRef } from '@/components/UserAggregationList'
 import { isTouchDevice } from '@/lib/utils'
 import { useKindFilter } from '@/providers/KindFilterProvider'
+import { useUserTrust } from '@/providers/UserTrustProvider'
 import storage from '@/services/local-storage.service'
 import { TFeedSubRequest, TNoteListMode } from '@/types'
 import { useMemo, useRef, useState } from 'react'
@@ -11,6 +12,7 @@ import KindFilter from '../KindFilter'
 import { RefreshButton } from '../RefreshButton'
 
 export default function NormalFeed({
+  trustScoreFilterId,
   subRequests,
   areAlgoRelays = false,
   isMainFeed = false,
@@ -19,6 +21,7 @@ export default function NormalFeed({
   onRefresh,
   isPubkeyFeed = false
 }: {
+  trustScoreFilterId?: string
   subRequests: TFeedSubRequest[]
   areAlgoRelays?: boolean
   isMainFeed?: boolean
@@ -28,6 +31,7 @@ export default function NormalFeed({
   isPubkeyFeed?: boolean
 }) {
   const { showKinds } = useKindFilter()
+  const { getMinTrustScore } = useUserTrust()
   const [temporaryShowKinds, setTemporaryShowKinds] = useState(showKinds)
   const [listMode, setListMode] = useState<TNoteListMode>(() => storage.getNoteListMode())
   const supportTouch = useMemo(() => isTouchDevice(), [])
@@ -38,6 +42,9 @@ export default function NormalFeed({
     return subRequests.every((req) => !req.filter.kinds?.length)
   }, [subRequests])
   const [trustFilterOpen, setTrustFilterOpen] = useState(false)
+  const trustScoreThreshold = useMemo(() => {
+    return trustScoreFilterId ? getMinTrustScore(trustScoreFilterId) : undefined
+  }, [trustScoreFilterId, getMinTrustScore])
 
   const handleListModeChange = (mode: TNoteListMode) => {
     setListMode(mode)
@@ -85,7 +92,12 @@ export default function NormalFeed({
                 }}
               />
             )}
-            {!isPubkeyFeed && <TrustScoreFilter onOpenChange={handleTrustFilterOpenChange} />}
+            {trustScoreFilterId && (
+              <TrustScoreFilter
+                filterId={trustScoreFilterId}
+                onOpenChange={handleTrustFilterOpenChange}
+              />
+            )}
             {showKindsFilter && (
               <KindFilter
                 showKinds={temporaryShowKinds}
@@ -105,6 +117,7 @@ export default function NormalFeed({
           areAlgoRelays={areAlgoRelays}
           showRelayCloseReason={showRelayCloseReason}
           isPubkeyFeed={isPubkeyFeed}
+          trustScoreThreshold={trustScoreThreshold}
         />
       ) : (
         <NoteList
@@ -115,6 +128,7 @@ export default function NormalFeed({
           areAlgoRelays={areAlgoRelays}
           showRelayCloseReason={showRelayCloseReason}
           isPubkeyFeed={isPubkeyFeed}
+          trustScoreThreshold={trustScoreThreshold}
         />
       )}
     </>

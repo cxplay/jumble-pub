@@ -679,6 +679,8 @@ export default {
     'Invalid relay URL': 'Неверный URL реле',
     'Muted words': 'Заблокированные слова',
     'Add muted word': 'Добавить заблокированное слово',
-    'Zap Details': 'Детали запа'
+    'Zap Details': 'Детали запа',
+    'Default trust score filter threshold ({{n}}%)':
+      'Порог фильтра рейтинга доверия по умолчанию ({{n}}%)'
   }
 }

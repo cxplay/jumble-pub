@@ -668,6 +668,7 @@ export default {
     'Invalid relay URL': 'Invalid relay URL',
     'Muted words': 'Muted words',
     'Add muted word': 'Add muted word',
-    'Zap Details': 'Zap Details'
+    'Zap Details': 'Zap Details',
+    'Default trust score filter threshold ({{n}}%)': 'Default trust score filter threshold ({{n}}%)'
   }
 }

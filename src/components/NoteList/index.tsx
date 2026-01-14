@@ -51,13 +51,13 @@ const NoteList = forwardRef<
     filterMutedNotes?: boolean
     hideReplies?: boolean
     hideSpam?: boolean
+    trustScoreThreshold?: number
     areAlgoRelays?: boolean
     showRelayCloseReason?: boolean
     pinnedEventIds?: string[]
     filterFn?: (event: Event) => boolean
     showNewNotesDirectly?: boolean
     isPubkeyFeed?: boolean
-    disableTrustFilter?: boolean
   }
 >(
   (
@@ -67,13 +67,13 @@ const NoteList = forwardRef<
       filterMutedNotes = true,
       hideReplies = false,
       hideSpam = false,
+      trustScoreThreshold,
       areAlgoRelays = false,
       showRelayCloseReason = false,
       pinnedEventIds,
       filterFn,
       showNewNotesDirectly = false,
-      isPubkeyFeed = false,
-      disableTrustFilter = false
+      isPubkeyFeed = false
     },
     ref
   ) => {
@@ -106,20 +106,23 @@ const NoteList = forwardRef<
     const showNewNotesDirectlyRef = useRef(showNewNotesDirectly)
     showNewNotesDirectlyRef.current = showNewNotesDirectly
 
+    const pinnedEventHexIdSet = useMemo(() => {
+      const set = new Set<string>()
+      pinnedEventIds?.forEach((id) => {
+        try {
+          const { type, data } = decode(id)
+          if (type === 'nevent') {
+            set.add(data.id)
+          }
+        } catch {
+          // ignore
+        }
+      })
+      return set
+    }, [pinnedEventIds?.join(',')])
+
     const shouldHideEvent = useCallback(
       (evt: Event) => {
-        const pinnedEventHexIdSet = new Set()
-        pinnedEventIds?.forEach((id) => {
-          try {
-            const { type, data } = decode(id)
-            if (type === 'nevent') {
-              pinnedEventHexIdSet.add(data.id)
-            }
-          } catch {
-            // ignore
-          }
-        })
-
         if (pinnedEventHexIdSet.has(evt.id)) return true
         if (isEventDeleted(evt)) return true
         if (filterMutedNotes && mutePubkeySet.has(evt.pubkey)) return true
@@ -144,7 +147,7 @@ const NoteList = forwardRef<
 
         return false
       },
-      [mutePubkeySet, JSON.stringify(pinnedEventIds), isEventDeleted, filterFn, mutedWords]
+      [mutePubkeySet, isEventDeleted, filterFn, mutedWords, pinnedEventHexIdSet]
     )
 
     useEffect(() => {
@@ -222,7 +225,10 @@ const NoteList = forwardRef<
           }
         })
 
-        if (disableTrustFilter) {
+        const _trustScoreThreshold = hideSpam
+          ? SPAMMER_PERCENTILE_THRESHOLD
+          : (trustScoreThreshold ?? 0)
+        if (!_trustScoreThreshold || _trustScoreThreshold <= 0) {
           setFilteredNotes(
             filteredEvents.map((evt, i) => {
               const key = keys[i]
@@ -236,12 +242,7 @@ const NoteList = forwardRef<
           await Promise.all(
             filteredEvents.map(async (evt, i) => {
               // Check trust score filter
-              if (
-                !(await meetsMinTrustScore(
-                  evt.pubkey,
-                  hideSpam ? SPAMMER_PERCENTILE_THRESHOLD : undefined
-                ))
-              ) {
+              if (!(await meetsMinTrustScore(evt.pubkey, _trustScoreThreshold))) {
                 return null
               }
               const key = keys[i]
@@ -266,7 +267,7 @@ const NoteList = forwardRef<
       hideReplies,
       hideSpam,
       meetsMinTrustScore,
-      disableTrustFilter
+      trustScoreThreshold
     ])
 
     useEffect(() => {
@@ -286,6 +287,14 @@ const NoteList = forwardRef<
           filteredEvents.push(event)
         })
 
+        const _trustScoreThreshold = hideSpam
+          ? SPAMMER_PERCENTILE_THRESHOLD
+          : (trustScoreThreshold ?? 0)
+        if (!_trustScoreThreshold || _trustScoreThreshold <= 0) {
+          setFilteredNewEvents(filteredEvents)
+          return
+        }
+
         const _filteredNotes = (
           await Promise.all(
             filteredEvents.map(async (evt) => {
@@ -293,7 +302,7 @@ const NoteList = forwardRef<
                 return null
               }
               // Check trust score filter
-              if (!(await meetsMinTrustScore(evt.pubkey))) {
+              if (!(await meetsMinTrustScore(evt.pubkey, _trustScoreThreshold))) {
                 return null
               }
               return evt
@@ -303,7 +312,7 @@ const NoteList = forwardRef<
         setFilteredNewEvents(_filteredNotes)
       }
       processNewEvents()
-    }, [newEvents, shouldHideEvent, isSpammer, hideSpam, meetsMinTrustScore])
+    }, [newEvents, shouldHideEvent, isSpammer, hideSpam, meetsMinTrustScore, trustScoreThreshold])
 
     const scrollToTop = (behavior: ScrollBehavior = 'instant') => {
       setTimeout(() => {

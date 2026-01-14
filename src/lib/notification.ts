@@ -13,7 +13,7 @@ export async function notificationFilter(
     pubkey?: string | null
     mutePubkeySet: Set<string>
     hideContentMentioningMutedUsers?: boolean
-    meetsMinTrustScore: (pubkey: string, minScore?: number) => Promise<boolean>
+    meetsMinTrustScore: (pubkey: string) => Promise<boolean>
   }
 ): Promise<boolean> {
   if (

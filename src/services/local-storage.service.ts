@@ -64,9 +64,10 @@ class LocalStorageService {
   private quickReaction: boolean = false
   private quickReactionEmoji: string | TEmoji = '+'
   private nsfwDisplayPolicy: TNsfwDisplayPolicy = NSFW_DISPLAY_POLICY.HIDE_CONTENT
-  private minTrustScore: number = 40
   private defaultRelayUrls: string[] = BIG_RELAY_URLS
   private mutedWords: string[] = []
+  private minTrustScore: number = 0
+  private minTrustScoreMap: Record<string, number> = {}
 
   constructor() {
     if (!LocalStorageService.instance) {
@@ -275,6 +276,18 @@ class LocalStorageService {
         storedHideUntrustedNotes
       ) {
         this.minTrustScore = 100 // set to max if any of the old settings were true
+      }
+    }
+
+    const minTrustScoreMapStr = window.localStorage.getItem(StorageKey.MIN_TRUST_SCORE_MAP)
+    if (minTrustScoreMapStr) {
+      try {
+        const map = JSON.parse(minTrustScoreMapStr)
+        if (typeof map === 'object' && map !== null) {
+          this.minTrustScoreMap = map
+        }
+      } catch {
+        // Invalid JSON, use default
       }
     }
 
@@ -643,6 +656,15 @@ class LocalStorageService {
       this.minTrustScore = score
       window.localStorage.setItem(StorageKey.MIN_TRUST_SCORE, score.toString())
     }
+  }
+
+  getMinTrustScoreMap() {
+    return this.minTrustScoreMap
+  }
+
+  setMinTrustScoreMap(map: Record<string, number>) {
+    this.minTrustScoreMap = map
+    window.localStorage.setItem(StorageKey.MIN_TRUST_SCORE_MAP, JSON.stringify(map))
   }
 
   getDefaultRelayUrls() {

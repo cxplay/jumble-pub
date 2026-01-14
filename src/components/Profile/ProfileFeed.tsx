@@ -177,7 +177,6 @@ export default function ProfileFeed({
         filterMutedNotes={false}
         pinnedEventIds={listMode === 'you' || !!search ? [] : pinnedEventIds}
         showNewNotesDirectly={myPubkey === pubkey}
-        disableTrustFilter
       />
     </>
   )

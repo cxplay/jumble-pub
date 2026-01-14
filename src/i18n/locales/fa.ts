@@ -674,6 +674,7 @@ export default {
     'Invalid relay URL': 'آدرس URL رله نامعتبر است',
     'Muted words': 'کلمات بی‌صدا شده',
     'Add muted word': 'افزودن کلمه بی‌صدا',
-    'Zap Details': 'جزئیات زپ'
+    'Zap Details': 'جزئیات زپ',
+    'Default trust score filter threshold ({{n}}%)': 'آستانه فیلتر امتیاز اعتماد پیش‌فرض ({{n}}%)'
   }
 }

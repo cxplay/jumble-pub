@@ -669,6 +669,7 @@ export default {
     'Invalid relay URL': '유효하지 않은 릴레이 URL',
     'Muted words': '차단 단어',
     'Add muted word': '차단 단어 추가',
-    'Zap Details': '잽 세부 정보'
+    'Zap Details': '잽 세부 정보',
+    'Default trust score filter threshold ({{n}}%)': '기본 신뢰 점수 필터 임계값 ({{n}}%)'
   }
 }

@@ -1,6 +1,6 @@
 import { Drawer, DrawerContent, DrawerOverlay } from '@/components/ui/drawer'
 import { Popover, PopoverAnchor, PopoverContent } from '@/components/ui/popover'
-import { LONG_PRESS_THRESHOLD } from '@/constants'
+import { LONG_PRESS_THRESHOLD, SPECIAL_TRUST_SCORE_FILTER_ID } from '@/constants'
 import { useStuff } from '@/hooks/useStuff'
 import { useStuffStatsById } from '@/hooks/useStuffStatsById'
 import {
@@ -28,7 +28,7 @@ export default function LikeButton({ stuff }: { stuff: Event | string }) {
   const { t } = useTranslation()
   const { isSmallScreen } = useScreenSize()
   const { pubkey, publish, checkLogin } = useNostr()
-  const { meetsMinTrustScore } = useUserTrust()
+  const { getMinTrustScore, meetsMinTrustScore } = useUserTrust()
   const { quickReaction, quickReactionEmoji } = useUserPreferences()
   const { event, externalContent, stuffKey } = useStuff(stuff)
   const [liking, setLiking] = useState(false)
@@ -49,9 +49,15 @@ export default function LikeButton({ stuff }: { stuff: Event | string }) {
       const stats = noteStats || {}
       const likes = stats.likes || []
       let count = 0
+
+      const trustScoreThreshold = getMinTrustScore(SPECIAL_TRUST_SCORE_FILTER_ID.INTERACTIONS)
+      if (!trustScoreThreshold) {
+        setLikeCount(likes.length)
+        return
+      }
       await Promise.all(
         likes.map(async (like) => {
-          if (await meetsMinTrustScore(like.pubkey)) {
+          if (await meetsMinTrustScore(like.pubkey, trustScoreThreshold)) {
             count++
           }
         })
@@ -59,7 +65,7 @@ export default function LikeButton({ stuff }: { stuff: Event | string }) {
       setLikeCount(count)
     }
     filterLikes()
-  }, [noteStats, meetsMinTrustScore])
+  }, [noteStats, meetsMinTrustScore, getMinTrustScore])
 
   useEffect(() => {
     setTimeout(() => setIsPickerOpen(false), 100)

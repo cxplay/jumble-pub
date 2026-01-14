@@ -668,6 +668,8 @@ export default {
     'Invalid relay URL': 'Érvénytelen továbbító URL',
     'Muted words': 'Némított szavak',
     'Add muted word': 'Némított szó hozzáadása',
-    'Zap Details': 'Zap Részletek'
+    'Zap Details': 'Zap Részletek',
+    'Default trust score filter threshold ({{n}}%)':
+      'Alapértelmezett bizalmi pontszám szűrő küszöbérték ({{n}}%)'
   }
 }

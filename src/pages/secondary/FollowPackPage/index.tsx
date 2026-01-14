@@ -4,6 +4,7 @@ import ProfileList from '@/components/ProfileList'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useFetchEvent } from '@/hooks/useFetchEvent'
 import SecondaryPageLayout from '@/layouts/SecondaryPageLayout'
+import { getEventKey } from '@/lib/event'
 import { getFollowPackInfoFromEvent } from '@/lib/event-metadata'
 import { cn } from '@/lib/utils'
 import { useNostr } from '@/providers/NostrProvider'
@@ -96,7 +97,9 @@ const FollowPackPage = forwardRef(({ id, index }: { id?: string; index?: number 
 
         {/* Content */}
         {tab === 'users' && <ProfileList pubkeys={pubkeys} />}
-        {tab === 'feed' && pubkeys.length > 0 && <Feed pubkeys={pubkeys} />}
+        {tab === 'feed' && pubkeys.length > 0 && (
+          <Feed trustScoreFilterId={`follow-pack-${getEventKey(event)}`} pubkeys={pubkeys} />
+        )}
       </div>
     </SecondaryPageLayout>
   )
@@ -104,7 +107,7 @@ const FollowPackPage = forwardRef(({ id, index }: { id?: string; index?: number 
 FollowPackPage.displayName = 'FollowPackPage'
 export default FollowPackPage
 
-function Feed({ pubkeys }: { pubkeys: string[] }) {
+function Feed({ trustScoreFilterId, pubkeys }: { trustScoreFilterId: string; pubkeys: string[] }) {
   const { pubkey: myPubkey } = useNostr()
   const [subRequests, setSubRequests] = useState<TFeedSubRequest[]>([])
 
@@ -112,5 +115,5 @@ function Feed({ pubkeys }: { pubkeys: string[] }) {
     client.generateSubRequestsForPubkeys(pubkeys, myPubkey).then(setSubRequests)
   }, [pubkeys, myPubkey])
 
-  return <NormalFeed subRequests={subRequests} />
+  return <NormalFeed trustScoreFilterId={trustScoreFilterId} subRequests={subRequests} />
 }

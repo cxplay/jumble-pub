@@ -28,20 +28,22 @@ function getDescription(score: number, t: (key: string, options?: any) => string
 }
 
 export default function TrustScoreFilter({
+  filterId,
   onOpenChange
 }: {
+  filterId: string
   onOpenChange?: (open: boolean) => void
 }) {
   const { t } = useTranslation()
   const { isSmallScreen } = useScreenSize()
-  const { minTrustScore, updateMinTrustScore } = useUserTrust()
+  const { getMinTrustScore, updateMinTrustScore } = useUserTrust()
   const [open, setOpen] = useState(false)
-  const [temporaryScore, setTemporaryScore] = useState(minTrustScore)
+  const [temporaryScore, setTemporaryScore] = useState(0)
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
-    setTemporaryScore(minTrustScore)
-  }, [minTrustScore])
+    setTemporaryScore(getMinTrustScore(filterId))
+  }, [getMinTrustScore, filterId])
 
   // Debounced update function
   const handleScoreChange = (newScore: number) => {
@@ -54,7 +56,7 @@ export default function TrustScoreFilter({
 
     // Set new timer for debounced update
     debounceTimerRef.current = setTimeout(() => {
-      updateMinTrustScore(newScore)
+      updateMinTrustScore(filterId, newScore)
     }, 300) // 300ms debounce delay
   }
 
@@ -81,7 +83,7 @@ export default function TrustScoreFilter({
       size="titlebar-icon"
       className={cn(
         'relative',
-        minTrustScore === 0
+        temporaryScore === 0
           ? 'text-muted-foreground hover:text-foreground'
           : 'text-primary hover:text-primary-hover'
       )}
@@ -89,10 +91,10 @@ export default function TrustScoreFilter({
         setOpen(true)
       }}
     >
-      {minTrustScore < 100 ? <Shield size={16} /> : <ShieldCheck size={16} />}
-      {minTrustScore > 0 && minTrustScore < 100 && (
+      {temporaryScore < 100 ? <Shield size={16} /> : <ShieldCheck size={16} />}
+      {temporaryScore > 0 && temporaryScore < 100 && (
         <div className="absolute inset-0 w-full h-full flex flex-col items-center justify-center text-[0.5rem] font-mono font-bold">
-          {minTrustScore}
+          {temporaryScore}
         </div>
       )}
     </Button>

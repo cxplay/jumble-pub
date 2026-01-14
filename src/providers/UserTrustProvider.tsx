@@ -1,3 +1,4 @@
+import { SPECIAL_TRUST_SCORE_FILTER_ID } from '@/constants'
 import client from '@/services/client.service'
 import fayan from '@/services/fayan.service'
 import storage from '@/services/local-storage.service'
@@ -6,10 +7,12 @@ import { useNostr } from './NostrProvider'
 
 type TUserTrustContext = {
   minTrustScore: number
-  updateMinTrustScore: (score: number) => void
+  minTrustScoreMap: Record<string, number>
+  getMinTrustScore: (id: string) => number
+  updateMinTrustScore: (id: string, score: number) => void
   isUserTrusted: (pubkey: string) => boolean
   isSpammer: (pubkey: string) => Promise<boolean>
-  meetsMinTrustScore: (pubkey: string, minScore?: number) => Promise<boolean>
+  meetsMinTrustScore: (pubkey: string, minScore: number) => Promise<boolean>
 }
 
 const UserTrustContext = createContext<TUserTrustContext | undefined>(undefined)
@@ -27,6 +30,9 @@ const wotSet = new Set<string>()
 export function UserTrustProvider({ children }: { children: React.ReactNode }) {
   const { pubkey: currentPubkey } = useNostr()
   const [minTrustScore, setMinTrustScore] = useState(() => storage.getMinTrustScore())
+  const [minTrustScoreMap, setMinTrustScoreMap] = useState<Record<string, number>>(() =>
+    storage.getMinTrustScoreMap()
+  )
 
   useEffect(() => {
     if (!currentPubkey) return
@@ -70,15 +76,31 @@ export function UserTrustProvider({ children }: { children: React.ReactNode }) {
     [isUserTrusted]
   )
 
-  const updateMinTrustScore = (score: number) => {
-    setMinTrustScore(score)
-    storage.setMinTrustScore(score)
+  const getMinTrustScore = useCallback(
+    (id: string) => {
+      return id === SPECIAL_TRUST_SCORE_FILTER_ID.DEFAULT
+        ? minTrustScore
+        : (minTrustScoreMap[id] ?? minTrustScore)
+    },
+    [minTrustScore, minTrustScoreMap]
+  )
+
+  const updateMinTrustScore = (id: string, score: number) => {
+    if (score < 0 || score > 100) return
+
+    if (id === SPECIAL_TRUST_SCORE_FILTER_ID.DEFAULT) {
+      setMinTrustScore(score)
+      storage.setMinTrustScore(score)
+    } else {
+      const newMap = { ...minTrustScoreMap, [id]: score }
+      setMinTrustScoreMap(newMap)
+      storage.setMinTrustScoreMap(newMap)
+    }
   }
 
   const meetsMinTrustScore = useCallback(
-    async (pubkey: string, minScore?: number) => {
-      const threshold = minScore !== undefined ? minScore : minTrustScore
-      if (threshold === 0) return true
+    async (pubkey: string, minScore: number) => {
+      if (minScore === 0) return true
       if (pubkey === currentPubkey) return true
 
       // WoT users always have 100% trust score
@@ -87,15 +109,17 @@ export function UserTrustProvider({ children }: { children: React.ReactNode }) {
       // Get percentile from reputation system
       const percentile = await fayan.fetchUserPercentile(pubkey)
       if (percentile === null) return true // If no data, indicate the trust server is down, so allow the user
-      return percentile >= threshold
+      return percentile >= minScore
     },
-    [currentPubkey, minTrustScore]
+    [currentPubkey]
   )
 
   return (
     <UserTrustContext.Provider
       value={{
         minTrustScore,
+        minTrustScoreMap,
+        getMinTrustScore,
         updateMinTrustScore,
         isUserTrusted,
         isSpammer,

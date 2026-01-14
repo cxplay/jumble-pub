@@ -1,5 +1,6 @@
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
+import { SPECIAL_TRUST_SCORE_FILTER_ID } from '@/constants'
 import { useState } from 'react'
 import QuoteList from '../QuoteList'
 import ReactionList from '../ReactionList'
@@ -37,7 +38,7 @@ export default function ExternalContentInteractions({
         </ScrollArea>
         <Separator orientation="vertical" className="h-6" />
         <div className="size-10 flex items-center justify-center">
-          <TrustScoreFilter />
+          <TrustScoreFilter filterId={SPECIAL_TRUST_SCORE_FILTER_ID.INTERACTIONS} />
         </div>
       </div>
       <Separator />

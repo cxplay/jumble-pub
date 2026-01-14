@@ -1,6 +1,7 @@
 import { useSecondaryPage } from '@/PageManager'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
+import { SPECIAL_TRUST_SCORE_FILTER_ID } from '@/constants'
 import { useThread } from '@/hooks/useThread'
 import { getEventKey, isMentioningMutedUsers } from '@/lib/event'
 import { toNote } from '@/lib/link'
@@ -42,7 +43,7 @@ export default function ReplyNote({
   const { isSmallScreen } = useScreenSize()
   const { push } = useSecondaryPage()
   const { mutePubkeySet } = useMuteList()
-  const { minTrustScore, meetsMinTrustScore } = useUserTrust()
+  const { getMinTrustScore, meetsMinTrustScore } = useUserTrust()
   const { hideContentMentioningMutedUsers } = useContentPolicy()
   const eventKey = useMemo(() => getEventKey(event), [event])
   const replies = useThread(eventKey)
@@ -69,6 +70,7 @@ export default function ReplyNote({
         return
       }
 
+      const trustScoreThreshold = getMinTrustScore(SPECIAL_TRUST_SCORE_FILTER_ID.INTERACTIONS)
       for (const reply of replies) {
         if (mutePubkeySet.has(reply.pubkey)) {
           continue
@@ -76,7 +78,7 @@ export default function ReplyNote({
         if (hideContentMentioningMutedUsers && isMentioningMutedUsers(reply, mutePubkeySet)) {
           continue
         }
-        if (!(await meetsMinTrustScore(reply.pubkey))) {
+        if (trustScoreThreshold && !(await meetsMinTrustScore(reply.pubkey, trustScoreThreshold))) {
           continue
         }
         setHasReplies(true)
@@ -86,7 +88,13 @@ export default function ReplyNote({
     }
 
     checkHasReplies()
-  }, [replies, minTrustScore, meetsMinTrustScore, mutePubkeySet, hideContentMentioningMutedUsers])
+  }, [
+    replies,
+    getMinTrustScore,
+    meetsMinTrustScore,
+    mutePubkeySet,
+    hideContentMentioningMutedUsers
+  ])
 
   return (
     <div

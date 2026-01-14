@@ -683,6 +683,8 @@ export default {
     'Invalid relay URL': 'URL de relais non valide',
     'Muted words': 'Mots masqués',
     'Add muted word': 'Ajouter un mot masqué',
-    'Zap Details': 'Détails du Zap'
+    'Zap Details': 'Détails du Zap',
+    'Default trust score filter threshold ({{n}}%)':
+      'Seuil par défaut du filtre de score de confiance ({{n}}%)'
   }
 }

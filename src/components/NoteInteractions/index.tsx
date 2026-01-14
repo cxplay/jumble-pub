@@ -1,5 +1,6 @@
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
+import { SPECIAL_TRUST_SCORE_FILTER_ID } from '@/constants'
 import { Event } from 'nostr-tools'
 import { useState } from 'react'
 import QuoteList from '../QuoteList'
@@ -42,7 +43,7 @@ export default function NoteInteractions({ event }: { event: Event }) {
           <ScrollBar orientation="horizontal" className="opacity-0 pointer-events-none" />
         </ScrollArea>
         <Separator orientation="vertical" className="h-6" />
-        <TrustScoreFilter />
+        <TrustScoreFilter filterId={SPECIAL_TRUST_SCORE_FILTER_ID.INTERACTIONS} />
       </div>
       <Separator />
       {list}

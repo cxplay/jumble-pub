@@ -1,5 +1,6 @@
 import NotificationList from '@/components/NotificationList'
 import TrustScoreFilter from '@/components/TrustScoreFilter'
+import { SPECIAL_TRUST_SCORE_FILTER_ID } from '@/constants'
 import PrimaryPageLayout from '@/layouts/PrimaryPageLayout'
 import { usePrimaryPage } from '@/PageManager'
 import { TPageRef } from '@/types'
@@ -42,7 +43,7 @@ function NotificationListPageTitlebar() {
         <Bell />
         <div className="text-lg font-semibold">{t('Notifications')}</div>
       </div>
-      <TrustScoreFilter />
+      <TrustScoreFilter filterId={SPECIAL_TRUST_SCORE_FILTER_ID.NOTIFICATIONS} />
     </div>
   )
 }
