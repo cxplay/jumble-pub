@@ -561,8 +561,7 @@ export default {
     'External Content': '外部コンテンツ',
     Highlight: 'ハイライト',
     'Optimal relays and {{count}} other relays': '最適なリレーと他の{{count}}個のリレー',
-    'Likely spam account (Trust score: {{percentile}}%)':
-      'スパムの可能性が高いアカウント（信頼スコア：{{percentile}}%）',
+    'Low trust ranking ({{percentile}}%)': '信頼度が低いアカウント ({{percentile}}%)',
     'Suspicious account (Trust score: {{percentile}}%)':
       '疑わしいアカウント（信頼スコア：{{percentile}}%）',
     'n users': '{{count}}人のユーザー',

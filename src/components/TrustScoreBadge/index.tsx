@@ -54,11 +54,11 @@ export default function TrustScoreBadge({
 
   if (loading || percentile === null) return null
 
-  // percentile < 40: likely spam (red alert)
+  // percentile < 40: low trust ranking (red alert)
   if (percentile < 40) {
     return (
       <div
-        title={t('Likely spam account (Trust score: {{percentile}}%)', { percentile })}
+        title={t('Low trust ranking ({{percentile}}%)', { percentile })}
         className={classNames?.container}
       >
         <ShieldAlert className={cn('!size-4 text-red-500', className)} />

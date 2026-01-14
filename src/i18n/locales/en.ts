@@ -556,8 +556,7 @@ export default {
     'External Content': 'External Content',
     Highlight: 'Highlight',
     'Optimal relays and {{count}} other relays': 'Optimal relays and {{count}} other relays',
-    'Likely spam account (Trust score: {{percentile}}%)':
-      'Likely spam account (Trust score: {{percentile}}%)',
+    'Low trust ranking ({{percentile}}%)': 'Low trust ranking ({{percentile}}%)',
     'Suspicious account (Trust score: {{percentile}}%)':
       'Suspicious account (Trust score: {{percentile}}%)',
     'n users': '{{count}} users',

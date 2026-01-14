@@ -562,8 +562,7 @@ export default {
     'External Content': 'बाहरी सामग्री',
     Highlight: 'हाइलाइट',
     'Optimal relays and {{count}} other relays': 'इष्टतम रिले और {{count}} अन्य रिले',
-    'Likely spam account (Trust score: {{percentile}}%)':
-      'संभावित स्पैम खाता (विश्वास स्कोर: {{percentile}}%)',
+    'Low trust ranking ({{percentile}}%)': 'कम विश्वास रैंकिंग ({{percentile}}%)',
     'Suspicious account (Trust score: {{percentile}}%)':
       'संदिग्ध खाता (विश्वास स्कोर: {{percentile}}%)',
     'n users': '{{count}} उपयोगकर्ता',

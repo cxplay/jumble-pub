@@ -567,8 +567,7 @@ export default {
     Highlight: 'Podświetl',
     'Optimal relays and {{count}} other relays':
       'Optymalne transmitery i {{count}} innych transmiterów',
-    'Likely spam account (Trust score: {{percentile}}%)':
-      'Prawdopodobnie konto spamowe (Wynik zaufania: {{percentile}}%)',
+    'Low trust ranking ({{percentile}}%)': 'Niski ranking zaufania ({{percentile}}%)',
     'Suspicious account (Trust score: {{percentile}}%)':
       'Podejrzane konto (Wynik zaufania: {{percentile}}%)',
     'n users': '{{count}} użytkowników',

@@ -554,8 +554,7 @@ export default {
     'External Content': 'เนื้อหาภายนอก',
     Highlight: 'ไฮไลต์',
     'Optimal relays and {{count}} other relays': 'รีเลย์ที่เหมาะสมและรีเลย์อื่น {{count}} รายการ',
-    'Likely spam account (Trust score: {{percentile}}%)':
-      'น่าจะเป็นบัญชีสแปม (คะแนนความน่าเชื่อถือ: {{percentile}}%)',
+    'Low trust ranking ({{percentile}}%)': 'อันดับความน่าเชื่อถือต่ำ ({{percentile}}%)',
     'Suspicious account (Trust score: {{percentile}}%)':
       'บัญชีที่น่าสงสัย (คะแนนความน่าเชื่อถือ: {{percentile}}%)',
     'n users': '{{count}} ผู้ใช้',

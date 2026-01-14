@@ -567,8 +567,7 @@ export default {
     'External Content': 'Внешний контент',
     Highlight: 'Выделить',
     'Optimal relays and {{count}} other relays': 'Оптимальные релеи и {{count}} других релеев',
-    'Likely spam account (Trust score: {{percentile}}%)':
-      'Вероятно спам-аккаунт (Оценка доверия: {{percentile}}%)',
+    'Low trust ranking ({{percentile}}%)': 'Низкий рейтинг доверия ({{percentile}}%)',
     'Suspicious account (Trust score: {{percentile}}%)':
       'Подозрительный аккаунт (Оценка доверия: {{percentile}}%)',
     'n users': '{{count}} пользователей',

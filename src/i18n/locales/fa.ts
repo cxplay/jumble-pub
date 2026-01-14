@@ -561,8 +561,7 @@ export default {
     'External Content': 'محتوای خارجی',
     Highlight: 'برجسته‌سازی',
     'Optimal relays and {{count}} other relays': 'رله‌های بهینه و {{count}} رله دیگر',
-    'Likely spam account (Trust score: {{percentile}}%)':
-      'احتمالاً حساب هرزنامه (امتیاز اعتماد: {{percentile}}%)',
+    'Low trust ranking ({{percentile}}%)': 'رتبه اعتماد پایین ({{percentile}}%)',
     'Suspicious account (Trust score: {{percentile}}%)':
       'حساب مشکوک (امتیاز اعتماد: {{percentile}}%)',
     'n users': '{{count}} کاربر',

@@ -571,8 +571,7 @@ export default {
     'External Content': 'Externer Inhalt',
     Highlight: 'Hervorheben',
     'Optimal relays and {{count}} other relays': 'Optimale Relays und {{count}} andere Relays',
-    'Likely spam account (Trust score: {{percentile}}%)':
-      'Wahrscheinlich Spam-Konto (Vertrauenswert: {{percentile}}%)',
+    'Low trust ranking ({{percentile}}%)': 'Niedriges Vertrauensranking ({{percentile}}%)',
     'Suspicious account (Trust score: {{percentile}}%)':
       'Verdächtiges Konto (Vertrauenswert: {{percentile}}%)',
     'n users': '{{count}} Benutzer',

@@ -556,8 +556,7 @@ export default {
     'External Content': 'محتوى خارجي',
     Highlight: 'تسليط الضوء',
     'Optimal relays and {{count}} other relays': 'المرحلات المثلى و {{count}} مرحلات أخرى',
-    'Likely spam account (Trust score: {{percentile}}%)':
-      'حساب مشبوه للغاية (درجة الثقة: {{percentile}}%)',
+    'Low trust ranking ({{percentile}}%)': 'تصنيف ثقة منخفض ({{percentile}}%)',
     'Suspicious account (Trust score: {{percentile}}%)': 'حساب مشبوه (درجة الثقة: {{percentile}}%)',
     'n users': '{{count}} مستخدمين',
     'View Details': 'عرض التفاصيل',

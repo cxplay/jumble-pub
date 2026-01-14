@@ -548,8 +548,7 @@ export default {
     'External Content': '外部内容',
     Highlight: '高亮',
     'Optimal relays and {{count}} other relays': '最佳中继器和其他 {{count}} 个中继器',
-    'Likely spam account (Trust score: {{percentile}}%)':
-      '疑似垃圾账号（信任分数：{{percentile}}%）',
+    'Low trust ranking ({{percentile}}%)': '可信度较低 ({{percentile}}%)',
     'Suspicious account (Trust score: {{percentile}}%)': '可疑账号（信任分数：{{percentile}}%）',
     'n users': '{{count}} 位用户',
     'View Details': '查看详情',

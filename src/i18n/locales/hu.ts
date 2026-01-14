@@ -556,8 +556,7 @@ export default {
     'External Content': 'Külső tartalom',
     Highlight: 'Kiemelés',
     'Optimal relays and {{count}} other relays': 'Optimális relay-ek és {{count}} másik relay',
-    'Likely spam account (Trust score: {{percentile}}%)':
-      'Valószínűleg spam fiók (Megbízhatósági pontszám: {{percentile}}%)',
+    'Low trust ranking ({{percentile}}%)': 'Alacsony megbízhatósági rangsor ({{percentile}}%)',
     'Suspicious account (Trust score: {{percentile}}%)':
       'Gyanús fiók (Megbízhatósági pontszám: {{percentile}}%)',
     'n users': '{{count}} felhasználó',
