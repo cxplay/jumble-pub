@@ -18,7 +18,7 @@ export default function FollowedBy({ pubkey }: { pubkey: string }) {
       const followings = (await client.fetchFollowings(accountPubkey)).reverse()
       const followingsOfFollowings = await Promise.all(
         followings.map(async (following) => {
-          return client.fetchFollowings(following)
+          return client.fetchFollowings(following, false)
         })
       )
       const _followedBy: string[] = []
