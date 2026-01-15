@@ -669,6 +669,8 @@ export default {
     'Add muted word': 'Némított szó hozzáadása',
     'Zap Details': 'Zap Részletek',
     'Default trust score filter threshold ({{n}}%)':
-      'Alapértelmezett bizalmi pontszám szűrő küszöbérték ({{n}}%)'
+      'Alapértelmezett bizalmi pontszám szűrő küszöbérték ({{n}}%)',
+    'No notes found': 'Nem található jegyzet',
+    'Try again later or check your connection': 'Próbáld újra később vagy ellenőrizd a kapcsolatot'
   }
 }

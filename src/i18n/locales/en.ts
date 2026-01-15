@@ -668,6 +668,8 @@ export default {
     'Muted words': 'Muted words',
     'Add muted word': 'Add muted word',
     'Zap Details': 'Zap Details',
-    'Default trust score filter threshold ({{n}}%)': 'Default trust score filter threshold ({{n}}%)'
+    'Default trust score filter threshold ({{n}}%)': 'Default trust score filter threshold ({{n}}%)',
+    'No notes found': 'No notes found',
+    'Try again later or check your connection': 'Try again later or check your connection'
   }
 }

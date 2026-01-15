@@ -494,7 +494,11 @@ const NoteList = forwardRef<
         ) : events.length ? (
           <div className="text-center text-sm text-muted-foreground mt-2">{t('no more notes')}</div>
         ) : (
-          <div className="flex justify-center w-full mt-2">
+          <div className="flex flex-col items-center justify-center w-full mt-8 gap-4">
+            <div className="text-center text-muted-foreground">
+              <div className="text-lg font-medium">{t('No notes found')}</div>
+              <div className="text-sm mt-1">{t('Try again later or check your connection')}</div>
+            </div>
             <Button size="lg" onClick={() => setRefreshCount((count) => count + 1)}>
               {t('Reload')}
             </Button>

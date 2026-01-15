@@ -674,6 +674,8 @@ export default {
     'Muted words': 'کلمات بی‌صدا شده',
     'Add muted word': 'افزودن کلمه بی‌صدا',
     'Zap Details': 'جزئیات زپ',
-    'Default trust score filter threshold ({{n}}%)': 'آستانه فیلتر امتیاز اعتماد پیش‌فرض ({{n}}%)'
+    'Default trust score filter threshold ({{n}}%)': 'آستانه فیلتر امتیاز اعتماد پیش‌فرض ({{n}}%)',
+    'No notes found': 'یادداشتی یافت نشد',
+    'Try again later or check your connection': 'بعداً دوباره امتحان کنید یا اتصال خود را بررسی کنید'
   }
 }

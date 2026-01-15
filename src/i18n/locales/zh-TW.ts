@@ -647,6 +647,8 @@ export default {
     'Muted words': '屏蔽詞',
     'Add muted word': '添加屏蔽詞',
     'Zap Details': '打閃詳情',
-    'Default trust score filter threshold ({{n}}%)': '預設信任分數過濾閾值 ({{n}}%)'
+    'Default trust score filter threshold ({{n}}%)': '預設信任分數過濾閾值 ({{n}}%)',
+    'No notes found': '沒有找到筆記',
+    'Try again later or check your connection': '請稍後重試或檢查網路連接'
   }
 }

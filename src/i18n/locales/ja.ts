@@ -673,6 +673,8 @@ export default {
     'Muted words': 'ミュートワード',
     'Add muted word': 'ミュートワードを追加',
     'Zap Details': 'Zapの詳細',
-    'Default trust score filter threshold ({{n}}%)': 'デフォルトの信頼スコアフィルター閾値 ({{n}}%)'
+    'Default trust score filter threshold ({{n}}%)': 'デフォルトの信頼スコアフィルター閾値 ({{n}}%)',
+    'No notes found': 'ノートが見つかりません',
+    'Try again later or check your connection': '後でもう一度お試しいただくか、接続を確認してください'
   }
 }

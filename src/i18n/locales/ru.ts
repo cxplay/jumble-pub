@@ -680,6 +680,8 @@ export default {
     'Add muted word': 'Добавить заблокированное слово',
     'Zap Details': 'Детали запа',
     'Default trust score filter threshold ({{n}}%)':
-      'Порог фильтра рейтинга доверия по умолчанию ({{n}}%)'
+      'Порог фильтра рейтинга доверия по умолчанию ({{n}}%)',
+    'No notes found': 'Заметки не найдены',
+    'Try again later or check your connection': 'Попробуйте позже или проверьте подключение'
   }
 }

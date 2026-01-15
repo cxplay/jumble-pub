@@ -680,6 +680,8 @@ export default {
     'Add muted word': 'Aggiungi parola silenziata',
     'Zap Details': 'Dettagli Zap',
     'Default trust score filter threshold ({{n}}%)':
-      'Soglia predefinita del filtro del punteggio di fiducia ({{n}}%)'
+      'Soglia predefinita del filtro del punteggio di fiducia ({{n}}%)',
+    'No notes found': 'Nessuna nota trovata',
+    'Try again later or check your connection': 'Riprova più tardi o controlla la connessione'
   }
 }

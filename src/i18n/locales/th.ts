@@ -665,6 +665,8 @@ export default {
     'Add muted word': 'เพิ่มคำที่ถูกปิดเสียง',
     'Zap Details': 'รายละเอียดซาตส์',
     'Default trust score filter threshold ({{n}}%)':
-      'เกณฑ์ตัวกรองคะแนนความไว้วางใจเริ่มต้น ({{n}}%)'
+      'เกณฑ์ตัวกรองคะแนนความไว้วางใจเริ่มต้น ({{n}}%)',
+    'No notes found': 'ไม่พบโน้ต',
+    'Try again later or check your connection': 'ลองใหม่ภายหลังหรือตรวจสอบการเชื่อมต่อของคุณ'
   }
 }

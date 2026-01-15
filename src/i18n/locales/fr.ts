@@ -684,6 +684,8 @@ export default {
     'Add muted word': 'Ajouter un mot masqué',
     'Zap Details': 'Détails du Zap',
     'Default trust score filter threshold ({{n}}%)':
-      'Seuil par défaut du filtre de score de confiance ({{n}}%)'
+      'Seuil par défaut du filtre de score de confiance ({{n}}%)',
+    'No notes found': 'Aucune note trouvée',
+    'Try again later or check your connection': 'Réessayez plus tard ou vérifiez votre connexion'
   }
 }

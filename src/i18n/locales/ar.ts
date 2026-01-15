@@ -663,6 +663,8 @@ export default {
     'Muted words': 'الكلمات المحظورة',
     'Add muted word': 'إضافة كلمة محظورة',
     'Zap Details': 'تفاصيل Zap',
-    'Default trust score filter threshold ({{n}}%)': 'عتبة مرشح درجة الثقة الافتراضية ({{n}}%)'
+    'Default trust score filter threshold ({{n}}%)': 'عتبة مرشح درجة الثقة الافتراضية ({{n}}%)',
+    'No notes found': 'لم يتم العثور على ملاحظات',
+    'Try again later or check your connection': 'حاول مرة أخرى لاحقًا أو تحقق من اتصالك'
   }
 }

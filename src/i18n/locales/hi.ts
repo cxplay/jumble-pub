@@ -675,6 +675,8 @@ export default {
     'Muted words': 'म्यूट किए गए शब्द',
     'Add muted word': 'म्यूट शब्द जोड़ें',
     'Zap Details': 'जैप विवरण',
-    'Default trust score filter threshold ({{n}}%)': 'डिफ़ॉल्ट विश्वास स्कोर फ़िल्टर सीमा ({{n}}%)'
+    'Default trust score filter threshold ({{n}}%)': 'डिफ़ॉल्ट विश्वास स्कोर फ़िल्टर सीमा ({{n}}%)',
+    'No notes found': 'कोई नोट्स नहीं मिले',
+    'Try again later or check your connection': 'बाद में पुनः प्रयास करें या अपना कनेक्शन जाँचें'
   }
 }
