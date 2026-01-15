@@ -1,5 +1,11 @@
+import { getProfileFromEvent } from '@/lib/event-metadata'
 import { userIdToPubkey } from '@/lib/pubkey'
+import { TProfile } from '@/types'
 import DataLoader from 'dataloader'
+import { NostrEvent } from 'nostr-tools'
+import client from './client.service'
+
+const SERVICE_URL = 'https://fayan.jumble.social'
 
 class FayanService {
   static instance: FayanService
@@ -7,7 +13,7 @@ class FayanService {
   private userPercentileDataLoader = new DataLoader<string, number | null>(
     async (pubkeys) => {
       try {
-        const res = await fetch(`https://fayan.jumble.social/users`, {
+        const res = await fetch(`${SERVICE_URL}/users`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -30,6 +36,7 @@ class FayanService {
       }
     }
   )
+  private searchResultCache: Map<string, TProfile[]> = new Map()
 
   constructor() {
     if (!FayanService.instance) {
@@ -41,6 +48,50 @@ class FayanService {
   // null means server error
   async fetchUserPercentile(userId: string): Promise<number | null> {
     return await this.userPercentileDataLoader.load(userId)
+  }
+
+  async searchUsers(query: string, limit = 20, offset = 0) {
+    const cache = this.searchResultCache.get(query)
+    if (cache) {
+      if (offset + limit <= cache.length) {
+        console.log('FayanService searchUsers returning from cache')
+        return cache.slice(offset, offset + limit)
+      }
+    }
+    try {
+      const url = new URL('/search', SERVICE_URL)
+      url.searchParams.append('q', query)
+      url.searchParams.append('limit', limit.toString())
+      if (offset > 0) {
+        url.searchParams.append('offset', offset.toString())
+      }
+
+      const res = await fetch(url.toString())
+      if (!res.ok) {
+        return []
+      }
+      const data = (await res.json()) as { event: NostrEvent; percentile: number }[]
+      const profiles: TProfile[] = []
+      data.forEach(({ event, percentile }) => {
+        const profile = getProfileFromEvent(event)
+        profiles.push(profile)
+        this.userPercentileDataLoader.prime(profile.pubkey, percentile)
+        client.updateProfileEventCache(event)
+      })
+
+      // Cache the results
+      const existingCache = this.searchResultCache.get(query) || []
+      if (offset === 0) {
+        this.searchResultCache.set(query, profiles)
+      } else if (offset <= existingCache.length) {
+        const newCache = existingCache.slice(0, offset).concat(profiles)
+        this.searchResultCache.set(query, newCache)
+      }
+
+      return profiles
+    } catch {
+      return []
+    }
   }
 }
 

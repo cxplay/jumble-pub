@@ -1,6 +1,5 @@
-import { SEARCHABLE_RELAY_URLS } from '@/constants'
 import { useFeed } from '@/providers/FeedProvider'
-import client from '@/services/client.service'
+import fayan from '@/services/fayan.service'
 import { TProfile } from '@/types'
 import { useEffect, useState } from 'react'
 import { useFetchRelayInfos } from './useFetchRelayInfos'
@@ -22,19 +21,9 @@ export function useSearchProfiles(search: string, limit: number) {
       setIsFetching(true)
       setProfiles([])
       try {
-        const profiles = await client.searchProfilesFromLocal(search, limit)
-        setProfiles(profiles)
-        if (profiles.length >= limit) {
-          return
-        }
-        const existingPubkeys = new Set(profiles.map((profile) => profile.pubkey))
-        const fetchedProfiles = await client.searchProfiles(
-          searchableRelayUrls.concat(SEARCHABLE_RELAY_URLS).slice(0, 4),
-          {
-            search,
-            limit
-          }
-        )
+        const existingPubkeys = new Set<string>()
+        const profiles: TProfile[] = []
+        const fetchedProfiles = await fayan.searchUsers(search, limit)
         if (fetchedProfiles.length) {
           fetchedProfiles.forEach((profile) => {
             if (existingPubkeys.has(profile.pubkey)) {

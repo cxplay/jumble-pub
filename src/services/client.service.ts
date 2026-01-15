@@ -1031,18 +1031,6 @@ class ClientService extends EventTarget {
 
   /** =========== Profile =========== */
 
-  async searchProfiles(relayUrls: string[], filter: Filter): Promise<TProfile[]> {
-    const events = await this.query(relayUrls, {
-      ...filter,
-      kinds: [kinds.Metadata]
-    })
-
-    const profileEvents = events.sort((a, b) => b.created_at - a.created_at)
-    await Promise.allSettled(profileEvents.map((profile) => this.addUsernameToIndex(profile)))
-    profileEvents.forEach((profile) => this.updateProfileEventCache(profile))
-    return profileEvents.map((profileEvent) => getProfileFromEvent(profileEvent))
-  }
-
   async searchNpubsFromLocal(query: string, limit: number = 100) {
     const result = await this.userIndex.searchAsync(query, { limit })
     return result.map((pubkey) => pubkeyToNpub(pubkey as string)).filter(Boolean) as string[]
@@ -1170,7 +1158,10 @@ class ClientService extends EventTarget {
   }
 
   async updateProfileEventCache(event: NEvent) {
-    await this.updateReplaceableEventFromBigRelaysCache(event)
+    await Promise.allSettled([
+      this.updateReplaceableEventFromBigRelaysCache(event),
+      this.addUsernameToIndex(event)
+    ])
   }
 
   /** =========== Relay list =========== */

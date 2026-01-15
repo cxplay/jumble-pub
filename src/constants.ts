@@ -76,7 +76,6 @@ export const BIG_RELAY_URLS = [
 export const SEARCHABLE_RELAY_URLS = [
   'wss://search.nos.today/',
   'wss://relay.ditto.pub/',
-  'wss://relay.nostrcheck.me/',
   'wss://relay.nostr.band/'
 ]
 
