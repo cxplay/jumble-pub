@@ -22,6 +22,8 @@ import { useTranslation } from 'react-i18next'
 import PostEditor from '../PostEditor'
 import { formatCount } from './utils'
 import { SPECIAL_TRUST_SCORE_FILTER_ID } from '@/constants'
+import { formatError } from '@/lib/error'
+import { toast } from 'sonner'
 
 export default function RepostButton({ stuff }: { stuff: Event | string }) {
   const { t } = useTranslation()
@@ -87,7 +89,10 @@ export default function RepostButton({ stuff }: { stuff: Event | string }) {
         const evt = await publish(repost)
         stuffStatsService.updateStuffStatsByEvents([evt])
       } catch (error) {
-        console.error('repost failed', error)
+        const errors = formatError(error)
+        errors.forEach((err) => {
+          toast.error(`${t('Failed to repost')}: ${err}`, { duration: 10_000 })
+        })
       } finally {
         setReposting(false)
         clearTimeout(timer)

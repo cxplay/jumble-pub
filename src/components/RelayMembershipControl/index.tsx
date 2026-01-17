@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { createJoinDraftEvent, createLeaveDraftEvent } from '@/lib/draft-event'
+import { formatError } from '@/lib/error'
 import { checkNip43Support } from '@/lib/relay'
 import { useNostr } from '@/providers/NostrProvider'
 import relayMembershipService from '@/services/relay-membership.service'
@@ -72,7 +73,11 @@ export default function RelayMembershipControl({
       toast.success(t('Join request sent successfully'))
       await relayMembershipService.addNewMember(relayInfo.url, joinRequestEvent.pubkey)
       onMembershipStatusChange?.(true)
-    } catch {
+    } catch (error) {
+      const errors = formatError(error)
+      errors.forEach((err) => {
+        toast.error(`${t('Failed to send join request')}: ${err}`, { duration: 10_000 })
+      })
       setShowJoinDialog(true)
     } finally {
       setIsLoading(false)

@@ -6,7 +6,6 @@ import { BookmarkIcon, Loader } from 'lucide-react'
 import { Event } from 'nostr-tools'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { toast } from 'sonner'
 
 export default function BookmarkButton({ stuff }: { stuff: Event | string }) {
   const { t } = useTranslation()
@@ -33,13 +32,8 @@ export default function BookmarkButton({ stuff }: { stuff: Event | string }) {
       if (isBookmarked || !event) return
 
       setUpdating(true)
-      try {
-        await addBookmark(event)
-      } catch (error) {
-        toast.error(t('Bookmark failed') + ': ' + (error as Error).message)
-      } finally {
-        setUpdating(false)
-      }
+      await addBookmark(event)
+      setUpdating(false)
     })
   }
 
@@ -49,13 +43,8 @@ export default function BookmarkButton({ stuff }: { stuff: Event | string }) {
       if (!isBookmarked || !event) return
 
       setUpdating(true)
-      try {
-        await removeBookmark(event)
-      } catch (error) {
-        toast.error(t('Remove bookmark failed') + ': ' + (error as Error).message)
-      } finally {
-        setUpdating(false)
-      }
+      await removeBookmark(event)
+      setUpdating(false)
     })
   }
 

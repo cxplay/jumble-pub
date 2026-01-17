@@ -26,6 +26,7 @@ import PostOptions from './PostOptions'
 import PostRelaySelector from './PostRelaySelector'
 import PostTextarea, { TPostTextareaHandle } from './PostTextarea'
 import Uploader from './Uploader'
+import { formatError } from '@/lib/error'
 
 export default function PostContent({
   defaultContent = '',
@@ -160,13 +161,9 @@ export default function PostContent({
         toast.success(t('Post successful'), { duration: 2000 })
         close()
       } catch (error) {
-        const errors = error instanceof AggregateError ? error.errors : [error]
+        const errors = formatError(error)
         errors.forEach((err) => {
-          toast.error(
-            `${t('Failed to post')}: ${err instanceof Error ? err.message : String(err)}`,
-            { duration: 10_000 }
-          )
-          console.error(err)
+          toast.error(`${t('Failed to post')}: ${err}`, { duration: 10_000 })
         })
         return
       } finally {

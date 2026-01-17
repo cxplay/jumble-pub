@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { createRelayReviewDraftEvent } from '@/lib/draft-event'
+import { formatError } from '@/lib/error'
 import { useNostr } from '@/providers/NostrProvider'
 import { Loader2, Star } from 'lucide-react'
 import { NostrEvent } from 'nostr-tools'
@@ -32,12 +33,10 @@ export default function ReviewEditor({
       const evt = await publish(draftEvent)
       onReviewed(evt)
     } catch (error) {
-      if (error instanceof AggregateError) {
-        error.errors.forEach((e) => toast.error(`${t('Failed to review')}: ${e.message}`))
-      } else if (error instanceof Error) {
-        toast.error(`${t('Failed to review')}: ${error.message}`)
-      }
-      console.error(error)
+      const errors = formatError(error)
+      errors.forEach((err) => {
+        toast.error(`${t('Failed to review')}: ${err}`, { duration: 10_000 })
+      })
       return
     } finally {
       setSubmitting(false)

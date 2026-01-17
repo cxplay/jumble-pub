@@ -4,6 +4,8 @@ import client from '@/services/client.service'
 import { createContext, useContext, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNostr } from './NostrProvider'
+import { formatError } from '@/lib/error'
+import { toast } from 'sonner'
 
 type TFollowListContext = {
   followingSet: Set<string>
@@ -44,8 +46,15 @@ export function FollowListProvider({ children }: { children: React.ReactNode }) 
       (followListEvent?.tags ?? []).concat([['p', pubkey]]),
       followListEvent?.content
     )
-    const newFollowListEvent = await publish(newFollowListDraftEvent)
-    await updateFollowListEvent(newFollowListEvent)
+    try {
+      const newFollowListEvent = await publish(newFollowListDraftEvent)
+      await updateFollowListEvent(newFollowListEvent)
+    } catch (error) {
+      const errors = formatError(error)
+      errors.forEach((err) => {
+        toast.error(`Failed to follow: ${err}`, { duration: 10_000 })
+      })
+    }
   }
 
   const unfollow = async (pubkey: string) => {
@@ -58,8 +67,15 @@ export function FollowListProvider({ children }: { children: React.ReactNode }) 
       followListEvent.tags.filter(([tagName, tagValue]) => tagName !== 'p' || tagValue !== pubkey),
       followListEvent.content
     )
-    const newFollowListEvent = await publish(newFollowListDraftEvent)
-    await updateFollowListEvent(newFollowListEvent)
+    try {
+      const newFollowListEvent = await publish(newFollowListDraftEvent)
+      await updateFollowListEvent(newFollowListEvent)
+    } catch (error) {
+      const errors = formatError(error)
+      errors.forEach((err) => {
+        toast.error(`Failed to unfollow: ${err}`, { duration: 10_000 })
+      })
+    }
   }
 
   return (

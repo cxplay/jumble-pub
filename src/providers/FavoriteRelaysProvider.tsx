@@ -1,4 +1,5 @@
 import { createFavoriteRelaysDraftEvent, createRelaySetDraftEvent } from '@/lib/draft-event'
+import { formatError } from '@/lib/error'
 import { getReplaceableEventIdentifier } from '@/lib/event'
 import { getRelaySetFromEvent } from '@/lib/event-metadata'
 import { randomString } from '@/lib/random'
@@ -10,6 +11,7 @@ import storage from '@/services/local-storage.service'
 import { TRelaySet } from '@/types'
 import { Event, kinds } from 'nostr-tools'
 import { createContext, useContext, useEffect, useState } from 'react'
+import { toast } from 'sonner'
 import { useNostr } from './NostrProvider'
 
 type TFavoriteRelaysContext = {
@@ -146,8 +148,15 @@ export function FavoriteRelaysProvider({ children }: { children: React.ReactNode
       [...favoriteRelays, ...normalizedUrls],
       relaySetEvents
     )
-    const newFavoriteRelaysEvent = await publish(draftEvent)
-    updateFavoriteRelaysEvent(newFavoriteRelaysEvent)
+    try {
+      const newFavoriteRelaysEvent = await publish(draftEvent)
+      updateFavoriteRelaysEvent(newFavoriteRelaysEvent)
+    } catch (error) {
+      const errors = formatError(error)
+      errors.forEach((err) => {
+        toast.error(`Failed to add favorite relays: ${err}`, { duration: 10_000 })
+      })
+    }
   }
 
   const deleteFavoriteRelays = async (relayUrls: string[]) => {
@@ -160,8 +169,15 @@ export function FavoriteRelaysProvider({ children }: { children: React.ReactNode
       favoriteRelays.filter((url) => !normalizedUrls.includes(url)),
       relaySetEvents
     )
-    const newFavoriteRelaysEvent = await publish(draftEvent)
-    updateFavoriteRelaysEvent(newFavoriteRelaysEvent)
+    try {
+      const newFavoriteRelaysEvent = await publish(draftEvent)
+      updateFavoriteRelaysEvent(newFavoriteRelaysEvent)
+    } catch (error) {
+      const errors = formatError(error)
+      errors.forEach((err) => {
+        toast.error(`Failed to delete favorite relays: ${err}`, { duration: 10_000 })
+      })
+    }
   }
 
   const createRelaySet = async (relaySetName: string, relayUrls: string[] = []) => {
@@ -174,15 +190,22 @@ export function FavoriteRelaysProvider({ children }: { children: React.ReactNode
       name: relaySetName,
       relayUrls: normalizedUrls
     })
-    const newRelaySetEvent = await publish(relaySetDraftEvent)
-    await indexedDb.putReplaceableEvent(newRelaySetEvent)
+    try {
+      const newRelaySetEvent = await publish(relaySetDraftEvent)
+      await indexedDb.putReplaceableEvent(newRelaySetEvent)
 
-    const favoriteRelaysDraftEvent = createFavoriteRelaysDraftEvent(favoriteRelays, [
-      ...relaySetEvents,
-      newRelaySetEvent
-    ])
-    const newFavoriteRelaysEvent = await publish(favoriteRelaysDraftEvent)
-    updateFavoriteRelaysEvent(newFavoriteRelaysEvent)
+      const favoriteRelaysDraftEvent = createFavoriteRelaysDraftEvent(favoriteRelays, [
+        ...relaySetEvents,
+        newRelaySetEvent
+      ])
+      const newFavoriteRelaysEvent = await publish(favoriteRelaysDraftEvent)
+      updateFavoriteRelaysEvent(newFavoriteRelaysEvent)
+    } catch (error) {
+      const errors = formatError(error)
+      errors.forEach((err) => {
+        toast.error(`Failed to create relay set: ${err}`, { duration: 10_000 })
+      })
+    }
   }
 
   const addRelaySets = async (newRelaySetEvents: Event[]) => {
@@ -190,8 +213,15 @@ export function FavoriteRelaysProvider({ children }: { children: React.ReactNode
       ...relaySetEvents,
       ...newRelaySetEvents
     ])
-    const newFavoriteRelaysEvent = await publish(favoriteRelaysDraftEvent)
-    updateFavoriteRelaysEvent(newFavoriteRelaysEvent)
+    try {
+      const newFavoriteRelaysEvent = await publish(favoriteRelaysDraftEvent)
+      updateFavoriteRelaysEvent(newFavoriteRelaysEvent)
+    } catch (error) {
+      const errors = formatError(error)
+      errors.forEach((err) => {
+        toast.error(`Failed to add relay sets: ${err}`, { duration: 10_000 })
+      })
+    }
   }
 
   const deleteRelaySet = async (id: string) => {
@@ -201,30 +231,52 @@ export function FavoriteRelaysProvider({ children }: { children: React.ReactNode
     if (newRelaySetEvents.length === relaySetEvents.length) return
 
     const draftEvent = createFavoriteRelaysDraftEvent(favoriteRelays, newRelaySetEvents)
-    const newFavoriteRelaysEvent = await publish(draftEvent)
-    updateFavoriteRelaysEvent(newFavoriteRelaysEvent)
+    try {
+      const newFavoriteRelaysEvent = await publish(draftEvent)
+      updateFavoriteRelaysEvent(newFavoriteRelaysEvent)
+    } catch (error) {
+      const errors = formatError(error)
+      errors.forEach((err) => {
+        toast.error(`Failed to delete relay set: ${err}`, { duration: 10_000 })
+      })
+    }
   }
 
   const updateRelaySet = async (newSet: TRelaySet) => {
     const draftEvent = createRelaySetDraftEvent(newSet)
-    const newRelaySetEvent = await publish(draftEvent)
-    await indexedDb.putReplaceableEvent(newRelaySetEvent)
 
-    setRelaySetEvents((prev) => {
-      return prev.map((event) => {
-        if (getReplaceableEventIdentifier(event) === newSet.id) {
-          return newRelaySetEvent
-        }
-        return event
+    try {
+      const newRelaySetEvent = await publish(draftEvent)
+      await indexedDb.putReplaceableEvent(newRelaySetEvent)
+
+      setRelaySetEvents((prev) => {
+        return prev.map((event) => {
+          if (getReplaceableEventIdentifier(event) === newSet.id) {
+            return newRelaySetEvent
+          }
+          return event
+        })
       })
-    })
+    } catch (error) {
+      const errors = formatError(error)
+      errors.forEach((err) => {
+        toast.error(`Failed to update relay set: ${err}`, { duration: 10_000 })
+      })
+    }
   }
 
   const reorderFavoriteRelays = async (reorderedRelays: string[]) => {
     setFavoriteRelays(reorderedRelays)
     const draftEvent = createFavoriteRelaysDraftEvent(reorderedRelays, relaySetEvents)
-    const newFavoriteRelaysEvent = await publish(draftEvent)
-    updateFavoriteRelaysEvent(newFavoriteRelaysEvent)
+    try {
+      const newFavoriteRelaysEvent = await publish(draftEvent)
+      updateFavoriteRelaysEvent(newFavoriteRelaysEvent)
+    } catch (error) {
+      const errors = formatError(error)
+      errors.forEach((err) => {
+        toast.error(`Failed to reorder favorite relays: ${err}`, { duration: 10_000 })
+      })
+    }
   }
 
   const reorderRelaySets = async (reorderedSets: TRelaySet[]) => {
@@ -233,8 +285,15 @@ export function FavoriteRelaysProvider({ children }: { children: React.ReactNode
       favoriteRelays,
       reorderedSets.map((set) => set.aTag)
     )
-    const newFavoriteRelaysEvent = await publish(draftEvent)
-    updateFavoriteRelaysEvent(newFavoriteRelaysEvent)
+    try {
+      const newFavoriteRelaysEvent = await publish(draftEvent)
+      updateFavoriteRelaysEvent(newFavoriteRelaysEvent)
+    } catch (error) {
+      const errors = formatError(error)
+      errors.forEach((err) => {
+        toast.error(`Failed to reorder relay sets: ${err}`, { duration: 10_000 })
+      })
+    }
   }
 
   return (

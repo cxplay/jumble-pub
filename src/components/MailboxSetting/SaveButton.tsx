@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { createRelayListDraftEvent } from '@/lib/draft-event'
+import { formatError } from '@/lib/error'
 import { useNostr } from '@/providers/NostrProvider'
 import { TMailboxRelay } from '@/types'
 import { CloudUpload, Loader } from 'lucide-react'
@@ -25,11 +26,18 @@ export default function SaveButton({
 
     setPushing(true)
     const event = createRelayListDraftEvent(mailboxRelays)
-    const relayListEvent = await publish(event)
-    await updateRelayListEvent(relayListEvent)
-    toast.success('Successfully saved mailbox relays')
-    setHasChange(false)
-    setPushing(false)
+    try {
+      const relayListEvent = await publish(event)
+      await updateRelayListEvent(relayListEvent)
+      toast.success('Successfully saved mailbox relays')
+      setHasChange(false)
+      setPushing(false)
+    } catch (error) {
+      const errors = formatError(error)
+      errors.forEach((err) => {
+        toast.error(`${t('Failed to save mailbox relays')}: ${err}`, { duration: 10_000 })
+      })
+    }
   }
 
   return (

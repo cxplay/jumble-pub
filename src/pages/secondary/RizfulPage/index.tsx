@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import SecondaryPageLayout from '@/layouts/SecondaryPageLayout'
 import { createProfileDraftEvent } from '@/lib/draft-event'
+import { formatError } from '@/lib/error'
 import { isEmail } from '@/lib/utils'
 import { useNostr } from '@/providers/NostrProvider'
 import { useZap } from '@/providers/ZapProvider'
@@ -65,8 +66,13 @@ const RizfulPage = forwardRef(({ index }: { index?: number }, ref) => {
       )
       const newProfileEvent = await publish(profileDraftEvent)
       await updateProfileEvent(newProfileEvent)
-    } catch (e: unknown) {
-      toast.error(e instanceof Error ? e.message : String(e))
+    } catch (error) {
+      const errors = formatError(error)
+      errors.forEach((err) => {
+        toast.error(`${t('Failed to update profile with Lightning Address')}: ${err}`, {
+          duration: 10_000
+        })
+      })
     }
   }
 

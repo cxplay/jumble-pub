@@ -16,6 +16,7 @@ import {
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { createReportDraftEvent } from '@/lib/draft-event'
+import { formatError } from '@/lib/error'
 import { useNostr } from '@/providers/NostrProvider'
 import { useScreenSize } from '@/providers/ScreenSizeProvider'
 import { Loader } from 'lucide-react'
@@ -94,13 +95,9 @@ function ReportContent({ event, closeDialog }: { event: NostrEvent; closeDialog:
       toast.success(t('Successfully report'))
       closeDialog()
     } catch (error) {
-      const errors = error instanceof AggregateError ? error.errors : [error]
+      const errors = formatError(error)
       errors.forEach((err) => {
-        toast.error(
-          `${t('Failed to report')}: ${err instanceof Error ? err.message : String(err)}`,
-          { duration: 10_000 }
-        )
-        console.error(err)
+        toast.error(`${t('Failed to report')}: ${err}`, { duration: 10_000 })
       })
       return
     } finally {

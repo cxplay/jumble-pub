@@ -15,7 +15,6 @@ import { useNostr } from '@/providers/NostrProvider'
 import { Loader } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { toast } from 'sonner'
 
 export default function FollowButton({ pubkey }: { pubkey: string }) {
   const { t } = useTranslation()
@@ -33,13 +32,8 @@ export default function FollowButton({ pubkey }: { pubkey: string }) {
       if (isFollowing) return
 
       setUpdating(true)
-      try {
-        await follow(pubkey)
-      } catch (error) {
-        toast.error(t('Follow failed') + ': ' + (error as Error).message)
-      } finally {
-        setUpdating(false)
-      }
+      await follow(pubkey)
+      setUpdating(false)
     })
   }
 
@@ -49,13 +43,8 @@ export default function FollowButton({ pubkey }: { pubkey: string }) {
       if (!isFollowing) return
 
       setUpdating(true)
-      try {
-        await unfollow(pubkey)
-      } catch (error) {
-        toast.error(t('Unfollow failed') + ': ' + (error as Error).message)
-      } finally {
-        setUpdating(false)
-      }
+      await unfollow(pubkey)
+      setUpdating(false)
     })
   }
 

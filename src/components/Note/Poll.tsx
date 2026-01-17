@@ -3,6 +3,7 @@ import { POLL_TYPE } from '@/constants'
 import { useTranslatedEvent } from '@/hooks'
 import { useFetchPollResults } from '@/hooks/useFetchPollResults'
 import { createPollResponseDraftEvent } from '@/lib/draft-event'
+import { formatError } from '@/lib/error'
 import { getPollMetadataFromEvent } from '@/lib/event-metadata'
 import { cn, isPartiallyInViewport } from '@/lib/utils'
 import { useNostr } from '@/providers/NostrProvider'
@@ -126,8 +127,10 @@ export default function Poll({ event, className }: { event: Event; className?: s
       setSelectedOptionIds([])
       pollResultsService.addPollResponse(event.id, pubkey, selectedOptionIds)
     } catch (error) {
-      console.error('Failed to vote:', error)
-      toast.error('Failed to vote: ' + (error as Error).message)
+      const errors = formatError(error)
+      errors.forEach((err) => {
+        toast.error(`${t('Failed to vote')}: ${err}`, { duration: 10_000 })
+      })
     } finally {
       setIsVoting(false)
     }

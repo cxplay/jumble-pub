@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
 import { RECOMMENDED_BLOSSOM_SERVERS } from '@/constants'
 import { createBlossomServerListDraftEvent } from '@/lib/draft-event'
+import { formatError } from '@/lib/error'
 import { getServersFromServerTags } from '@/lib/tag'
 import { normalizeHttpUrl } from '@/lib/url'
 import { cn } from '@/lib/utils'
@@ -13,6 +14,7 @@ import { AlertCircle, ArrowUpToLine, Loader, X } from 'lucide-react'
 import { Event } from 'nostr-tools'
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
 
 export default function BlossomServerListSetting() {
   const { t } = useTranslation()
@@ -48,7 +50,10 @@ export default function BlossomServerListSetting() {
       setBlossomServerListEvent(newEvent)
       setUrl('')
     } catch (error) {
-      console.error('Failed to add Blossom URL:', error)
+      const errors = formatError(error)
+      errors.forEach((err) => {
+        toast.error(`${t('Failed to add Blossom URL')}: ${err}`, { duration: 10_000 })
+      })
     } finally {
       setAdding(false)
     }
@@ -72,7 +77,10 @@ export default function BlossomServerListSetting() {
       await client.updateBlossomServerListEventCache(newEvent)
       setBlossomServerListEvent(newEvent)
     } catch (error) {
-      console.error('Failed to remove Blossom URL:', error)
+      const errors = formatError(error)
+      errors.forEach((err) => {
+        toast.error(`${t('Failed to remove Blossom URL')}: ${err}`, { duration: 10_000 })
+      })
     } finally {
       setRemovingIndex(-1)
     }
@@ -88,7 +96,10 @@ export default function BlossomServerListSetting() {
       await client.updateBlossomServerListEventCache(newEvent)
       setBlossomServerListEvent(newEvent)
     } catch (error) {
-      console.error('Failed to move Blossom URL to top:', error)
+      const errors = formatError(error)
+      errors.forEach((err) => {
+        toast.error(`${t('Failed to move Blossom URL to top')}: ${err}`, { duration: 10_000 })
+      })
     } finally {
       setMovingIndex(-1)
     }

@@ -19,6 +19,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { createJoinDraftEvent } from '@/lib/draft-event'
+import { formatError } from '@/lib/error'
 import { useNostr } from '@/providers/NostrProvider'
 import { useScreenSize } from '@/providers/ScreenSizeProvider'
 import relayMembershipService from '@/services/relay-membership.service'
@@ -57,13 +58,9 @@ export default function JoinDialog({
       setInviteCode('')
       setShowJoinDialog(false)
     } catch (error) {
-      const errors = error instanceof AggregateError ? error.errors : [error]
+      const errors = formatError(error)
       errors.forEach((err) => {
-        toast.error(
-          `${t('Failed to send join request')}: ${err instanceof Error ? err.message : String(err)}`,
-          { duration: 10_000 }
-        )
-        console.error(err)
+        toast.error(`${t('Failed to send join request')}: ${err}`, { duration: 10_000 })
       })
       return
     } finally {

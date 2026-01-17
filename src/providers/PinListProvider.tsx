@@ -1,5 +1,6 @@
 import { MAX_PINNED_NOTES } from '@/constants'
 import { buildETag, createPinListDraftEvent } from '@/lib/draft-event'
+import { formatError } from '@/lib/error'
 import { getPinnedEventHexIdSetFromPinListEvent } from '@/lib/event-metadata'
 import client from '@/services/client.service'
 import { Event, kinds } from 'nostr-tools'
@@ -67,7 +68,7 @@ export function PinListProvider({ children }: { children: React.ReactNode }) {
     const { unwrap } = toast.promise(_pin, {
       loading: t('Pinning...'),
       success: t('Pinned!'),
-      error: (err) => t('Failed to pin: {{error}}', { error: err.message })
+      error: (err) => t('Failed to pin: {{error}}', { error: formatError(err).join('; ') })
     })
     await unwrap()
   }
@@ -92,7 +93,7 @@ export function PinListProvider({ children }: { children: React.ReactNode }) {
     const { unwrap } = toast.promise(_unpin, {
       loading: t('Unpinning...'),
       success: t('Unpinned!'),
-      error: (err) => t('Failed to unpin: {{error}}', { error: err.message })
+      error: (err) => t('Failed to unpin: {{error}}', { error: formatError(err).join('; ') })
     })
     await unwrap()
   }

@@ -1,8 +1,10 @@
 import { ExtendedKind } from '@/constants'
+import { formatError } from '@/lib/error'
 import { getPubkeysFromPTags } from '@/lib/tag'
 import indexedDb from '@/services/indexed-db.service'
 import { Event } from 'nostr-tools'
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { toast } from 'sonner'
 import { z } from 'zod'
 import { useNostr } from './NostrProvider'
 
@@ -105,7 +107,10 @@ export function PinnedUsersProvider({ children }: { children: React.ReactNode })
         const newEvent = await publish(draftEvent)
         await updatePinnedUsersEvent(newEvent, privateTags)
       } catch (error) {
-        console.error('Failed to pin user:', error)
+        const errors = formatError(error)
+        errors.forEach((err) => {
+          toast.error(`Failed to pin user: ${err}`, { duration: 10_000 })
+        })
       }
     },
     [accountPubkey, isPinned, pinnedUsersEvent, publish, updatePinnedUsersEvent, privateTags]
@@ -130,7 +135,10 @@ export function PinnedUsersProvider({ children }: { children: React.ReactNode })
         const newEvent = await publish(draftEvent)
         await updatePinnedUsersEvent(newEvent, newPrivateTags)
       } catch (error) {
-        console.error('Failed to unpin user:', error)
+        const errors = formatError(error)
+        errors.forEach((err) => {
+          toast.error(`Failed to unpin user: ${err}`, { duration: 10_000 })
+        })
       }
     },
     [

@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import SecondaryPageLayout from '@/layouts/SecondaryPageLayout'
 import { createProfileDraftEvent } from '@/lib/draft-event'
+import { formatError } from '@/lib/error'
 import { generateImageByPubkey } from '@/lib/pubkey'
 import { isEmail } from '@/lib/utils'
 import { useSecondaryPage } from '@/PageManager'
@@ -14,6 +15,7 @@ import { useNostr } from '@/providers/NostrProvider'
 import { Loader, Upload } from 'lucide-react'
 import { forwardRef, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
 
 const ProfileEditorPage = forwardRef(({ index }: { index?: number }, ref) => {
   const { t } = useTranslation()
@@ -97,10 +99,17 @@ const ProfileEditorPage = forwardRef(({ index }: { index?: number }, ref) => {
       JSON.stringify(newProfileContent),
       profileEvent?.tags
     )
-    const newProfileEvent = await publish(profileDraftEvent)
-    await updateProfileEvent(newProfileEvent)
-    setSaving(false)
-    pop()
+    try {
+      const newProfileEvent = await publish(profileDraftEvent)
+      await updateProfileEvent(newProfileEvent)
+      setSaving(false)
+      pop()
+    } catch (error) {
+      const errors = formatError(error)
+      errors.forEach((err) => {
+        toast.error(`${t('Failed to save profile')}: ${err}`, { duration: 10_000 })
+      })
+    }
   }
 
   const onBannerUploadSuccess = ({ url }: { url: string }) => {

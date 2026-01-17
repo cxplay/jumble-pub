@@ -1,3 +1,4 @@
+import { formatError } from '@/lib/error'
 import { getNoteBech32Id, isProtectedEvent } from '@/lib/event'
 import { toNjump } from '@/lib/link'
 import { pubkeyToNpub } from '@/lib/pubkey'
@@ -117,7 +118,7 @@ export function useMenuActions({
                 error: (err) => {
                   return t('Failed to republish to relay set: {{name}}. Error: {{error}}', {
                     name: set.name,
-                    error: err.message
+                    error: formatError(err).join('; ')
                   })
                 }
               })
@@ -147,7 +148,7 @@ export function useMenuActions({
               error: (err) => {
                 return t('Failed to republish to relay: {{url}}. Error: {{error}}', {
                   url: simplifyUrl(relay),
-                  error: err.message
+                  error: formatError(err).join('; ')
                 })
               }
             })

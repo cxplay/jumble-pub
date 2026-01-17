@@ -7,7 +7,6 @@ import { CheckIcon, Loader, PlusIcon } from 'lucide-react'
 import { Event } from 'nostr-tools'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { toast } from 'sonner'
 import Image from '../Image'
 
 export default function EmojiPack({ event, className }: { event: Event; className?: string }) {
@@ -27,14 +26,8 @@ export default function EmojiPack({ event, className }: { event: Event; classNam
       if (isCollected) return
 
       setUpdating(true)
-      try {
-        await addEmojiPack(event)
-        toast.success(t('Emoji pack added'))
-      } catch (error) {
-        toast.error(t('Add emoji pack failed') + ': ' + (error as Error).message)
-      } finally {
-        setUpdating(false)
-      }
+      await addEmojiPack(event)
+      setUpdating(false)
     })
   }
 
@@ -44,14 +37,8 @@ export default function EmojiPack({ event, className }: { event: Event; classNam
       if (!isCollected) return
 
       setUpdating(true)
-      try {
-        await removeEmojiPack(event)
-        toast.success(t('Emoji pack removed'))
-      } catch (error) {
-        toast.error(t('Remove emoji pack failed') + ': ' + (error as Error).message)
-      } finally {
-        setUpdating(false)
-      }
+      await removeEmojiPack(event)
+      setUpdating(false)
     })
   }
 

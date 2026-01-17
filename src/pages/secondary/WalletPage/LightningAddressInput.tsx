@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { createProfileDraftEvent } from '@/lib/draft-event'
+import { formatError } from '@/lib/error'
 import { isEmail } from '@/lib/utils'
 import { useNostr } from '@/providers/NostrProvider'
 import { Loader } from 'lucide-react'
@@ -45,9 +46,19 @@ export default function LightningAddressInput() {
       JSON.stringify(profileContent),
       profileEvent?.tags
     )
-    const newProfileEvent = await publish(profileDraftEvent)
-    await updateProfileEvent(newProfileEvent)
-    setSaving(false)
+    try {
+      const newProfileEvent = await publish(profileDraftEvent)
+      await updateProfileEvent(newProfileEvent)
+    } catch (error) {
+      const errors = formatError(error)
+      errors.forEach((err) => {
+        toast.error(`${t('Failed to update profile with Lightning Address')}: ${err}`, {
+          duration: 10_000
+        })
+      })
+    } finally {
+      setSaving(false)
+    }
   }
 
   return (

@@ -23,6 +23,8 @@ import Emoji from '../Emoji'
 import EmojiPicker from '../EmojiPicker'
 import SuggestedEmojis from '../SuggestedEmojis'
 import { formatCount } from './utils'
+import { formatError } from '@/lib/error'
+import { toast } from 'sonner'
 
 export default function LikeButton({ stuff }: { stuff: Event | string }) {
   const { t } = useTranslation()
@@ -90,7 +92,10 @@ export default function LikeButton({ stuff }: { stuff: Event | string }) {
         const evt = await publish(reaction, { additionalRelayUrls: seenOn })
         stuffStatsService.updateStuffStatsByEvents([evt])
       } catch (error) {
-        console.error('like failed', error)
+        const errors = formatError(error)
+        errors.forEach((err) => {
+          toast.error(`${t('Failed to like')}: ${err}`, { duration: 10_000 })
+        })
       } finally {
         setLiking(false)
         clearTimeout(timer)

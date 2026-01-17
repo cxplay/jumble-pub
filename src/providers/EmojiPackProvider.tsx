@@ -1,8 +1,10 @@
 import { buildATag, createUserEmojiListDraftEvent } from '@/lib/draft-event'
+import { formatError } from '@/lib/error'
 import { getReplaceableCoordinateFromEvent } from '@/lib/event'
 import client from '@/services/client.service'
 import { Event, kinds } from 'nostr-tools'
 import { createContext, useContext, useMemo } from 'react'
+import { toast } from 'sonner'
 import { useNostr } from './NostrProvider'
 
 type TEmojiPackContext = {
@@ -54,8 +56,15 @@ export function EmojiPackProvider({ children }: { children: React.ReactNode }) {
       [...currentTags, buildATag(event)],
       userEmojiListEvent?.content
     )
-    const newUserEmojiListEvent = await publish(newUserEmojiListDraftEvent)
-    await updateUserEmojiListEvent(newUserEmojiListEvent)
+    try {
+      const newUserEmojiListEvent = await publish(newUserEmojiListDraftEvent)
+      await updateUserEmojiListEvent(newUserEmojiListEvent)
+    } catch (error) {
+      const errors = formatError(error)
+      errors.forEach((err) => {
+        toast.error(`Failed to add emoji pack: ${err}`, { duration: 10_000 })
+      })
+    }
   }
 
   const removeEmojiPack = async (event: Event) => {
@@ -72,8 +81,15 @@ export function EmojiPackProvider({ children }: { children: React.ReactNode }) {
       newTags,
       userEmojiListEvent.content
     )
-    const newUserEmojiListEvent = await publish(newUserEmojiListDraftEvent)
-    await updateUserEmojiListEvent(newUserEmojiListEvent)
+    try {
+      const newUserEmojiListEvent = await publish(newUserEmojiListDraftEvent)
+      await updateUserEmojiListEvent(newUserEmojiListEvent)
+    } catch (error) {
+      const errors = formatError(error)
+      errors.forEach((err) => {
+        toast.error(`Failed to remove emoji pack: ${err}`, { duration: 10_000 })
+      })
+    }
   }
 
   return (

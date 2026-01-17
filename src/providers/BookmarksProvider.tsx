@@ -1,8 +1,10 @@
 import { buildATag, buildETag, createBookmarkDraftEvent } from '@/lib/draft-event'
+import { formatError } from '@/lib/error'
 import { getReplaceableCoordinateFromEvent, isReplaceableEvent } from '@/lib/event'
 import client from '@/services/client.service'
 import { Event } from 'nostr-tools'
 import { createContext, useContext } from 'react'
+import { toast } from 'sonner'
 import { useNostr } from './NostrProvider'
 
 type TBookmarksContext = {
@@ -45,8 +47,15 @@ export function BookmarksProvider({ children }: { children: React.ReactNode }) {
       [...currentTags, isReplaceable ? buildATag(event) : buildETag(event.id, event.pubkey)],
       bookmarkListEvent?.content
     )
-    const newBookmarkEvent = await publish(newBookmarkDraftEvent)
-    await updateBookmarkListEvent(newBookmarkEvent)
+    try {
+      const newBookmarkEvent = await publish(newBookmarkDraftEvent)
+      await updateBookmarkListEvent(newBookmarkEvent)
+    } catch (error) {
+      const errors = formatError(error)
+      errors.forEach((err) => {
+        toast.error(`Failed to add bookmark: ${err}`, { duration: 10_000 })
+      })
+    }
   }
 
   const removeBookmark = async (event: Event) => {
@@ -64,8 +73,15 @@ export function BookmarksProvider({ children }: { children: React.ReactNode }) {
     if (newTags.length === bookmarkListEvent.tags.length) return
 
     const newBookmarkDraftEvent = createBookmarkDraftEvent(newTags, bookmarkListEvent.content)
-    const newBookmarkEvent = await publish(newBookmarkDraftEvent)
-    await updateBookmarkListEvent(newBookmarkEvent)
+    try {
+      const newBookmarkEvent = await publish(newBookmarkDraftEvent)
+      await updateBookmarkListEvent(newBookmarkEvent)
+    } catch (error) {
+      const errors = formatError(error)
+      errors.forEach((err) => {
+        toast.error(`Failed to remove bookmark: ${err}`, { duration: 10_000 })
+      })
+    }
   }
 
   return (

@@ -5,6 +5,7 @@ import {
   createExternalContentReactionDraftEvent,
   createReactionDraftEvent
 } from '@/lib/draft-event'
+import { formatError } from '@/lib/error'
 import { getDefaultRelayUrls } from '@/lib/relay'
 import { cn } from '@/lib/utils'
 import { useNostr } from '@/providers/NostrProvider'
@@ -14,6 +15,7 @@ import { TEmoji } from '@/types'
 import { Loader } from 'lucide-react'
 import { Event } from 'nostr-tools'
 import { useMemo, useRef, useState } from 'react'
+import { toast } from 'sonner'
 import Emoji from '../Emoji'
 
 export default function Likes({ stuff }: { stuff: Event | string }) {
@@ -57,7 +59,10 @@ export default function Likes({ stuff }: { stuff: Event | string }) {
         const evt = await publish(reaction, { additionalRelayUrls: seenOn })
         stuffStatsService.updateStuffStatsByEvents([evt])
       } catch (error) {
-        console.error('like failed', error)
+        const errors = formatError(error)
+        errors.forEach((err) => {
+          toast.error(`Failed to like: ${err}`, { duration: 10_000 })
+        })
       } finally {
         setLiking(null)
         clearTimeout(timer)

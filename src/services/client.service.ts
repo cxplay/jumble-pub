@@ -179,12 +179,20 @@ class ClientService extends EventTarget {
       const successThreshold = uniqueRelayUrls.length / 3
       const errors: { url: string; error: any }[] = []
 
-      const checkCompletion = () => {
+      const checkCompletion = (url: string, success: boolean, error?: unknown) => {
+        if (error) {
+          errors.push({ url, error })
+        }
+        if (success) {
+          successCount++
+        }
+        finishedCount++
+
         if (successCount >= successThreshold) {
           this.emitNewEvent(event, uniqueRelayUrls)
           resolve()
         }
-        if (++finishedCount >= uniqueRelayUrls.length) {
+        if (finishedCount >= uniqueRelayUrls.length) {
           reject(
             new AggregateError(
               errors.map(
@@ -204,8 +212,7 @@ class ClientService extends EventTarget {
             return undefined
           })
           if (!relay) {
-            errors.push({ url, error: new Error('Cannot connect to relay') })
-            checkCompletion()
+            checkCompletion(url, false, new Error('Cannot connect to relay'))
             return
           }
 
@@ -216,7 +223,7 @@ class ClientService extends EventTarget {
             try {
               await relay.publish(event)
               that.trackEventSeenOn(event.id, relay)
-              successCount++
+              checkCompletion(url, true)
             } catch (error) {
               if (
                 !hasAuthed &&
@@ -227,17 +234,20 @@ class ClientService extends EventTarget {
                 try {
                   await relay.auth((authEvt: EventTemplate) => that.signer!.signEvent(authEvt))
                   hasAuthed = true
-                  return await publishPromise()
+                  await publishPromise().catch(() => {
+                    // ignore
+                  })
+                  return
                 } catch (error) {
-                  errors.push({ url, error })
+                  checkCompletion(url, false, error)
                 }
               } else {
-                errors.push({ url, error })
+                checkCompletion(url, false, error)
               }
             }
           }
 
-          return publishPromise().finally(checkCompletion)
+          return publishPromise()
         })
       )
     })

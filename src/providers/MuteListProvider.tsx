@@ -1,4 +1,5 @@
 import { createMuteListDraftEvent } from '@/lib/draft-event'
+import { formatError } from '@/lib/error'
 import { getPubkeysFromPTags } from '@/lib/tag'
 import client from '@/services/client.service'
 import indexedDb from '@/services/indexed-db.service'
@@ -115,7 +116,6 @@ export function MuteListProvider({ children }: { children: React.ReactNode }) {
     }
     const newMuteListDraftEvent = createMuteListDraftEvent(tags, content)
     const event = await publish(newMuteListDraftEvent)
-    toast.success(t('Successfully updated mute list'))
     return event
   }
 
@@ -147,7 +147,10 @@ export function MuteListProvider({ children }: { children: React.ReactNode }) {
       const privateTags = await getPrivateTags(newMuteListEvent)
       await updateMuteListEvent(newMuteListEvent, privateTags)
     } catch (error) {
-      toast.error(t('Failed to mute user publicly') + ': ' + (error as Error).message)
+      const errors = formatError(error)
+      errors.forEach((err) => {
+        toast.error(t('Failed to mute user publicly') + ': ' + err, { duration: 10_000 })
+      })
     } finally {
       setChanging(false)
     }
@@ -170,7 +173,10 @@ export function MuteListProvider({ children }: { children: React.ReactNode }) {
       const newMuteListEvent = await publishNewMuteListEvent(muteListEvent?.tags ?? [], cipherText)
       await updateMuteListEvent(newMuteListEvent, newPrivateTags)
     } catch (error) {
-      toast.error(t('Failed to mute user privately') + ': ' + (error as Error).message)
+      const errors = formatError(error)
+      errors.forEach((err) => {
+        toast.error(t('Failed to mute user privately') + ': ' + err, { duration: 10_000 })
+      })
     } finally {
       setChanging(false)
     }
@@ -196,6 +202,11 @@ export function MuteListProvider({ children }: { children: React.ReactNode }) {
         cipherText
       )
       await updateMuteListEvent(newMuteListEvent, newPrivateTags)
+    } catch (error) {
+      const errors = formatError(error)
+      errors.forEach((err) => {
+        toast.error(t('Failed to unmute user') + ': ' + err, { duration: 10_000 })
+      })
     } finally {
       setChanging(false)
     }
@@ -223,6 +234,11 @@ export function MuteListProvider({ children }: { children: React.ReactNode }) {
         cipherText
       )
       await updateMuteListEvent(newMuteListEvent, newPrivateTags)
+    } catch (error) {
+      const errors = formatError(error)
+      errors.forEach((err) => {
+        toast.error(t('Failed to switch to public mute') + ': ' + err, { duration: 10_000 })
+      })
     } finally {
       setChanging(false)
     }
@@ -248,6 +264,11 @@ export function MuteListProvider({ children }: { children: React.ReactNode }) {
       const cipherText = await nip04Encrypt(accountPubkey, JSON.stringify(newPrivateTags))
       const newMuteListEvent = await publishNewMuteListEvent(newTags, cipherText)
       await updateMuteListEvent(newMuteListEvent, newPrivateTags)
+    } catch (error) {
+      const errors = formatError(error)
+      errors.forEach((err) => {
+        toast.error(t('Failed to switch to private mute') + ': ' + err, { duration: 10_000 })
+      })
     } finally {
       setChanging(false)
     }
