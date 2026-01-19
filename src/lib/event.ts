@@ -10,6 +10,7 @@ import {
   getImetaInfoFromImetaTag,
   tagNameEquals
 } from './tag'
+import { randomString } from './random'
 
 const EVENT_EMBEDDED_NOTES_CACHE = new LRUCache<string, string[]>({ max: 10000 })
 const EVENT_EMBEDDED_PUBKEYS_CACHE = new LRUCache<string, string[]>({ max: 10000 })
@@ -347,7 +348,7 @@ export function getReplaceableEventIdentifier(event: Event) {
 
 export function createFakeEvent(event: Partial<Event>): Event {
   return {
-    id: '',
+    id: randomString(64, { hex: true }),
     kind: 1,
     pubkey: '',
     content: '',

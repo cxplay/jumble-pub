@@ -17,6 +17,8 @@ import SaveRelayDropdownMenu from '../SaveRelayDropdownMenu'
 import UserAvatar from '../UserAvatar'
 import Username from '../Username'
 import RelayReviewsPreview from './RelayReviewsPreview'
+import Content from '../Content'
+import { createFakeEvent } from '@/lib/event'
 
 export default function RelayInfo({ url, className }: { url: string; className?: string }) {
   const { t } = useTranslation()
@@ -53,7 +55,7 @@ export default function RelayInfo({ url, className }: { url: string; className?:
           )}
           {relayInfo.description && (
             <div className="text-wrap break-words whitespace-pre-wrap mt-2 select-text">
-              {relayInfo.description}
+              <Content event={createFakeEvent({ content: relayInfo.description })} />
             </div>
           )}
         </div>
