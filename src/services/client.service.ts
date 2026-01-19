@@ -1031,9 +1031,7 @@ class ClientService extends EventTarget {
     for (let i = 0; i * 20 < followings.length; i++) {
       if (signal.aborted) return
       await Promise.all(
-        followings
-          .slice(i * 20, (i + 1) * 20)
-          .map((pubkey) => this.fetchProfile(pubkey, false, false))
+        followings.slice(i * 20, (i + 1) * 20).map((pubkey) => this.fetchProfile(pubkey, false))
       )
       await new Promise((resolve) => setTimeout(resolve, 1000))
     }
@@ -1132,11 +1130,7 @@ class ClientService extends EventTarget {
     return results.map((res) => (res.status === 'fulfilled' ? res.value : null))
   })
 
-  async fetchProfile(
-    id: string,
-    skipCache = false,
-    updateCacheInBackground = true
-  ): Promise<TProfile | null> {
+  async fetchProfile(id: string, skipCache = false): Promise<TProfile | null> {
     if (skipCache) {
       return this._fetchProfile(id)
     }
@@ -1144,7 +1138,7 @@ class ClientService extends EventTarget {
     const pubkey = userIdToPubkey(id, true)
     const localProfileEvent = await indexedDb.getReplaceableEvent(pubkey, kinds.Metadata)
     if (localProfileEvent) {
-      if (updateCacheInBackground) {
+      if (localProfileEvent.created_at < dayjs().subtract(3, 'day').unix()) {
         this.profileDataloader.load(id) // update cache in background
       }
       const localProfile = getProfileFromEvent(localProfileEvent)
