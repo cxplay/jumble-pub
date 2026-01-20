@@ -67,8 +67,10 @@ export default function PrimaryPageSidebar() {
       </div>
       <button
         className={cn(
-          'absolute flex flex-col justify-center items-center right-0 w-5 h-6 p-0 rounded-l-md hover:shadow-md text-muted-foreground hover:text-foreground hover:bg-background transition-colors [&_svg]:size-4',
-          themeSetting === 'pure-black' || enableSingleColumnLayout ? 'top-3' : 'top-5'
+          'absolute flex flex-col justify-center items-center w-5 h-6 p-0 rounded-l-md hover:shadow-md text-muted-foreground hover:text-foreground hover:bg-background transition-colors [&_svg]:size-4',
+          themeSetting === 'pure-black' || enableSingleColumnLayout
+            ? 'top-3 right-0'
+            : 'top-5 -right-0.5'
         )}
         onClick={(e) => {
           e.stopPropagation()
