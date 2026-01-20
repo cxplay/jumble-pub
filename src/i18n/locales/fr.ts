@@ -686,6 +686,7 @@ export default {
     'Default trust score filter threshold ({{n}}%)':
       'Seuil par défaut du filtre de score de confiance ({{n}}%)',
     'No notes found': 'Aucune note trouvée',
-    'Try again later or check your connection': 'Réessayez plus tard ou vérifiez votre connexion'
+    'Try again later or check your connection': 'Réessayez plus tard ou vérifiez votre connexion',
+    'Hide indirect': 'Masquer indirects'
   }
 }

@@ -68,6 +68,7 @@ class LocalStorageService {
   private mutedWords: string[] = []
   private minTrustScore: number = 0
   private minTrustScoreMap: Record<string, number> = {}
+  private hideIndirectNotifications: boolean = false
 
   constructor() {
     if (!LocalStorageService.instance) {
@@ -318,6 +319,9 @@ class LocalStorageService {
         // Invalid JSON, use default
       }
     }
+
+    this.hideIndirectNotifications =
+      window.localStorage.getItem(StorageKey.HIDE_INDIRECT_NOTIFICATIONS) === 'true'
 
     // Clean up deprecated data
     window.localStorage.removeItem(StorageKey.PINNED_PUBKEYS)
@@ -683,6 +687,15 @@ class LocalStorageService {
   setMutedWords(words: string[]) {
     this.mutedWords = words
     window.localStorage.setItem(StorageKey.MUTED_WORDS, JSON.stringify(this.mutedWords))
+  }
+
+  getHideIndirectNotifications() {
+    return this.hideIndirectNotifications
+  }
+
+  setHideIndirectNotifications(onlyShow: boolean) {
+    this.hideIndirectNotifications = onlyShow
+    window.localStorage.setItem(StorageKey.HIDE_INDIRECT_NOTIFICATIONS, onlyShow.toString())
   }
 }
 

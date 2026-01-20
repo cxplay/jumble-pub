@@ -680,8 +680,10 @@ export default {
     'Muted words': 'Wyciszone słowa',
     'Add muted word': 'Dodaj wyciszone słowo',
     'Zap Details': 'Szczegóły zapu',
-    'Default trust score filter threshold ({{n}}%)': 'Domyślny próg filtra wyniku zaufania ({{n}}%)',
+    'Default trust score filter threshold ({{n}}%)':
+      'Domyślny próg filtra wyniku zaufania ({{n}}%)',
     'No notes found': 'Nie znaleziono notatek',
-    'Try again later or check your connection': 'Spróbuj ponownie później lub sprawdź połączenie'
+    'Try again later or check your connection': 'Spróbuj ponownie później lub sprawdź połączenie',
+    'Hide indirect': 'Ukryj pośrednie'
   }
 }

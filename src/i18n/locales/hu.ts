@@ -671,6 +671,7 @@ export default {
     'Default trust score filter threshold ({{n}}%)':
       'Alapértelmezett bizalmi pontszám szűrő küszöbérték ({{n}}%)',
     'No notes found': 'Nem található jegyzet',
-    'Try again later or check your connection': 'Próbáld újra később vagy ellenőrizd a kapcsolatot'
+    'Try again later or check your connection': 'Próbáld újra később vagy ellenőrizd a kapcsolatot',
+    'Hide indirect': 'Közvetettek elrejtése'
   }
 }

@@ -1,13 +1,16 @@
 import ParentNotePreview from '@/components/ParentNotePreview'
-import { NOTIFICATION_LIST_STYLE } from '@/constants'
-import { getEmbeddedPubkeys, getParentStuff } from '@/lib/event'
+import { ExtendedKind, NOTIFICATION_LIST_STYLE } from '@/constants'
+import { getEmbeddedPubkeys, getParentStuff, getParentTag } from '@/lib/event'
 import { toExternalContent, toNote } from '@/lib/link'
+import { generateBech32IdFromETag, tagNameEquals } from '@/lib/tag'
 import { useSecondaryPage } from '@/PageManager'
 import { useNostr } from '@/providers/NostrProvider'
+import { useNotificationUserPreference } from '@/providers/NotificationUserPreferenceProvider'
 import { useUserPreferences } from '@/providers/UserPreferencesProvider'
+import client from '@/services/client.service'
 import { AtSign, MessageCircle, Quote } from 'lucide-react'
 import { Event } from 'nostr-tools'
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Notification from './Notification'
 
@@ -22,6 +25,7 @@ export function MentionNotification({
   const { push } = useSecondaryPage()
   const { pubkey } = useNostr()
   const { notificationListStyle } = useUserPreferences()
+  const { hideIndirect } = useNotificationUserPreference()
   const isMention = useMemo(() => {
     if (!pubkey) return false
     const mentions = getEmbeddedPubkeys(notification)
@@ -30,6 +34,49 @@ export function MentionNotification({
   const { parentEventId, parentExternalContent } = useMemo(() => {
     return getParentStuff(notification)
   }, [notification])
+  const [isDirectMention, setIsDirectMention] = useState(false)
+  useEffect(() => {
+    const checkIsDirectMention = async () => {
+      if (!pubkey) return false
+      if (isMention) return true
+      if (notification.kind === ExtendedKind.POLL) return true
+
+      if (
+        notification.kind === ExtendedKind.VOICE_COMMENT ||
+        notification.kind === ExtendedKind.COMMENT
+      ) {
+        const parentPTag = notification.tags.findLast(tagNameEquals('p'))
+        const parentPubkey = parentPTag?.[1]
+        return parentPubkey === pubkey
+      }
+
+      const parentTag = getParentTag(notification)
+      if (parentTag?.type === 'e') {
+        const [, , , , parentPubkey] = parentTag.tag
+        if (parentPubkey) {
+          return parentPubkey === pubkey
+        }
+        const parentEventId = generateBech32IdFromETag(parentTag.tag)
+        if (!parentEventId) return false
+        const parentEvent = await client.fetchEvent(parentEventId)
+        if (parentEvent) {
+          return parentEvent.pubkey === pubkey
+        }
+        return false
+      }
+      if (parentTag?.type === 'a') {
+        const coordinate = parentTag.tag[1]
+        const [, parentPubkey] = coordinate.split(':')
+        return parentPubkey === pubkey
+      }
+      return false
+    }
+    checkIsDirectMention().then(setIsDirectMention)
+  }, [pubkey, notification, isMention])
+
+  if (hideIndirect && !isDirectMention) {
+    return null
+  }
 
   return (
     <Notification

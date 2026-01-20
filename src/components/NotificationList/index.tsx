@@ -1,4 +1,4 @@
-import { ExtendedKind, NOTIFICATION_LIST_STYLE } from '@/constants'
+import { ExtendedKind, NOTIFICATION_LIST_STYLE, SPECIAL_TRUST_SCORE_FILTER_ID } from '@/constants'
 import { useInfiniteScroll } from '@/hooks'
 import { compareEvents } from '@/lib/event'
 import { getDefaultRelayUrls } from '@/lib/relay'
@@ -28,6 +28,7 @@ import PullToRefresh from 'react-simple-pull-to-refresh'
 import { LoadingBar } from '../LoadingBar'
 import { RefreshButton } from '../RefreshButton'
 import Tabs from '../Tabs'
+import TrustScoreFilter from '../TrustScoreFilter'
 import { NotificationItem } from './NotificationItem'
 import { NotificationSkeleton } from './NotificationItem/Notification'
 
@@ -280,7 +281,12 @@ const NotificationList = forwardRef((_, ref) => {
           setShowCount(SHOW_COUNT)
           setNotificationType(type as TNotificationType)
         }}
-        options={!supportTouch ? <RefreshButton onClick={() => refresh()} /> : null}
+        options={
+          <>
+            {!supportTouch ? <RefreshButton onClick={() => refresh()} /> : null}
+            <TrustScoreFilter filterId={SPECIAL_TRUST_SCORE_FILTER_ID.NOTIFICATIONS} />
+          </>
+        }
       />
       <div ref={topRef} className="scroll-mt-[calc(6rem+1px)]" />
       {supportTouch ? (

@@ -682,6 +682,7 @@ export default {
     'Default trust score filter threshold ({{n}}%)':
       'Soglia predefinita del filtro del punteggio di fiducia ({{n}}%)',
     'No notes found': 'Nessuna nota trovata',
-    'Try again later or check your connection': 'Riprova più tardi o controlla la connessione'
+    'Try again later or check your connection': 'Riprova più tardi o controlla la connessione',
+    'Hide indirect': 'Nascondi indirette'
   }
 }

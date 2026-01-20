@@ -1,3 +1,5 @@
+import { useNostr } from '@/providers/NostrProvider'
+import { useNotificationUserPreference } from '@/providers/NotificationUserPreferenceProvider'
 import client from '@/services/client.service'
 import { Repeat } from 'lucide-react'
 import { Event, validateEvent } from 'nostr-tools'
@@ -13,6 +15,8 @@ export function RepostNotification({
   isNew?: boolean
 }) {
   const { t } = useTranslation()
+  const { pubkey } = useNostr()
+  const { hideIndirect } = useNotificationUserPreference()
   const event = useMemo(() => {
     try {
       const event = JSON.parse(notification.content) as Event
@@ -25,6 +29,9 @@ export function RepostNotification({
     }
   }, [notification.content])
   if (!event) return null
+  if (hideIndirect && event.pubkey !== pubkey) {
+    return null
+  }
 
   return (
     <Notification

@@ -676,6 +676,8 @@ export default {
     'Zap Details': 'جزئیات زپ',
     'Default trust score filter threshold ({{n}}%)': 'آستانه فیلتر امتیاز اعتماد پیش‌فرض ({{n}}%)',
     'No notes found': 'یادداشتی یافت نشد',
-    'Try again later or check your connection': 'بعداً دوباره امتحان کنید یا اتصال خود را بررسی کنید'
+    'Try again later or check your connection':
+      'بعداً دوباره امتحان کنید یا اتصال خود را بررسی کنید',
+    'Hide indirect': 'پنهان کردن غیرمستقیم'
   }
 }

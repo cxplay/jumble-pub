@@ -688,6 +688,8 @@ export default {
     'Default trust score filter threshold ({{n}}%)':
       'Standard-Vertrauenswert-Filter-Schwelle ({{n}}%)',
     'No notes found': 'Keine Notizen gefunden',
-    'Try again later or check your connection': 'Versuchen Sie es später erneut oder überprüfen Sie Ihre Verbindung'
+    'Try again later or check your connection':
+      'Versuchen Sie es später erneut oder überprüfen Sie Ihre Verbindung',
+    'Hide indirect': 'Indirekte ausblenden'
   }
 }

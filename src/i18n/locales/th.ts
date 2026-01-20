@@ -667,6 +667,7 @@ export default {
     'Default trust score filter threshold ({{n}}%)':
       'เกณฑ์ตัวกรองคะแนนความไว้วางใจเริ่มต้น ({{n}}%)',
     'No notes found': 'ไม่พบโน้ต',
-    'Try again later or check your connection': 'ลองใหม่ภายหลังหรือตรวจสอบการเชื่อมต่อของคุณ'
+    'Try again later or check your connection': 'ลองใหม่ภายหลังหรือตรวจสอบการเชื่อมต่อของคุณ',
+    'Hide indirect': 'ซ่อนทางอ้อม'
   }
 }

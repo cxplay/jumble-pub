@@ -127,7 +127,7 @@ function NoteListPageTitlebar({
                 layoutRef?.current?.scrollToTop('smooth')
               }
             }}
-            className={showRelayDetails ? 'bg-accent/50' : ''}
+            className={showRelayDetails ? 'bg-muted/40' : ''}
           >
             <Info />
           </Button>

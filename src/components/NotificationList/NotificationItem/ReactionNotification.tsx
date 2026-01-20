@@ -2,6 +2,7 @@ import Image from '@/components/Image'
 import { useFetchEvent } from '@/hooks'
 import { generateBech32IdFromATag, generateBech32IdFromETag, tagNameEquals } from '@/lib/tag'
 import { useNostr } from '@/providers/NostrProvider'
+import { useNotificationUserPreference } from '@/providers/NotificationUserPreferenceProvider'
 import { Heart } from 'lucide-react'
 import { Event } from 'nostr-tools'
 import { useMemo } from 'react'
@@ -17,6 +18,7 @@ export function ReactionNotification({
 }) {
   const { t } = useTranslation()
   const { pubkey } = useNostr()
+  const { hideIndirect } = useNotificationUserPreference()
   const eventId = useMemo(() => {
     const aTag = notification.tags.findLast(tagNameEquals('a'))
     if (aTag) {
@@ -54,6 +56,9 @@ export function ReactionNotification({
   }, [notification])
 
   if (!event || !eventId || !reaction) {
+    return null
+  }
+  if (hideIndirect && event.pubkey !== pubkey) {
     return null
   }
 
