@@ -2,7 +2,6 @@ import Explore from '@/components/Explore'
 import FollowingFavoriteRelayList from '@/components/FollowingFavoriteRelayList'
 import NoteList from '@/components/NoteList'
 import Tabs from '@/components/Tabs'
-import { Button } from '@/components/ui/button'
 import { ExtendedKind } from '@/constants'
 import PrimaryPageLayout from '@/layouts/PrimaryPageLayout'
 import { getReplaceableEventIdentifier } from '@/lib/event'
@@ -10,7 +9,7 @@ import { getDefaultRelayUrls } from '@/lib/relay'
 import { isLocalNetworkUrl, isOnionUrl, isWebsocketUrl } from '@/lib/url'
 import storage from '@/services/local-storage.service'
 import { TPageRef } from '@/types'
-import { Compass, Plus } from 'lucide-react'
+import { Compass } from 'lucide-react'
 import { NostrEvent } from 'nostr-tools'
 import { forwardRef, useCallback, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -89,20 +88,7 @@ function ExplorePageTitlebar() {
         <Compass />
         <div className="text-lg font-semibold">{t('Explore')}</div>
       </div>
-      <Button
-        variant="ghost"
-        size="titlebar-icon"
-        className="relative w-fit px-3"
-        onClick={() => {
-          window.open(
-            'https://github.com/CodyTseng/awesome-nostr-relays/issues/new?template=add-relay.md',
-            '_blank'
-          )
-        }}
-      >
-        <Plus size={16} />
-        {t('Submit Relay')}
-      </Button>
+      {/* Placeholder for future right-aligned items */}
     </div>
   )
 }
