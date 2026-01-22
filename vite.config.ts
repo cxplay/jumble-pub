@@ -79,8 +79,8 @@ export default defineConfig(({ mode }) => {
           enabled: true
         },
         manifest: {
-          name: 'Jumble',
-          short_name: 'Jumble',
+          name: 'Nostr!moe',
+          short_name: 'Nostr!moe',
           icons: [
             {
               src: '/pwa-512x512.png',
