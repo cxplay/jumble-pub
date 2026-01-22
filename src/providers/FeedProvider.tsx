@@ -163,7 +163,7 @@ export function FeedProvider({ children }: { children: React.ReactNode }) {
       }
 
       if (relaySet) {
-        const newFeedInfo = { feedType, id: relaySet.id }
+        const newFeedInfo = { feedType, id: relaySet.id, name: relaySet.name }
         setFeedInfo(newFeedInfo)
         feedInfoRef.current = newFeedInfo
         setRelayUrls(relaySet.relayUrls)
