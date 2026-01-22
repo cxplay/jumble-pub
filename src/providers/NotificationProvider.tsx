@@ -154,9 +154,9 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
 
     // Update title
     if (newNotificationCount > 0) {
-      document.title = `(${newNotificationCount >= 10 ? '9+' : newNotificationCount}) Jumble`
+      document.title = `(${newNotificationCount >= 10 ? '9+' : newNotificationCount}) Nostr!moe`
     } else {
-      document.title = 'Jumble'
+      document.title = 'Nostr!moe'
     }
 
     // Update favicons

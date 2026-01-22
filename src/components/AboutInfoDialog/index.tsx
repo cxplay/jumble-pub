@@ -11,15 +11,15 @@ export default function AboutInfoDialog({ children }: { children: React.ReactNod
 
   const content = (
     <>
-      <div className="text-xl font-semibold">Jumble</div>
+      <div className="text-xl font-semibold">Nostr!moe</div>
       <div className="text-muted-foreground">
-        A user-friendly Nostr client for exploring relay feeds
+        由 Jumble 驱动的 Nostr!moe 社区
       </div>
       <div>
-        Made by <Username userId={CODY_PUBKEY} className="inline-block text-primary" showAt />
+        制作: <Username userId={CODY_PUBKEY} className="inline-block text-primary" showAt />
       </div>
       <div>
-        Source code:{' '}
+        源代码:{' '}
         <a
           href="https://github.com/CodyTseng/jumble"
           target="_blank"
@@ -29,7 +29,7 @@ export default function AboutInfoDialog({ children }: { children: React.ReactNod
           GitHub
         </a>
         <div className="text-sm text-muted-foreground">
-          If you like Jumble, please consider giving it a star ⭐
+          果你喜欢 Jumble, 请考虑给它点一个 star ⭐
         </div>
       </div>
     </>

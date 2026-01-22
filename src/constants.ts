@@ -200,16 +200,16 @@ export const PRIMARY_COLORS = {
   DEFAULT: {
     name: 'Default',
     light: {
-      primary: '259 43% 56%',
+      primary: '338 100% 74%',
       'primary-hover': '259 43% 65%',
       'primary-foreground': '0 0% 98%',
-      ring: '259 43% 56%'
+      ring: '338 100% 74%'
     },
     dark: {
-      primary: '259 43% 56%',
+      primary: '338 100% 74%',
       'primary-hover': '259 43% 65%',
       'primary-foreground': '240 5.9% 10%',
-      ring: '259 43% 56%'
+      ring: '338 100% 74%'
     }
   },
   RED: {
