@@ -42,7 +42,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
             </a>{' '}
             with the error details, or{' '}
             <a
-              href="https://jumble.social/npub1syjmjy0dp62dhccq3g97fr87tngvpvzey08llyt6ul58m2zqpzps9wf6wl"
+              href="https://nostr.moe/npub1syjmjy0dp62dhccq3g97fr87tngvpvzey08llyt6ul58m2zqpzps9wf6wl"
               target="_blank"
               rel="noopener noreferrer"
               className="text-primary underline"

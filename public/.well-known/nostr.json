@@ -1,7 +1,17 @@
 {
-  "names": {
-    "_": "f4eb8e62add1340b9cadcd9861e669b2e907cea534e0f7f3ac974c11c758a51a",
-    "cody": "8125b911ed0e94dbe3008a0be48cfe5cd0c0b05923cfff917ae7e87da8400883",
-    "cody2": "24462930821b45f530ec0063eca0a6522e5a577856f982fa944df0ef3caf03ab"
-  }
+    "names": {
+        "admin": "97eafcb1b8438d56d2a3309c6faf08ae61be618a65c87b6a295549ea773ac29d",
+        "cxplay": "434f97993627f1e61f14eeaf60caa8cfdcec10a592caff8250c825252d548c15",
+        "xtao": "32faf94b469aa90acf4b583df764c814efe1bae60fd3fc21b07de58713ae1187",
+        "jixun": "90e3b53acc128f797efff8f285695aca03b2778ff10d601e41453fa46e947dd6",
+        "joomaen": "77c2969ea4db4ca1859305d7ebabf6053fd132ddcc88e1b178bfd938a33cfa50"
+    },
+    "relays": {
+        "97eafcb1b8438d56d2a3309c6faf08ae61be618a65c87b6a295549ea773ac29d": [
+            "wss://relay.nostr.moe"
+        ],
+        "434f97993627f1e61f14eeaf60caa8cfdcec10a592caff8250c825252d548c15": [
+            "wss://relay.cxplay.org"
+        ]
+    }
 }
