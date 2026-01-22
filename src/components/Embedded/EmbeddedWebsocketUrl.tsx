@@ -12,7 +12,7 @@ export function EmbeddedWebsocketUrl({ url }: { url: string }) {
       }}
     >
       [ {url} ]
-      <span className="w-2 h-1 bg-primary" />
+      <span className="h-1 w-2 bg-primary" />
     </span>
   )
 }

@@ -91,7 +91,7 @@ export default function MuteButton({ pubkey }: { pubkey: string }) {
         <DrawerContent>
           <div className="py-2">
             <Button
-              className="w-full p-6 justify-start text-destructive text-lg gap-4 [&_svg]:size-5 focus:text-destructive"
+              className="w-full justify-start gap-4 p-6 text-lg text-destructive focus:text-destructive [&_svg]:size-5"
               variant="ghost"
               onClick={(e) => handleMute(e, true)}
               disabled={updating || changing}
@@ -99,7 +99,7 @@ export default function MuteButton({ pubkey }: { pubkey: string }) {
               {updating ? <Loader className="animate-spin" /> : t('Mute user privately')}
             </Button>
             <Button
-              className="w-full p-6 justify-start text-destructive text-lg gap-4 [&_svg]:size-5 focus:text-destructive"
+              className="w-full justify-start gap-4 p-6 text-lg text-destructive focus:text-destructive [&_svg]:size-5"
               variant="ghost"
               onClick={(e) => handleMute(e, false)}
               disabled={updating || changing}

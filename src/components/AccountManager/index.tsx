@@ -45,10 +45,10 @@ function AccountManagerNav({
   return (
     <div onClick={(e) => e.stopPropagation()} className="flex flex-col gap-8">
       <div>
-        <div className="text-center text-muted-foreground text-sm font-semibold">
+        <div className="text-center text-sm font-semibold text-muted-foreground">
           {t('Add an Account')}
         </div>
-        <div className="space-y-2 mt-4">
+        <div className="mt-4 space-y-2">
           {!!window.nostr && (
             <Button onClick={() => nip07Login().then(() => close?.())} className="w-full">
               {t('Login with Browser Extension')}
@@ -69,10 +69,10 @@ function AccountManagerNav({
       </div>
       <Separator />
       <div>
-        <div className="text-center text-muted-foreground text-sm font-semibold">
+        <div className="text-center text-sm font-semibold text-muted-foreground">
           {t("Don't have an account yet?")}
         </div>
-        <Button onClick={() => setPage('signup')} className="w-full mt-4">
+        <Button onClick={() => setPage('signup')} className="mt-4 w-full">
           {t('Create New Account')}
         </Button>
       </div>
@@ -80,7 +80,7 @@ function AccountManagerNav({
         <>
           <Separator />
           <div>
-            <div className="text-center text-muted-foreground text-sm font-semibold">
+            <div className="text-center text-sm font-semibold text-muted-foreground">
               {t('Logged in Accounts')}
             </div>
             <AccountList className="mt-4" afterSwitch={() => close?.()} />

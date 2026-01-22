@@ -39,13 +39,13 @@ export function Tabs({
 
   return (
     <div className="w-fit">
-      <div className="flex relative">
+      <div className="relative flex">
         {TABS.map((tab, index) => (
           <div
             key={tab.value}
             ref={(el) => (tabRefs.current[index] = el)}
             className={cn(
-              `text-center px-4 py-2 font-semibold clickable cursor-pointer rounded-lg`,
+              `clickable cursor-pointer rounded-lg px-4 py-2 text-center font-semibold`,
               selectedTab === tab.value ? '' : 'text-muted-foreground'
             )}
             onClick={() => onTabChange(tab.value)}
@@ -54,7 +54,7 @@ export function Tabs({
           </div>
         ))}
         <div
-          className="absolute bottom-0 h-1 bg-primary rounded-full transition-all duration-500"
+          className="absolute bottom-0 h-1 rounded-full bg-primary transition-all duration-500"
           style={{
             width: `${indicatorStyle.width}px`,
             left: `${indicatorStyle.left}px`

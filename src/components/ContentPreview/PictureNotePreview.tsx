@@ -13,7 +13,7 @@ export default function PictureNotePreview({
 
   return (
     <div className={cn('pointer-events-none', className)}>
-      [{t('Image')}] <span className="italic pr-0.5">{event.content}</span>
+      [{t('Image')}] <span className="pr-0.5 italic">{event.content}</span>
     </div>
   )
 }

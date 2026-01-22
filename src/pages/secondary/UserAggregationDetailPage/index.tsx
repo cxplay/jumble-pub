@@ -56,7 +56,7 @@ const UserAggregationDetailPage = forwardRef(
     if (!pubkey || !feedId) {
       return (
         <SecondaryPageLayout ref={ref} index={index} title={t('User Posts')}>
-          <div className="flex justify-center items-center h-40 text-muted-foreground">
+          <div className="flex h-40 items-center justify-center text-muted-foreground">
             {t('Invalid user')}
           </div>
         </SecondaryPageLayout>
@@ -74,7 +74,7 @@ const UserAggregationDetailPage = forwardRef(
           {aggregation.map((event) => (
             <NoteCard key={event.id} className="w-full" event={event} filterMutedNotes={false} />
           ))}
-          <div className="text-center text-sm text-muted-foreground mt-2">{t('no more notes')}</div>
+          <div className="mt-2 text-center text-sm text-muted-foreground">{t('no more notes')}</div>
         </div>
       </SecondaryPageLayout>
     )

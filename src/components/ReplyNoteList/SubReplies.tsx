@@ -47,10 +47,10 @@ export default function SubReplies({ parentKey }: { parentKey: string }) {
             e.stopPropagation()
             setIsExpanded(!isExpanded)
           }}
-          className="relative w-full flex items-center gap-1.5 pl-14 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors clickable"
+          className="clickable relative flex w-full items-center gap-1.5 py-2 pl-14 text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
           <div
-            className={cn('absolute left-[34px] top-0 bottom-0 w-px text-border z-20')}
+            className={cn('absolute bottom-0 left-[34px] top-0 z-20 w-px text-border')}
             style={{
               background: isExpanded
                 ? 'currentColor'
@@ -86,14 +86,14 @@ export default function SubReplies({ parentKey }: { parentKey: string }) {
               <div
                 ref={(el) => (replyRefs.current[currentReplyKey] = el)}
                 key={currentReplyKey}
-                className="scroll-mt-12 flex relative"
+                className="relative flex scroll-mt-12"
               >
-                <div className="absolute left-[34px] top-0 h-8 w-4 rounded-bl-lg border-l border-b z-20" />
+                <div className="absolute left-[34px] top-0 z-20 h-8 w-4 rounded-bl-lg border-b border-l" />
                 {index < replies.length - 1 && (
-                  <div className="absolute left-[34px] top-0 bottom-0 border-l z-20" />
+                  <div className="absolute bottom-0 left-[34px] top-0 z-20 border-l" />
                 )}
                 <ReplyNote
-                  className="flex-1 w-0 pl-10"
+                  className="w-0 flex-1 pl-10"
                   event={reply}
                   parentEventId={_parentKey !== parentKey ? _parentEventId : undefined}
                   onClickParent={() => {

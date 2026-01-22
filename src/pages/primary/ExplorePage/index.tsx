@@ -83,8 +83,8 @@ function ExplorePageTitlebar() {
   const { t } = useTranslation()
 
   return (
-    <div className="flex gap-2 justify-between h-full">
-      <div className="flex gap-2 items-center h-full pl-3">
+    <div className="flex h-full justify-between gap-2">
+      <div className="flex h-full items-center gap-2 pl-3">
         <Compass />
         <div className="text-lg font-semibold">{t('Explore')}</div>
       </div>

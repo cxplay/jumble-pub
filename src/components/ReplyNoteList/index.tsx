@@ -57,7 +57,7 @@ export default function ReplyNoteList({ stuff }: { stuff: NEvent | string }) {
       {shouldShowLoadingIndicator ? (
         <ReplyNoteSkeleton />
       ) : (
-        <div className="text-sm mt-2 mb-3 text-center text-muted-foreground">
+        <div className="mb-3 mt-2 text-center text-sm text-muted-foreground">
           {replies.length > 0 ? t('no more replies') : t('no replies')}
         </div>
       )}

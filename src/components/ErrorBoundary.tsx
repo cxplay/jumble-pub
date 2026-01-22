@@ -28,9 +28,9 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   render() {
     if (this.state.hasError) {
       return (
-        <div className="w-screen h-screen flex flex-col items-center justify-center p-4 gap-4">
+        <div className="flex h-screen w-screen flex-col items-center justify-center gap-4 p-4">
           <h1 className="text-2xl font-bold">Oops, something went wrong.</h1>
-          <p className="text-lg text-center max-w-md">
+          <p className="max-w-md text-center text-lg">
             Sorry for the inconvenience. If you don't mind helping, you can{' '}
             <a
               href="https://github.com/CodyTseng/jumble/issues/new"
@@ -61,7 +61,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
               >
                 Copy Error Message
               </Button>
-              <pre className="bg-destructive/10 text-destructive p-2 rounded text-wrap break-words whitespace-pre-wrap">
+              <pre className="whitespace-pre-wrap text-wrap break-words rounded bg-destructive/10 p-2 text-destructive">
                 Error: {this.state.error.message}
               </pre>
             </>

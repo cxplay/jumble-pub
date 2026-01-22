@@ -55,7 +55,7 @@ export default function PostEditor({
     return (
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetContent
-          className="h-full w-full p-0 border-none"
+          className="h-full w-full border-none p-0"
           side="bottom"
           hideClose
           onEscapeKeyDown={(e) => {
@@ -65,7 +65,7 @@ export default function PostEditor({
             }
           }}
         >
-          <ScrollArea className="px-4 h-full max-h-screen">
+          <ScrollArea className="h-full max-h-screen px-4">
             <div className="space-y-4 px-2 py-6">
               <SheetHeader>
                 <SheetTitle className="text-start">
@@ -84,7 +84,7 @@ export default function PostEditor({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
-        className="p-0 max-w-2xl"
+        className="max-w-2xl p-0"
         withoutClose
         onEscapeKeyDown={(e) => {
           if (postEditor.isSuggestionPopupOpen) {
@@ -93,7 +93,7 @@ export default function PostEditor({
           }
         }}
       >
-        <ScrollArea className="px-4 h-full max-h-screen">
+        <ScrollArea className="h-full max-h-screen px-4">
           <div className="space-y-4 px-2 py-6">
             <DialogHeader>
               <DialogTitle>

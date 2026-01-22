@@ -22,7 +22,7 @@ export default function FeedButton({ className }: { className?: string }) {
         <Drawer open={open} onOpenChange={setOpen}>
           <DrawerContent className="max-h-[85vh]">
             <div
-              className="flex-1 overflow-y-auto overscroll-contain py-3 px-4"
+              className="flex-1 overflow-y-auto overscroll-contain px-4 py-3"
               style={{
                 touchAction: 'pan-y',
                 WebkitOverflowScrolling: 'touch'
@@ -41,9 +41,9 @@ export default function FeedButton({ className }: { className?: string }) {
       <PopoverTrigger asChild>
         <FeedSwitcherTrigger className={className} />
       </PopoverTrigger>
-      <PopoverContent sideOffset={0} side="bottom" className="w-[400px] p-0 overflow-hidden">
+      <PopoverContent sideOffset={0} side="bottom" className="w-[400px] overflow-hidden p-0">
         <div
-          className="max-h-[calc(100vh-16rem)] overflow-y-auto overscroll-contain py-3 px-4"
+          className="max-h-[calc(100vh-16rem)] overflow-y-auto overscroll-contain px-4 py-3"
           onWheel={(e) => e.stopPropagation()}
           onTouchMove={(e) => e.stopPropagation()}
         >
@@ -94,12 +94,12 @@ const FeedSwitcherTrigger = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivEle
 
     return (
       <div
-        className={cn('flex items-center gap-2 clickable px-3 h-full rounded-xl', className)}
+        className={cn('clickable flex h-full items-center gap-2 rounded-xl px-3', className)}
         ref={ref}
         {...props}
       >
         {icon}
-        <div className="text-lg font-semibold truncate">{title}</div>
+        <div className="truncate text-lg font-semibold">{title}</div>
         <ChevronDown />
       </div>
     )

@@ -73,17 +73,17 @@ export default function RepostList({ event }: { event: Event }) {
       {filteredReposts.slice(0, showCount).map((repost) => (
         <div
           key={repost.id}
-          className="px-4 py-3 border-b transition-colors clickable flex items-center gap-3"
+          className="clickable flex items-center gap-3 border-b px-4 py-3 transition-colors"
           onClick={() => push(toProfile(repost.pubkey))}
         >
-          <Repeat className="text-green-400 size-5" />
+          <Repeat className="size-5 text-green-400" />
 
           <UserAvatar userId={repost.pubkey} size="medium" className="shrink-0" />
 
-          <div className="flex-1 w-0">
+          <div className="w-0 flex-1">
             <Username
               userId={repost.pubkey}
-              className="text-sm font-semibold text-muted-foreground hover:text-foreground max-w-fit truncate"
+              className="max-w-fit truncate text-sm font-semibold text-muted-foreground hover:text-foreground"
               skeletonClassName="h-3"
             />
             <div className="flex items-center gap-1 text-sm text-muted-foreground">
@@ -100,7 +100,7 @@ export default function RepostList({ event }: { event: Event }) {
 
       <div ref={bottomRef} />
 
-      <div className="text-sm mt-2 text-center text-muted-foreground">
+      <div className="mt-2 text-center text-sm text-muted-foreground">
         {filteredReposts.length > 0 ? t('No more reposts') : t('No reposts yet')}
       </div>
     </div>

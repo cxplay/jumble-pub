@@ -43,7 +43,7 @@ export default function LongFormArticle({
             return (
               <SecondaryPageLink
                 to={toNote(href)}
-                className="break-words underline text-foreground"
+                className="break-words text-foreground underline"
               >
                 {children}
               </SecondaryPageLink>
@@ -53,7 +53,7 @@ export default function LongFormArticle({
             return (
               <SecondaryPageLink
                 to={toProfile(href)}
-                className="break-words underline text-foreground"
+                className="break-words text-foreground underline"
               >
                 {children}
               </SecondaryPageLink>
@@ -65,7 +65,7 @@ export default function LongFormArticle({
               href={href}
               target="_blank"
               rel="noreferrer noopener"
-              className="break-words inline-flex items-baseline gap-1"
+              className="inline-flex items-baseline gap-1 break-words"
             >
               {children} <ExternalLink className="size-3" />
             </a>
@@ -73,11 +73,11 @@ export default function LongFormArticle({
         },
         p: (props) => <p {...props} className="break-words" />,
         div: (props) => <div {...props} className="break-words" />,
-        code: (props) => <code {...props} className="break-words whitespace-pre-wrap" />,
+        code: (props) => <code {...props} className="whitespace-pre-wrap break-words" />,
         img: (props) => (
           <ImageWithLightbox
             image={{ url: props.src || '', pubkey: event.pubkey }}
-            className="max-h-[80vh] sm:max-h-[50vh] object-contain my-0"
+            className="my-0 max-h-[80vh] object-contain sm:max-h-[50vh]"
             classNames={{
               wrapper: 'w-fit max-w-full'
             }}
@@ -91,7 +91,7 @@ export default function LongFormArticle({
     <>
       <div
         ref={contentRef}
-        className={`prose prose-zinc max-w-none dark:prose-invert break-words overflow-wrap-anywhere ${className || ''}`}
+        className={`overflow-wrap-anywhere prose prose-zinc max-w-none break-words dark:prose-invert ${className || ''}`}
       >
         <h1 className="break-words">{metadata.title}</h1>
         {metadata.summary && (
@@ -102,7 +102,7 @@ export default function LongFormArticle({
         {metadata.image && (
           <ImageWithLightbox
             image={{ url: metadata.image, pubkey: event.pubkey }}
-            className="w-full aspect-[3/1] object-cover my-0"
+            className="my-0 aspect-[3/1] w-full object-cover"
           />
         )}
         <Markdown
@@ -118,12 +118,12 @@ export default function LongFormArticle({
           {event.content}
         </Markdown>
         {metadata.tags.length > 0 && (
-          <div className="flex gap-2 flex-wrap pb-2">
+          <div className="flex flex-wrap gap-2 pb-2">
             {metadata.tags.map((tag) => (
               <div
                 key={tag}
                 title={tag}
-                className="flex items-center rounded-full px-3 bg-muted text-muted-foreground max-w-44 cursor-pointer hover:bg-accent hover:text-accent-foreground"
+                className="flex max-w-44 cursor-pointer items-center rounded-full bg-muted px-3 text-muted-foreground hover:bg-accent hover:text-accent-foreground"
                 onClick={(e) => {
                   e.stopPropagation()
                   push(toNoteList({ hashtag: tag, kinds: [kinds.LongFormArticle] }))

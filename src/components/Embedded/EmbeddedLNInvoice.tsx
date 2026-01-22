@@ -42,21 +42,21 @@ export function EmbeddedLNInvoice({ invoice, className }: { invoice: string; cla
 
   return (
     <div
-      className={cn('p-3 border rounded-lg cursor-default flex flex-col gap-3 max-w-sm', className)}
+      className={cn('flex max-w-sm cursor-default flex-col gap-3 rounded-lg border p-3', className)}
       onClick={(e) => e.stopPropagation()}
     >
       <div className="flex items-center gap-2">
-        <Zap className="w-5 h-5 text-yellow-400" />
-        <div className="font-semibold text-sm">{t('Lightning Invoice')}</div>
+        <Zap className="h-5 w-5 text-yellow-400" />
+        <div className="text-sm font-semibold">{t('Lightning Invoice')}</div>
       </div>
       {description && (
-        <div className="text-sm text-muted-foreground break-words">{description}</div>
+        <div className="break-words text-sm text-muted-foreground">{description}</div>
       )}
       <div className="text-lg font-bold">
         {formatAmount(amount)} {t('sats')}
       </div>
       <Button onClick={handlePayClick}>
-        {paying && <Loader className="w-4 h-4 animate-spin" />}
+        {paying && <Loader className="h-4 w-4 animate-spin" />}
         {t('Pay')}
       </Button>
     </div>

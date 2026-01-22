@@ -40,7 +40,7 @@ export default function AboutInfoDialog({ children }: { children: React.ReactNod
       <Drawer open={open} onOpenChange={setOpen}>
         <DrawerTrigger asChild>{children}</DrawerTrigger>
         <DrawerContent>
-          <div className="p-4 space-y-4">{content}</div>
+          <div className="space-y-4 p-4">{content}</div>
         </DrawerContent>
       </Drawer>
     )

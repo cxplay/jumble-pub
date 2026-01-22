@@ -15,12 +15,12 @@ export default function Followings({ pubkey }: { pubkey: string }) {
   return (
     <SecondaryPageLink
       to={toFollowingList(pubkey)}
-      className="flex gap-1 hover:underline w-fit items-center"
+      className="flex w-fit items-center gap-1 hover:underline"
     >
       {accountPubkey === pubkey ? (
         selfFollowingSet.size
       ) : isFetching ? (
-        <Loader className="animate-spin size-4" />
+        <Loader className="size-4 animate-spin" />
       ) : (
         followings.length
       )}

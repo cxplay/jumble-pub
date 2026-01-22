@@ -40,7 +40,7 @@ export default function PullRelaySetsButton() {
   const trigger = (
     <Button
       variant="link"
-      className="text-muted-foreground hover:no-underline hover:text-foreground p-0 h-fit"
+      className="h-fit p-0 text-muted-foreground hover:text-foreground hover:no-underline"
       disabled={!pubkey}
     >
       <CloudDownload />
@@ -53,7 +53,7 @@ export default function PullRelaySetsButton() {
       <Drawer open={open} onOpenChange={setOpen}>
         <DrawerTrigger asChild>{trigger}</DrawerTrigger>
         <DrawerContent className="max-h-[90vh]">
-          <div className="flex flex-col p-4 gap-4 overflow-auto">
+          <div className="flex flex-col gap-4 overflow-auto p-4">
             <DrawerHeader>
               <DrawerTitle>{t('Select the relay sets you want to pull')}</DrawerTitle>
               <DrawerDescription className="hidden" />

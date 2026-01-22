@@ -13,7 +13,7 @@ export default function VideoNotePreview({
 
   return (
     <div className={cn('pointer-events-none', className)}>
-      [{t('Media')}] <span className="italic pr-0.5">{event.content}</span>
+      [{t('Media')}] <span className="pr-0.5 italic">{event.content}</span>
     </div>
   )
 }

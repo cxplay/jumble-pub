@@ -14,7 +14,7 @@ export function getRelayListFromEvent(
   filterOutOnionRelays: boolean = true
 ): TRelayList {
   const defaultRelays = getDefaultRelayUrls()
-  
+
   if (!event) {
     return { write: defaultRelays, read: defaultRelays, originalRelays: [] }
   }

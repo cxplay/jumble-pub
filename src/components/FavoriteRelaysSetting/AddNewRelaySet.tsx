@@ -28,7 +28,7 @@ export default function AddNewRelaySet() {
 
   return (
     <div className="space-y-1">
-      <div className="flex gap-2 items-center">
+      <div className="flex items-center gap-2">
         <Input
           placeholder={t('Add a new relay set')}
           value={newRelaySetName}

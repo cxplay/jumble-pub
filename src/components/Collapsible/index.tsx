@@ -48,7 +48,7 @@ export default function Collapsible({
 
   return (
     <div
-      className={cn('relative text-left overflow-hidden', className)}
+      className={cn('relative overflow-hidden text-left', className)}
       ref={containerRef}
       {...props}
       style={{
@@ -57,8 +57,8 @@ export default function Collapsible({
     >
       {children}
       {shouldCollapse && !expanded && (
-        <div className="absolute bottom-0 h-40 w-full z-10 bg-gradient-to-b from-transparent to-background/90 flex items-end justify-center pb-4">
-          <div className="bg-background rounded-lg">
+        <div className="absolute bottom-0 z-10 flex h-40 w-full items-end justify-center bg-gradient-to-b from-transparent to-background/90 pb-4">
+          <div className="rounded-lg bg-background">
             <Button
               className="bg-foreground hover:bg-foreground/80"
               onClick={(e) => {

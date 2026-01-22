@@ -30,14 +30,14 @@ export default function PrimaryPageSidebar() {
   return (
     <div
       className={cn(
-        'relative flex flex-col pb-2 pt-3 justify-between h-full shrink-0',
-        sidebarCollapse ? 'px-2 w-16' : 'px-4 w-52'
+        'relative flex h-full shrink-0 flex-col justify-between pb-2 pt-3',
+        sidebarCollapse ? 'w-16 px-2' : 'w-52 px-4'
       )}
     >
       <div className="space-y-2">
         {sidebarCollapse ? (
           <button
-            className="px-3 py-1 mb-4 w-full cursor-pointer hover:opacity-80 transition-opacity"
+            className="mb-4 w-full cursor-pointer px-3 py-1 transition-opacity hover:opacity-80"
             onClick={() => navigate('home')}
             aria-label="Go to home"
           >
@@ -45,7 +45,7 @@ export default function PrimaryPageSidebar() {
           </button>
         ) : (
           <button
-            className="px-4 mb-4 w-full cursor-pointer hover:opacity-80 transition-opacity"
+            className="mb-4 w-full cursor-pointer px-4 transition-opacity hover:opacity-80"
             onClick={() => navigate('home')}
             aria-label="Go to home"
           >
@@ -67,10 +67,10 @@ export default function PrimaryPageSidebar() {
       </div>
       <button
         className={cn(
-          'absolute flex flex-col justify-center items-center w-5 h-6 p-0 rounded-l-md hover:shadow-md text-muted-foreground hover:text-foreground hover:bg-background transition-colors [&_svg]:size-4',
+          'absolute flex h-6 w-5 flex-col items-center justify-center rounded-l-md p-0 text-muted-foreground transition-colors hover:bg-background hover:text-foreground hover:shadow-md [&_svg]:size-4',
           themeSetting === 'pure-black' || enableSingleColumnLayout
-            ? 'top-3 right-0'
-            : 'top-5 -right-0.5'
+            ? 'right-0 top-3'
+            : '-right-0.5 top-5'
         )}
         onClick={(e) => {
           e.stopPropagation()

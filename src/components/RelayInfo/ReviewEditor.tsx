@@ -44,25 +44,25 @@ export default function ReviewEditor({
   }
 
   return (
-    <div className="px-4 space-y-2">
+    <div className="space-y-2 px-4">
       <Textarea
         className="min-h-36"
         placeholder={t('Write a review and pick a star rating')}
         value={review}
         onChange={(e) => setReview(e.target.value)}
       />
-      <div className="flex justify-between items-center">
+      <div className="flex items-center justify-between">
         <div className="flex items-center">
           {Array.from({ length: 5 }).map((_, index) => (
             <div
               key={index}
-              className="pr-2 cursor-pointer"
+              className="cursor-pointer pr-2"
               onMouseEnter={() => setHoverStars(index + 1)}
               onMouseLeave={() => setHoverStars(0)}
             >
               {index < (hoverStars || stars) ? (
                 <Star
-                  className="size-6 text-yellow-400 fill-yellow-400"
+                  className="size-6 fill-yellow-400 text-yellow-400"
                   onClick={() => setStars(index + 1)}
                 />
               ) : (

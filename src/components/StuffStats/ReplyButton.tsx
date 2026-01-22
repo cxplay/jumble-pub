@@ -20,7 +20,7 @@ export default function ReplyButton({ stuff }: { stuff: Event | string }) {
     <>
       <button
         className={cn(
-          'flex gap-1 items-center enabled:hover:text-blue-400 pr-3 h-full',
+          'flex h-full items-center gap-1 pr-3 enabled:hover:text-blue-400',
           hasReplied ? 'text-blue-400' : 'text-muted-foreground'
         )}
         onClick={(e) => {

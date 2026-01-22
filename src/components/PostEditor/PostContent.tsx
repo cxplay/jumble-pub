@@ -197,11 +197,11 @@ export default function PostContent({
     <div className="space-y-2">
       {parentEvent && (
         <ScrollArea className="flex max-h-48 flex-col overflow-y-auto rounded-lg border bg-muted/40">
-          <div className="p-2 sm:p-3 pointer-events-none">
+          <div className="pointer-events-none p-2 sm:p-3">
             {highlightedText ? (
               <div className="flex gap-4">
-                <div className="w-1 flex-shrink-0 my-1 bg-primary/60 rounded-md" />
-                <div className="italic whitespace-pre-line">{highlightedText}</div>
+                <div className="my-1 w-1 flex-shrink-0 rounded-md bg-primary/60" />
+                <div className="whitespace-pre-line italic">{highlightedText}</div>
               </div>
             ) : (
               <Note size="small" event={parentEvent} hideParentNotePreview />
@@ -233,10 +233,10 @@ export default function PostContent({
         uploadProgresses.map(({ file, progress, cancel }, index) => (
           <div key={`${file.name}-${index}`} className="mt-2 flex items-end gap-2">
             <div className="min-w-0 flex-1">
-              <div className="truncate text-xs text-muted-foreground mb-1">
+              <div className="mb-1 truncate text-xs text-muted-foreground">
                 {file.name ?? t('Uploading...')}
               </div>
-              <div className="h-0.5 w-full rounded-full bg-muted overflow-hidden">
+              <div className="h-0.5 w-full overflow-hidden rounded-full bg-muted">
                 <div
                   className="h-full bg-primary transition-[width] duration-200 ease-out"
                   style={{ width: `${progress}%` }}
@@ -265,7 +265,7 @@ export default function PostContent({
         />
       )}
       <div className="flex items-center justify-between">
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Uploader
             onUploadSuccess={({ url }) => {
               textareaRef.current?.appendText(url, true)
@@ -314,14 +314,14 @@ export default function PostContent({
             <Settings />
           </Button>
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Mentions
             content={text}
             parentEvent={parentEvent}
             mentions={mentions}
             setMentions={setMentions}
           />
-          <div className="flex gap-2 items-center max-sm:hidden">
+          <div className="flex items-center gap-2 max-sm:hidden">
             <Button
               variant="secondary"
               onClick={(e) => {
@@ -348,7 +348,7 @@ export default function PostContent({
         minPow={minPow}
         setMinPow={setMinPow}
       />
-      <div className="flex gap-2 items-center justify-around sm:hidden">
+      <div className="flex items-center justify-around gap-2 sm:hidden">
         <Button
           className="w-full"
           variant="secondary"

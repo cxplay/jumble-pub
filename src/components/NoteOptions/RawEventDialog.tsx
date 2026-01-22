@@ -25,7 +25,7 @@ export default function RawEventDialog({
           <DialogDescription className="hidden" />
         </DialogHeader>
         <ScrollArea className="h-full">
-          <pre className="text-sm text-muted-foreground select-text">
+          <pre className="select-text text-sm text-muted-foreground">
             {JSON.stringify(event, null, 2)}
           </pre>
           <ScrollBar orientation="horizontal" />

@@ -20,7 +20,7 @@ export default function RelayReview({ event, className }: { event: Event; classN
         <Stars stars={stars} />
         <span className="text-sm text-muted-foreground">→</span>
         <div
-          className="text-sm text-muted-foreground hover:text-foreground hover:underline cursor-pointer truncate"
+          className="cursor-pointer truncate text-sm text-muted-foreground hover:text-foreground hover:underline"
           onClick={(e) => {
             e.stopPropagation()
             push(toRelay(url))

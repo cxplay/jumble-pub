@@ -18,8 +18,8 @@ const SystemSettingsPage = forwardRef(({ index }: { index?: number }, ref) => {
 
   return (
     <SecondaryPageLayout ref={ref} index={index} title={t('System')}>
-      <div className="space-y-4 mt-3">
-        <div className="px-4 space-y-2">
+      <div className="mt-3 space-y-4">
+        <div className="space-y-2 px-4">
           <Label htmlFor="favicon-url" className="text-base font-normal">
             {t('Favicon URL')}
           </Label>
@@ -31,7 +31,7 @@ const SystemSettingsPage = forwardRef(({ index }: { index?: number }, ref) => {
             placeholder={DEFAULT_FAVICON_URL_TEMPLATE}
           />
         </div>
-        <div className="flex justify-between items-center px-4 min-h-9">
+        <div className="flex min-h-9 items-center justify-between px-4">
           <Label htmlFor="filter-out-onion-relays" className="text-base font-normal">
             {t('Filter out onion relays')}
           </Label>
@@ -44,7 +44,7 @@ const SystemSettingsPage = forwardRef(({ index }: { index?: number }, ref) => {
             }}
           />
         </div>
-        <div className="px-4 space-y-2">
+        <div className="space-y-2 px-4">
           <DefaultRelaysSetting />
         </div>
       </div>

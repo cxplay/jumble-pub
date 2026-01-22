@@ -39,10 +39,10 @@ const AppearanceSettingsPage = forwardRef(({ index }: { index?: number }, ref) =
 
   return (
     <SecondaryPageLayout ref={ref} index={index} title={t('Appearance')}>
-      <div className="space-y-4 my-3">
+      <div className="my-3 space-y-4">
         <div className="flex flex-col gap-2 px-4">
           <Label className="text-base">{t('Theme')}</Label>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
+          <div className="grid w-full grid-cols-2 gap-4 md:grid-cols-4">
             {THEMES.map(({ key, label, icon }) => (
               <OptionButton
                 key={key}
@@ -57,7 +57,7 @@ const AppearanceSettingsPage = forwardRef(({ index }: { index?: number }, ref) =
         {!isSmallScreen && (
           <div className="flex flex-col gap-2 px-4">
             <Label className="text-base">{t('Layout')}</Label>
-            <div className="grid grid-cols-2 gap-4 w-full">
+            <div className="grid w-full grid-cols-2 gap-4">
               {LAYOUTS.map(({ key, label, icon }) => (
                 <OptionButton
                   key={key.toString()}
@@ -72,7 +72,7 @@ const AppearanceSettingsPage = forwardRef(({ index }: { index?: number }, ref) =
         )}
         <div className="flex flex-col gap-2 px-4">
           <Label className="text-base">{t('Notification list style')}</Label>
-          <div className="grid grid-cols-2 gap-4 w-full">
+          <div className="grid w-full grid-cols-2 gap-4">
             {NOTIFICATION_STYLES.map(({ key, label, icon }) => (
               <OptionButton
                 key={key}
@@ -86,7 +86,7 @@ const AppearanceSettingsPage = forwardRef(({ index }: { index?: number }, ref) =
         </div>
         <div className="flex flex-col gap-2 px-4">
           <Label className="text-base">{t('Primary color')}</Label>
-          <div className="grid grid-cols-4 gap-4 w-full">
+          <div className="grid w-full grid-cols-4 gap-4">
             {Object.entries(PRIMARY_COLORS).map(([key, config]) => (
               <OptionButton
                 key={key}
@@ -127,11 +127,11 @@ const OptionButton = ({
     <button
       onClick={onClick}
       className={cn(
-        'flex flex-col items-center gap-2 py-4 rounded-lg border-2 transition-all',
+        'flex flex-col items-center gap-2 rounded-lg border-2 py-4 transition-all',
         isSelected ? 'border-primary' : 'border-border hover:border-muted-foreground/40'
       )}
     >
-      <div className="flex items-center justify-center w-8 h-8">{icon}</div>
+      <div className="flex h-8 w-8 items-center justify-center">{icon}</div>
       <span className="text-xs font-medium">{label}</span>
     </button>
   )

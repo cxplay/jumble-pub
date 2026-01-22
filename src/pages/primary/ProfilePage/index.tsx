@@ -27,7 +27,7 @@ function ProfilePageTitlebar() {
   const { t } = useTranslation()
 
   return (
-    <div className="flex gap-2 items-center h-full pl-3">
+    <div className="flex h-full items-center gap-2 pl-3">
       <UserRound />
       <div className="text-lg font-semibold">{t('Profile')}</div>
     </div>

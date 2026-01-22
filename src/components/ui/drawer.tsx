@@ -76,7 +76,7 @@ const DrawerContent = React.forwardRef<
     <DrawerPrimitive.Content
       ref={ref}
       className={cn(
-        'fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-2xl sm:border bg-background',
+        'fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-2xl bg-background sm:border',
         className
       )}
       style={{
@@ -85,7 +85,7 @@ const DrawerContent = React.forwardRef<
       onOpenAutoFocus={(e) => e.preventDefault()}
       {...props}
     >
-      <div className="mx-auto mt-4 pb-2 mb-2 h-2 w-[100px] rounded-full bg-muted" />
+      <div className="mx-auto mb-2 mt-4 h-2 w-[100px] rounded-full bg-muted pb-2" />
       {children}
     </DrawerPrimitive.Content>
   </DrawerPortal>

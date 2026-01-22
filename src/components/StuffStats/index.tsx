@@ -51,7 +51,7 @@ export default function StuffStats({
         )}
         <div
           className={cn(
-            'flex justify-between items-center h-5 [&_svg]:size-5',
+            'flex h-5 items-center justify-between [&_svg]:size-5',
             loading ? 'animate-pulse' : '',
             classNames?.buttonBar
           )}
@@ -76,7 +76,7 @@ export default function StuffStats({
           <Likes stuff={stuff} />
         </>
       )}
-      <div className="flex justify-between h-5 [&_svg]:size-4">
+      <div className="flex h-5 justify-between [&_svg]:size-4">
         <div
           className={cn('flex items-center', loading ? 'animate-pulse' : '')}
           onClick={(e) => e.stopPropagation()}

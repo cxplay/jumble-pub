@@ -16,7 +16,7 @@ export default function FollowingBadge({ pubkey, userId }: { pubkey?: string; us
   if (!isFollowing) return null
 
   return (
-    <div className="rounded-full bg-muted px-2 py-0.5 flex items-center" title={t('Following')}>
+    <div className="flex items-center rounded-full bg-muted px-2 py-0.5" title={t('Following')}>
       <UserRoundCheck className="!size-3" />
     </div>
   )

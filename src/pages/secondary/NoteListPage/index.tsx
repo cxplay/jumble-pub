@@ -70,7 +70,7 @@ const NoteListPage = forwardRef(({ index }: { index?: number }, ref) => {
         setTitle(
           <div className="flex items-center gap-1">
             {domain}
-            <Favicon domain={domain} className="w-5 h-5" />
+            <Favicon domain={domain} className="h-5 w-5" />
           </div>
         )
         const pubkeys = await fetchPubkeysFromDomain(domain)
@@ -101,7 +101,7 @@ const NoteListPage = forwardRef(({ index }: { index?: number }, ref) => {
   let content: React.ReactNode = null
   if (data?.type === 'domain' && subRequests.length === 0) {
     content = (
-      <div className="text-center w-full py-10">
+      <div className="w-full py-10 text-center">
         <span className="text-muted-foreground">
           {t('No pubkeys found from {url}', { url: getWellKnownNip05Url(data.domain) })}
         </span>

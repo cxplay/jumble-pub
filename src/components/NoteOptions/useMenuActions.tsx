@@ -106,7 +106,7 @@ export function useMenuActions({
         ...relaySets
           .filter((set) => set.relayUrls.length)
           .map((set, index) => ({
-            label: <div className="text-left truncate">{set.name}</div>,
+            label: <div className="truncate text-left">{set.name}</div>,
             onClick: async () => {
               closeDrawer()
               const promise = client.publishEvent(set.relayUrls, event)
@@ -132,7 +132,7 @@ export function useMenuActions({
       items.push(
         ...relayUrls.map((relay, index) => ({
           label: (
-            <div className="flex items-center gap-2 w-full">
+            <div className="flex w-full items-center gap-2">
               <RelayIcon url={relay} />
               <div className="flex-1 truncate text-left">{simplifyUrl(relay)}</div>
             </div>

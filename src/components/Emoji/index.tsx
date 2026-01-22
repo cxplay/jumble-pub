@@ -17,7 +17,7 @@ export default function Emoji({
 
   if (typeof emoji === 'string') {
     return emoji === '+' ? (
-      <Heart className={cn('size-5 text-red-400 fill-red-400', classNames?.img)} />
+      <Heart className={cn('size-5 fill-red-400 text-red-400', classNames?.img)} />
     ) : (
       <span className={cn('whitespace-nowrap', classNames?.text)}>{emoji}</span>
     )
@@ -34,7 +34,7 @@ export default function Emoji({
       src={emoji.url}
       alt={emoji.shortcode}
       draggable={false}
-      className={cn('inline-block size-5 pointer-events-none', classNames?.img)}
+      className={cn('pointer-events-none inline-block size-5', classNames?.img)}
       onLoad={() => {
         setHasError(false)
       }}

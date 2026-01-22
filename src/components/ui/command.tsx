@@ -41,7 +41,7 @@ const CommandDialog = ({
       </DialogHeader>
       <DialogContent
         className={cn(
-          'overflow-hidden p-0 shadow-lg top-4 translate-y-0 data-[state=closed]:slide-out-to-top-4 data-[state=open]:slide-in-from-top-4',
+          'top-4 translate-y-0 overflow-hidden p-0 shadow-lg data-[state=closed]:slide-out-to-top-4 data-[state=open]:slide-in-from-top-4',
           classNames?.content
         )}
       >
@@ -65,7 +65,7 @@ const CommandInput = React.forwardRef<
     <CommandPrimitive.Input
       ref={ref}
       className={cn(
-        'flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 pr-6',
+        'flex h-10 w-full rounded-md bg-transparent py-3 pr-6 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50',
         className
       )}
       {...props}
@@ -130,7 +130,7 @@ const CommandItem = React.forwardRef<
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
-      'relative flex cursor-pointer gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+      'relative flex cursor-pointer select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
       className
     )}
     {...props}

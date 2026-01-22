@@ -37,18 +37,18 @@ export default function AccountList({
               .finally(() => setSwitchingAccount(null))
           }}
         >
-          <div className="flex justify-between items-center p-2">
-            <div className="flex-1 flex items-center gap-2 relative">
+          <div className="flex items-center justify-between p-2">
+            <div className="relative flex flex-1 items-center gap-2">
               <SimpleUserAvatar userId={act.pubkey} />
-              <div className="flex-1 w-0">
-                <SimpleUsername userId={act.pubkey} className="font-semibold truncate" />
-                <div className="text-sm rounded-full bg-muted px-2 w-fit">
+              <div className="w-0 flex-1">
+                <SimpleUsername userId={act.pubkey} className="truncate font-semibold" />
+                <div className="w-fit rounded-full bg-muted px-2 text-sm">
                   {formatPubkey(act.pubkey)}
                 </div>
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <div className="flex gap-2 items-center">
+              <div className="flex items-center gap-2">
                 <SignerTypeBadge signerType={act.signerType} />
               </div>
               <Button
@@ -65,7 +65,7 @@ export default function AccountList({
             </div>
           </div>
           {switchingAccount && isSameAccount(act, switchingAccount) && (
-            <div className="absolute top-0 left-0 flex w-full h-full items-center justify-center rounded-lg bg-muted/60">
+            <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center rounded-lg bg-muted/60">
               <Loader size={16} className="animate-spin" />
             </div>
           )}

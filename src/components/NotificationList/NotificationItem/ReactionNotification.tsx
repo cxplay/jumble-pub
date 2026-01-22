@@ -42,7 +42,7 @@ export function ReactionNotification({
           <Image
             image={{ url: emojiUrl, pubkey: notification.pubkey }}
             alt={emojiName}
-            className="w-6 h-6"
+            className="h-6 w-6"
             classNames={{ errorPlaceholder: 'bg-transparent', wrapper: 'rounded-md' }}
             errorPlaceholder={<Heart size={24} className="text-red-400" />}
           />
@@ -65,7 +65,7 @@ export function ReactionNotification({
   return (
     <Notification
       notificationId={notification.id}
-      icon={<div className="text-xl min-w-6 text-center">{reaction}</div>}
+      icon={<div className="min-w-6 text-center text-xl">{reaction}</div>}
       sender={notification.pubkey}
       sentAt={notification.created_at}
       targetEvent={event}

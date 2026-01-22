@@ -17,7 +17,7 @@ export default function PollPreview({ event, className }: { event: Event; classN
       <Content
         content={translatedEvent?.content ?? event.content}
         emojiInfos={emojiInfos}
-        className="italic pr-0.5"
+        className="pr-0.5 italic"
       />
     </div>
   )

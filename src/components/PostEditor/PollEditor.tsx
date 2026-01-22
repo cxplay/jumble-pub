@@ -58,7 +58,7 @@ export default function PollEditor({
   }
 
   return (
-    <div className="space-y-4 border rounded-lg p-3">
+    <div className="space-y-4 rounded-lg border p-3">
       <div className="space-y-2">
         {options.map((option, index) => (
           <div key={index} className="flex gap-2">

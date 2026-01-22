@@ -87,7 +87,7 @@ export default function HighlightButton({ onHighlight, containerRef }: Highlight
 
   return (
     <div
-      className="fixed z-50 animate-in fade-in-0 slide-in-from-bottom-4 duration-200"
+      className="fixed z-50 duration-200 animate-in fade-in-0 slide-in-from-bottom-4"
       style={{
         top: `${position.top}px`,
         left: `${position.left}px`
@@ -97,7 +97,7 @@ export default function HighlightButton({ onHighlight, containerRef }: Highlight
         ref={buttonRef}
         size="sm"
         variant="default"
-        className="shadow-lg gap-2 -translate-x-1/2"
+        className="-translate-x-1/2 gap-2 shadow-lg"
         onClick={(e) => {
           e.stopPropagation()
           onHighlight(selectedText)

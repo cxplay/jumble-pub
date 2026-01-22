@@ -93,7 +93,7 @@ export default function TrustScoreFilter({
     >
       {temporaryScore < 100 ? <Shield size={16} /> : <ShieldCheck size={16} />}
       {temporaryScore > 0 && temporaryScore < 100 && (
-        <div className="absolute inset-0 w-full h-full flex flex-col items-center justify-center text-[0.5rem] font-mono font-bold">
+        <div className="absolute inset-0 flex h-full w-full flex-col items-center justify-center font-mono text-[0.5rem] font-bold">
           {temporaryScore}
         </div>
       )}
@@ -131,10 +131,10 @@ export default function TrustScoreFilter({
               key={level.value}
               onClick={() => handleScoreChange(level.value)}
               className={cn(
-                'text-center py-1.5 px-2 flex-1 rounded text-xs transition-all duration-200',
+                'flex-1 rounded px-2 py-1.5 text-center text-xs transition-all duration-200',
                 temporaryScore === level.value
-                  ? 'bg-primary text-primary-foreground font-medium shadow-sm'
-                  : 'bg-secondary hover:bg-secondary/80 hover:shadow-sm hover:scale-[1.02]'
+                  ? 'bg-primary font-medium text-primary-foreground shadow-sm'
+                  : 'bg-secondary hover:scale-[1.02] hover:bg-secondary/80 hover:shadow-sm'
               )}
             >
               {t(level.label)}
@@ -144,7 +144,7 @@ export default function TrustScoreFilter({
       </div>
 
       {/* Description */}
-      <div className="space-y-1 pt-2 border-t">
+      <div className="space-y-1 border-t pt-2">
         <div className="text-sm font-medium text-foreground">{description}</div>
         <div className="text-xs text-muted-foreground">
           {t('trust-filter.trust-score-description')}
@@ -173,7 +173,7 @@ export default function TrustScoreFilter({
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>{trigger}</PopoverTrigger>
-      <PopoverContent className="p-4 space-y-4 w-96" collisionPadding={16} sideOffset={0}>
+      <PopoverContent className="w-96 space-y-4 p-4" collisionPadding={16} sideOffset={0}>
         {content}
       </PopoverContent>
     </Popover>

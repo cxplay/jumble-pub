@@ -10,10 +10,10 @@ export default function TrendingNotes() {
 
   return (
     <div>
-      <div className="top-12 h-12 px-4 flex flex-col justify-center text-lg font-bold bg-background z-30 border-b">
+      <div className="top-12 z-30 flex h-12 flex-col justify-center border-b bg-background px-4 text-lg font-bold">
         <div className="flex items-center gap-2">
           {t('Trending Notes')}
-          <span className="text-sm text-muted-foreground font-normal">
+          <span className="text-sm font-normal text-muted-foreground">
             ({RESOURCE_DESCRIPTION})
           </span>
         </div>

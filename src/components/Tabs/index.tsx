@@ -90,20 +90,20 @@ export default function Tabs({
     <div
       ref={containerRef}
       className={cn(
-        'sticky flex justify-between top-12 bg-background z-30 px-1 w-full transition-all duration-300 border-b',
+        'sticky top-12 z-30 flex w-full justify-between border-b bg-background px-1 transition-all duration-300',
         deepBrowsing && lastScrollTop > threshold && !active
           ? '-translate-y-[calc(100%+12rem)]'
           : ''
       )}
     >
-      <ScrollArea className="flex-1 w-0">
-        <div className="flex w-fit relative">
+      <ScrollArea className="w-0 flex-1">
+        <div className="relative flex w-fit">
           {tabs.map((tab, index) => (
             <div
               key={tab.value}
               ref={(el) => (tabRefs.current[index] = el)}
               className={cn(
-                `w-fit text-center py-2 px-4 my-1 font-semibold whitespace-nowrap clickable cursor-pointer rounded-xl transition-all duration-200`,
+                `clickable my-1 w-fit cursor-pointer whitespace-nowrap rounded-xl px-4 py-2 text-center font-semibold transition-all duration-200`,
                 value === tab.value
                   ? 'text-foreground'
                   : 'text-muted-foreground hover:text-foreground'
@@ -116,17 +116,17 @@ export default function Tabs({
             </div>
           ))}
           <div
-            className="absolute bottom-0 h-1 bg-gradient-to-r from-primary to-primary-hover rounded-full transition-all duration-300"
+            className="absolute bottom-0 h-1 rounded-full bg-gradient-to-r from-primary to-primary-hover transition-all duration-300"
             style={{
               width: `${indicatorStyle.width}px`,
               left: `${indicatorStyle.left}px`
             }}
           />
         </div>
-        <ScrollBar orientation="horizontal" className="opacity-0 pointer-events-none" />
+        <ScrollBar orientation="horizontal" className="pointer-events-none opacity-0" />
       </ScrollArea>
       {options && (
-        <div className="py-1 flex items-center gap-1">
+        <div className="flex items-center gap-1 py-1">
           <Separator orientation="vertical" className="h-8" />
           {options}
         </div>

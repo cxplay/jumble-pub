@@ -78,7 +78,7 @@ export default function TooManyRelaysAlertDialog() {
             <Button
               onClick={handleDismiss}
               variant="link"
-              className="text-muted-foreground text-xs"
+              className="text-xs text-muted-foreground"
             >
               {t("Don't remind me again")}
             </Button>
@@ -96,7 +96,7 @@ export default function TooManyRelaysAlertDialog() {
           <AlertDialogDescription>{description}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <Button onClick={handleDismiss} variant="link" className="text-muted-foreground text-xs">
+          <Button onClick={handleDismiss} variant="link" className="text-xs text-muted-foreground">
             {t("Don't remind me again")}
           </Button>
           <Button variant="outline" onClick={handleMaybeLater}>

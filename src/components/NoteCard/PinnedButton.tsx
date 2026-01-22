@@ -15,7 +15,7 @@ export default function PinnedButton({ event }: { event: NostrEvent }) {
 
   if (event.pubkey !== pubkey) {
     return (
-      <div className="flex gap-1 text-sm items-center text-primary mb-1 px-4 py-0 h-fit">
+      <div className="mb-1 flex h-fit items-center gap-1 px-4 py-0 text-sm text-primary">
         <Pin size={16} className="shrink-0" />
         {t('Pinned')}
       </div>
@@ -24,7 +24,7 @@ export default function PinnedButton({ event }: { event: NostrEvent }) {
 
   return (
     <Button
-      className="flex gap-1 text-sm text-primary items-center mb-1 px-4 py-0.5 h-fit"
+      className="mb-1 flex h-fit items-center gap-1 px-4 py-0.5 text-sm text-primary"
       variant="link"
       onClick={(e) => {
         e.stopPropagation()
@@ -36,7 +36,7 @@ export default function PinnedButton({ event }: { event: NostrEvent }) {
       onMouseLeave={() => setHovered(false)}
     >
       {unpinning ? (
-        <Loader size={16} className="animate-spin shrink-0" />
+        <Loader size={16} className="shrink-0 animate-spin" />
       ) : (
         <Pin size={16} className="shrink-0" />
       )}

@@ -46,14 +46,14 @@ function ProfileButton({ collapse }: { collapse: boolean }) {
         <Button
           variant="ghost"
           className={cn(
-            'clickable shadow-none p-2 flex items-center bg-transparent text-foreground hover:text-accent-foreground rounded-lg justify-start gap-4 text-lg font-semibold',
-            collapse ? 'w-12 h-12' : 'w-full h-auto'
+            'clickable flex items-center justify-start gap-4 rounded-lg bg-transparent p-2 text-lg font-semibold text-foreground shadow-none hover:text-accent-foreground',
+            collapse ? 'h-12 w-12' : 'h-auto w-full'
           )}
         >
-          <div className="flex gap-2 items-center flex-1 w-0">
+          <div className="flex w-0 flex-1 items-center gap-2">
             <SimpleUserAvatar size="medium" userId={pubkey} />
             {!collapse && (
-              <SimpleUsername className="truncate font-semibold text-lg" userId={pubkey} />
+              <SimpleUsername className="truncate text-lg font-semibold" userId={pubkey} />
             )}
           </div>
         </Button>
@@ -75,12 +75,12 @@ function ProfileButton({ collapse }: { collapse: boolean }) {
               }
             }}
           >
-            <div className="flex gap-2 items-center flex-1">
+            <div className="flex flex-1 items-center gap-2">
               <SimpleUserAvatar userId={act.pubkey} />
-              <div className="flex-1 w-0">
+              <div className="w-0 flex-1">
                 <SimpleUsername
                   userId={act.pubkey}
-                  className="font-medium truncate"
+                  className="truncate font-medium"
                   skeletonClassName="h-3"
                 />
                 <SignerTypeBadge signerType={act.signerType} />
@@ -88,7 +88,7 @@ function ProfileButton({ collapse }: { collapse: boolean }) {
             </div>
             <div
               className={cn(
-                'border border-muted-foreground rounded-full size-3.5',
+                'size-3.5 rounded-full border border-muted-foreground',
                 act.pubkey === pubkey && 'size-4 border-4 border-primary'
               )}
             />
@@ -96,9 +96,9 @@ function ProfileButton({ collapse }: { collapse: boolean }) {
         ))}
         <DropdownMenuItem
           onClick={() => setLoginDialogOpen(true)}
-          className="border border-dashed m-2 focus:border-muted-foreground focus:bg-background"
+          className="m-2 border border-dashed focus:border-muted-foreground focus:bg-background"
         >
-          <div className="flex gap-2 items-center justify-center w-full py-2">
+          <div className="flex w-full items-center justify-center gap-2 py-2">
             <Plus />
             {t('Add an Account')}
           </div>
@@ -111,7 +111,7 @@ function ProfileButton({ collapse }: { collapse: boolean }) {
           <span className="shrink-0">{t('Logout')}</span>
           <SimpleUsername
             userId={pubkey}
-            className="text-muted-foreground border border-muted-foreground px-1 rounded-md text-xs truncate"
+            className="truncate rounded-md border border-muted-foreground px-1 text-xs text-muted-foreground"
           />
         </DropdownMenuItem>
       </DropdownMenuContent>

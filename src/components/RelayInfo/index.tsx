@@ -34,13 +34,13 @@ export default function RelayInfo({ url, className }: { url: string; className?:
   }
 
   return (
-    <div className={cn('space-y-4 mb-2', className)}>
-      <div className="px-4 space-y-4">
+    <div className={cn('mb-2 space-y-4', className)}>
+      <div className="space-y-4 px-4">
         <div className="space-y-2">
-          <div className="flex items-center gap-2 justify-between">
-            <div className="flex gap-2 items-center flex-1">
-              <RelayIcon url={url} className="w-8 h-8" />
-              <div className="text-2xl font-semibold truncate select-text flex-1 w-0">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex flex-1 items-center gap-2">
+              <RelayIcon url={url} className="h-8 w-8" />
+              <div className="w-0 flex-1 select-text truncate text-2xl font-semibold">
                 {relayInfo.name || relayInfo.shortUrl}
               </div>
             </div>
@@ -54,7 +54,7 @@ export default function RelayInfo({ url, className }: { url: string; className?:
             </div>
           )}
           {relayInfo.description && (
-            <div className="text-wrap break-words whitespace-pre-wrap mt-2 select-text">
+            <div className="mt-2 select-text whitespace-pre-wrap text-wrap break-words">
               <Content event={createFakeEvent({ content: relayInfo.description })} />
             </div>
           )}
@@ -65,7 +65,7 @@ export default function RelayInfo({ url, className }: { url: string; className?:
           <a
             href={normalizeHttpUrl(relayInfo.url)}
             target="_blank"
-            className="hover:underline text-primary select-text truncate block w-fit max-w-full"
+            className="block w-fit max-w-full select-text truncate text-primary hover:underline"
           >
             {normalizeHttpUrl(relayInfo.url)}
           </a>
@@ -74,36 +74,36 @@ export default function RelayInfo({ url, className }: { url: string; className?:
         <ScrollArea className="overflow-x-auto">
           <div className="flex gap-8 pb-2">
             {relayInfo.pubkey && (
-              <div className="space-y-2 w-fit">
+              <div className="w-fit space-y-2">
                 <div className="text-sm font-semibold text-muted-foreground">{t('Operator')}</div>
-                <div className="flex gap-2 items-center">
+                <div className="flex items-center gap-2">
                   <UserAvatar userId={relayInfo.pubkey} size="small" />
-                  <Username userId={relayInfo.pubkey} className="font-semibold text-nowrap" />
+                  <Username userId={relayInfo.pubkey} className="text-nowrap font-semibold" />
                 </div>
               </div>
             )}
             {relayInfo.contact && (
-              <div className="space-y-2 w-fit">
+              <div className="w-fit space-y-2">
                 <div className="text-sm font-semibold text-muted-foreground">{t('Contact')}</div>
-                <div className="flex gap-2 items-center font-semibold select-text text-nowrap">
+                <div className="flex select-text items-center gap-2 text-nowrap font-semibold">
                   <Mail />
                   {relayInfo.contact}
                 </div>
               </div>
             )}
             {relayInfo.software && (
-              <div className="space-y-2 w-fit">
+              <div className="w-fit space-y-2">
                 <div className="text-sm font-semibold text-muted-foreground">{t('Software')}</div>
-                <div className="flex gap-2 items-center font-semibold select-text text-nowrap">
+                <div className="flex select-text items-center gap-2 text-nowrap font-semibold">
                   <SquareCode />
                   {formatSoftware(relayInfo.software)}
                 </div>
               </div>
             )}
             {relayInfo.version && (
-              <div className="space-y-2 w-fit">
+              <div className="w-fit space-y-2">
                 <div className="text-sm font-semibold text-muted-foreground">{t('Version')}</div>
-                <div className="flex gap-2 items-center font-semibold select-text text-nowrap">
+                <div className="flex select-text items-center gap-2 text-nowrap font-semibold">
                   <GitBranch />
                   {relayInfo.version}
                 </div>

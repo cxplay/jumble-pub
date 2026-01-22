@@ -26,13 +26,13 @@ export default function LayoutSwitcher({ collapse }: { collapse: boolean }) {
     <div className="rounded-lg bg-muted p-1 shadow-inner">
       <div className="relative flex items-center justify-around">
         <div
-          className="py-1 w-full z-10 cursor-pointer flex flex-col items-center"
+          className="z-10 flex w-full cursor-pointer flex-col items-center py-1"
           onClick={() => updateEnableSingleColumnLayout(false)}
         >
           <Columns2 className={cn('size-5', enableSingleColumnLayout && 'text-muted-foreground')} />
         </div>
         <div
-          className="py-1 w-full z-10 cursor-pointer flex flex-col items-center"
+          className="z-10 flex w-full cursor-pointer flex-col items-center py-1"
           onClick={() => updateEnableSingleColumnLayout(true)}
         >
           <PanelLeft
@@ -41,7 +41,7 @@ export default function LayoutSwitcher({ collapse }: { collapse: boolean }) {
         </div>
         <div
           className={cn(
-            'rounded-md absolute top-0 left-0 inset-0 w-1/2 h-full transition-transform shadow-sm',
+            'absolute inset-0 left-0 top-0 h-full w-1/2 rounded-md shadow-sm transition-transform',
             !enableSingleColumnLayout
               ? 'translate-x-0 bg-surface-background'
               : 'translate-x-full bg-background'

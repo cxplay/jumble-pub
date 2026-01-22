@@ -113,7 +113,7 @@ export default function RelayReviewsPreview({ relayUrl }: { relayUrl: string }) 
 
   return (
     <div className="space-y-4">
-      <div className="px-4 flex items-center justify-between">
+      <div className="flex items-center justify-between px-4">
         <div>
           <div className="flex items-center gap-2">
             <div className="text-lg font-semibold">{stars}</div>
@@ -122,7 +122,7 @@ export default function RelayReviewsPreview({ relayUrl }: { relayUrl: string }) 
           <div
             className={cn(
               'text-sm text-muted-foreground',
-              count > 0 && 'underline cursor-pointer hover:text-foreground'
+              count > 0 && 'cursor-pointer underline hover:text-foreground'
             )}
             onClick={() => {
               if (count > 0) {
@@ -145,7 +145,7 @@ export default function RelayReviewsPreview({ relayUrl }: { relayUrl: string }) 
       {myReview || reviews.length > 0 ? (
         <ReviewCarousel relayUrl={relayUrl} myReview={myReview} reviews={reviews} />
       ) : !showEditor ? (
-        <div className="flex items-center justify-center text-sm text-muted-foreground p-4">
+        <div className="flex items-center justify-center p-4 text-sm text-muted-foreground">
           {initialized ? t('No reviews yet. Be the first to write one!') : t('Loading...')}
         </div>
       ) : null}
@@ -187,7 +187,7 @@ function ReviewCarousel({
         {reviews.length > 10 && (
           <Item>
             <div
-              className="border rounded-lg bg-muted/20 p-3 flex items-center justify-center h-full hover:bg-muted cursor-pointer"
+              className="flex h-full cursor-pointer items-center justify-center rounded-lg border bg-muted/20 p-3 hover:bg-muted"
               onClick={() => push(toRelayReviews(relayUrl))}
             >
               <div className="text-sm text-muted-foreground">{t('View more reviews')}</div>

@@ -17,7 +17,7 @@ export default function LoginDialog({
     return (
       <Drawer open={open} onOpenChange={setOpen}>
         <DrawerContent className="max-h-[90vh]">
-          <div className="flex flex-col p-4 gap-4 overflow-auto">
+          <div className="flex flex-col gap-4 overflow-auto p-4">
             <AccountManager close={() => setOpen(false)} />
           </div>
         </DrawerContent>
@@ -27,7 +27,7 @@ export default function LoginDialog({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="w-[520px] max-h-[90vh] py-8 overflow-auto">
+      <DialogContent className="max-h-[90vh] w-[520px] overflow-auto py-8">
         <AccountManager close={() => setOpen(false)} />
       </DialogContent>
     </Dialog>

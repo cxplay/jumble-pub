@@ -4,7 +4,7 @@ export default function NotFound() {
   const { t } = useTranslation()
 
   return (
-    <div className="text-muted-foreground w-full h-full flex flex-col items-center justify-center gap-2">
+    <div className="flex h-full w-full flex-col items-center justify-center gap-2 text-muted-foreground">
       <div>{t('Lost in the void')} 🌌</div>
       <div>(404)</div>
     </div>

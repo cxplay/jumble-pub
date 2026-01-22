@@ -40,7 +40,7 @@ export function MobileMenu({
                   <Button
                     key={index}
                     onClick={action.onClick}
-                    className={`w-full p-6 justify-start text-lg gap-4 [&_svg]:size-5 ${action.className || ''}`}
+                    className={`w-full justify-start gap-4 p-6 text-lg [&_svg]:size-5 ${action.className || ''}`}
                     variant="ghost"
                   >
                     <Icon />
@@ -52,18 +52,18 @@ export function MobileMenu({
               <>
                 <Button
                   onClick={goBackToMainMenu}
-                  className="w-full p-6 justify-start text-lg gap-4 [&_svg]:size-5 mb-2"
+                  className="mb-2 w-full justify-start gap-4 p-6 text-lg [&_svg]:size-5"
                   variant="ghost"
                 >
                   <ArrowLeft />
                   {subMenuTitle}
                 </Button>
-                <div className="border-t border-border mb-2" />
+                <div className="mb-2 border-t border-border" />
                 {activeSubMenu.map((subAction, index) => (
                   <Button
                     key={index}
                     onClick={subAction.onClick}
-                    className={`w-full p-6 justify-start text-lg gap-4 ${subAction.className || ''}`}
+                    className={`w-full justify-start gap-4 p-6 text-lg ${subAction.className || ''}`}
                     variant="ghost"
                   >
                     {subAction.label}

@@ -92,7 +92,7 @@ export default function ExternalLink({
             <div className="py-2">
               <Button
                 onClick={handleOpenLink}
-                className="w-full p-6 justify-start text-lg gap-4 [&_svg]:size-5"
+                className="w-full justify-start gap-4 p-6 text-lg [&_svg]:size-5"
                 variant="ghost"
               >
                 <ExternalLinkIcon />
@@ -100,7 +100,7 @@ export default function ExternalLink({
               </Button>
               <Button
                 onClick={handleViewDiscussions}
-                className="w-full p-6 justify-start text-lg gap-4 [&_svg]:size-5"
+                className="w-full justify-start gap-4 p-6 text-lg [&_svg]:size-5"
                 variant="ghost"
               >
                 <MessageSquare />

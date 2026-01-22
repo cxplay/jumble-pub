@@ -31,7 +31,7 @@ export default function YoutubeEmbeddedPlayer({
   if (!display) {
     return (
       <div
-        className="text-primary hover:underline truncate w-fit cursor-pointer"
+        className="w-fit cursor-pointer truncate text-primary hover:underline"
         onClick={(e) => {
           e.stopPropagation()
           setDisplay(true)

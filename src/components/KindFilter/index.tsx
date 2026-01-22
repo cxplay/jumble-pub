@@ -95,7 +95,7 @@ export default function KindFilter({
     >
       <ListFilter size={16} />
       {isDifferentFromSaved && (
-        <div className="absolute size-2 rounded-full bg-primary left-7 top-2 ring-2 ring-background" />
+        <div className="absolute left-7 top-2 size-2 rounded-full bg-primary ring-2 ring-background" />
       )}
     </Button>
   )
@@ -109,7 +109,7 @@ export default function KindFilter({
             <div
               key={label}
               className={cn(
-                'cursor-pointer grid gap-1.5 rounded-lg border px-4 py-3',
+                'grid cursor-pointer gap-1.5 rounded-lg border px-4 py-3',
                 checked ? 'border-primary/60 bg-primary/5' : 'clickable'
               )}
               onClick={() => {
@@ -122,14 +122,14 @@ export default function KindFilter({
                 }
               }}
             >
-              <p className="leading-none font-medium">{t(label)}</p>
-              <p className="text-muted-foreground text-xs">kind {kindGroup.join(', ')}</p>
+              <p className="font-medium leading-none">{t(label)}</p>
+              <p className="text-xs text-muted-foreground">kind {kindGroup.join(', ')}</p>
             </div>
           )
         })}
       </div>
 
-      <div className="grid grid-cols-3 gap-2 mt-4">
+      <div className="mt-4 grid grid-cols-3 gap-2">
         <Button
           variant="secondary"
           onClick={() => {
@@ -155,7 +155,7 @@ export default function KindFilter({
         </Button>
       </div>
 
-      <Label className="flex items-center gap-2 cursor-pointer mt-4">
+      <Label className="mt-4 flex cursor-pointer items-center gap-2">
         <Checkbox
           id="persistent-filter"
           checked={isPersistent}

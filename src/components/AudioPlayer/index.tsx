@@ -129,7 +129,7 @@ export default function AudioPlayer({
     <div
       ref={containerRef}
       className={cn(
-        'flex items-center gap-3 py-2 px-2 border rounded-full max-w-md bg-background',
+        'flex max-w-md items-center gap-3 rounded-full border bg-background px-2 py-2',
         className
       )}
       onClick={(e) => e.stopPropagation()}
@@ -137,12 +137,12 @@ export default function AudioPlayer({
       <audio ref={audioRef} src={src} preload="metadata" onError={() => setError(false)} />
 
       {/* Play/Pause Button */}
-      <Button size="icon" className="rounded-full shrink-0" onClick={togglePlay}>
+      <Button size="icon" className="shrink-0 rounded-full" onClick={togglePlay}>
         {isPlaying ? <Pause fill="currentColor" /> : <Play fill="currentColor" />}
       </Button>
 
       {/* Progress Section */}
-      <div className="flex-1 relative">
+      <div className="relative flex-1">
         <Slider
           value={[currentTime]}
           max={duration || 100}
@@ -153,14 +153,14 @@ export default function AudioPlayer({
         />
       </div>
 
-      <div className="text-sm font-mono text-muted-foreground">
+      <div className="font-mono text-sm text-muted-foreground">
         {formatTime(Math.max(duration - currentTime, 0))}
       </div>
       {isMinimized ? (
         <Button
           variant="ghost"
           size="icon"
-          className="rounded-full shrink-0 text-muted-foreground"
+          className="shrink-0 rounded-full text-muted-foreground"
           onClick={() => mediaManager.stopAudioBackground()}
         >
           <X />
@@ -169,7 +169,7 @@ export default function AudioPlayer({
         <Button
           variant="ghost"
           size="icon"
-          className="rounded-full shrink-0 text-muted-foreground"
+          className="shrink-0 rounded-full text-muted-foreground"
           onClick={() => mediaManager.playAudioBackground(src, audioRef.current?.currentTime || 0)}
         >
           <Minimize2 />

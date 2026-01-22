@@ -16,11 +16,11 @@ export default function CommunityDefinition({
   const metadata = useMemo(() => getCommunityDefinitionFromEvent(event), [event])
 
   const communityNameComponent = (
-    <div className="text-xl font-semibold line-clamp-1">{metadata.name}</div>
+    <div className="line-clamp-1 text-xl font-semibold">{metadata.name}</div>
   )
 
   const communityDescriptionComponent = metadata.description && (
-    <div className="text-sm text-muted-foreground line-clamp-2">{metadata.description}</div>
+    <div className="line-clamp-2 text-sm text-muted-foreground">{metadata.description}</div>
   )
 
   return (
@@ -29,16 +29,16 @@ export default function CommunityDefinition({
         {metadata.image && autoLoadMedia && (
           <Image
             image={{ url: metadata.image, pubkey: event.pubkey }}
-            className="aspect-square bg-foreground h-20"
+            className="aspect-square h-20 bg-foreground"
             hideIfError
           />
         )}
-        <div className="flex-1 w-0 space-y-1">
+        <div className="w-0 flex-1 space-y-1">
           {communityNameComponent}
           {communityDescriptionComponent}
         </div>
       </div>
-      <ClientSelect className="w-full mt-2" event={event} />
+      <ClientSelect className="mt-2 w-full" event={event} />
     </div>
   )
 }

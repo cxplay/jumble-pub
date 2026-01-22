@@ -211,7 +211,7 @@ export default function PostRelaySelector({
           <Label>{t('Post to')}</Label>
           <Button
             variant="outline"
-            className="px-2 flex-1 max-w-fit justify-start"
+            className="max-w-fit flex-1 justify-start px-2"
             onClick={() => setIsDrawerOpen(true)}
           >
             <div className="truncate">{description}</div>
@@ -237,12 +237,12 @@ export default function PostRelaySelector({
       <div className="flex items-center gap-2">
         <Label>{t('Post to')}</Label>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="px-2 flex-1 max-w-fit justify-start">
+          <Button variant="outline" className="max-w-fit flex-1 justify-start px-2">
             <div className="truncate">{description}</div>
           </Button>
         </DropdownMenuTrigger>
       </div>
-      <DropdownMenuContent align="start" className="max-w-96 max-h-[50vh]" showScrollButtons>
+      <DropdownMenuContent align="start" className="max-h-[50vh] max-w-96" showScrollButtons>
         {content}
       </DropdownMenuContent>
     </DropdownMenu>
@@ -272,9 +272,9 @@ function MenuItem({
     return (
       <div
         onClick={() => onCheckedChange(!checked)}
-        className="flex items-center gap-2 px-4 py-3 clickable"
+        className="clickable flex items-center gap-2 px-4 py-3"
       >
-        <div className="flex items-center justify-center size-4 shrink-0">
+        <div className="flex size-4 shrink-0 items-center justify-center">
           {checked && <Check className="size-4" />}
         </div>
         {children}

@@ -20,22 +20,22 @@ export default function RelayItem({ relay }: { relay: string }) {
 
   return (
     <div
-      className="relative group clickable flex gap-2 border rounded-lg p-2 pr-2.5 items-center justify-between select-none"
+      className="clickable group relative flex select-none items-center justify-between gap-2 rounded-lg border p-2 pr-2.5"
       ref={setNodeRef}
       style={style}
       onClick={() => push(toRelay(relay))}
     >
-      <div className="flex items-center gap-1 flex-1">
+      <div className="flex flex-1 items-center gap-1">
         <div
-          className="cursor-grab active:cursor-grabbing p-2 hover:bg-muted rounded touch-none shrink-0"
+          className="shrink-0 cursor-grab touch-none rounded p-2 hover:bg-muted active:cursor-grabbing"
           {...attributes}
           {...listeners}
         >
           <GripVertical className="size-4 text-muted-foreground" />
         </div>
-        <div className="flex gap-2 items-center flex-1">
+        <div className="flex flex-1 items-center gap-2">
           <RelayIcon url={relay} />
-          <div className="flex-1 w-0 truncate font-semibold">{relay}</div>
+          <div className="w-0 flex-1 truncate font-semibold">{relay}</div>
         </div>
       </div>
       <SaveRelayDropdownMenu urls={[relay]} />

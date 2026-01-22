@@ -44,20 +44,20 @@ export default function ZapList({ event }: { event: Event }) {
       {filteredZaps.slice(0, showCount).map((zap) => (
         <div
           key={zap.pr}
-          className="px-4 py-3 border-b transition-colors clickable flex gap-2"
+          className="clickable flex gap-2 border-b px-4 py-3 transition-colors"
           onClick={() => push(toProfile(zap.pubkey))}
         >
-          <div className="w-8 flex flex-col items-center mt-0.5">
-            <Zap className="text-yellow-400 size-5" />
+          <div className="mt-0.5 flex w-8 flex-col items-center">
+            <Zap className="size-5 text-yellow-400" />
             <div className="text-sm font-semibold text-yellow-400">{formatAmount(zap.amount)}</div>
           </div>
 
-          <div className="flex space-x-2 items-start">
-            <UserAvatar userId={zap.pubkey} size="medium" className="shrink-0 mt-0.5" />
+          <div className="flex items-start space-x-2">
+            <UserAvatar userId={zap.pubkey} size="medium" className="mt-0.5 shrink-0" />
             <div className="flex-1">
               <Username
                 userId={zap.pubkey}
-                className="text-sm font-semibold text-muted-foreground hover:text-foreground max-w-fit truncate"
+                className="max-w-fit truncate text-sm font-semibold text-muted-foreground hover:text-foreground"
                 skeletonClassName="h-3"
               />
               <div className="flex items-center gap-1 text-sm text-muted-foreground">
@@ -76,7 +76,7 @@ export default function ZapList({ event }: { event: Event }) {
 
       <div ref={bottomRef} />
 
-      <div className="text-sm mt-2 text-center text-muted-foreground">
+      <div className="mt-2 text-center text-sm text-muted-foreground">
         {filteredZaps.length > 0 ? t('No more zaps') : t('No zaps yet')}
       </div>
     </div>

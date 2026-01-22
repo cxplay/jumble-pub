@@ -12,7 +12,7 @@ export function Titlebar({
   return (
     <div
       className={cn(
-        'sticky top-0 w-full h-12 z-40 bg-background [&_svg]:size-5 [&_svg]:shrink-0 select-none',
+        'sticky top-0 z-40 h-12 w-full select-none bg-background [&_svg]:size-5 [&_svg]:shrink-0',
         !hideBottomBorder && 'border-b',
         className
       )}

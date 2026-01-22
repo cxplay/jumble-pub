@@ -13,9 +13,9 @@ export default function Relays({ pubkey }: { pubkey: string }) {
   return (
     <SecondaryPageLink
       to={accountPubkey === pubkey ? toRelaySettings('mailbox') : toOthersRelaySettings(pubkey)}
-      className="flex gap-1 hover:underline w-fit items-center"
+      className="flex w-fit items-center gap-1 hover:underline"
     >
-      {isFetching ? <Loader className="animate-spin size-4" /> : relayList.originalRelays.length}
+      {isFetching ? <Loader className="size-4 animate-spin" /> : relayList.originalRelays.length}
       <div className="text-muted-foreground">{t('Relays')}</div>
     </SecondaryPageLink>
   )

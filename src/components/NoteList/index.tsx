@@ -492,12 +492,12 @@ const NoteList = forwardRef<
         {shouldShowLoadingIndicator || filtering || initialLoading ? (
           <NoteCardLoadingSkeleton />
         ) : events.length ? (
-          <div className="text-center text-sm text-muted-foreground mt-2">{t('no more notes')}</div>
+          <div className="mt-2 text-center text-sm text-muted-foreground">{t('no more notes')}</div>
         ) : (
-          <div className="flex flex-col items-center justify-center w-full mt-8 gap-4">
+          <div className="mt-8 flex w-full flex-col items-center justify-center gap-4">
             <div className="text-center text-muted-foreground">
               <div className="text-lg font-medium">{t('No notes found')}</div>
-              <div className="text-sm mt-1">{t('Try again later or check your connection')}</div>
+              <div className="mt-1 text-sm">{t('Try again later or check your connection')}</div>
             </div>
             <Button size="lg" onClick={() => setRefreshCount((count) => count + 1)}>
               {t('Reload')}

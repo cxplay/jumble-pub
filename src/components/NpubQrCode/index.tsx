@@ -16,17 +16,17 @@ export default function NpubQrCode({ pubkey }: { pubkey: string }) {
   if (!npub) return null
 
   const trigger = (
-    <div className="bg-muted rounded-full h-5 w-5 flex flex-col items-center justify-center text-muted-foreground hover:text-foreground">
+    <div className="flex h-5 w-5 flex-col items-center justify-center rounded-full bg-muted text-muted-foreground hover:text-foreground">
       <QrCodeIcon size={14} />
     </div>
   )
 
   const content = (
-    <div className="w-full flex flex-col items-center gap-4 p-8">
-      <div className="flex items-center w-full gap-2 pointer-events-none px-1">
+    <div className="flex w-full flex-col items-center gap-4 p-8">
+      <div className="pointer-events-none flex w-full items-center gap-2 px-1">
         <UserAvatar size="big" userId={pubkey} />
-        <div className="flex-1 w-0">
-          <Username userId={pubkey} className="text-2xl font-semibold truncate" />
+        <div className="w-0 flex-1">
+          <Username userId={pubkey} className="truncate text-2xl font-semibold" />
           <Nip05 pubkey={pubkey} />
         </div>
       </div>
@@ -49,7 +49,7 @@ export default function NpubQrCode({ pubkey }: { pubkey: string }) {
   return (
     <Dialog>
       <DialogTrigger>{trigger}</DialogTrigger>
-      <DialogContent className="w-80 p-0 m-0" onOpenAutoFocus={(e) => e.preventDefault()}>
+      <DialogContent className="m-0 w-80 p-0" onOpenAutoFocus={(e) => e.preventDefault()}>
         {content}
       </DialogContent>
     </Dialog>

@@ -313,27 +313,27 @@ const SearchBar = forwardRef<
   )
 
   return (
-    <div className="relative flex gap-1 items-center h-full w-full">
+    <div className="relative flex h-full w-full items-center gap-1">
       {displayList && list && (
         <>
           <div
             className={cn(
-              'bg-surface-background rounded-b-lg shadow-lg z-50',
+              'z-50 rounded-b-lg bg-surface-background shadow-lg',
               isSmallScreen
-                ? 'fixed top-12 inset-x-0'
-                : 'absolute top-full -translate-y-2 inset-x-0 pt-3.5 pb-1 border px-1'
+                ? 'fixed inset-x-0 top-12'
+                : 'absolute inset-x-0 top-full -translate-y-2 border px-1 pb-1 pt-3.5'
             )}
             onMouseDown={(e) => e.preventDefault()}
           >
             <div className="h-fit">{list}</div>
           </div>
-          <div className="fixed inset-0 w-full h-full" onClick={() => blur()} />
+          <div className="fixed inset-0 h-full w-full" onClick={() => blur()} />
         </>
       )}
       <SearchInput
         ref={searchInputRef}
         className={cn(
-          'bg-surface-background shadow-inner h-full border-transparent',
+          'h-full border-transparent bg-surface-background shadow-inner',
           searching ? 'z-50' : ''
         )}
         placeholder={t('People, keywords, or relays')}
@@ -366,11 +366,11 @@ function NormalItem({
   const { t } = useTranslation()
   return (
     <Item onClick={onClick} selected={selected}>
-      <div className="size-10 flex justify-center items-center">
-        <Search className="text-muted-foreground flex-shrink-0" />
+      <div className="flex size-10 items-center justify-center">
+        <Search className="flex-shrink-0 text-muted-foreground" />
       </div>
-      <div className="flex flex-col min-w-0 flex-1">
-        <div className="font-semibold truncate">{search}</div>
+      <div className="flex min-w-0 flex-1 flex-col">
+        <div className="truncate font-semibold">{search}</div>
         <div className="text-sm text-muted-foreground">{t('Search for notes')}</div>
       </div>
     </Item>
@@ -389,11 +389,11 @@ function HashtagItem({
   const { t } = useTranslation()
   return (
     <Item onClick={onClick} selected={selected}>
-      <div className="size-10 flex justify-center items-center">
-        <Hash className="text-muted-foreground flex-shrink-0" />
+      <div className="flex size-10 items-center justify-center">
+        <Hash className="flex-shrink-0 text-muted-foreground" />
       </div>
-      <div className="flex flex-col min-w-0 flex-1">
-        <div className="font-semibold truncate">#{hashtag}</div>
+      <div className="flex min-w-0 flex-1 flex-col">
+        <div className="truncate font-semibold">#{hashtag}</div>
         <div className="text-sm text-muted-foreground">{t('Search for hashtag')}</div>
       </div>
     </Item>
@@ -412,11 +412,11 @@ function NoteItem({
   const { t } = useTranslation()
   return (
     <Item onClick={onClick} selected={selected}>
-      <div className="size-10 flex justify-center items-center">
-        <Notebook className="text-muted-foreground flex-shrink-0" />
+      <div className="flex size-10 items-center justify-center">
+        <Notebook className="flex-shrink-0 text-muted-foreground" />
       </div>
-      <div className="flex flex-col min-w-0 flex-1">
-        <div className="font-semibold truncate font-mono text-sm">{id}</div>
+      <div className="flex min-w-0 flex-1 flex-col">
+        <div className="truncate font-mono text-sm font-semibold">{id}</div>
         <div className="text-sm text-muted-foreground">{t('Go to note')}</div>
       </div>
     </Item>
@@ -434,7 +434,7 @@ function ProfileItem({
 }) {
   return (
     <div
-      className={cn('px-2 hover:bg-accent rounded-md cursor-pointer', selected && 'bg-accent')}
+      className={cn('cursor-pointer rounded-md px-2 hover:bg-accent', selected && 'bg-accent')}
       onClick={onClick}
     >
       <UserItem
@@ -459,11 +459,11 @@ function RelayItem({
   const { t } = useTranslation()
   return (
     <Item onClick={onClick} selected={selected}>
-      <div className="size-10 flex justify-center items-center">
-        <Server className="text-muted-foreground flex-shrink-0" />
+      <div className="flex size-10 items-center justify-center">
+        <Server className="flex-shrink-0 text-muted-foreground" />
       </div>
-      <div className="flex flex-col min-w-0 flex-1">
-        <div className="font-semibold truncate">{url}</div>
+      <div className="flex min-w-0 flex-1 flex-col">
+        <div className="truncate font-semibold">{url}</div>
         <div className="text-sm text-muted-foreground">{t('Go to relay')}</div>
       </div>
     </Item>
@@ -482,11 +482,11 @@ function ExternalContentItem({
   const { t } = useTranslation()
   return (
     <Item onClick={onClick} selected={selected}>
-      <div className="size-10 flex justify-center items-center">
-        <MessageSquare className="text-muted-foreground flex-shrink-0" />
+      <div className="flex size-10 items-center justify-center">
+        <MessageSquare className="flex-shrink-0 text-muted-foreground" />
       </div>
-      <div className="flex flex-col min-w-0 flex-1">
-        <div className="font-semibold truncate">{search}</div>
+      <div className="flex min-w-0 flex-1 flex-col">
+        <div className="truncate font-semibold">{search}</div>
         <div className="text-sm text-muted-foreground">{t('View discussions about this')}</div>
       </div>
     </Item>
@@ -504,12 +504,12 @@ function NakItem({
 }) {
   return (
     <Item onClick={onClick} selected={selected}>
-      <div className="size-10 flex justify-center items-center">
-        <Terminal className="text-muted-foreground flex-shrink-0" />
+      <div className="flex size-10 items-center justify-center">
+        <Terminal className="flex-shrink-0 text-muted-foreground" />
       </div>
-      <div className="flex flex-col min-w-0 flex-1">
-        <div className="font-semibold truncate">REQ</div>
-        <div className="text-sm text-muted-foreground truncate">{description}</div>
+      <div className="flex min-w-0 flex-1 flex-col">
+        <div className="truncate font-semibold">REQ</div>
+        <div className="truncate text-sm text-muted-foreground">{description}</div>
       </div>
     </Item>
   )
@@ -524,7 +524,7 @@ function Item({
   return (
     <div
       className={cn(
-        'flex gap-2 items-center px-2 py-1.5 hover:bg-accent rounded-md cursor-pointer',
+        'flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 hover:bg-accent',
         selected ? 'bg-accent' : '',
         className
       )}

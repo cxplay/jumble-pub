@@ -59,10 +59,10 @@ export default function Notification({
   if (notificationListStyle === NOTIFICATION_LIST_STYLE.COMPACT) {
     return (
       <div
-        className="flex items-center justify-between cursor-pointer py-2 px-4"
+        className="flex cursor-pointer items-center justify-between px-4 py-2"
         onClick={handleClick}
       >
-        <div className="flex gap-2 items-center flex-1 w-0">
+        <div className="flex w-0 flex-1 items-center gap-2">
           <div className="relative">
             <UserAvatar userId={sender} size="small" />
             <TrustScoreBadge
@@ -78,14 +78,14 @@ export default function Notification({
           {targetEvent && (
             <ContentPreview
               className={cn(
-                'truncate flex-1 w-0',
+                'w-0 flex-1 truncate',
                 unread ? 'font-semibold' : 'text-muted-foreground'
               )}
               event={targetEvent}
             />
           )}
         </div>
-        <div className="text-muted-foreground shrink-0">
+        <div className="shrink-0 text-muted-foreground">
           <FormattedTimestamp timestamp={sentAt} short />
         </div>
       </div>
@@ -94,27 +94,27 @@ export default function Notification({
 
   return (
     <div
-      className="clickable flex items-start gap-2 cursor-pointer py-2 px-4 border-b"
+      className="clickable flex cursor-pointer items-start gap-2 border-b px-4 py-2"
       onClick={handleClick}
     >
-      <div className="flex gap-2 items-center mt-1.5">
+      <div className="mt-1.5 flex items-center gap-2">
         {icon}
         <UserAvatar userId={sender} size="medium" />
       </div>
-      <div className="flex-1 w-0">
+      <div className="w-0 flex-1">
         <div className="flex items-center justify-between gap-1">
-          <div className="flex gap-1 items-center">
+          <div className="flex items-center gap-1">
             <Username
               userId={sender}
-              className="flex-1 max-w-fit truncate font-semibold"
+              className="max-w-fit flex-1 truncate font-semibold"
               skeletonClassName="h-4"
             />
             <TrustScoreBadge pubkey={sender} />
-            <div className="shrink-0 text-muted-foreground text-sm">{description}</div>
+            <div className="shrink-0 text-sm text-muted-foreground">{description}</div>
           </div>
           {unread && (
             <button
-              className="m-0.5 size-3 bg-primary rounded-full shrink-0 transition-all hover:ring-4 hover:ring-primary/20"
+              className="m-0.5 size-3 shrink-0 rounded-full bg-primary transition-all hover:ring-4 hover:ring-primary/20"
               title={t('Mark as read')}
               onClick={(e) => {
                 e.stopPropagation()
@@ -130,7 +130,7 @@ export default function Notification({
             event={targetEvent}
           />
         )}
-        <FormattedTimestamp timestamp={sentAt} className="shrink-0 text-muted-foreground text-sm" />
+        <FormattedTimestamp timestamp={sentAt} className="shrink-0 text-sm text-muted-foreground" />
         {showStats && targetEvent && <StuffStats stuff={targetEvent} className="mt-1" />}
       </div>
     </div>
@@ -142,28 +142,28 @@ export function NotificationSkeleton() {
 
   if (notificationListStyle === NOTIFICATION_LIST_STYLE.COMPACT) {
     return (
-      <div className="flex gap-2 items-center h-11 py-2 px-4">
-        <Skeleton className="w-7 h-7 rounded-full" />
-        <Skeleton className="h-6 flex-1 w-0" />
+      <div className="flex h-11 items-center gap-2 px-4 py-2">
+        <Skeleton className="h-7 w-7 rounded-full" />
+        <Skeleton className="h-6 w-0 flex-1" />
       </div>
     )
   }
 
   return (
-    <div className="flex items-start gap-2 cursor-pointer py-2 px-4">
-      <div className="flex gap-2 items-center mt-1.5">
-        <Skeleton className="w-6 h-6" />
-        <Skeleton className="w-9 h-9 rounded-full" />
+    <div className="flex cursor-pointer items-start gap-2 px-4 py-2">
+      <div className="mt-1.5 flex items-center gap-2">
+        <Skeleton className="h-6 w-6" />
+        <Skeleton className="h-9 w-9 rounded-full" />
       </div>
-      <div className="flex-1 w-0">
+      <div className="w-0 flex-1">
         <div className="py-1">
-          <Skeleton className="w-16 h-4" />
+          <Skeleton className="h-4 w-16" />
         </div>
         <div className="py-1">
-          <Skeleton className="w-full h-4" />
+          <Skeleton className="h-4 w-full" />
         </div>
         <div className="py-1">
-          <Skeleton className="w-12 h-4" />
+          <Skeleton className="h-4 w-12" />
         </div>
       </div>
     </div>

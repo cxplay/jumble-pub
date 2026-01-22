@@ -59,7 +59,7 @@ function NotificationListPageTitlebar() {
   const { t } = useTranslation()
 
   return (
-    <div className="flex gap-2 items-center justify-between h-full pl-3">
+    <div className="flex h-full items-center justify-between gap-2 pl-3">
       <div className="flex items-center gap-2">
         <Bell />
         <div className="text-lg font-semibold">{t('Notifications')}</div>
@@ -77,8 +77,8 @@ function HideUnrelatedNotificationsToggle() {
     <Button
       variant="ghost"
       className={cn(
-        'h-10 px-3 shrink-0 rounded-xl [&_svg]:size-5',
-        hideIndirect ? 'text-foreground bg-muted/40' : 'text-muted-foreground'
+        'h-10 shrink-0 rounded-xl px-3 [&_svg]:size-5',
+        hideIndirect ? 'bg-muted/40 text-foreground' : 'text-muted-foreground'
       )}
       onClick={() => updateHideIndirect(!hideIndirect)}
     >

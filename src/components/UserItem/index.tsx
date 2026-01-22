@@ -23,13 +23,13 @@ export default function UserItem({
   const pubkey = useMemo(() => userIdToPubkey(userId), [userId])
 
   return (
-    <div className={cn('flex gap-2 items-center h-14', className)}>
+    <div className={cn('flex h-14 items-center gap-2', className)}>
       <UserAvatar userId={userId} className="shrink-0" />
       <div className="w-full overflow-hidden">
         <div className="flex items-center gap-2">
           <Username
             userId={userId}
-            className="font-semibold truncate max-w-full w-fit"
+            className="w-fit max-w-full truncate font-semibold"
             skeletonClassName="h-4"
           />
           {showFollowingBadge && <FollowingBadge pubkey={pubkey} />}
@@ -44,14 +44,14 @@ export default function UserItem({
 
 export function UserItemSkeleton({ hideFollowButton }: { hideFollowButton?: boolean }) {
   return (
-    <div className="flex gap-2 items-center h-14">
-      <Skeleton className="w-10 h-10 rounded-full shrink-0" />
+    <div className="flex h-14 items-center gap-2">
+      <Skeleton className="h-10 w-10 shrink-0 rounded-full" />
       <div className="w-full">
         <div className="py-1">
-          <Skeleton className="w-16 h-4" />
+          <Skeleton className="h-4 w-16" />
         </div>
       </div>
-      {!hideFollowButton && <Skeleton className="rounded-full min-w-28 h-9" />}
+      {!hideFollowButton && <Skeleton className="h-9 min-w-28 rounded-full" />}
     </div>
   )
 }

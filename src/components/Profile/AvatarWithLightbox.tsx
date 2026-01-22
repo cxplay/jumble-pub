@@ -13,7 +13,7 @@ export default function AvatarWithLightbox({ userId }: { userId: string }) {
 
   if (!profile) {
     return (
-      <Skeleton className="shrink-0 w-24 h-24 rounded-full absolute left-3 bottom-0 translate-y-1/2 border-4 border-background" />
+      <Skeleton className="absolute bottom-0 left-3 h-24 w-24 shrink-0 translate-y-1/2 rounded-full border-4 border-background" />
     )
   }
   const { avatar, pubkey } = profile || {}

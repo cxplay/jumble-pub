@@ -53,7 +53,7 @@ const NoteListPage = forwardRef<TPageRef>((_, ref) => {
   let content: React.ReactNode = null
   if (!isReady) {
     content = (
-      <div className="text-center text-sm text-muted-foreground pt-3">{t('loading...')}</div>
+      <div className="pt-3 text-center text-sm text-muted-foreground">{t('loading...')}</div>
     )
   } else if (!feedInfo) {
     content = <WelcomeGuide />
@@ -112,9 +112,9 @@ function NoteListPageTitlebar({
   const { isSmallScreen } = useScreenSize()
 
   return (
-    <div className="flex gap-1 items-center h-full justify-between">
-      <FeedButton className="flex-1 max-w-fit w-0" />
-      <div className="shrink-0 flex gap-1 items-center">
+    <div className="flex h-full items-center justify-between gap-1">
+      <FeedButton className="w-0 max-w-fit flex-1" />
+      <div className="flex shrink-0 items-center gap-1">
         {setShowRelayDetails && (
           <Button
             variant="ghost"
@@ -182,21 +182,21 @@ function WelcomeGuide() {
   const { checkLogin } = useNostr()
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[60vh] px-4 text-center space-y-6">
+    <div className="flex min-h-[60vh] flex-col items-center justify-center space-y-6 px-4 text-center">
       <div className="space-y-2">
-        <div className="flex items-center w-full justify-center gap-2">
+        <div className="flex w-full items-center justify-center gap-2">
           <Sparkles className="text-yellow-400" />
           <h2 className="text-2xl font-bold">{t('Welcome to Jumble')}</h2>
           <Sparkles className="text-yellow-400" />
         </div>
-        <p className="text-muted-foreground max-w-md">
+        <p className="max-w-md text-muted-foreground">
           {t(
             'Jumble is a client focused on browsing relays. Get started by exploring interesting relays or login to view your following feed.'
           )}
         </p>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-3 w-full max-w-md">
+      <div className="flex w-full max-w-md flex-col gap-3 sm:flex-row">
         <Button size="lg" className="w-full" onClick={() => navigate('explore')}>
           <Compass className="size-5" />
           {t('Explore')}

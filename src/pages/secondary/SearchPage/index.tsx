@@ -60,7 +60,7 @@ const SearchPage = forwardRef(({ index }: { index?: number }, ref) => {
       ref={ref}
       index={index}
       titlebar={
-        <div className="flex items-center gap-1 h-full">
+        <div className="flex h-full items-center gap-1">
           <Button variant="ghost" size="titlebar-icon" onClick={() => pop()}>
             <ChevronLeft />
           </Button>

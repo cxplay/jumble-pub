@@ -30,7 +30,7 @@ export default function Explore() {
         <div className="p-4 max-md:border-b">
           <Skeleton className="h-6 w-20" />
         </div>
-        <div className="grid md:px-4 md:grid-cols-2 md:gap-2">
+        <div className="grid md:grid-cols-2 md:gap-2 md:px-4">
           <RelaySimpleInfoSkeleton className="h-auto px-4 py-3 md:rounded-lg md:border" />
         </div>
       </div>
@@ -62,13 +62,13 @@ function RelayCollection({ collection }: { collection: TAwesomeRelayCollection }
     <div>
       <div
         className={cn(
-          'sticky bg-background z-20 px-4 py-3 text-2xl font-semibold max-md:border-b',
+          'sticky z-20 bg-background px-4 py-3 text-2xl font-semibold max-md:border-b',
           deepBrowsing ? 'top-12' : 'top-24'
         )}
       >
         {collection.name}
       </div>
-      <div className="grid md:px-4 md:grid-cols-2 md:gap-3">
+      <div className="grid md:grid-cols-2 md:gap-3 md:px-4">
         {collection.relays.map((url) => (
           <RelayItem key={url} url={url} />
         ))}
@@ -82,7 +82,7 @@ function RelayItem({ url }: { url: string }) {
   const { relayInfo, isFetching } = useFetchRelayInfo(url)
 
   if (isFetching) {
-    return <RelaySimpleInfoSkeleton className="h-auto px-4 py-3 border-b md:rounded-lg md:border" />
+    return <RelaySimpleInfoSkeleton className="h-auto border-b px-4 py-3 md:rounded-lg md:border" />
   }
 
   if (!relayInfo) {
@@ -92,7 +92,7 @@ function RelayItem({ url }: { url: string }) {
   return (
     <RelaySimpleInfo
       key={relayInfo.url}
-      className="clickable h-auto px-4 py-3 border-b md:rounded-lg md:border"
+      className="clickable h-auto border-b px-4 py-3 md:rounded-lg md:border"
       relayInfo={relayInfo}
       onClick={(e) => {
         e.stopPropagation()

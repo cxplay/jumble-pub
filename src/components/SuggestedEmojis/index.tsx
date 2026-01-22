@@ -44,7 +44,7 @@ export default function SuggestedEmojis({
   return (
     <div className="flex gap-1 p-1" onClick={(e) => e.stopPropagation()}>
       <div
-        className="w-8 h-8 rounded-lg clickable flex justify-center items-center text-xl"
+        className="clickable flex h-8 w-8 items-center justify-center rounded-lg text-xl"
         onClick={() => onEmojiClick('+')}
       >
         <Emoji emoji="+" />
@@ -53,14 +53,14 @@ export default function SuggestedEmojis({
         typeof emoji === 'string' ? (
           <div
             key={index}
-            className="w-8 h-8 rounded-lg clickable flex justify-center items-center text-xl"
+            className="clickable flex h-8 w-8 items-center justify-center rounded-lg text-xl"
             onClick={() => onEmojiClick(emoji)}
           >
             {emoji}
           </div>
         ) : (
           <div
-            className="flex flex-col items-center justify-center p-1 rounded-lg clickable"
+            className="clickable flex flex-col items-center justify-center rounded-lg p-1"
             key={index}
             onClick={() => onEmojiClick(emoji)}
           >
@@ -68,7 +68,7 @@ export default function SuggestedEmojis({
           </div>
         )
       )}
-      <Button variant="ghost" className="w-8 h-8 text-muted-foreground" onClick={onMoreButtonClick}>
+      <Button variant="ghost" className="h-8 w-8 text-muted-foreground" onClick={onMoreButtonClick}>
         <MoreHorizontal size={24} />
       </Button>
     </div>

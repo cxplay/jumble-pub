@@ -43,7 +43,7 @@ export default function FavoriteRelayList() {
 
   return (
     <div className="space-y-2">
-      <div className="text-muted-foreground font-semibold select-none">{t('Relays')}</div>
+      <div className="select-none font-semibold text-muted-foreground">{t('Relays')}</div>
       <DndContext
         sensors={sensors}
         collisionDetection={closestCenter}

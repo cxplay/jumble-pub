@@ -38,21 +38,21 @@ export default function MailboxRelay({
 
   return (
     <div ref={setNodeRef} style={style} className="flex items-center justify-between">
-      <div className="flex items-center gap-2 flex-1 w-0">
+      <div className="flex w-0 flex-1 items-center gap-2">
         <div
           {...attributes}
           {...listeners}
-          className="cursor-grab active:cursor-grabbing p-2 hover:bg-muted rounded touch-none"
+          className="cursor-grab touch-none rounded p-2 hover:bg-muted active:cursor-grabbing"
           style={{ touchAction: 'none' }}
         >
           <GripVertical size={16} className="text-muted-foreground" />
         </div>
         <div
-          className="flex items-center gap-2 flex-1 w-0 cursor-pointer"
+          className="flex w-0 flex-1 cursor-pointer items-center gap-2"
           onClick={() => push(toRelay(mailboxRelay.url))}
         >
           <RelayIcon url={mailboxRelay.url} />
-          <div className="truncate flex-1 w-0">{mailboxRelay.url}</div>
+          <div className="w-0 flex-1 truncate">{mailboxRelay.url}</div>
         </div>
       </div>
       <div className="flex items-center gap-4">
@@ -72,7 +72,7 @@ export default function MailboxRelay({
         <CircleX
           size={16}
           onClick={() => removeMailboxRelay(mailboxRelay.url)}
-          className="text-muted-foreground hover:text-destructive clickable"
+          className="clickable text-muted-foreground hover:text-destructive"
         />
       </div>
     </div>

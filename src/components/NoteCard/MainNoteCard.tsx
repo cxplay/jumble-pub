@@ -37,7 +37,7 @@ export default function MainNoteCard({
       <div
         className={cn(
           'clickable transition-all duration-200',
-          embedded ? 'p-3 sm:p-4 border rounded-xl bg-card' : 'py-3 hover:bg-accent/30'
+          embedded ? 'rounded-xl border bg-card p-3 sm:p-4' : 'py-3 hover:bg-accent/30'
         )}
       >
         <Collapsible alwaysExpand={embedded}>

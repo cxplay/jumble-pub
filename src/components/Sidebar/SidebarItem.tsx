@@ -12,11 +12,11 @@ const SidebarItem = forwardRef<
   return (
     <Button
       className={cn(
-        'flex shadow-none items-center transition-colors duration-500 bg-transparent m-0 rounded-lg gap-4 text-lg font-semibold',
+        'm-0 flex items-center gap-4 rounded-lg bg-transparent text-lg font-semibold shadow-none transition-colors duration-500',
         collapse
-          ? 'w-12 h-12 p-3 [&_svg]:size-full'
-          : 'justify-start w-full h-auto py-2 px-3 [&_svg]:size-5',
-        active && 'text-primary hover:text-primary bg-primary/10 hover:bg-primary/10',
+          ? 'h-12 w-12 p-3 [&_svg]:size-full'
+          : 'h-auto w-full justify-start px-3 py-2 [&_svg]:size-5',
+        active && 'bg-primary/10 text-primary hover:bg-primary/10 hover:text-primary',
         className
       )}
       variant="ghost"

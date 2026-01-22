@@ -57,7 +57,7 @@ export default function MutedWords() {
             {mutedWords.map((word) => (
               <div
                 key={word}
-                className="flex items-center gap-1 bg-muted px-2 py-1 rounded-md text-sm"
+                className="flex items-center gap-1 rounded-md bg-muted px-2 py-1 text-sm"
               >
                 <span>{word}</span>
                 <Button

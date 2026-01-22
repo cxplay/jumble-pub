@@ -37,7 +37,7 @@ export default function NewNotesButton({
       {newEvents.length > 0 && (
         <div
           className={cn(
-            'w-full flex justify-center z-40 pointer-events-none',
+            'pointer-events-none z-40 flex w-full justify-center',
             enableSingleColumnLayout ? 'sticky' : 'absolute'
           )}
           style={{
@@ -48,10 +48,10 @@ export default function NewNotesButton({
         >
           <Button
             onClick={onClick}
-            className="group rounded-full h-fit py-2 pl-2 pr-3 hover:bg-primary-hover pointer-events-auto"
+            className="group pointer-events-auto h-fit rounded-full py-2 pl-2 pr-3 hover:bg-primary-hover"
           >
             {pubkeys.length > 0 && (
-              <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale">
+              <div className="flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background *:data-[slot=avatar]:grayscale">
                 {pubkeys.map((pubkey) => (
                   <SimpleUserAvatar key={pubkey} userId={pubkey} size="small" />
                 ))}

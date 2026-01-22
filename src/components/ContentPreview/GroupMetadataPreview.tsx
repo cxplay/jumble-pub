@@ -16,7 +16,7 @@ export default function GroupMetadataPreview({
 
   return (
     <div className={cn('pointer-events-none', className)}>
-      [{t('Group')}] <span className="italic pr-0.5">{metadata.name}</span>
+      [{t('Group')}] <span className="pr-0.5 italic">{metadata.name}</span>
     </div>
   )
 }

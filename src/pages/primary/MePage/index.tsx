@@ -41,7 +41,7 @@ const MePage = forwardRef<TPageRef>((_, ref) => {
         titlebar={<MePageTitlebar />}
         hideTitlebarBottomBorder
       >
-        <div className="flex flex-col p-4 gap-4 overflow-auto">
+        <div className="flex flex-col gap-4 overflow-auto p-4">
           <AccountManager />
         </div>
       </PrimaryPageLayout>
@@ -55,15 +55,15 @@ const MePage = forwardRef<TPageRef>((_, ref) => {
       titlebar={<MePageTitlebar />}
       hideTitlebarBottomBorder
     >
-      <div className="flex gap-4 items-center p-4">
+      <div className="flex items-center gap-4 p-4">
         <SimpleUserAvatar userId={pubkey} size="big" />
-        <div className="space-y-1 flex-1 w-0">
+        <div className="w-0 flex-1 space-y-1">
           <SimpleUsername
-            className="text-xl font-semibold text-wrap"
+            className="text-wrap text-xl font-semibold"
             userId={pubkey}
             skeletonClassName="h-6 w-32"
           />
-          <div className="flex gap-1 mt-1">
+          <div className="mt-1 flex gap-1">
             <PubkeyCopy pubkey={pubkey} />
             <NpubQrCode pubkey={pubkey} />
           </div>
@@ -108,7 +108,7 @@ export default MePage
 function MePageTitlebar() {
   const { push } = useSecondaryPage()
   return (
-    <div className="flex justify-end items-center">
+    <div className="flex items-center justify-end">
       <Button variant="ghost" size="titlebar-icon" onClick={() => push(toSettings())}>
         <Settings />
       </Button>
@@ -125,7 +125,7 @@ function Item({
   return (
     <div
       className={cn(
-        'flex clickable justify-between items-center px-4 py-2 h-[52px] rounded-lg [&_svg]:size-4 [&_svg]:shrink-0',
+        'clickable flex h-[52px] items-center justify-between rounded-lg px-4 py-2 [&_svg]:size-4 [&_svg]:shrink-0',
         className
       )}
       {...props}

@@ -71,25 +71,25 @@ const MentionList = forwardRef<MentionListHandle, MentionListProps>((props, ref)
 
   return (
     <ScrollArea
-      className="border rounded-lg bg-background z-50 pointer-events-auto flex flex-col max-h-80 overflow-y-auto"
+      className="pointer-events-auto z-50 flex max-h-80 flex-col overflow-y-auto rounded-lg border bg-background"
       onWheel={(e) => e.stopPropagation()}
       onTouchMove={(e) => e.stopPropagation()}
     >
       {props.items.map((item, index) => (
         <button
           className={cn(
-            'cursor-pointer text-start items-center m-1 p-2 outline-none transition-colors [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 rounded-md',
+            'm-1 cursor-pointer items-center rounded-md p-2 text-start outline-none transition-colors [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
             selectedIndex === index && 'bg-accent text-accent-foreground'
           )}
           key={item}
           onClick={() => selectItem(index)}
           onMouseEnter={() => setSelectedIndex(index)}
         >
-          <div className="flex gap-2 w-80 items-center truncate pointer-events-none">
+          <div className="pointer-events-none flex w-80 items-center gap-2 truncate">
             <SimpleUserAvatar userId={item} />
-            <div className="flex-1 w-0">
+            <div className="w-0 flex-1">
               <div className="flex items-center gap-2">
-                <SimpleUsername userId={item} className="font-semibold truncate" />
+                <SimpleUsername userId={item} className="truncate font-semibold" />
                 <FollowingBadge userId={item} />
               </div>
               <Nip05 pubkey={userIdToPubkey(item)} />

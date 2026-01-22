@@ -449,13 +449,13 @@ const UserAggregationList = forwardRef<
             <UserAggregationItemSkeleton />
           </div>
         ) : aggregations.length === 0 ? (
-          <div className="flex justify-center w-full mt-2">
+          <div className="mt-2 flex w-full justify-center">
             <Button size="lg" onClick={() => setRefreshCount((count) => count + 1)}>
               {t('Reload')}
             </Button>
           </div>
         ) : (
-          <div className="text-center text-sm text-muted-foreground mt-2">{t('no more notes')}</div>
+          <div className="mt-2 text-center text-sm text-muted-foreground">{t('no more notes')}</div>
         )}
       </div>
     )
@@ -464,8 +464,8 @@ const UserAggregationList = forwardRef<
       <div>
         <div ref={topRef} className="scroll-mt-[calc(6rem+1px)]" />
         {showLoadingBar && <LoadingBar />}
-        <div className="border-b h-12 pl-4 pr-1 flex items-center justify-between gap-2">
-          <div className="text-sm text-muted-foreground flex items-center gap-1.5 min-w-0">
+        <div className="flex h-12 items-center justify-between gap-2 border-b pl-4 pr-1">
+          <div className="flex min-w-0 items-center gap-1.5 text-sm text-muted-foreground">
             <span className="font-medium text-foreground">
               {lastXDays === 1
                 ? t('Last 24 hours')
@@ -478,7 +478,7 @@ const UserAggregationList = forwardRef<
           </div>
           <Button
             variant="ghost"
-            className="h-10 px-3 shrink-0 rounded-lg text-muted-foreground hover:text-foreground"
+            className="h-10 shrink-0 rounded-lg px-3 text-muted-foreground hover:text-foreground"
             disabled={showLoadingBar || !hasMore}
             onClick={handleLoadEarlier}
           >
@@ -567,7 +567,7 @@ function UserAggregationItem({
   return (
     <div
       className={cn(
-        'group relative flex items-center gap-4 px-4 py-3 border-b hover:bg-accent/30 cursor-pointer transition-all duration-200',
+        'group relative flex cursor-pointer items-center gap-4 border-b px-4 py-3 transition-all duration-200 hover:bg-accent/30',
         isNew && 'bg-primary/15 hover:bg-primary/20'
       )}
       onClick={onClick}
@@ -581,13 +581,13 @@ function UserAggregationItem({
         <UserAvatar userId={aggregation.pubkey} className={!hasNewEvents ? 'grayscale' : ''} />
       )}
 
-      <div className="flex-1 min-w-0 flex flex-col">
+      <div className="flex min-w-0 flex-1 flex-col">
         <div className="flex items-center gap-2">
           {supportTouch ? (
             <SimpleUsername
               userId={aggregation.pubkey}
               className={cn(
-                'font-semibold text-base truncate max-w-fit',
+                'max-w-fit truncate text-base font-semibold',
                 !hasNewEvents && 'text-muted-foreground'
               )}
               skeletonClassName="h-4"
@@ -596,7 +596,7 @@ function UserAggregationItem({
             <Username
               userId={aggregation.pubkey}
               className={cn(
-                'font-semibold text-base truncate max-w-fit',
+                'max-w-fit truncate text-base font-semibold',
                 !hasNewEvents && 'text-muted-foreground'
               )}
               skeletonClassName="h-4"
@@ -630,9 +630,9 @@ function UserAggregationItem({
 
       <button
         className={cn(
-          'flex-shrink-0 size-10 rounded-full font-bold tabular-nums text-primary border border-primary/80 bg-primary/10 hover:border-primary hover:bg-primary/20 flex flex-col items-center justify-center transition-colors',
+          'flex size-10 flex-shrink-0 flex-col items-center justify-center rounded-full border border-primary/80 bg-primary/10 font-bold tabular-nums text-primary transition-colors hover:border-primary hover:bg-primary/20',
           !hasNewEvents &&
-            'border-muted-foreground/80 text-muted-foreground/80 bg-muted-foreground/10 hover:border-muted-foreground hover:text-muted-foreground hover:bg-muted-foreground/20'
+            'border-muted-foreground/80 bg-muted-foreground/10 text-muted-foreground/80 hover:border-muted-foreground hover:bg-muted-foreground/20 hover:text-muted-foreground'
         )}
         onClick={onToggleViewed}
       >
@@ -647,8 +647,8 @@ function UserAggregationItemSkeleton() {
     <div className="flex items-center gap-4 px-4 py-3">
       <Skeleton className="size-10 rounded-full" />
       <div className="flex-1">
-        <Skeleton className="h-4 w-36 my-1" />
-        <Skeleton className="h-3 w-14 my-1" />
+        <Skeleton className="my-1 h-4 w-36" />
+        <Skeleton className="my-1 h-3 w-14" />
       </div>
       <Skeleton className="size-10 rounded-full" />
     </div>

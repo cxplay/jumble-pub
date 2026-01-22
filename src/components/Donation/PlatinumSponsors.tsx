@@ -7,10 +7,10 @@ export default function PlatinumSponsors() {
 
   return (
     <div className="space-y-2">
-      <div className="font-semibold text-center">{t('Platinum Sponsors')}</div>
-      <div className="flex flex-col gap-2 items-center">
+      <div className="text-center font-semibold">{t('Platinum Sponsors')}</div>
+      <div className="flex flex-col items-center gap-2">
         <div
-          className="flex items-center gap-4 cursor-pointer"
+          className="flex cursor-pointer items-center gap-4"
           onClick={() => window.open('https://opensats.org/', '_blank')}
         >
           <Image

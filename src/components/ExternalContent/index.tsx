@@ -40,7 +40,7 @@ export default function ExternalContent({
 
   if (node.type === 'text') {
     return (
-      <div className={cn('text-wrap break-words whitespace-pre-wrap', className)}>{content}</div>
+      <div className={cn('whitespace-pre-wrap text-wrap break-words', className)}>{content}</div>
     )
   }
 

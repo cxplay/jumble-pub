@@ -135,7 +135,7 @@ export default function ZapButton({ stuff }: { stuff: Event | string }) {
     <>
       <button
         className={cn(
-          'flex items-center gap-1 select-none px-3 h-full cursor-pointer enabled:hover:text-yellow-400 disabled:text-muted-foreground/40 disabled:cursor-default',
+          'flex h-full cursor-pointer select-none items-center gap-1 px-3 enabled:hover:text-yellow-400 disabled:cursor-default disabled:text-muted-foreground/40',
           hasZapped ? 'text-yellow-400' : 'text-muted-foreground'
         )}
         title={t('Zap')}

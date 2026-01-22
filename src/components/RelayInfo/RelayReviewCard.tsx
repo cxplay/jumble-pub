@@ -25,17 +25,17 @@ export default function RelayReviewCard({
 
   return (
     <div
-      className={cn('clickable border rounded-lg bg-muted/20 p-3 h-full', className)}
+      className={cn('clickable h-full rounded-lg border bg-muted/20 p-3', className)}
       onClick={() => push(toNote(event))}
     >
-      <div className="flex justify-between items-start gap-2">
-        <div className="flex items-center space-x-2 flex-1">
+      <div className="flex items-start justify-between gap-2">
+        <div className="flex flex-1 items-center space-x-2">
           <SimpleUserAvatar userId={event.pubkey} size="medium" />
-          <div className="flex-1 w-0">
-            <div className="flex gap-2 items-center">
+          <div className="w-0 flex-1">
+            <div className="flex items-center gap-2">
               <SimpleUsername
                 userId={event.pubkey}
-                className="font-semibold flex truncate text-sm"
+                className="flex truncate text-sm font-semibold"
                 skeletonClassName="h-3"
               />
               <ClientTag event={event} />

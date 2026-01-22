@@ -71,7 +71,7 @@ export default function MailboxSetting() {
 
   if (!pubkey) {
     return (
-      <div className="flex flex-col w-full items-center">
+      <div className="flex w-full flex-col items-center">
         <Button size="lg" onClick={() => checkLogin()}>
           {t('Login to set')}
         </Button>
@@ -109,7 +109,7 @@ export default function MailboxSetting() {
 
   return (
     <div className="space-y-4">
-      <div className="text-xs text-muted-foreground space-y-1">
+      <div className="space-y-1 text-xs text-muted-foreground">
         <div>{t('read relays description')}</div>
         <div>{t('write relays description')}</div>
         <div>{t('read & write relays notice')}</div>

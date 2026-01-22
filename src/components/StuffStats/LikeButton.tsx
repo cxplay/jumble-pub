@@ -138,7 +138,7 @@ export default function LikeButton({ stuff }: { stuff: Event | string }) {
 
   const trigger = (
     <button
-      className="flex items-center enabled:hover:text-primary gap-1 px-3 h-full text-muted-foreground"
+      className="flex h-full items-center gap-1 px-3 text-muted-foreground enabled:hover:text-primary"
       title={t('Like')}
       disabled={liking}
       onClick={handleClick}
@@ -188,7 +188,7 @@ export default function LikeButton({ stuff }: { stuff: Event | string }) {
   return (
     <Popover open={isEmojiReactionsOpen} onOpenChange={(open) => setIsEmojiReactionsOpen(open)}>
       <PopoverAnchor asChild>{trigger}</PopoverAnchor>
-      <PopoverContent side="top" className="p-0 w-fit border-0 shadow-lg">
+      <PopoverContent side="top" className="w-fit border-0 p-0 shadow-lg">
         {isPickerOpen ? (
           <EmojiPicker
             onEmojiClick={(emoji, e) => {

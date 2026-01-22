@@ -23,7 +23,7 @@ export default function BannerWithLightbox({
   return (
     <ImageWithLightbox
       image={{ url: bannerUrl, pubkey }}
-      className="rounded-none w-full aspect-[3/1]"
+      className="aspect-[3/1] w-full rounded-none"
       classNames={{
         skeleton: 'rounded-none',
         wrapper: 'rounded-none border-none aspect-[3/1]'

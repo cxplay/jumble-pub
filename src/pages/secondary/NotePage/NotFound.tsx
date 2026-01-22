@@ -5,7 +5,7 @@ export default function NotFound({ bech32Id }: { bech32Id?: string }) {
   const { t } = useTranslation()
 
   return (
-    <div className="text-muted-foreground w-full h-full flex flex-col items-center justify-center gap-2">
+    <div className="flex h-full w-full flex-col items-center justify-center gap-2 text-muted-foreground">
       <div>{t('Note not found')}</div>
       <ClientSelect originalNoteId={bech32Id} />
     </div>

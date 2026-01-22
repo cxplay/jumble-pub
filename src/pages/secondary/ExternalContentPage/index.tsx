@@ -28,7 +28,7 @@ const ExternalContentPage = forwardRef(({ index }: { index?: number }, ref) => {
       title={t('External Content')}
       displayScrollToTopButton
     >
-      <div className="px-4 mt-3">
+      <div className="mt-3 px-4">
         <ExternalContent content={id} mustLoadMedia />
         <StuffStats className="mt-3" stuff={id} fetchIfNotExisting displayTopZapsAndLikes />
       </div>

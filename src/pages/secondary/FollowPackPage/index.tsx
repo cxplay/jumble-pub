@@ -27,9 +27,9 @@ const FollowPackPage = forwardRef(({ id, index }: { id?: string; index?: number 
   if (isFetching) {
     return (
       <SecondaryPageLayout ref={ref} index={index} title={t('Follow Pack')}>
-        <div className="px-4 py-3 space-y-2">
+        <div className="space-y-2 px-4 py-3">
           <Skeleton className="h-48 w-full" />
-          <Skeleton className="h-7 py-1 w-full" />
+          <Skeleton className="h-7 w-full py-1" />
         </div>
       </SecondaryPageLayout>
     )
@@ -47,11 +47,11 @@ const FollowPackPage = forwardRef(({ id, index }: { id?: string; index?: number 
     <SecondaryPageLayout ref={ref} index={index} title={t('Follow Pack')} displayScrollToTopButton>
       <div>
         {/* Header */}
-        <div className="px-4 pt-3 space-y-2">
+        <div className="space-y-2 px-4 pt-3">
           {image && (
             <ImageWithLightbox
               image={{ url: image, pubkey: event.pubkey }}
-              className="w-full h-48 object-cover rounded-lg"
+              className="h-48 w-full rounded-lg object-cover"
               classNames={{
                 wrapper: 'w-full h-48 border-none'
               }}
@@ -59,21 +59,21 @@ const FollowPackPage = forwardRef(({ id, index }: { id?: string; index?: number 
           )}
 
           <div className="flex items-center gap-2">
-            <h3 className="text-2xl font-semibold mb-1 truncate">{title}</h3>
-            <span className="text-xs text-muted-foreground shrink-0">
+            <h3 className="mb-1 truncate text-2xl font-semibold">{title}</h3>
+            <span className="shrink-0 text-xs text-muted-foreground">
               {t('n users', { count: pubkeys.length })}
             </span>
           </div>
 
           {description && (
-            <p className="text-sm text-muted-foreground whitespace-pre-wrap">{description}</p>
+            <p className="whitespace-pre-wrap text-sm text-muted-foreground">{description}</p>
           )}
 
           <div className="inline-flex items-center rounded-lg border bg-muted/50">
             <button
               onClick={() => setTab('users')}
               className={cn(
-                'px-3 py-1.5 text-sm font-medium rounded-l-lg transition-colors',
+                'rounded-l-lg px-3 py-1.5 text-sm font-medium transition-colors',
                 tab === 'users'
                   ? 'bg-background text-foreground shadow-sm'
                   : 'text-muted-foreground hover:text-foreground'
@@ -84,7 +84,7 @@ const FollowPackPage = forwardRef(({ id, index }: { id?: string; index?: number 
             <button
               onClick={() => setTab('feed')}
               className={cn(
-                'px-3 py-1.5 text-sm font-medium rounded-r-lg transition-colors',
+                'rounded-r-lg px-3 py-1.5 text-sm font-medium transition-colors',
                 tab === 'feed'
                   ? 'bg-background text-foreground shadow-sm'
                   : 'text-muted-foreground hover:text-foreground'

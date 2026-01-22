@@ -115,9 +115,9 @@ const RizfulPage = forwardRef(({ index }: { index?: number }, ref) => {
   if (connected) {
     return (
       <SecondaryPageLayout ref={ref} index={index} title={t('Rizful Vault')}>
-        <div className="px-4 pt-3 space-y-6 flex flex-col items-center">
+        <div className="flex flex-col items-center space-y-6 px-4 pt-3">
           <CheckCircle2 className="size-40 fill-green-400 text-background" />
-          <div className="font-semibold text-2xl">{t('Rizful Vault connected!')}</div>
+          <div className="text-2xl font-semibold">{t('Rizful Vault connected!')}</div>
           <div className="text-center text-sm text-muted-foreground">
             {t('You can now use your Rizful Vault to zap your favorite notes and creators.')}
           </div>
@@ -125,7 +125,7 @@ const RizfulPage = forwardRef(({ index }: { index?: number }, ref) => {
             <div className="flex flex-col items-center gap-2">
               <div>{t('Your Lightning Address')}:</div>
               <div
-                className="font-semibold text-lg rounded-lg px-4 py-1 flex justify-center items-center gap-2 cursor-pointer hover:bg-accent/80"
+                className="flex cursor-pointer items-center justify-center gap-2 rounded-lg px-4 py-1 text-lg font-semibold hover:bg-accent/80"
                 onClick={() => {
                   navigator.clipboard.writeText(lightningAddress)
                   setCopiedLightningAddress(true)
@@ -148,11 +148,11 @@ const RizfulPage = forwardRef(({ index }: { index?: number }, ref) => {
 
   return (
     <SecondaryPageLayout ref={ref} index={index} title={t('Rizful Vault')}>
-      <div className="px-4 pt-3 space-y-6">
+      <div className="space-y-6 px-4 pt-3">
         <div className="space-y-2">
           <div className="font-semibold">1. {t('New to Rizful?')}</div>
           <Button
-            className="bg-lime-500 hover:bg-lime-500/90 w-64"
+            className="w-64 bg-lime-500 hover:bg-lime-500/90"
             onClick={() => window.open(RIZFUL_SIGNUP_URL, '_blank')}
           >
             {t('Sign up for Rizful')} <ExternalLink />
@@ -165,7 +165,7 @@ const RizfulPage = forwardRef(({ index }: { index?: number }, ref) => {
         <div className="space-y-2">
           <div className="font-semibold">2. {t('Get your one-time code')}</div>
           <Button
-            className="bg-orange-500 hover:bg-orange-500/90 w-64"
+            className="w-64 bg-orange-500 hover:bg-orange-500/90"
             onClick={() => openPopup(RIZFUL_GET_TOKEN_URL, 'rizful_codes')}
           >
             {t('Get code')}
@@ -183,7 +183,7 @@ const RizfulPage = forwardRef(({ index }: { index?: number }, ref) => {
             }}
           />
           <Button
-            className="bg-sky-500 hover:bg-sky-500/90 w-64"
+            className="w-64 bg-sky-500 hover:bg-sky-500/90"
             disabled={!token || connecting}
             onClick={() => connectRizful()}
           >

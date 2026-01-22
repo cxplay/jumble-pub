@@ -108,7 +108,7 @@ export default function TopUp() {
             variant="outline"
             onClick={() => handlePresetClick(amount)}
             className={cn(
-              'flex flex-col h-auto py-3 hover:bg-primary/10',
+              'flex h-auto flex-col py-3 hover:bg-primary/10',
               selectedAmount === amount && 'border border-primary bg-primary/10'
             )}
           >

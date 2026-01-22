@@ -15,7 +15,7 @@ export default function DrawerMenuItem({
     <DrawerClose className="w-full">
       <Button
         onClick={onClick}
-        className={cn('w-full p-6 justify-start text-lg gap-4 [&_svg]:size-5', className)}
+        className={cn('w-full justify-start gap-4 p-6 text-lg [&_svg]:size-5', className)}
         variant="ghost"
       >
         {children}

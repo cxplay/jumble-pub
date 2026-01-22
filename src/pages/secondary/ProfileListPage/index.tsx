@@ -28,7 +28,7 @@ const ProfileListPage = forwardRef(({ index }: { index?: number }, ref) => {
       setTitle(
         <div className="flex items-center gap-1">
           {domain}
-          <Favicon domain={domain} className="w-5 h-5" />
+          <Favicon domain={domain} className="h-5 w-5" />
         </div>
       )
       setData({ type: 'domain', id: domain })

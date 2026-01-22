@@ -45,7 +45,7 @@ export default function RelaySetList() {
   return (
     <div className="space-y-2">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="text-muted-foreground font-semibold select-none shrink-0">
+        <div className="shrink-0 select-none font-semibold text-muted-foreground">
           {t('Relay sets')}
         </div>
         <PullRelaySetsButton />

@@ -21,19 +21,19 @@ export default function TopZaps({ stuff }: { stuff: Event | string }) {
   if (!topZaps.length || !event) return null
 
   return (
-    <ScrollArea className="pb-2 mb-1">
+    <ScrollArea className="mb-1 pb-2">
       <div className="flex gap-1">
         {topZaps.map((zap, index) => (
           <div key={zap.pr}>
             <div
-              className="flex gap-1 py-1 pl-1 pr-2 text-sm max-w-72 rounded-full bg-muted/80 items-center text-yellow-400 border border-yellow-400 hover:bg-yellow-400/20 cursor-pointer"
+              className="flex max-w-72 cursor-pointer items-center gap-1 rounded-full border border-yellow-400 bg-muted/80 py-1 pl-1 pr-2 text-sm text-yellow-400 hover:bg-yellow-400/20"
               onClick={(e) => {
                 e.stopPropagation()
                 setZapIndex(index)
               }}
             >
               <SimpleUserAvatar userId={zap.pubkey} size="xSmall" />
-              <Zap className="size-3 fill-yellow-400 shrink-0" />
+              <Zap className="size-3 shrink-0 fill-yellow-400" />
               <div className="font-semibold">{formatAmount(zap.amount)}</div>
               <ContentPreview
                 className="truncate"

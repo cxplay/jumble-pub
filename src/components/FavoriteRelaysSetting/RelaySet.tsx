@@ -42,19 +42,19 @@ export default function RelaySet({ relaySet }: { relaySet: TRelaySet }) {
   }
 
   return (
-    <div ref={setNodeRef} style={style} className="relative group">
-      <div className="w-full border rounded-lg px-2 py-2.5">
-        <div className="flex justify-between items-center">
+    <div ref={setNodeRef} style={style} className="group relative">
+      <div className="w-full rounded-lg border px-2 py-2.5">
+        <div className="flex items-center justify-between">
           <div className="flex items-center">
             <div
-              className="cursor-grab active:cursor-grabbing p-2 hover:bg-muted rounded touch-none"
+              className="cursor-grab touch-none rounded p-2 hover:bg-muted active:cursor-grabbing"
               {...attributes}
               {...listeners}
             >
               <GripVertical className="size-4 text-muted-foreground" />
             </div>
-            <div className="flex gap-2 items-center">
-              <div className="flex justify-center items-center w-6 h-6 shrink-0">
+            <div className="flex items-center gap-2">
+              <div className="flex h-6 w-6 shrink-0 items-center justify-center">
                 <FolderClosed className="size-4" />
               </div>
               <RelaySetName relaySet={relaySet} />
@@ -98,20 +98,20 @@ function RelaySetName({ relaySet }: { relaySet: TRelaySet }) {
   }
 
   return renamingRelaySetId === relaySet.id ? (
-    <div className="flex gap-1 items-center">
+    <div className="flex items-center gap-1">
       <Input
         value={newSetName}
         onChange={handleRenameInputChange}
         onBlur={saveNewRelaySetName}
         onKeyDown={handleRenameInputKeyDown}
-        className="font-semibold w-28"
+        className="w-28 font-semibold"
       />
       <Button variant="ghost" size="icon" onClick={saveNewRelaySetName}>
         <Check size={18} className="text-green-500" />
       </Button>
     </div>
   ) : (
-    <div className="h-8 font-semibold flex items-center select-none">{relaySet.name}</div>
+    <div className="flex h-8 select-none items-center font-semibold">{relaySet.name}</div>
   )
 }
 
@@ -125,7 +125,7 @@ function RelayUrlsExpandToggle({
   const { expandedRelaySetId, setExpandedRelaySetId } = useRelaySetsSettingComponent()
   return (
     <div
-      className="text-sm text-muted-foreground flex items-center gap-1 cursor-pointer hover:text-foreground"
+      className="flex cursor-pointer items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
       onClick={() => setExpandedRelaySetId((pre) => (pre === relaySetId ? null : relaySetId))}
     >
       <div className="select-none">{children}</div>

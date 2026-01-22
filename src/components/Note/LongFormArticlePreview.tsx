@@ -19,14 +19,14 @@ export default function LongFormArticlePreview({
   const { autoLoadMedia } = useContentPolicy()
   const metadata = useMemo(() => getLongFormArticleMetadataFromEvent(event), [event])
 
-  const titleComponent = <div className="text-xl font-semibold line-clamp-2">{metadata.title}</div>
+  const titleComponent = <div className="line-clamp-2 text-xl font-semibold">{metadata.title}</div>
 
   const tagsComponent = metadata.tags.length > 0 && (
-    <div className="flex gap-1 flex-wrap">
+    <div className="flex flex-wrap gap-1">
       {metadata.tags.map((tag) => (
         <div
           key={tag}
-          className="flex items-center rounded-full text-xs px-2.5 py-0.5 bg-muted text-muted-foreground max-w-32 cursor-pointer hover:bg-accent hover:text-accent-foreground"
+          className="flex max-w-32 cursor-pointer items-center rounded-full bg-muted px-2.5 py-0.5 text-xs text-muted-foreground hover:bg-accent hover:text-accent-foreground"
           onClick={(e) => {
             e.stopPropagation()
             push(toNoteList({ hashtag: tag, kinds: [kinds.LongFormArticle] }))
@@ -39,7 +39,7 @@ export default function LongFormArticlePreview({
   )
 
   const summaryComponent = metadata.summary && (
-    <div className="text-sm text-muted-foreground line-clamp-4">{metadata.summary}</div>
+    <div className="line-clamp-4 text-sm text-muted-foreground">{metadata.summary}</div>
   )
 
   if (isSmallScreen) {
@@ -48,7 +48,7 @@ export default function LongFormArticlePreview({
         {metadata.image && autoLoadMedia && (
           <Image
             image={{ url: metadata.image, pubkey: event.pubkey }}
-            className="w-full aspect-video"
+            className="aspect-video w-full"
             hideIfError
           />
         )}
@@ -67,11 +67,11 @@ export default function LongFormArticlePreview({
         {metadata.image && autoLoadMedia && (
           <Image
             image={{ url: metadata.image, pubkey: event.pubkey }}
-            className="aspect-[4/3] xl:aspect-video object-cover bg-foreground h-44"
+            className="aspect-[4/3] h-44 bg-foreground object-cover xl:aspect-video"
             hideIfError
           />
         )}
-        <div className="flex-1 w-0 space-y-1">
+        <div className="w-0 flex-1 space-y-1">
           {titleComponent}
           {summaryComponent}
           {tagsComponent}

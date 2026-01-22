@@ -52,7 +52,7 @@ export default function ProfileOptions({ pubkey }: { pubkey: string }) {
                   setIsDrawerOpen(false)
                   navigator.clipboard.writeText(pubkeyToNpub(pubkey) ?? '')
                 }}
-                className="w-full p-6 justify-start text-lg gap-4 [&_svg]:size-5"
+                className="w-full justify-start gap-4 p-6 text-lg [&_svg]:size-5"
                 variant="ghost"
               >
                 <Copy />
@@ -65,7 +65,7 @@ export default function ProfileOptions({ pubkey }: { pubkey: string }) {
                       setIsDrawerOpen(false)
                       unmutePubkey(pubkey)
                     }}
-                    className="w-full p-6 justify-start text-lg gap-4 [&_svg]:size-5 text-destructive focus:text-destructive"
+                    className="w-full justify-start gap-4 p-6 text-lg text-destructive focus:text-destructive [&_svg]:size-5"
                     variant="ghost"
                   >
                     <Bell />
@@ -78,7 +78,7 @@ export default function ProfileOptions({ pubkey }: { pubkey: string }) {
                         setIsDrawerOpen(false)
                         mutePubkeyPrivately(pubkey)
                       }}
-                      className="w-full p-6 justify-start text-lg gap-4 [&_svg]:size-5 text-destructive focus:text-destructive"
+                      className="w-full justify-start gap-4 p-6 text-lg text-destructive focus:text-destructive [&_svg]:size-5"
                       variant="ghost"
                     >
                       <BellOff />
@@ -89,7 +89,7 @@ export default function ProfileOptions({ pubkey }: { pubkey: string }) {
                         setIsDrawerOpen(false)
                         mutePubkeyPublicly(pubkey)
                       }}
-                      className="w-full p-6 justify-start text-lg gap-4 [&_svg]:size-5 text-destructive focus:text-destructive"
+                      className="w-full justify-start gap-4 p-6 text-lg text-destructive focus:text-destructive [&_svg]:size-5"
                       variant="ghost"
                     >
                       <BellOff />

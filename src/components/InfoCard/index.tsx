@@ -25,7 +25,7 @@ export default function InfoCard({
   variant?: 'info' | 'success' | 'alert'
 }) {
   return (
-    <div className={cn('p-3 rounded-lg text-sm [&_svg]:size-4', VARIANT_STYLES[variant])}>
+    <div className={cn('rounded-lg p-3 text-sm [&_svg]:size-4', VARIANT_STYLES[variant])}>
       <div className="flex items-center gap-2">
         {icon ?? ICON_MAP[variant]}
         <div className="font-medium">{title}</div>

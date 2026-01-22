@@ -101,18 +101,18 @@ const Post = memo(({ tweetId, url, className, embedded = true }: PostProps) => {
 
   return (
     <div
-      className={cn('relative group', className)}
+      className={cn('group relative', className)}
       style={{
         maxWidth: '550px',
         minHeight: '225px'
       }}
     >
       <div ref={containerRef} className="cursor-pointer" onClick={handleViewComments} />
-      {!loaded && <Skeleton className="absolute inset-0 w-full h-full rounded-lg" />}
+      {!loaded && <Skeleton className="absolute inset-0 h-full w-full rounded-lg" />}
       {loaded && embedded && !supportTouch && (
         /* Hover overlay mask */
         <div
-          className="absolute inset-0 bg-muted/40 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center cursor-pointer rounded-lg"
+          className="absolute inset-0 flex cursor-pointer items-center justify-center rounded-lg bg-muted/40 opacity-0 backdrop-blur-md transition-opacity duration-200 group-hover:opacity-100"
           onClick={handleViewComments}
         >
           <div className="flex flex-col items-center gap-3">

@@ -127,7 +127,7 @@ export default function RelayMembershipControl({
             onClick={handleGetInviteCodeClick}
             disabled={isLoading}
           >
-            <Mail className="w-4 h-4 mr-2" />
+            <Mail className="mr-2 h-4 w-4" />
             {t('Get Invite Code')}
           </Button>
           <Button
@@ -136,7 +136,7 @@ export default function RelayMembershipControl({
             onClick={handleLeaveClick}
             disabled={isLoading}
           >
-            <LogOut className="w-4 h-4 mr-2" />
+            <LogOut className="mr-2 h-4 w-4" />
             {t('Leave')}
           </Button>
         </div>
@@ -149,7 +149,7 @@ export default function RelayMembershipControl({
           }}
           disabled={isLoading}
         >
-          <LogIn className="w-4 h-4 mr-2" />
+          <LogIn className="mr-2 h-4 w-4" />
           {t('Request to Join Relay')}
         </Button>
       )}

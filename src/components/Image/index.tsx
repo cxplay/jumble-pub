@@ -79,7 +79,7 @@ export default function Image({
         <img
           src={`data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='${dim.width}' height='${dim.height}'%3E%3C/svg%3E`}
           className={cn(
-            'object-cover transition-opacity pointer-events-none w-full h-full',
+            'pointer-events-none h-full w-full object-cover transition-opacity',
             className
           )}
           alt=""
@@ -91,7 +91,7 @@ export default function Image({
             <ThumbHashPlaceholder
               thumbHash={thumbHash}
               className={cn(
-                'w-full h-full transition-opacity',
+                'h-full w-full transition-opacity',
                 isLoading ? 'opacity-100' : 'opacity-0'
               )}
             />
@@ -99,14 +99,14 @@ export default function Image({
             <BlurHashCanvas
               blurHash={blurHash}
               className={cn(
-                'w-full h-full transition-opacity',
+                'h-full w-full transition-opacity',
                 isLoading ? 'opacity-100' : 'opacity-0'
               )}
             />
           ) : (
             <Skeleton
               className={cn(
-                'w-full h-full transition-opacity',
+                'h-full w-full transition-opacity',
                 isLoading ? 'opacity-100' : 'opacity-0',
                 classNames.skeleton
               )}
@@ -124,8 +124,8 @@ export default function Image({
           onLoad={handleLoad}
           onError={handleError}
           className={cn(
-            'object-cover transition-opacity pointer-events-none w-full h-full',
-            isLoading ? 'opacity-0 absolute inset-0' : '',
+            'pointer-events-none h-full w-full object-cover transition-opacity',
+            isLoading ? 'absolute inset-0 opacity-0' : '',
             className
           )}
         />
@@ -137,12 +137,12 @@ export default function Image({
             alt={alt}
             decoding="async"
             loading="lazy"
-            className={cn('object-cover w-full h-full transition-opacity', className)}
+            className={cn('h-full w-full object-cover transition-opacity', className)}
           />
         ) : (
           <div
             className={cn(
-              'object-cover flex flex-col items-center justify-center w-full h-full bg-muted',
+              'flex h-full w-full flex-col items-center justify-center bg-muted object-cover',
               className,
               classNames.errorPlaceholder
             )}
@@ -188,7 +188,7 @@ function BlurHashCanvas({ blurHash, className = '' }: { blurHash: string; classN
       ref={canvasRef}
       width={blurHashWidth}
       height={blurHashHeight}
-      className={cn('w-full h-full object-cover rounded-xl', className)}
+      className={cn('h-full w-full rounded-xl object-cover', className)}
       style={{
         imageRendering: 'auto',
         filter: 'blur(0.5px)'
@@ -218,7 +218,7 @@ function ThumbHashPlaceholder({
 
   return (
     <div
-      className={cn('w-full h-full object-cover rounded-lg', className)}
+      className={cn('h-full w-full rounded-lg object-cover', className)}
       style={{
         backgroundImage: `url(${dataUrl})`,
         backgroundSize: 'cover',

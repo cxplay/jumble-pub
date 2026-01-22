@@ -14,17 +14,17 @@ export default function ProfileCard({ userId }: { userId: string }) {
   const { username, about, emojis } = profile || {}
 
   return (
-    <div className="w-full flex flex-col gap-2 not-prose">
-      <div className="flex space-x-2 w-full items-start justify-between">
-        <SimpleUserAvatar userId={pubkey} className="w-12 h-12" />
+    <div className="not-prose flex w-full flex-col gap-2">
+      <div className="flex w-full items-start justify-between space-x-2">
+        <SimpleUserAvatar userId={pubkey} className="h-12 w-12" />
         <FollowButton pubkey={pubkey} />
       </div>
       <div>
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <TextWithEmojis
             text={username || ''}
             emojis={emojis}
-            className="text-lg font-semibold truncate"
+            className="truncate text-lg font-semibold"
           />
           <TrustScoreBadge pubkey={pubkey} />
         </div>
@@ -34,7 +34,7 @@ export default function ProfileCard({ userId }: { userId: string }) {
         <ProfileAbout
           about={about}
           emojis={emojis}
-          className="text-sm text-wrap break-words w-full overflow-hidden text-ellipsis line-clamp-6"
+          className="line-clamp-6 w-full overflow-hidden text-ellipsis text-wrap break-words text-sm"
         />
       )}
     </div>

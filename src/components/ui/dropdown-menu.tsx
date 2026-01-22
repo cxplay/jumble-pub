@@ -45,7 +45,7 @@ const DropdownMenu = ({
         createPortal(
           <div
             ref={backdropRef}
-            className="fixed inset-0 z-50 pointer-events-auto"
+            className="pointer-events-auto fixed inset-0 z-50"
             onClick={(e) => {
               e.stopPropagation()
               handleOpenChange(false)
@@ -83,7 +83,7 @@ const DropdownMenuSubTrigger = React.forwardRef<
   <DropdownMenuPrimitive.SubTrigger
     ref={ref}
     className={cn(
-      'flex cursor-default gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent data-[state=open]:bg-accent [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+      'flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent data-[state=open]:bg-accent [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
       inset && 'pl-8',
       className
     )}
@@ -143,11 +143,11 @@ const DropdownMenuSubContent = React.forwardRef<
         {...props}
       >
         {showScrollButtons && canScrollUp && (
-          <div className="absolute top-0 inset-x-0 z-10 flex items-center justify-center bg-popover">
+          <div className="absolute inset-x-0 top-0 z-10 flex items-center justify-center bg-popover">
             <button
               onClick={scrollUp}
               onMouseEnter={scrollUp}
-              className="flex items-center justify-center w-full h-6 hover:bg-accent rounded-sm transition-colors"
+              className="flex h-6 w-full items-center justify-center rounded-sm transition-colors hover:bg-accent"
               type="button"
             >
               <ChevronUp className="h-4 w-4" />
@@ -157,18 +157,18 @@ const DropdownMenuSubContent = React.forwardRef<
 
         <div
           ref={scrollAreaRef}
-          className={cn('p-1 overflow-y-auto scrollbar-hide', className)}
+          className={cn('scrollbar-hide overflow-y-auto p-1', className)}
           onScroll={checkScrollability}
         >
           {props.children}
         </div>
 
         {showScrollButtons && canScrollDown && (
-          <div className="absolute bottom-0 inset-x-0 flex items-center justify-center bg-popover">
+          <div className="absolute inset-x-0 bottom-0 flex items-center justify-center bg-popover">
             <button
               onClick={scrollDown}
               onMouseEnter={scrollDown}
-              className="flex items-center justify-center w-full h-6 hover:bg-accent rounded-sm transition-colors"
+              className="flex h-6 w-full items-center justify-center rounded-sm transition-colors hover:bg-accent"
               type="button"
             >
               <ChevronDown className="h-4 w-4" />
@@ -230,11 +230,11 @@ const DropdownMenuContent = React.forwardRef<
         {...props}
       >
         {showScrollButtons && canScrollUp && (
-          <div className="absolute top-0 inset-x-0 z-10 flex items-center justify-center bg-popover">
+          <div className="absolute inset-x-0 top-0 z-10 flex items-center justify-center bg-popover">
             <button
               onClick={scrollUp}
               onMouseEnter={scrollUp}
-              className="flex items-center justify-center w-full h-6 hover:bg-accent rounded-sm transition-colors"
+              className="flex h-6 w-full items-center justify-center rounded-sm transition-colors hover:bg-accent"
               type="button"
             >
               <ChevronUp className="h-4 w-4" />
@@ -244,7 +244,7 @@ const DropdownMenuContent = React.forwardRef<
 
         <div
           ref={scrollAreaRef}
-          className={cn('p-1 overflow-y-auto scrollbar-hide', className)}
+          className={cn('scrollbar-hide overflow-y-auto p-1', className)}
           onScroll={checkScrollability}
           onWheel={(e) => e.stopPropagation()}
         >
@@ -252,11 +252,11 @@ const DropdownMenuContent = React.forwardRef<
         </div>
 
         {showScrollButtons && canScrollDown && (
-          <div className="absolute bottom-0 inset-x-0 flex items-center justify-center bg-popover">
+          <div className="absolute inset-x-0 bottom-0 flex items-center justify-center bg-popover">
             <button
               onClick={scrollDown}
               onMouseEnter={scrollDown}
-              className="flex items-center justify-center w-full h-6 hover:bg-accent rounded-sm transition-colors"
+              className="flex h-6 w-full items-center justify-center rounded-sm transition-colors hover:bg-accent"
               type="button"
             >
               <ChevronDown className="h-4 w-4" />
@@ -278,7 +278,7 @@ const DropdownMenuItem = React.forwardRef<
   <DropdownMenuPrimitive.Item
     ref={ref}
     className={cn(
-      'relative flex cursor-pointer select-none items-center gap-2 px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 rounded-md',
+      'relative flex cursor-pointer select-none items-center gap-2 rounded-md px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
       inset && 'pl-8',
       className
     )}

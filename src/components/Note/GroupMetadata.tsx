@@ -18,11 +18,11 @@ export default function GroupMetadata({
   const metadata = useMemo(() => getGroupMetadataFromEvent(event), [event])
 
   const groupNameComponent = (
-    <div className="text-xl font-semibold line-clamp-1">{metadata.name}</div>
+    <div className="line-clamp-1 text-xl font-semibold">{metadata.name}</div>
   )
 
   const groupAboutComponent = metadata.about && (
-    <div className="text-sm text-muted-foreground line-clamp-2">{metadata.about}</div>
+    <div className="line-clamp-2 text-sm text-muted-foreground">{metadata.about}</div>
   )
 
   return (
@@ -31,16 +31,16 @@ export default function GroupMetadata({
         {metadata.picture && autoLoadMedia && (
           <Image
             image={{ url: metadata.picture, pubkey: event.pubkey }}
-            className="aspect-square bg-foreground h-20"
+            className="aspect-square h-20 bg-foreground"
             hideIfError
           />
         )}
-        <div className="flex-1 w-0 space-y-1">
+        <div className="w-0 flex-1 space-y-1">
           {groupNameComponent}
           {groupAboutComponent}
         </div>
       </div>
-      <ClientSelect className="w-full mt-2" event={event} originalNoteId={originalNoteId} />
+      <ClientSelect className="mt-2 w-full" event={event} originalNoteId={originalNoteId} />
     </div>
   )
 }

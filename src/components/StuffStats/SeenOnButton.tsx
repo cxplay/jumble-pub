@@ -37,7 +37,7 @@ export default function SeenOnButton({ stuff }: { stuff: Event | string }) {
 
   const trigger = (
     <button
-      className="flex gap-1 items-center text-muted-foreground enabled:hover:text-primary pl-3 h-full disabled:text-muted-foreground/40"
+      className="flex h-full items-center gap-1 pl-3 text-muted-foreground enabled:hover:text-primary disabled:text-muted-foreground/40"
       title={t('Seen on')}
       disabled={relays.length === 0}
       onClick={() => {
@@ -67,7 +67,7 @@ export default function SeenOnButton({ stuff }: { stuff: Event | string }) {
             <div className="py-2">
               {relays.map((relay) => (
                 <Button
-                  className="w-full p-6 justify-start text-lg gap-4"
+                  className="w-full justify-start gap-4 p-6 text-lg"
                   variant="ghost"
                   key={relay}
                   onClick={() => {

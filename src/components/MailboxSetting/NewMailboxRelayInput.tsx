@@ -46,7 +46,7 @@ export default function NewMailboxRelayInput({
         />
         <Button onClick={save}>{t('Add')}</Button>
       </div>
-      {newRelayUrlError && <div className="text-destructive text-xs mt-1">{newRelayUrlError}</div>}
+      {newRelayUrlError && <div className="mt-1 text-xs text-destructive">{newRelayUrlError}</div>}
     </div>
   )
 }

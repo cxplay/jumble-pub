@@ -30,7 +30,7 @@ const WalletPage = forwardRef(({ index }: { index?: number }, ref) => {
   return (
     <SecondaryPageLayout ref={ref} index={index} title={t('Wallet')}>
       {isWalletConnected ? (
-        <div className="px-4 pt-3 space-y-4">
+        <div className="space-y-4 px-4 pt-3">
           <div>
             {walletInfo?.node.alias && (
               <div className="mb-2">
@@ -63,13 +63,13 @@ const WalletPage = forwardRef(({ index }: { index?: number }, ref) => {
           <LightningAddressInput />
         </div>
       ) : (
-        <div className="px-4 pt-3 flex items-center gap-2">
+        <div className="flex items-center gap-2 px-4 pt-3">
           <Button className="bg-foreground hover:bg-foreground/90" onClick={() => push(toRizful())}>
             {t('Start with a Rizful Vault')}
           </Button>
           <Button
             variant="link"
-            className="text-muted-foreground hover:text-foreground px-0"
+            className="px-0 text-muted-foreground hover:text-foreground"
             onClick={() => {
               launchModal()
             }}

@@ -33,7 +33,7 @@ function RelayItem({ relay }: { relay: TMailboxRelay }) {
   const { url, scope } = relay
 
   return (
-    <div className="p-4 rounded-lg border clickable space-y-1" onClick={() => push(toRelay(url))}>
+    <div className="clickable space-y-1 rounded-lg border p-4" onClick={() => push(toRelay(url))}>
       <RelaySimpleInfo relayInfo={relayInfo} />
       <div className="flex gap-2">
         {['both', 'read'].includes(scope) && (

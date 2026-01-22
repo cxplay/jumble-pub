@@ -43,8 +43,8 @@ const NotePage = forwardRef(({ id, index }: { id?: string; index?: number }, ref
       <SecondaryPageLayout ref={ref} index={index} title={t('Note')}>
         <div className="px-4 pt-3">
           <div className="flex items-center space-x-2">
-            <Skeleton className="w-10 h-10 rounded-full" />
-            <div className={`flex-1 w-0`}>
+            <Skeleton className="h-10 w-10 rounded-full" />
+            <div className={`w-0 flex-1`}>
               <div className="py-1">
                 <Skeleton className="h-4 w-16" />
               </div>
@@ -55,10 +55,10 @@ const NotePage = forwardRef(({ id, index }: { id?: string; index?: number }, ref
           </div>
           <div className="pt-2">
             <div className="my-1">
-              <Skeleton className="w-full h-4 my-1 mt-2" />
+              <Skeleton className="my-1 mt-2 h-4 w-full" />
             </div>
             <div className="my-1">
-              <Skeleton className="w-2/3 h-4 my-1" />
+              <Skeleton className="my-1 h-4 w-2/3" />
             </div>
           </div>
         </div>
@@ -118,12 +118,12 @@ function ExternalRoot({ value }: { value: string }) {
   return (
     <div>
       <Card
-        className="flex space-x-1 px-1.5 py-1 items-center clickable text-sm text-muted-foreground hover:text-foreground"
+        className="clickable flex items-center space-x-1 px-1.5 py-1 text-sm text-muted-foreground hover:text-foreground"
         onClick={() => push(toExternalContent(value))}
       >
         <div className="truncate">{value}</div>
       </Card>
-      <div className="ml-5 w-px h-2 bg-border" />
+      <div className="ml-5 h-2 w-px bg-border" />
     </div>
   )
 }
@@ -144,13 +144,13 @@ function ParentNote({
   if (isFetching) {
     return (
       <div>
-        <div className="flex space-x-1 px-[0.4375rem] py-1 items-center rounded-full border clickable text-sm text-muted-foreground">
-          <Skeleton className="shrink w-4 h-4 rounded-full" />
-          <div className="py-1 flex-1">
+        <div className="clickable flex items-center space-x-1 rounded-full border px-[0.4375rem] py-1 text-sm text-muted-foreground">
+          <Skeleton className="h-4 w-4 shrink rounded-full" />
+          <div className="flex-1 py-1">
             <Skeleton className="h-3" />
           </div>
         </div>
-        <div className="ml-5 w-px h-3 bg-border" />
+        <div className="ml-5 h-3 w-px bg-border" />
       </div>
     )
   }
@@ -159,7 +159,7 @@ function ParentNote({
     <div>
       <div
         className={cn(
-          'flex space-x-1 px-[0.4375rem] py-1 items-center rounded-full border clickable text-sm text-muted-foreground',
+          'clickable flex items-center space-x-1 rounded-full border px-[0.4375rem] py-1 text-sm text-muted-foreground',
           event && 'hover:text-foreground'
         )}
         onClick={() => {
@@ -170,9 +170,9 @@ function ParentNote({
         <ContentPreview className="truncate" event={event} />
       </div>
       {isConsecutive ? (
-        <div className="ml-5 w-px h-3 bg-border" />
+        <div className="ml-5 h-3 w-px bg-border" />
       ) : (
-        <Ellipsis className="ml-3.5 text-muted-foreground/60 size-3" />
+        <Ellipsis className="ml-3.5 size-3 text-muted-foreground/60" />
       )}
     </div>
   )

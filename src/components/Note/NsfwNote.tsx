@@ -6,7 +6,7 @@ export default function NsfwNote({ show }: { show: () => void }) {
   const { t } = useTranslation()
 
   return (
-    <div className="flex flex-col gap-2 items-center text-muted-foreground font-medium my-4">
+    <div className="my-4 flex flex-col items-center gap-2 font-medium text-muted-foreground">
       <div>{t('🔞 NSFW 🔞')}</div>
       <Button
         onClick={(e) => {

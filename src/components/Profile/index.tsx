@@ -98,14 +98,14 @@ export default function Profile({ id }: { id?: string }) {
     return (
       <>
         <div>
-          <div className="relative bg-cover bg-center mb-2">
-            <Skeleton className="w-full aspect-[3/1] rounded-none" />
-            <Skeleton className="w-24 h-24 absolute bottom-0 left-3 translate-y-1/2 border-4 border-background rounded-full" />
+          <div className="relative mb-2 bg-cover bg-center">
+            <Skeleton className="aspect-[3/1] w-full rounded-none" />
+            <Skeleton className="absolute bottom-0 left-3 h-24 w-24 translate-y-1/2 rounded-full border-4 border-background" />
           </div>
         </div>
         <div className="px-4">
-          <Skeleton className="h-5 w-28 mt-14 mb-1" />
-          <Skeleton className="h-5 w-56 mt-2 my-1 rounded-full" />
+          <Skeleton className="mb-1 mt-14 h-5 w-28" />
+          <Skeleton className="my-1 mt-2 h-5 w-56 rounded-full" />
         </div>
       </>
     )
@@ -116,12 +116,12 @@ export default function Profile({ id }: { id?: string }) {
   return (
     <>
       <div ref={topContainerRef}>
-        <div className="relative bg-cover bg-center mb-2">
+        <div className="relative mb-2 bg-cover bg-center">
           <BannerWithLightbox banner={banner} pubkey={pubkey} />
           <AvatarWithLightbox userId={pubkey} />
         </div>
         <div className="px-4">
-          <div className="flex justify-end h-8 gap-2 items-center">
+          <div className="flex h-8 items-center justify-end gap-2">
             <ProfileOptions pubkey={pubkey} />
             {isSelf ? (
               <Button
@@ -140,27 +140,27 @@ export default function Profile({ id }: { id?: string }) {
             )}
           </div>
           <div className="pt-2">
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               <TextWithEmojis
                 text={username}
                 emojis={emojis}
-                className="text-xl font-semibold truncate select-text"
+                className="select-text truncate text-xl font-semibold"
               />
               <TrustScoreBadge pubkey={pubkey} />
               {isFollowingYou && (
-                <div className="text-muted-foreground rounded-full bg-muted text-xs h-fit px-2 shrink-0">
+                <div className="h-fit shrink-0 rounded-full bg-muted px-2 text-xs text-muted-foreground">
                   {t('Follows you')}
                 </div>
               )}
             </div>
             <Nip05 pubkey={pubkey} />
             {lightningAddress && (
-              <div className="text-sm text-yellow-400 flex gap-1 items-center select-text">
+              <div className="flex select-text items-center gap-1 text-sm text-yellow-400">
                 <Zap className="size-4 shrink-0" />
-                <div className="flex-1 max-w-fit w-0 truncate">{lightningAddress}</div>
+                <div className="w-0 max-w-fit flex-1 truncate">{lightningAddress}</div>
               </div>
             )}
-            <div className="flex gap-1 mt-1">
+            <div className="mt-1 flex gap-1">
               <PubkeyCopy pubkey={pubkey} />
               <NpubQrCode pubkey={pubkey} />
             </div>
@@ -168,27 +168,27 @@ export default function Profile({ id }: { id?: string }) {
               <ProfileAbout
                 about={about}
                 emojis={emojis}
-                className="text-wrap break-words whitespace-pre-wrap mt-2 select-text"
+                className="mt-2 select-text whitespace-pre-wrap text-wrap break-words"
               />
             </Collapsible>
             {website && (
-              <div className="flex gap-1 items-center text-primary mt-2 truncate select-text">
+              <div className="mt-2 flex select-text items-center gap-1 truncate text-primary">
                 <Link size={14} className="shrink-0" />
                 <a
                   href={website}
                   target="_blank"
-                  className="hover:underline truncate flex-1 max-w-fit w-0"
+                  className="w-0 max-w-fit flex-1 truncate hover:underline"
                 >
                   {website}
                 </a>
               </div>
             )}
-            <div className="flex justify-between items-center mt-2 text-sm">
-              <div className="flex gap-4 items-center">
+            <div className="mt-2 flex items-center justify-between text-sm">
+              <div className="flex items-center gap-4">
                 <Followings pubkey={pubkey} />
                 <Relays pubkey={pubkey} />
                 {isSelf && (
-                  <SecondaryPageLink to={toMuteList()} className="flex gap-1 hover:underline w-fit">
+                  <SecondaryPageLink to={toMuteList()} className="flex w-fit gap-1 hover:underline">
                     {mutePubkeySet.size}
                     <div className="text-muted-foreground">{t('Muted')}</div>
                   </SecondaryPageLink>
@@ -198,7 +198,7 @@ export default function Profile({ id }: { id?: string }) {
             </div>
           </div>
         </div>
-        <div className="px-4 pt-3.5 pb-0.5">
+        <div className="px-4 pb-0.5 pt-3.5">
           <SearchInput
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}

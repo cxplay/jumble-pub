@@ -27,7 +27,7 @@ const TranslationPage = forwardRef(({ index }: { index?: number }, ref) => {
 
   return (
     <SecondaryPageLayout ref={ref} index={index} title={t('Translation')}>
-      <div className="px-4 pt-3 space-y-4">
+      <div className="space-y-4 px-4 pt-3">
         <div className="space-y-2">
           <Label htmlFor="languages" className="text-base font-medium">
             {t('Languages')}

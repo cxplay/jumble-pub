@@ -73,7 +73,7 @@ export default function RelayUrls({ relaySetId }: { relaySetId: string }) {
         />
         <Button onClick={saveNewRelayUrl}>{t('Add')}</Button>
       </div>
-      {newRelayUrlError && <div className="text-xs text-destructive mt-1">{newRelayUrlError}</div>}
+      {newRelayUrlError && <div className="mt-1 text-xs text-destructive">{newRelayUrlError}</div>}
     </>
   )
 }
@@ -81,15 +81,15 @@ export default function RelayUrls({ relaySetId }: { relaySetId: string }) {
 function RelayUrl({ url, onRemove }: { url: string; onRemove: () => void }) {
   return (
     <div className="flex items-center justify-between pl-1 pr-3">
-      <div className="flex gap-3 items-center flex-1 w-0">
-        <RelayIcon url={url} className="w-4 h-4" />
-        <div className="text-muted-foreground text-sm truncate">{url}</div>
+      <div className="flex w-0 flex-1 items-center gap-3">
+        <RelayIcon url={url} className="h-4 w-4" />
+        <div className="truncate text-sm text-muted-foreground">{url}</div>
       </div>
       <div className="shrink-0">
         <CircleX
           size={16}
           onClick={onRemove}
-          className="text-muted-foreground hover:text-destructive cursor-pointer"
+          className="cursor-pointer text-muted-foreground hover:text-destructive"
         />
       </div>
     </div>

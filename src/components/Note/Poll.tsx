@@ -170,7 +170,7 @@ export default function Poll({ event, className }: { event: Event; className?: s
                 key={option.id}
                 title={option.label}
                 className={cn(
-                  'relative w-full px-4 py-3 rounded-lg border transition-all flex items-center gap-2 overflow-hidden',
+                  'relative flex w-full items-center gap-2 overflow-hidden rounded-lg border px-4 py-3 transition-all',
                   canVote ? 'cursor-pointer' : 'cursor-not-allowed',
                   canVote &&
                     (selectedOptionIds.includes(option.id)
@@ -184,7 +184,7 @@ export default function Poll({ event, className }: { event: Event; className?: s
                 disabled={!canVote}
               >
                 {/* Content */}
-                <div className="flex items-center gap-2 flex-1 w-0 z-10">
+                <div className="z-10 flex w-0 flex-1 items-center gap-2">
                   <div className={cn('line-clamp-2 text-left', isMax ? 'font-semibold' : '')}>
                     {option.label}
                   </div>
@@ -195,7 +195,7 @@ export default function Poll({ event, className }: { event: Event; className?: s
                 {showResults && (
                   <div
                     className={cn(
-                      'text-muted-foreground shrink-0 z-10',
+                      'z-10 shrink-0 text-muted-foreground',
                       isMax ? 'font-semibold text-foreground' : ''
                     )}
                   >
@@ -217,13 +217,13 @@ export default function Poll({ event, className }: { event: Event; className?: s
         </div>
 
         {/* Results Summary */}
-        <div className="flex justify-between items-center text-sm text-muted-foreground">
+        <div className="flex items-center justify-between text-sm text-muted-foreground">
           <div>{t('{{number}} votes', { number: pollResults?.totalVotes ?? 0 })}</div>
 
           {isLoadingResults && t('Loading...')}
           {!isLoadingResults && showResults && (
             <div
-              className="hover:underline cursor-pointer"
+              className="cursor-pointer hover:underline"
               onClick={(e) => {
                 e.stopPropagation()
                 fetchResults()

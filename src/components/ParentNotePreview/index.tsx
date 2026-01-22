@@ -23,7 +23,7 @@ export default function ParentNotePreview({
     return (
       <div
         className={cn(
-          'flex gap-1 items-center text-sm rounded-full px-2 bg-muted w-fit max-w-full text-muted-foreground hover:text-foreground cursor-pointer',
+          'flex w-fit max-w-full cursor-pointer items-center gap-1 rounded-full bg-muted px-2 text-sm text-muted-foreground hover:text-foreground',
           className
         )}
         onClick={onClick}
@@ -42,13 +42,13 @@ export default function ParentNotePreview({
     return (
       <div
         className={cn(
-          'flex gap-1 items-center text-sm rounded-full px-2 bg-muted w-44 max-w-full text-muted-foreground',
+          'flex w-44 max-w-full items-center gap-1 rounded-full bg-muted px-2 text-sm text-muted-foreground',
           className
         )}
       >
         <div className="shrink-0">{t('reply to')}</div>
-        <Skeleton className="w-4 h-4 rounded-full" />
-        <div className="py-1 flex-1">
+        <Skeleton className="h-4 w-4 rounded-full" />
+        <div className="flex-1 py-1">
           <Skeleton className="h-3" />
         </div>
       </div>
@@ -58,8 +58,8 @@ export default function ParentNotePreview({
   return (
     <div
       className={cn(
-        'flex gap-1 items-center text-sm rounded-full px-2 bg-muted w-fit max-w-full text-muted-foreground',
-        event && 'hover:text-foreground cursor-pointer',
+        'flex w-fit max-w-full items-center gap-1 rounded-full bg-muted px-2 text-sm text-muted-foreground',
+        event && 'cursor-pointer hover:text-foreground',
         className
       )}
       onClick={event ? onClick : undefined}

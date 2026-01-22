@@ -339,11 +339,11 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
         >
           <CurrentRelaysProvider>
             <NotificationProvider>
-              <div className="flex lg:justify-around w-full">
-                <div className="sticky top-0 lg:w-full flex justify-end self-start h-[var(--vh)]">
+              <div className="flex w-full lg:justify-around">
+                <div className="sticky top-0 flex h-[var(--vh)] justify-end self-start lg:w-full">
                   <Sidebar />
                 </div>
-                <div className="flex-1 w-0 bg-background border-x lg:flex-auto lg:w-[640px] lg:shrink-0">
+                <div className="w-0 flex-1 border-x bg-background lg:w-[640px] lg:flex-auto lg:shrink-0">
                   {!!secondaryStack.length &&
                     secondaryStack.map((item, index) => (
                       <div
@@ -369,10 +369,10 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
                     </div>
                   ))}
                 </div>
-                <div className="hidden lg:w-full lg:block" />
+                <div className="hidden lg:block lg:w-full" />
               </div>
               <TooManyRelaysAlertDialog />
-              <BackgroundAudio className="fixed bottom-20 right-0 z-50 w-80 rounded-l-full rounded-r-none overflow-hidden shadow-lg border" />
+              <BackgroundAudio className="fixed bottom-20 right-0 z-50 w-80 overflow-hidden rounded-l-full rounded-r-none border shadow-lg" />
             </NotificationProvider>
           </CurrentRelaysProvider>
         </SecondaryPageContext.Provider>
@@ -407,20 +407,20 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
                 <Sidebar />
                 <div
                   className={cn(
-                    'grid grid-cols-2 w-full',
-                    themeSetting === 'pure-black' ? '' : 'gap-2 pr-2 py-2'
+                    'grid w-full grid-cols-2',
+                    themeSetting === 'pure-black' ? '' : 'gap-2 py-2 pr-2'
                   )}
                 >
                   <div
                     className={cn(
-                      'bg-background overflow-hidden',
+                      'overflow-hidden bg-background',
                       themeSetting === 'pure-black' ? 'border-l' : 'rounded-2xl shadow-lg'
                     )}
                   >
                     {primaryPages.map(({ name, element, props }) => (
                       <div
                         key={name}
-                        className="flex flex-col h-full w-full"
+                        className="flex h-full w-full flex-col"
                         style={{
                           display: currentPrimaryPage === name ? 'block' : 'none'
                         }}
@@ -431,7 +431,7 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
                   </div>
                   <div
                     className={cn(
-                      'bg-background overflow-hidden',
+                      'overflow-hidden bg-background',
                       themeSetting === 'pure-black' ? 'border-l' : 'rounded-2xl',
                       themeSetting !== 'pure-black' && secondaryStack.length > 0 && 'shadow-lg',
                       secondaryStack.length === 0 ? 'bg-surface' : ''
@@ -440,7 +440,7 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
                     {secondaryStack.map((item, index) => (
                       <div
                         key={item.index}
-                        className="flex flex-col h-full w-full"
+                        className="flex h-full w-full flex-col"
                         style={{ display: index === secondaryStack.length - 1 ? 'block' : 'none' }}
                       >
                         {item.element}
@@ -451,7 +451,7 @@ export function PageManager({ maxStackSize = 5 }: { maxStackSize?: number }) {
               </div>
             </div>
             <TooManyRelaysAlertDialog />
-            <BackgroundAudio className="fixed bottom-20 right-0 z-50 w-80 rounded-l-full rounded-r-none overflow-hidden shadow-lg border" />
+            <BackgroundAudio className="fixed bottom-20 right-0 z-50 w-80 overflow-hidden rounded-l-full rounded-r-none border shadow-lg" />
           </NotificationProvider>
         </CurrentRelaysProvider>
       </SecondaryPageContext.Provider>

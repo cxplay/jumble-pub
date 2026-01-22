@@ -103,7 +103,7 @@ export default function RepostButton({ stuff }: { stuff: Event | string }) {
   const trigger = (
     <button
       className={cn(
-        'flex gap-1 items-center px-3 h-full enabled:hover:text-lime-500 disabled:text-muted-foreground/40',
+        'flex h-full items-center gap-1 px-3 enabled:hover:text-lime-500 disabled:text-muted-foreground/40',
         hasReposted ? 'text-lime-500' : 'text-muted-foreground'
       )}
       disabled={!event}
@@ -148,7 +148,7 @@ export default function RepostButton({ stuff }: { stuff: Event | string }) {
                   repost()
                 }}
                 disabled={!canRepost}
-                className="w-full p-6 justify-start text-lg gap-4 [&_svg]:size-5"
+                className="w-full justify-start gap-4 p-6 text-lg [&_svg]:size-5"
                 variant="ghost"
               >
                 <Repeat /> {t('Repost')}
@@ -161,7 +161,7 @@ export default function RepostButton({ stuff }: { stuff: Event | string }) {
                     setIsPostDialogOpen(true)
                   })
                 }}
-                className="w-full p-6 justify-start text-lg gap-4 [&_svg]:size-5"
+                className="w-full justify-start gap-4 p-6 text-lg [&_svg]:size-5"
                 variant="ghost"
               >
                 <PencilLine /> {t('Quote')}

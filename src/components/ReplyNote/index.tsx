@@ -99,23 +99,23 @@ export default function ReplyNote({
   return (
     <div
       className={cn(
-        'relative pb-3 transition-colors duration-500 clickable',
+        'clickable relative pb-3 transition-colors duration-500',
         highlight ? 'bg-primary/40' : '',
         className
       )}
       onClick={() => push(toNote(event))}
     >
-      {hasReplies && <div className="absolute left-[34px] top-14 bottom-0 border-l z-20" />}
+      {hasReplies && <div className="absolute bottom-0 left-[34px] top-14 z-20 border-l" />}
       <Collapsible>
-        <div className="flex space-x-2 items-start px-4 pt-3">
-          <UserAvatar userId={event.pubkey} size="medium" className="shrink-0 mt-0.5" />
+        <div className="flex items-start space-x-2 px-4 pt-3">
+          <UserAvatar userId={event.pubkey} size="medium" className="mt-0.5 shrink-0" />
           <div className="w-full overflow-hidden">
             <div className="flex items-start justify-between gap-2">
-              <div className="flex-1 w-0">
-                <div className="flex gap-1 items-center">
+              <div className="w-0 flex-1">
+                <div className="flex items-center gap-1">
                   <Username
                     userId={event.pubkey}
-                    className="text-sm font-semibold text-muted-foreground hover:text-foreground truncate"
+                    className="truncate text-sm font-semibold text-muted-foreground hover:text-foreground"
                     skeletonClassName="h-3"
                   />
                   <TrustScoreBadge pubkey={event.pubkey} className="!size-3.5" />
@@ -130,7 +130,7 @@ export default function ReplyNote({
                   />
                 </div>
               </div>
-              <div className="flex items-center shrink-0">
+              <div className="flex shrink-0 items-center">
                 <TranslateButton event={event} className="py-0" />
                 <NoteOptions event={event} className="shrink-0 [&_svg]:size-5" />
               </div>
@@ -150,7 +150,7 @@ export default function ReplyNote({
             ) : (
               <Button
                 variant="outline"
-                className="text-muted-foreground font-medium mt-2"
+                className="mt-2 font-medium text-muted-foreground"
                 onClick={(e) => {
                   e.stopPropagation()
                   setShowMuted(true)
@@ -162,24 +162,24 @@ export default function ReplyNote({
           </div>
         </div>
       </Collapsible>
-      {show && <StuffStats className="ml-14 pl-1 mr-4 mt-2" stuff={event} displayTopZapsAndLikes />}
+      {show && <StuffStats className="ml-14 mr-4 mt-2 pl-1" stuff={event} displayTopZapsAndLikes />}
     </div>
   )
 }
 
 export function ReplyNoteSkeleton() {
   return (
-    <div className="px-4 py-3 flex items-start space-x-2 w-full">
-      <Skeleton className="w-9 h-9 rounded-full shrink-0 mt-0.5" />
+    <div className="flex w-full items-start space-x-2 px-4 py-3">
+      <Skeleton className="mt-0.5 h-9 w-9 shrink-0 rounded-full" />
       <div className="w-full">
         <div className="py-1">
           <Skeleton className="h-3 w-16" />
         </div>
         <div className="my-1">
-          <Skeleton className="w-full h-4 my-1 mt-2" />
+          <Skeleton className="my-1 mt-2 h-4 w-full" />
         </div>
         <div className="my-1">
-          <Skeleton className="w-2/3 h-4 my-1" />
+          <Skeleton className="my-1 h-4 w-2/3" />
         </div>
       </div>
     </div>

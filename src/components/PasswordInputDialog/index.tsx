@@ -67,7 +67,7 @@ export default function PasswordInputDialog({
           onKeyDown={handleKeyDown}
           placeholder={t('Password')}
         />
-        <DialogFooter className="w-full flex flex-wrap gap-2">
+        <DialogFooter className="flex w-full flex-wrap gap-2">
           <Button variant="outline" onClick={onCancel} className="flex-1">
             {t('Cancel')}
           </Button>

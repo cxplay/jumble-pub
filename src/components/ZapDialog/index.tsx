@@ -74,13 +74,13 @@ export default function ZapDialog({
           hideOverlay
           onOpenAutoFocus={(e) => e.preventDefault()}
           ref={drawerContentRef}
-          className="flex flex-col gap-4 px-4 mb-4"
+          className="mb-4 flex flex-col gap-4 px-4"
         >
           <DrawerHeader>
-            <DrawerTitle className="flex gap-2 items-center">
+            <DrawerTitle className="flex items-center gap-2">
               <div className="shrink-0">{t('Zap to')}</div>
               <UserAvatar size="small" userId={pubkey} />
-              <Username userId={pubkey} className="truncate flex-1 w-0 text-start h-5" />
+              <Username userId={pubkey} className="h-5 w-0 flex-1 truncate text-start" />
             </DrawerTitle>
             <DialogDescription></DialogDescription>
           </DrawerHeader>
@@ -101,10 +101,10 @@ export default function ZapDialog({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent onOpenAutoFocus={(e) => e.preventDefault()}>
         <DialogHeader>
-          <DialogTitle className="flex gap-2 items-center">
+          <DialogTitle className="flex items-center gap-2">
             <div className="shrink-0">{t('Zap to')}</div>
             <UserAvatar size="small" userId={pubkey} />
-            <Username userId={pubkey} className="truncate flex-1 max-w-fit text-start h-5" />
+            <Username userId={pubkey} className="h-5 max-w-fit flex-1 truncate text-start" />
           </DialogTitle>
         </DialogHeader>
         <ZapDialogContent
@@ -202,7 +202,7 @@ function ZapDialogContent({
     <>
       {/* Sats slider or input */}
       <div className="flex flex-col items-center">
-        <div className="flex justify-center w-full">
+        <div className="flex w-full justify-center">
           <input
             id="sats"
             value={sats}
@@ -224,7 +224,7 @@ function ZapDialogContent({
                 e.target.setSelectionRange(val.length, val.length)
               })
             }}
-            className="bg-transparent text-center w-full p-0 focus-visible:outline-none text-6xl font-bold"
+            className="w-full bg-transparent p-0 text-center text-6xl font-bold focus-visible:outline-none"
           />
         </div>
         <Label htmlFor="sats">{t('Sats')}</Label>
@@ -232,7 +232,7 @@ function ZapDialogContent({
 
       {/* Self-zap easter egg warning */}
       {isSelfZap && (
-        <div className="text-sm text-yellow-600 dark:text-yellow-400 text-center px-4 py-2 bg-yellow-50 dark:bg-yellow-950/30 rounded-md border border-yellow-200 dark:border-yellow-900">
+        <div className="rounded-md border border-yellow-200 bg-yellow-50 px-4 py-2 text-center text-sm text-yellow-600 dark:border-yellow-900 dark:bg-yellow-950/30 dark:text-yellow-400">
           {t('selfZapWarning')}
         </div>
       )}

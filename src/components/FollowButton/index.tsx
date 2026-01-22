@@ -53,7 +53,7 @@ export default function FollowButton({ pubkey }: { pubkey: string }) {
       <AlertDialog>
         <AlertDialogTrigger asChild>
           <Button
-            className="rounded-full min-w-28"
+            className="min-w-28 rounded-full"
             variant={hover ? 'destructive' : 'secondary'}
             disabled={updating}
             onMouseEnter={() => setHover(true)}
@@ -85,7 +85,7 @@ export default function FollowButton({ pubkey }: { pubkey: string }) {
       </AlertDialog>
     </div>
   ) : (
-    <Button className="rounded-full min-w-28" onClick={handleFollow} disabled={updating}>
+    <Button className="min-w-28 rounded-full" onClick={handleFollow} disabled={updating}>
       {updating ? <Loader className="animate-spin" /> : t('Follow')}
     </Button>
   )

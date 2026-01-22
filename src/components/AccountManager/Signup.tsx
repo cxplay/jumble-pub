@@ -53,7 +53,7 @@ export default function Signup({
       {(['generate', 'password'] as Step[]).map((s, index) => (
         <div key={s} className="flex items-center">
           <div
-            className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
+            className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-semibold ${
               step === s
                 ? 'bg-primary text-primary-foreground'
                 : step === 'password' && s === 'generate'
@@ -63,7 +63,7 @@ export default function Signup({
           >
             {index + 1}
           </div>
-          {index < 1 && <div className="w-12 h-0.5 bg-muted mx-1" />}
+          {index < 1 && <div className="mx-1 h-0.5 w-12 bg-muted" />}
         </div>
       ))}
     </div>
@@ -75,7 +75,7 @@ export default function Signup({
         {renderStepIndicator()}
 
         <div className="text-center">
-          <h3 className="text-lg font-semibold mb-2">{t('Create Your Nostr Account')}</h3>
+          <h3 className="mb-2 text-lg font-semibold">{t('Create Your Nostr Account')}</h3>
           <p className="text-sm text-muted-foreground">
             {t('Generate your unique private key. This is your digital identity.')}
           </p>
@@ -110,7 +110,7 @@ export default function Signup({
           </div>
         </div>
 
-        <div className="w-full flex flex-wrap gap-2">
+        <div className="flex w-full flex-wrap gap-2">
           <Button onClick={handleDownload} className="flex-1">
             <Download />
             {t('Download Backup File')}
@@ -129,7 +129,7 @@ export default function Signup({
           </Button>
         </div>
 
-        <div className="flex items-center gap-2 ml-2">
+        <div className="ml-2 flex items-center gap-2">
           <Checkbox
             id="acknowledge-checkbox"
             checked={checkedSaveKey}
@@ -159,7 +159,7 @@ export default function Signup({
       {renderStepIndicator()}
 
       <div className="text-center">
-        <h3 className="text-lg font-semibold mb-2">{t('Secure Your Account')}</h3>
+        <h3 className="mb-2 text-lg font-semibold">{t('Secure Your Account')}</h3>
         <p className="text-sm text-muted-foreground">
           {t('Add an extra layer of protection with a password')}
         </p>
@@ -201,7 +201,7 @@ export default function Signup({
         )}
       </div>
 
-      <div className="w-full flex gap-2">
+      <div className="flex w-full gap-2">
         <Button
           variant="secondary"
           onClick={() => {

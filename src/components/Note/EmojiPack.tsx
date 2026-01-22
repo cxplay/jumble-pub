@@ -44,7 +44,7 @@ export default function EmojiPack({ event, className }: { event: Event; classNam
 
   return (
     <div className={className}>
-      <div className="flex items-center justify-between mb-2">
+      <div className="mb-2 flex items-center justify-between">
         <h3 className="text-2xl font-semibold">{title}</h3>
         {accountPubkey && (
           <Button
@@ -55,7 +55,7 @@ export default function EmojiPack({ event, className }: { event: Event; classNam
             className="shrink-0"
           >
             {updating ? (
-              <Loader className="animate-spin mr-1" />
+              <Loader className="mr-1 animate-spin" />
             ) : isCollected ? (
               <CheckIcon />
             ) : (

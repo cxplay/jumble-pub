@@ -13,12 +13,12 @@ export default function Donation({ className }: { className?: string }) {
   const [donationAmount, setDonationAmount] = useState<number | undefined>(undefined)
 
   return (
-    <div className={cn('p-4 border rounded-lg space-y-4', className)}>
+    <div className={cn('space-y-4 rounded-lg border p-4', className)}>
       <div className="text-center font-semibold">{t('Enjoying Jumble?')}</div>
       <div className="text-center text-muted-foreground">
         {t('Your donation helps me maintain Jumble and make it better! 😊')}
       </div>
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         {[
           { amount: 1000, text: '☕️ 1k' },
           { amount: 10000, text: '🍜 10k' },

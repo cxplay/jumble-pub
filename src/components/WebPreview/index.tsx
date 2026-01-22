@@ -42,7 +42,7 @@ export default function WebPreview({
   if (isSmallScreen && image) {
     return (
       <div
-        className="rounded-xl border mt-2 overflow-hidden"
+        className="mt-2 overflow-hidden rounded-xl border"
         onClick={(e) => {
           e.stopPropagation()
           window.open(url, '_blank')
@@ -50,15 +50,15 @@ export default function WebPreview({
       >
         <Image
           image={{ url: image }}
-          className="w-full h-44"
+          className="h-44 w-full"
           classNames={{
             wrapper: 'rounded-none'
           }}
           hideIfError
         />
-        <div className="bg-muted p-2 w-full">
+        <div className="w-full bg-muted p-2">
           <div className="text-xs text-muted-foreground">{hostname}</div>
-          <div className="font-semibold line-clamp-1">{title}</div>
+          <div className="line-clamp-1 font-semibold">{title}</div>
         </div>
       </div>
     )
@@ -66,7 +66,7 @@ export default function WebPreview({
 
   return (
     <div
-      className={cn('p-0 clickable flex w-full border rounded-xl overflow-hidden', className)}
+      className={cn('clickable flex w-full overflow-hidden rounded-xl border p-0', className)}
       onClick={(e) => {
         e.stopPropagation()
         window.open(url, '_blank')
@@ -75,17 +75,17 @@ export default function WebPreview({
       {image && (
         <Image
           image={{ url: image }}
-          className="aspect-[4/3] xl:aspect-video bg-foreground h-44"
+          className="aspect-[4/3] h-44 bg-foreground xl:aspect-video"
           classNames={{
             wrapper: 'rounded-none border-r'
           }}
           hideIfError
         />
       )}
-      <div className="flex-1 w-0 p-2">
+      <div className="w-0 flex-1 p-2">
         <div className="text-xs text-muted-foreground">{hostname}</div>
-        <div className="font-semibold line-clamp-2">{title}</div>
-        <div className="text-xs text-muted-foreground line-clamp-5">{description}</div>
+        <div className="line-clamp-2 font-semibold">{title}</div>
+        <div className="line-clamp-5 text-xs text-muted-foreground">{description}</div>
       </div>
     </div>
   )

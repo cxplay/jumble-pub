@@ -21,12 +21,12 @@ export default function Highlight({ event, className }: { event: Event; classNam
   )
 
   return (
-    <div className={cn('text-wrap break-words whitespace-pre-wrap space-y-4', className)}>
+    <div className={cn('space-y-4 whitespace-pre-wrap text-wrap break-words', className)}>
       {comment && <Content event={createFakeEvent({ content: comment, tags: event.tags })} />}
       <div className="flex gap-4">
-        <div className="w-1 flex-shrink-0 my-1 bg-primary/60 rounded-md" />
+        <div className="my-1 w-1 flex-shrink-0 rounded-md bg-primary/60" />
         <div
-          className="italic whitespace-pre-line"
+          className="whitespace-pre-line italic"
           style={{
             overflowWrap: 'anywhere'
           }}
@@ -112,7 +112,7 @@ function HighlightSource({ event }: { event: Event }) {
         {t('From')}{' '}
         <ExternalLink
           url={sourceTag[1]}
-          className="underline italic text-muted-foreground hover:text-foreground"
+          className="italic text-muted-foreground underline hover:text-foreground"
         />
       </div>
     )
@@ -124,7 +124,7 @@ function HighlightSource({ event }: { event: Event }) {
       {pubkey && <UserAvatar userId={pubkey} size="xSmall" className="cursor-pointer" />}
       {referenceEventId && (
         <div
-          className="truncate underline pointer-events-auto cursor-pointer hover:text-foreground"
+          className="pointer-events-auto cursor-pointer truncate underline hover:text-foreground"
           onClick={(e) => {
             e.stopPropagation()
             push(toNote(referenceEvent ?? referenceEventId))

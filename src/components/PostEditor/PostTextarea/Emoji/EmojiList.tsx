@@ -69,7 +69,7 @@ export const EmojiList = forwardRef<EmojiListHandler, EmojiListProps>((props, re
 
   return (
     <ScrollArea
-      className="border rounded-lg bg-background z-50 pointer-events-auto flex flex-col max-h-80 overflow-y-auto"
+      className="pointer-events-auto z-50 flex max-h-80 flex-col overflow-y-auto rounded-lg border bg-background"
       onWheel={(e) => e.stopPropagation()}
       onTouchMove={(e) => e.stopPropagation()}
     >
@@ -110,13 +110,13 @@ function EmojiListItem({
   return (
     <button
       className={cn(
-        'cursor-pointer w-full p-1 rounded-lg transition-colors [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+        'w-full cursor-pointer rounded-lg p-1 transition-colors [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
         selectedIndex === index && 'bg-accent text-accent-foreground'
       )}
       onClick={() => selectItem(index)}
       onMouseEnter={() => setSelectedIndex(index)}
     >
-      <div className="flex gap-2 items-center truncate pointer-events-none">
+      <div className="pointer-events-none flex items-center gap-2 truncate">
         <Emoji
           emoji={emoji}
           classNames={{

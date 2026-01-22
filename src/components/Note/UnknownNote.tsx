@@ -9,7 +9,7 @@ export default function UnknownNote({ event, className }: { event: Event; classN
   return (
     <div
       className={cn(
-        'flex flex-col gap-2 items-center text-muted-foreground font-medium my-4',
+        'my-4 flex flex-col items-center gap-2 font-medium text-muted-foreground',
         className
       )}
     >

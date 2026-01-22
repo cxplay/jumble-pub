@@ -39,7 +39,7 @@ export default function EmojiPickerDialog({
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
-      <DropdownMenuContent side="top" className="p-0 w-fit">
+      <DropdownMenuContent side="top" className="w-fit p-0">
         <EmojiPicker
           onEmojiClick={(emoji, e) => {
             e.stopPropagation()

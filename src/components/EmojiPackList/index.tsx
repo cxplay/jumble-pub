@@ -56,7 +56,7 @@ export default function EmojiPackList() {
 
   if (eventIds.length === 0) {
     return (
-      <div className="mt-2 text-sm text-center text-muted-foreground">
+      <div className="mt-2 text-center text-sm text-muted-foreground">
         {t('no emoji packs found')}
       </div>
     )

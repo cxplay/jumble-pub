@@ -40,7 +40,7 @@ export default function AddNewRelay() {
 
   return (
     <div className="space-y-1">
-      <div className="flex gap-2 items-center">
+      <div className="flex items-center gap-2">
         <Input
           placeholder={t('Add a new relay')}
           value={input}
@@ -50,7 +50,7 @@ export default function AddNewRelay() {
         />
         <Button onClick={saveRelay}>{t('Add')}</Button>
       </div>
-      {errorMsg && <div className="text-destructive text-sm pl-8">{errorMsg}</div>}
+      {errorMsg && <div className="pl-8 text-sm text-destructive">{errorMsg}</div>}
     </div>
   )
 }

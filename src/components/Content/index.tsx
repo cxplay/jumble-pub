@@ -110,7 +110,7 @@ export default function Content({
   let imageIndex = 0
   return (
     <>
-      <div ref={contentRef} className={cn('text-wrap break-words whitespace-pre-wrap', className)}>
+      <div ref={contentRef} className={cn('whitespace-pre-wrap text-wrap break-words', className)}>
         {nodes.map((node, index) => {
           if (node.type === 'text') {
             return node.data

@@ -94,7 +94,7 @@ export default function ImageGallery({
       <ImageWithLightbox
         key={i}
         image={image}
-        className="max-h-[80vh] sm:max-h-[50vh] object-contain"
+        className="max-h-[80vh] object-contain sm:max-h-[50vh]"
         classNames={{
           wrapper: cn('w-fit max-w-full border', className)
         }}
@@ -107,7 +107,7 @@ export default function ImageGallery({
     imageContent = (
       <Image
         key={0}
-        className="max-h-[80vh] sm:max-h-[50vh] object-contain"
+        className="max-h-[80vh] object-contain sm:max-h-[50vh]"
         classNames={{
           errorPlaceholder: 'aspect-square h-[30vh]',
           wrapper: 'cursor-zoom-in border'
@@ -118,7 +118,7 @@ export default function ImageGallery({
     )
   } else if (displayImages.length === 2 || displayImages.length === 4) {
     imageContent = (
-      <div className="grid grid-cols-2 gap-2 w-full">
+      <div className="grid w-full grid-cols-2 gap-2">
         {displayImages.map((image, i) => (
           <Image
             key={i}
@@ -132,7 +132,7 @@ export default function ImageGallery({
     )
   } else {
     imageContent = (
-      <div className="grid grid-cols-3 gap-2 w-full">
+      <div className="grid w-full grid-cols-3 gap-2">
         {displayImages.map((image, i) => (
           <Image
             key={i}

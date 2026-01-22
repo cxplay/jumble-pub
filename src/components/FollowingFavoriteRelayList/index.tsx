@@ -64,7 +64,7 @@ export default function FollowingFavoriteRelayList() {
       {showCount < relays.length && <div ref={bottomRef} />}
       {loading && <RelaySimpleInfoSkeleton className="p-4" />}
       {!loading && (
-        <div className="text-center text-muted-foreground text-sm mt-2">
+        <div className="mt-2 text-center text-sm text-muted-foreground">
           {relays.length === 0 ? t('no relays found') : t('no more relays')}
         </div>
       )}
@@ -81,7 +81,7 @@ function RelayItem({ url, users }: { url: string; users: string[] }) {
       key={url}
       relayInfo={relayInfo}
       users={users}
-      className="clickable p-4 border-b"
+      className="clickable border-b p-4"
       onClick={(e) => {
         e.stopPropagation()
         push(toRelay(url))

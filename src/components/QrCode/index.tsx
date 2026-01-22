@@ -47,7 +47,7 @@ export default function QrCode({ value, size = 180 }: { value: string; size?: nu
   }, [value, size])
 
   return (
-    <div className="rounded-2xl overflow-hidden p-2 bg-white">
+    <div className="overflow-hidden rounded-2xl bg-white p-2">
       <div ref={ref} />
     </div>
   )

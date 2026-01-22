@@ -10,7 +10,7 @@ export default function ClientTag({ event }: { event: NostrEvent }) {
   if (!usingClient) return null
 
   return (
-    <span className="text-sm text-muted-foreground shrink-0">
+    <span className="shrink-0 text-sm text-muted-foreground">
       {t('via {{client}}', { client: usingClient })}
     </span>
   )

@@ -89,7 +89,7 @@ export default function Mentions({
           <SimpleUserAvatar userId={pubkey} size="small" />
           <SimpleUsername
             userId={pubkey}
-            className="font-semibold text-sm truncate"
+            className="truncate text-sm font-semibold"
             skeletonClassName="h-3"
           />
         </MenuItem>
@@ -137,7 +137,7 @@ export default function Mentions({
           {potentialMentions.length > 0 && `(${mentions.length}/${potentialMentions.length})`}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="start" className="max-w-96 max-h-[50vh]" showScrollButtons>
+      <DropdownMenuContent align="start" className="max-h-[50vh] max-w-96" showScrollButtons>
         {items}
       </DropdownMenuContent>
     </DropdownMenu>
@@ -165,11 +165,11 @@ function MenuItem({
           onCheckedChange(!checked)
         }}
         className={cn(
-          'flex items-center gap-2 px-4 py-3 clickable',
-          disabled ? 'opacity-50 pointer-events-none' : ''
+          'clickable flex items-center gap-2 px-4 py-3',
+          disabled ? 'pointer-events-none opacity-50' : ''
         )}
       >
-        <div className="flex items-center justify-center size-4 shrink-0">
+        <div className="flex size-4 shrink-0 items-center justify-center">
           {checked && <Check className="size-4" />}
         </div>
         {children}

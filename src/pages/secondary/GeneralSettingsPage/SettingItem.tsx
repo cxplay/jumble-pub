@@ -6,7 +6,7 @@ const SettingItem = forwardRef<HTMLDivElement, HTMLProps<HTMLDivElement>>(
     return (
       <div
         className={cn(
-          'flex justify-between select-none items-center px-4 min-h-9 [&_svg]:size-4 [&_svg]:shrink-0',
+          'flex min-h-9 select-none items-center justify-between px-4 [&_svg]:size-4 [&_svg]:shrink-0',
           className
         )}
         {...props}

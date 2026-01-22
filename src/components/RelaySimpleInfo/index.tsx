@@ -20,13 +20,13 @@ export default function RelaySimpleInfo({
 
   return (
     <div className={cn('space-y-1', className)} {...props}>
-      <div className="flex items-start justify-between gap-2 w-full">
-        <div className="flex flex-1 w-0 items-center gap-2">
+      <div className="flex w-full items-start justify-between gap-2">
+        <div className="flex w-0 flex-1 items-center gap-2">
           <RelayIcon url={relayInfo?.url} className="h-9 w-9" />
-          <div className="flex-1 w-0">
+          <div className="w-0 flex-1">
             <div className="truncate font-semibold">{relayInfo?.name || relayInfo?.shortUrl}</div>
             {relayInfo?.name && (
-              <div className="text-xs text-muted-foreground truncate">{relayInfo?.shortUrl}</div>
+              <div className="truncate text-xs text-muted-foreground">{relayInfo?.shortUrl}</div>
             )}
           </div>
         </div>
@@ -34,7 +34,7 @@ export default function RelaySimpleInfo({
       </div>
       {!!relayInfo?.description && (
         <div
-          className="line-clamp-3 break-words whitespace-pre-wrap"
+          className="line-clamp-3 whitespace-pre-wrap break-words"
           style={{
             overflowWrap: 'anywhere'
           }}
@@ -50,7 +50,7 @@ export default function RelaySimpleInfo({
               <SimpleUserAvatar key={user} userId={user} size="xSmall" />
             ))}
             {users.length > 10 && (
-              <div className="text-muted-foreground text-xs rounded-full bg-muted w-5 h-5 flex items-center justify-center">
+              <div className="flex h-5 w-5 items-center justify-center rounded-full bg-muted text-xs text-muted-foreground">
                 +{users.length - 10}
               </div>
             )}
@@ -64,15 +64,15 @@ export default function RelaySimpleInfo({
 export function RelaySimpleInfoSkeleton({ className }: { className?: string }) {
   return (
     <div className={cn('space-y-1', className)}>
-      <div className="flex items-center gap-2 w-full">
+      <div className="flex w-full items-center gap-2">
         <Skeleton className="h-9 w-9 rounded-full" />
-        <div className="flex-1 w-0 space-y-1">
-          <Skeleton className="w-40 h-5" />
-          <Skeleton className="w-20 h-4" />
+        <div className="w-0 flex-1 space-y-1">
+          <Skeleton className="h-5 w-40" />
+          <Skeleton className="h-4 w-20" />
         </div>
       </div>
-      <Skeleton className="w-full h-4" />
-      <Skeleton className="w-2/3 h-4" />
+      <Skeleton className="h-4 w-full" />
+      <Skeleton className="h-4 w-2/3" />
     </div>
   )
 }

@@ -38,9 +38,9 @@ export default function NoteInteractions({ event }: { event: Event }) {
   return (
     <>
       <div className="flex items-center justify-between">
-        <ScrollArea className="flex-1 w-0">
+        <ScrollArea className="w-0 flex-1">
           <Tabs selectedTab={type} onTabChange={setType} />
-          <ScrollBar orientation="horizontal" className="opacity-0 pointer-events-none" />
+          <ScrollBar orientation="horizontal" className="pointer-events-none opacity-0" />
         </ScrollArea>
         <Separator orientation="vertical" className="h-6" />
         <TrustScoreFilter filterId={SPECIAL_TRUST_SCORE_FILTER_ID.INTERACTIONS} />

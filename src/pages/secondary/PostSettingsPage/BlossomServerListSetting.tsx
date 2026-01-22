@@ -109,12 +109,12 @@ export default function BlossomServerListSetting() {
     <div className="space-y-2">
       <div className="text-sm font-medium">{t('Blossom server URLs')}</div>
       {serverUrls.length === 0 && (
-        <div className="flex flex-col gap-1 text-sm border rounded-lg p-2 bg-muted text-muted-foreground">
-          <div className="font-medium flex gap-2 items-center">
+        <div className="flex flex-col gap-1 rounded-lg border bg-muted p-2 text-sm text-muted-foreground">
+          <div className="flex items-center gap-2 font-medium">
             <AlertCircle className="size-4" />
             {t('You need to add at least one media server in order to upload media files.')}
           </div>
-          <Separator className="bg-muted-foreground my-2" />
+          <Separator className="my-2 bg-muted-foreground" />
           <div className="font-medium">{t('Recommended blossom servers')}:</div>
           <div className="flex flex-col">
             {RECOMMENDED_BLOSSOM_SERVERS.map((recommendedUrl) => (
@@ -123,7 +123,7 @@ export default function BlossomServerListSetting() {
                 key={recommendedUrl}
                 onClick={() => addBlossomUrl(recommendedUrl)}
                 disabled={removingIndex >= 0 || adding || movingIndex >= 0}
-                className="w-fit p-0 text-muted-foreground hover:text-foreground h-fit"
+                className="h-fit w-fit p-0 text-muted-foreground hover:text-foreground"
               >
                 {recommendedUrl}
               </Button>
@@ -135,7 +135,7 @@ export default function BlossomServerListSetting() {
         <div
           key={url}
           className={cn(
-            'flex items-center justify-between gap-2 pl-3 pr-1 py-1 border rounded-lg',
+            'flex items-center justify-between gap-2 rounded-lg border py-1 pl-3 pr-1',
             idx === 0 && 'border-primary'
           )}
         >

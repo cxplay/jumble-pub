@@ -18,7 +18,7 @@ export function AccountInfo() {
 
   if (!pubkey) {
     return (
-      <div className="w-full flex justify-center">
+      <div className="flex w-full justify-center">
         <Button onClick={() => startLogin()}>{t('Login')}</Button>
       </div>
     )
@@ -43,7 +43,7 @@ export function AccountInfo() {
             type={showApiKey ? 'text' : 'password'}
             value={account?.api_key ?? ''}
             readOnly
-            className="font-mono flex-1 max-w-fit"
+            className="max-w-fit flex-1 font-mono"
           />
           <Button variant="outline" onClick={() => setShowApiKey(!showApiKey)}>
             {showApiKey ? <Eye /> : <EyeOff />}
@@ -62,7 +62,7 @@ export function AccountInfo() {
           </Button>
           <RegenerateApiKeyButton />
         </div>
-        <p className="text-sm text-muted-foreground select-text">
+        <p className="select-text text-sm text-muted-foreground">
           {t('jumbleTranslateApiKeyDescription', {
             serviceUrl: new URL('/v1/translation', JUMBLE_API_BASE_URL).toString()
           })}

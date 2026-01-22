@@ -82,18 +82,18 @@ function UserItem({ pubkey }: { pubkey: string }) {
   const [switching, setSwitching] = useState(false)
 
   return (
-    <div className="flex gap-2 items-start">
+    <div className="flex items-start gap-2">
       <UserAvatar userId={pubkey} className="shrink-0" />
       <div className="w-full overflow-hidden">
         <Username
           userId={pubkey}
-          className="font-semibold truncate max-w-full w-fit"
+          className="w-fit max-w-full truncate font-semibold"
           skeletonClassName="h-4"
         />
         <Nip05 pubkey={pubkey} />
-        <div className="truncate text-muted-foreground text-sm">{profile?.about}</div>
+        <div className="truncate text-sm text-muted-foreground">{profile?.about}</div>
       </div>
-      <div className="flex gap-2 items-center">
+      <div className="flex items-center gap-2">
         {switching ? (
           <Button disabled variant="ghost" size="icon">
             <Loader className="animate-spin" />

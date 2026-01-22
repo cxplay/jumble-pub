@@ -124,16 +124,16 @@ export default function Likes({ stuff }: { stuff: Event | string }) {
   }
 
   return (
-    <ScrollArea className="pb-2 mb-1">
+    <ScrollArea className="mb-1 pb-2">
       <div className="flex gap-1">
         {likes.map(({ key, emoji, pubkeys }) => (
           <div
             key={key}
             className={cn(
-              'flex h-7 w-fit gap-2 px-2 rounded-full items-center border shrink-0 select-none relative overflow-hidden transition-all duration-200',
+              'relative flex h-7 w-fit shrink-0 select-none items-center gap-2 overflow-hidden rounded-full border px-2 transition-all duration-200',
               pubkey && pubkeys.has(pubkey)
-                ? 'border-primary bg-primary/20 text-foreground cursor-not-allowed'
-                : 'bg-muted/80 text-muted-foreground cursor-pointer hover:bg-primary/40 hover:border-primary hover:text-foreground',
+                ? 'cursor-not-allowed border-primary bg-primary/20 text-foreground'
+                : 'cursor-pointer bg-muted/80 text-muted-foreground hover:border-primary hover:bg-primary/40 hover:text-foreground',
               (isLongPressing === key || isCompleted === key) && 'border-primary bg-primary/20'
             )}
             onClick={(e) => e.stopPropagation()}
@@ -146,7 +146,7 @@ export default function Likes({ stuff }: { stuff: Event | string }) {
             onTouchCancel={handleMouseLeave}
           >
             {(isLongPressing === key || isCompleted === key) && (
-              <div className="absolute inset-0 rounded-full overflow-hidden">
+              <div className="absolute inset-0 overflow-hidden rounded-full">
                 <div
                   className="h-full bg-gradient-to-r from-primary/40 via-primary/60 to-primary/80"
                   style={{
@@ -159,7 +159,7 @@ export default function Likes({ stuff }: { stuff: Event | string }) {
             )}
             <div className="relative z-10 flex items-center gap-2">
               {liking === key ? (
-                <Loader className="animate-spin size-4" />
+                <Loader className="size-4 animate-spin" />
               ) : (
                 <div
                   style={{

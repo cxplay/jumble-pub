@@ -29,18 +29,18 @@ export function EmbeddedNote({ noteId, className }: { noteId: string; className?
 function EmbeddedNoteSkeleton({ className }: { className?: string }) {
   return (
     <div
-      className={cn('text-left p-2 sm:p-3 border rounded-xl bg-card', className)}
+      className={cn('rounded-xl border bg-card p-2 text-left sm:p-3', className)}
       onClick={(e) => e.stopPropagation()}
     >
       <div className="flex items-center space-x-2">
-        <Skeleton className="w-9 h-9 rounded-full" />
+        <Skeleton className="h-9 w-9 rounded-full" />
         <div>
-          <Skeleton className="h-3 w-16 my-1" />
-          <Skeleton className="h-3 w-16 my-1" />
+          <Skeleton className="my-1 h-3 w-16" />
+          <Skeleton className="my-1 h-3 w-16" />
         </div>
       </div>
-      <Skeleton className="w-full h-4 my-1 mt-2" />
-      <Skeleton className="w-2/3 h-4 my-1" />
+      <Skeleton className="my-1 mt-2 h-4 w-full" />
+      <Skeleton className="my-1 h-4 w-2/3" />
     </div>
   )
 }
@@ -49,10 +49,10 @@ function EmbeddedNoteNotFound({ noteId, className }: { noteId: string; className
   const { t } = useTranslation()
 
   return (
-    <div className={cn('text-left p-2 sm:p-3 border rounded-xl bg-card', className)}>
-      <div className="flex flex-col items-center text-muted-foreground font-medium gap-2">
+    <div className={cn('rounded-xl border bg-card p-2 text-left sm:p-3', className)}>
+      <div className="flex flex-col items-center gap-2 font-medium text-muted-foreground">
         <div>{t('Sorry! The note cannot be found 😔')}</div>
-        <ClientSelect className="w-full mt-2" originalNoteId={noteId} />
+        <ClientSelect className="mt-2 w-full" originalNoteId={noteId} />
       </div>
     </div>
   )

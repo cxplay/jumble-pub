@@ -23,14 +23,14 @@ export default function LiveEvent({ event, className }: { event: Event; classNam
       <Badge variant="secondary">{metadata.status}</Badge>
     ))
 
-  const titleComponent = <div className="text-xl font-semibold line-clamp-1">{metadata.title}</div>
+  const titleComponent = <div className="line-clamp-1 text-xl font-semibold">{metadata.title}</div>
 
   const summaryComponent = metadata.summary && (
-    <div className="text-sm text-muted-foreground line-clamp-4">{metadata.summary}</div>
+    <div className="line-clamp-4 text-sm text-muted-foreground">{metadata.summary}</div>
   )
 
   const tagsComponent = metadata.tags.length > 0 && (
-    <div className="flex gap-1 flex-wrap">
+    <div className="flex flex-wrap gap-1">
       {metadata.tags.map((tag) => (
         <Badge key={tag} variant="secondary">
           {tag}
@@ -45,7 +45,7 @@ export default function LiveEvent({ event, className }: { event: Event; classNam
         {metadata.image && autoLoadMedia && (
           <Image
             image={{ url: metadata.image, pubkey: event.pubkey }}
-            className="w-full aspect-video"
+            className="aspect-video w-full"
             hideIfError
           />
         )}
@@ -54,7 +54,7 @@ export default function LiveEvent({ event, className }: { event: Event; classNam
           {liveStatusComponent}
           {summaryComponent}
           {tagsComponent}
-          <ClientSelect className="w-full mt-2" event={event} />
+          <ClientSelect className="mt-2 w-full" event={event} />
         </div>
       </div>
     )
@@ -66,18 +66,18 @@ export default function LiveEvent({ event, className }: { event: Event; classNam
         {metadata.image && autoLoadMedia && (
           <Image
             image={{ url: metadata.image, pubkey: event.pubkey }}
-            className="aspect-[4/3] xl:aspect-video bg-foreground h-44"
+            className="aspect-[4/3] h-44 bg-foreground xl:aspect-video"
             hideIfError
           />
         )}
-        <div className="flex-1 w-0 space-y-1">
+        <div className="w-0 flex-1 space-y-1">
           {titleComponent}
           {liveStatusComponent}
           {summaryComponent}
           {tagsComponent}
         </div>
       </div>
-      <ClientSelect className="w-full mt-2" event={event} />
+      <ClientSelect className="mt-2 w-full" event={event} />
     </div>
   )
 }

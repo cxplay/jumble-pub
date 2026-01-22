@@ -53,7 +53,7 @@ export default function PostOptions({
             disabled={posting}
           />
         </div>
-        <div className="text-muted-foreground text-xs">
+        <div className="text-xs text-muted-foreground">
           {t('Show others this was sent via Jumble')}
         </div>
       </div>

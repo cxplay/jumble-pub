@@ -186,17 +186,17 @@ export default function NostrConnectLogin({
 
   return (
     <div className="relative flex flex-col gap-4">
-      <div ref={qrContainerRef} className="flex flex-col items-center w-full space-y-3 mb-3">
+      <div ref={qrContainerRef} className="mb-3 flex w-full flex-col items-center space-y-3">
         <a href={loginDetails.connectionString} aria-label="Open with Nostr signer app">
           <QrCode size={qrCodeSize} value={loginDetails.connectionString} />
         </a>
         {nostrConnectionErrMsg && (
-          <div className="text-xs text-destructive text-center pt-1">{nostrConnectionErrMsg}</div>
+          <div className="pt-1 text-center text-xs text-destructive">{nostrConnectionErrMsg}</div>
         )}
       </div>
-      <div className="flex justify-center w-full mb-3">
+      <div className="mb-3 flex w-full justify-center">
         <div
-          className="flex items-center gap-2 text-sm text-muted-foreground bg-muted px-3 py-2 rounded-full cursor-pointer transition-all hover:bg-muted/80"
+          className="flex cursor-pointer items-center gap-2 rounded-full bg-muted px-3 py-2 text-sm text-muted-foreground transition-all hover:bg-muted/80"
           style={{
             width: qrCodeSize > 0 ? `${Math.max(150, Math.min(qrCodeSize, 320))}px` : 'auto'
           }}
@@ -204,14 +204,14 @@ export default function NostrConnectLogin({
           role="button"
           tabIndex={0}
         >
-          <div className="flex-grow min-w-0 truncate select-none">
+          <div className="min-w-0 flex-grow select-none truncate">
             {loginDetails.connectionString}
           </div>
           <div className="flex-shrink-0">{copied ? <Check size={14} /> : <Copy size={14} />}</div>
         </div>
       </div>
 
-      <div className="flex items-center w-full my-4">
+      <div className="my-4 flex w-full items-center">
         <div className="flex-grow border-t border-border/40"></div>
         <span className="px-3 text-xs text-muted-foreground">OR</span>
         <div className="flex-grow border-t border-border/40"></div>
@@ -219,7 +219,7 @@ export default function NostrConnectLogin({
 
       <div className="w-full space-y-1">
         <div className="flex items-start space-x-2">
-          <div className="flex-1 relative">
+          <div className="relative flex-1">
             <Input
               placeholder="bunker://..."
               value={bunkerInput}
@@ -229,7 +229,7 @@ export default function NostrConnectLogin({
             <Button
               size="sm"
               variant="ghost"
-              className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 p-0"
+              className="absolute right-1 top-1/2 h-8 w-8 -translate-y-1/2 p-0"
               onClick={startQrScan}
               disabled={pending}
             >
@@ -237,21 +237,21 @@ export default function NostrConnectLogin({
             </Button>
           </div>
           <Button onClick={() => handleLogin()} disabled={pending}>
-            <Loader className={pending ? 'animate-spin mr-2' : 'hidden'} />
+            <Loader className={pending ? 'mr-2 animate-spin' : 'hidden'} />
             {t('Login')}
           </Button>
         </div>
 
-        {errMsg && <div className="text-xs text-destructive pl-3 pt-1">{errMsg}</div>}
+        {errMsg && <div className="pl-3 pt-1 text-xs text-destructive">{errMsg}</div>}
       </div>
       <Button variant="secondary" onClick={back} className="w-full">
         {t('Back')}
       </Button>
 
-      <div className={cn('w-full h-full flex justify-center', isScanning ? '' : 'hidden')}>
+      <div className={cn('flex h-full w-full justify-center', isScanning ? '' : 'hidden')}>
         <video
           ref={videoRef}
-          className="absolute inset-0 w-full h-full bg-background"
+          className="absolute inset-0 h-full w-full bg-background"
           autoPlay
           playsInline
           muted
@@ -259,7 +259,7 @@ export default function NostrConnectLogin({
         <Button
           variant="secondary"
           size="sm"
-          className="absolute top-2 right-2"
+          className="absolute right-2 top-2"
           onClick={stopQrScan}
         >
           Cancel

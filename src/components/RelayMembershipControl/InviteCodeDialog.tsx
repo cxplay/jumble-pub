@@ -97,7 +97,7 @@ export default function InviteCodeDialog({
       </p>
     </div>
   ) : (
-    <div className="text-center py-8 text-muted-foreground">
+    <div className="py-8 text-center text-muted-foreground">
       {t('No invite code available from this relay.')}
     </div>
   )

@@ -30,7 +30,7 @@ const Popover = ({
         createPortal(
           <div
             ref={backdropRef}
-            className="fixed inset-0 z-40 pointer-events-auto"
+            className="pointer-events-auto fixed inset-0 z-40"
             onClick={(e) => {
               e.stopPropagation()
               handleOpenChange(false)

@@ -56,8 +56,8 @@ export function NoteCardLoadingSkeleton({ className }: { className?: string }) {
   return (
     <div className={cn('px-4 py-3', className)}>
       <div className="flex items-center space-x-2">
-        <Skeleton className="w-10 h-10 rounded-full" />
-        <div className={`flex-1 w-0`}>
+        <Skeleton className="h-10 w-10 rounded-full" />
+        <div className={`w-0 flex-1`}>
           <div className="py-1">
             <Skeleton className="h-4 w-16" />
           </div>
@@ -68,10 +68,10 @@ export function NoteCardLoadingSkeleton({ className }: { className?: string }) {
       </div>
       <div className="pt-2">
         <div className="my-1">
-          <Skeleton className="w-full h-4 my-1 mt-2" />
+          <Skeleton className="my-1 mt-2 h-4 w-full" />
         </div>
         <div className="my-1">
-          <Skeleton className="w-2/3 h-4 my-1" />
+          <Skeleton className="my-1 h-4 w-2/3" />
         </div>
       </div>
     </div>

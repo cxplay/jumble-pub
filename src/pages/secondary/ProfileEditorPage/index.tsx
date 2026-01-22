@@ -132,15 +132,15 @@ const ProfileEditorPage = forwardRef(({ index }: { index?: number }, ref) => {
 
   return (
     <SecondaryPageLayout ref={ref} index={index} title={profile.username} controls={controls}>
-      <div className="relative bg-cover bg-center mb-2">
+      <div className="relative mb-2 bg-cover bg-center">
         <Uploader
           onUploadSuccess={onBannerUploadSuccess}
           onUploadStart={() => setUploadingBanner(true)}
           onUploadEnd={() => setUploadingBanner(false)}
-          className="w-full relative cursor-pointer"
+          className="relative w-full cursor-pointer"
         >
-          <ProfileBanner banner={banner} pubkey={account.pubkey} className="w-full aspect-[3/1]" />
-          <div className="absolute top-0 bg-muted/30 w-full h-full flex flex-col justify-center items-center">
+          <ProfileBanner banner={banner} pubkey={account.pubkey} className="aspect-[3/1] w-full" />
+          <div className="absolute top-0 flex h-full w-full flex-col items-center justify-center bg-muted/30">
             {uploadingBanner ? <Loader size={36} className="animate-spin" /> : <Upload size={36} />}
           </div>
         </Uploader>
@@ -148,20 +148,20 @@ const ProfileEditorPage = forwardRef(({ index }: { index?: number }, ref) => {
           onUploadSuccess={onAvatarUploadSuccess}
           onUploadStart={() => setUploadingAvatar(true)}
           onUploadEnd={() => setUploadingAvatar(false)}
-          className="w-24 h-24 absolute bottom-0 left-4 translate-y-1/2 border-4 border-background cursor-pointer rounded-full"
+          className="absolute bottom-0 left-4 h-24 w-24 translate-y-1/2 cursor-pointer rounded-full border-4 border-background"
         >
-          <Avatar className="w-full h-full">
+          <Avatar className="h-full w-full">
             <AvatarImage src={avatar} className="object-cover object-center" />
             <AvatarFallback>
               <img src={defaultImage} />
             </AvatarFallback>
           </Avatar>
-          <div className="absolute top-0 bg-muted/30 w-full h-full rounded-full flex flex-col justify-center items-center">
+          <div className="absolute top-0 flex h-full w-full flex-col items-center justify-center rounded-full bg-muted/30">
             {uploadingAvatar ? <Loader className="animate-spin" /> : <Upload />}
           </div>
         </Uploader>
       </div>
-      <div className="pt-14 px-4 flex flex-col gap-4">
+      <div className="flex flex-col gap-4 px-4 pt-14">
         <Item>
           <Label htmlFor="profile-username-input">{t('Display Name')}</Label>
           <Input
@@ -208,7 +208,7 @@ const ProfileEditorPage = forwardRef(({ index }: { index?: number }, ref) => {
             }}
             className={nip05Error ? 'border-destructive' : ''}
           />
-          {nip05Error && <div className="text-xs text-destructive pl-3">{nip05Error}</div>}
+          {nip05Error && <div className="pl-3 text-xs text-destructive">{nip05Error}</div>}
         </Item>
         <Item>
           <Label htmlFor="profile-lightning-address-input">
@@ -225,7 +225,7 @@ const ProfileEditorPage = forwardRef(({ index }: { index?: number }, ref) => {
             className={lightningAddressError ? 'border-destructive' : ''}
           />
           {lightningAddressError && (
-            <div className="text-xs text-destructive pl-3">{lightningAddressError}</div>
+            <div className="pl-3 text-xs text-destructive">{lightningAddressError}</div>
           )}
         </Item>
       </div>

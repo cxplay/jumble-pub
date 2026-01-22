@@ -24,9 +24,9 @@ export default RelayPage
 
 function RelayPageTitlebar({ url }: { url?: string }) {
   return (
-    <div className="flex items-center gap-2 px-3 h-full">
+    <div className="flex h-full items-center gap-2 px-3">
       <Server />
-      <div className="text-lg font-semibold truncate">{simplifyUrl(url ?? '')}</div>
+      <div className="truncate text-lg font-semibold">{simplifyUrl(url ?? '')}</div>
     </div>
   )
 }
