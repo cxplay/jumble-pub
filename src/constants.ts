@@ -68,6 +68,7 @@ export const ApplicationDataKey = {
 }
 
 export const BIG_RELAY_URLS = [
+  'wss://relay.nostr.moe',
   'wss://relay.damus.io/',
   'wss://nos.lol/',
   'wss://relay.primal.net/',
@@ -75,9 +76,12 @@ export const BIG_RELAY_URLS = [
 ]
 
 export const SEARCHABLE_RELAY_URLS = [
-  'wss://search.nos.today/',
-  'wss://relay.ditto.pub/',
-  'wss://relay.nostr.band/'
+  // 'wss://search.nos.today/',
+  // 'wss://relay.ditto.pub/',
+  // 'wss://relay.nostr.band/',
+  // 'wss://nostr.wine',
+  'wss://relay.nostr.moe',
+  'wss://realy.cxplay.org'
 ]
 
 export const TRENDING_NOTES_RELAY_URLS = ['wss://trending.relays.land/']
