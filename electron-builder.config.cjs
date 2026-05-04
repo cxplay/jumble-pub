@@ -4,8 +4,8 @@ const hasAppleNotarizeCreds = !!process.env.APPLE_ID
 const hasMacSigningCert = !!process.env.CSC_LINK || hasAppleNotarizeCreds
 
 module.exports = {
-  appId: 'com.codytseng.jumble',
-  productName: 'Jumble',
+  appId: 'moe.nostr',
+  productName: 'Nostr!moe',
   copyright: 'Copyright © ${author}',
   directories: {
     output: 'release/${version}',
@@ -13,8 +13,8 @@ module.exports = {
   },
   publish: {
     provider: 'github',
-    owner: 'CodyTseng',
-    repo: 'jumble',
+    owner: 'cxplay',
+    repo: 'jumble-pub',
     releaseType: 'release'
   },
   files: [
