@@ -311,13 +311,13 @@ export const PRIMARY_COLORS = {
     name: 'Default',
     light: {
       primary: '338 100% 74%',
-      'primary-hover': '259 43% 65%',
+      'primary-hover': '338 100% 83%',
       'primary-foreground': '0 0% 98%',
       ring: '338 100% 74%'
     },
     dark: {
       primary: '338 100% 74%',
-      'primary-hover': '259 43% 65%',
+      'primary-hover': '338 100% 83%',
       'primary-foreground': '240 5.9% 10%',
       ring: '338 100% 74%'
     }
