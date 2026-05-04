@@ -7,7 +7,7 @@ import { Lightbulb, Monitor, X } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-const DOWNLOAD_URL = 'https://github.com/CodyTseng/jumble/releases/latest'
+const DOWNLOAD_URL = 'https://github.com/cxplay/jumble-pub/releases/latest'
 
 export default function DesktopAppTip({ collapse }: { collapse: boolean }) {
   const { t } = useTranslation()

@@ -71,7 +71,7 @@ const clients: Record<string, { name: string; getUrl: (id: string) => string }> 
   },
   njump: {
     name: 'Njump',
-    getUrl: (id: string) => `https://njump.me/${id}`
+    getUrl: (id: string) => `https://njump.to/${id}`
   }
 }
 

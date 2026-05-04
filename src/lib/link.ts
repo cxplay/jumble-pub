@@ -9,7 +9,7 @@ export const toNote = (eventOrId: Event | string) => {
   return `/notes/${nevent}`
 }
 export const toJumbleNote = (eventOrId: Event | string) => {
-  return `https://jumble.social${toNote(eventOrId)}`
+  return `https://nostr.moe${toNote(eventOrId)}`
 }
 export const toNoteList = ({
   hashtag,
