@@ -829,7 +829,12 @@ class IndexedDbService {
       const transaction = this.db.transaction(StoreNames.DM_MESSAGES, 'readwrite')
       const store = transaction.objectStore(StoreNames.DM_MESSAGES)
 
-      const putRequest = store.put(message)
+      // Drop legacy preview snapshots whenever a message is saved. Only the
+      // reference is persisted; the preview reads the original message live.
+      const putRequest = store.put({
+        ...message,
+        ...(message.replyTo ? { replyTo: { id: message.replyTo.id } } : {})
+      })
       putRequest.onsuccess = () => {
         transaction.commit()
         resolve()

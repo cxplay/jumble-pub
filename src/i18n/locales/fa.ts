@@ -1163,6 +1163,9 @@ export default {
     'Link previews': 'پیش‌نمایش لینک‌ها',
     'Show previews for links in notes': 'نمایش پیش‌نمایش لینک‌ها در یادداشت‌ها',
     'Avatar image must be {{size}} MB or smaller':
-      'حجم تصویر نمایه باید {{size}} مگابایت یا کمتر باشد'
+      'حجم تصویر نمایه باید {{size}} مگابایت یا کمتر باشد',
+    'Quoted message not loaded yet': 'پیام نقل‌شده هنوز بارگیری نشده است',
+    Video: 'ویدیو',
+    Audio: 'صدا'
   }
 }

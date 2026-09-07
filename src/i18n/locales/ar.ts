@@ -1148,6 +1148,9 @@ export default {
     'Link previews': 'معاينات الروابط',
     'Show previews for links in notes': 'عرض معاينات الروابط في الملاحظات',
     'Avatar image must be {{size}} MB or smaller':
-      'يجب ألا يتجاوز حجم صورة الملف الشخصي {{size}} ميغابايت'
+      'يجب ألا يتجاوز حجم صورة الملف الشخصي {{size}} ميغابايت',
+    'Quoted message not loaded yet': 'لم يتم تحميل الرسالة المقتبسة بعد',
+    Video: 'فيديو',
+    Audio: 'صوت'
   }
 }

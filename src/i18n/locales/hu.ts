@@ -1166,6 +1166,9 @@ export default {
     'Link previews': 'Hivatkozás-előnézetek',
     'Show previews for links in notes': 'Hivatkozások előnézetének megjelenítése a jegyzetekben',
     'Avatar image must be {{size}} MB or smaller':
-      'Az avatárkép legfeljebb {{size}} MB méretű lehet'
+      'Az avatárkép legfeljebb {{size}} MB méretű lehet',
+    'Quoted message not loaded yet': 'Az idézett üzenet még nem töltődött be',
+    Video: 'Videó',
+    Audio: 'Hang'
   }
 }

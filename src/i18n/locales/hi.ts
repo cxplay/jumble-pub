@@ -1161,6 +1161,9 @@ export default {
     'Copy link': 'लिंक कॉपी करें',
     'Link previews': 'लिंक पूर्वावलोकन',
     'Show previews for links in notes': 'नोट्स में लिंक के पूर्वावलोकन दिखाएँ',
-    'Avatar image must be {{size}} MB or smaller': 'अवतार इमेज {{size}} MB या उससे छोटी होनी चाहिए'
+    'Avatar image must be {{size}} MB or smaller': 'अवतार इमेज {{size}} MB या उससे छोटी होनी चाहिए',
+    'Quoted message not loaded yet': 'उद्धृत संदेश अभी लोड नहीं हुआ है',
+    Video: 'वीडियो',
+    Audio: 'ऑडियो'
   }
 }

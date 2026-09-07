@@ -1165,6 +1165,9 @@ export default {
     'Copy link': 'Bağlantıyı kopyala',
     'Link previews': 'Bağlantı önizlemeleri',
     'Show previews for links in notes': 'Notlardaki bağlantıların önizlemelerini göster',
-    'Avatar image must be {{size}} MB or smaller': 'Avatar görseli en fazla {{size}} MB olmalıdır'
+    'Avatar image must be {{size}} MB or smaller': 'Avatar görseli en fazla {{size}} MB olmalıdır',
+    'Quoted message not loaded yet': 'Alıntılanan mesaj henüz yüklenmedi',
+    Video: 'Video',
+    Audio: 'Ses'
   }
 }

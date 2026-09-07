@@ -1148,6 +1148,9 @@ export default {
     'Copy link': '링크 복사',
     'Link previews': '링크 미리보기',
     'Show previews for links in notes': '노트의 링크 미리보기 표시',
-    'Avatar image must be {{size}} MB or smaller': '아바타 이미지는 {{size}}MB 이하여야 합니다'
+    'Avatar image must be {{size}} MB or smaller': '아바타 이미지는 {{size}}MB 이하여야 합니다',
+    'Quoted message not loaded yet': '인용된 메시지가 아직 로드되지 않았습니다',
+    Video: '동영상',
+    Audio: '오디오'
   }
 }

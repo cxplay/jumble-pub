@@ -1169,6 +1169,9 @@ export default {
     'Link previews': 'Предпросмотр ссылок',
     'Show previews for links in notes': 'Показывать предпросмотр ссылок в заметках',
     'Avatar image must be {{size}} MB or smaller':
-      'Размер изображения аватара не должен превышать {{size}} МБ'
+      'Размер изображения аватара не должен превышать {{size}} МБ',
+    'Quoted message not loaded yet': 'Цитируемое сообщение ещё не загружено',
+    Video: 'Видео',
+    Audio: 'Аудио'
   }
 }

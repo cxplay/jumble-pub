@@ -1144,6 +1144,9 @@ export default {
     'Copy link': 'คัดลอกลิงก์',
     'Link previews': 'ตัวอย่างลิงก์',
     'Show previews for links in notes': 'แสดงตัวอย่างลิงก์ในโน้ต',
-    'Avatar image must be {{size}} MB or smaller': 'รูปโปรไฟล์ต้องมีขนาดไม่เกิน {{size}} MB'
+    'Avatar image must be {{size}} MB or smaller': 'รูปโปรไฟล์ต้องมีขนาดไม่เกิน {{size}} MB',
+    'Quoted message not loaded yet': 'ยังไม่ได้โหลดข้อความที่อ้างอิง',
+    Video: 'วิดีโอ',
+    Audio: 'เสียง'
   }
 }

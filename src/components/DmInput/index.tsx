@@ -1,4 +1,4 @@
-import ContentPreviewContent from '@/components/ContentPreview/Content'
+import DmReplyPreview from '@/components/DmReplyPreview'
 import Emoji from '@/components/Emoji'
 import FollowingBadge from '@/components/FollowingBadge'
 import ExpressionPickerDialog from '@/components/ExpressionPickerDialog'
@@ -8,7 +8,6 @@ import { SimpleUsername } from '@/components/Username'
 import { JUMBLE_BLOSSOM_SERVER } from '@/constants'
 import { getMediaMeta } from '@/lib/media-meta'
 import { userIdToPubkey } from '@/lib/pubkey'
-import { getEmojiInfosFromEmojiTags } from '@/lib/tag'
 import { showUploadErrorToast } from '@/lib/upload-error-toast'
 import { cn } from '@/lib/utils'
 import { useNostr } from '@/providers/NostrProvider'
@@ -155,7 +154,7 @@ export default function DmInput({
 }: {
   recipientPubkey: string
   disabled?: boolean
-  replyTo?: { id: string; content: string; senderPubkey: string; tags?: string[][] } | null
+  replyTo?: { id: string } | null
   onCancelReply?: () => void
   onReplyClick?: () => void
   onSent?: () => void
@@ -878,15 +877,10 @@ export default function DmInput({
                 onClick={onReplyClick}
                 className="before:bg-primary relative min-w-0 flex-1 cursor-pointer ps-2 text-start before:absolute before:inset-y-0.5 before:start-0 before:w-0.5 before:rounded-full"
               >
-                <SimpleUsername
-                  userId={replyTo.senderPubkey}
-                  className="text-primary text-xs font-medium"
-                  withoutSkeleton
-                />
-                <ContentPreviewContent
-                  content={replyTo.content || '...'}
-                  className="text-muted-foreground block truncate text-xs"
-                  emojiInfos={getEmojiInfosFromEmojiTags(replyTo.tags)}
+                <DmReplyPreview
+                  id={replyTo.id}
+                  participantsKey={dmService.getParticipantsKey(pubkey ?? '', recipientPubkey)}
+                  composing
                 />
               </button>
               <button

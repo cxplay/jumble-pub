@@ -1173,6 +1173,9 @@ export default {
     'Link previews': 'Podglądy linków',
     'Show previews for links in notes': 'Pokazuj podglądy linków w notatkach',
     'Avatar image must be {{size}} MB or smaller':
-      'Obraz awatara nie może być większy niż {{size}} MB'
+      'Obraz awatara nie może być większy niż {{size}} MB',
+    'Quoted message not loaded yet': 'Cytowana wiadomość nie została jeszcze wczytana',
+    Video: 'Wideo',
+    Audio: 'Audio'
   }
 }

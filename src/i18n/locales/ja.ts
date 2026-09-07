@@ -1162,6 +1162,9 @@ export default {
     'Copy link': 'リンクをコピー',
     'Link previews': 'リンクプレビュー',
     'Show previews for links in notes': 'ノート内のリンクのプレビューを表示する',
-    'Avatar image must be {{size}} MB or smaller': 'アバター画像は {{size}} MB 以下にしてください'
+    'Avatar image must be {{size}} MB or smaller': 'アバター画像は {{size}} MB 以下にしてください',
+    'Quoted message not loaded yet': '引用されたメッセージはまだ読み込まれていません',
+    Video: '動画',
+    Audio: '音声'
   }
 }

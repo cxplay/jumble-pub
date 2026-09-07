@@ -1170,6 +1170,9 @@ export default {
     'Link previews': 'Anteprime dei link',
     'Show previews for links in notes': 'Mostra le anteprime dei link nelle note',
     'Avatar image must be {{size}} MB or smaller':
-      'L’immagine dell’avatar deve essere di massimo {{size}} MB'
+      'L’immagine dell’avatar deve essere di massimo {{size}} MB',
+    'Quoted message not loaded yet': 'Il messaggio citato non è ancora stato caricato',
+    Video: 'Video',
+    Audio: 'Audio'
   }
 }

@@ -519,7 +519,7 @@ class DmService {
         createdAt: getDmMessageCreatedAt(rumor),
         originalEvent: rumor,
         decryptedRumor: rumor,
-        ...(replyToId ? { replyTo: { id: replyToId, content: '', senderPubkey: '' } } : {})
+        ...(replyToId ? { replyTo: { id: replyToId } } : {})
       }
 
       await this.saveMessage(message)
@@ -780,7 +780,6 @@ class DmService {
         verified
       )
       if (message) {
-        await this.resolveReplyTo(message)
         await this.saveMessage(message)
         messages.push(message)
 
@@ -818,7 +817,7 @@ class DmService {
     accountPubkey: string,
     recipientPubkey: string,
     content: string,
-    replyTo?: { id: string; content: string; senderPubkey: string },
+    replyTo?: { id: string },
     additionalTags?: string[][]
   ): Promise<TDmMessage> {
     // The reply relay hint is omitted: the rumor (and thus its id) is built before
@@ -883,7 +882,7 @@ class DmService {
     content: string,
     extraTags: string[][],
     kind?: number,
-    replyTo?: { id: string; content: string; senderPubkey: string }
+    replyTo?: { id: string }
   ): Promise<TDmMessage> {
     // Allocate the rumor timestamp synchronously, before any await, so rapid
     // consecutive sends keep their order (see allocateRumorTimestamp).
@@ -910,7 +909,7 @@ class DmService {
       originalEvent: rumor as unknown as Event,
       decryptedRumor: rumor as unknown as Event,
       sendState: 'sending',
-      ...(replyTo ? { replyTo } : {})
+      ...(replyTo ? { replyTo: { id: replyTo.id } } : {})
     }
 
     await this.saveMessage(message)
@@ -1114,9 +1113,6 @@ class DmService {
           )
           if (message) {
             const isReaction = unwrapped.rumor.kind === kinds.Reaction
-            if (!isReaction) {
-              await this.resolveReplyTo(message)
-            }
             await this.saveMessage(message)
 
             if (isReaction) {
@@ -1390,7 +1386,7 @@ class DmService {
       originalEvent: giftWrap,
       decryptedRumor: rumor as unknown as Event,
       verified,
-      ...(replyToId ? { replyTo: { id: replyToId, content: '', senderPubkey: '' } } : {})
+      ...(replyToId ? { replyTo: { id: replyToId } } : {})
     }
   }
 
@@ -1402,23 +1398,34 @@ class DmService {
     return '[File]'
   }
 
-  async resolveReplyTo(message: TDmMessage): Promise<TDmMessage> {
-    if (!message.replyTo || (message.replyTo.content && message.replyTo.senderPubkey)) {
-      return message
-    }
-    const replyMsg = await indexedDb.getDmMessageById(message.replyTo.id)
-    if (replyMsg) {
-      const isFile = replyMsg.decryptedRumor?.kind === ExtendedKind.RUMOR_FILE
-      message.replyTo = {
-        id: replyMsg.id,
-        content: isFile
-          ? this.getFilePreviewContent(replyMsg.decryptedRumor?.tags)
-          : replyMsg.content,
-        senderPubkey: replyMsg.senderPubkey,
-        tags: replyMsg.decryptedRumor?.tags
+  watchReplyTo(
+    id: string,
+    participantsKey: string,
+    listener: (message: TDmMessage | null) => void
+  ): () => void {
+    let disposed = false
+    let request = 0
+    const refresh = async () => {
+      const currentRequest = ++request
+      try {
+        const message = await indexedDb.getDmMessageById(id)
+        if (!disposed && currentRequest === request) {
+          listener(message?.participantsKey === participantsKey ? message : null)
+        }
+      } catch (error) {
+        if (!disposed && currentRequest === request) {
+          console.error('Failed to load DM reply preview:', error)
+          listener(null)
+        }
       }
     }
-    return message
+    // Subscribe before querying so a message arriving during the lookup is not missed.
+    const unsubscribe = this.onDataChanged(refresh)
+    void refresh()
+    return () => {
+      disposed = true
+      unsubscribe()
+    }
   }
 
   private async saveMessage(message: TDmMessage): Promise<void> {

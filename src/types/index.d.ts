@@ -294,9 +294,6 @@ export type TDmMessage = {
   decryptedRumor: Event
   replyTo?: {
     id: string
-    content: string
-    senderPubkey: string
-    tags?: string[][]
   }
   // Sender-identity verification result captured at ingestion time.
   // true      — seal.pubkey matched rumor.pubkey's current Kind 10044 'n' tag

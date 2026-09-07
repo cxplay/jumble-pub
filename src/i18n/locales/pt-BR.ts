@@ -1168,6 +1168,9 @@ export default {
     'Link previews': 'Pré-visualizações de links',
     'Show previews for links in notes': 'Mostrar pré-visualizações de links nas notas',
     'Avatar image must be {{size}} MB or smaller':
-      'A imagem do avatar deve ter no máximo {{size}} MB'
+      'A imagem do avatar deve ter no máximo {{size}} MB',
+    'Quoted message not loaded yet': 'A mensagem citada ainda não foi carregada',
+    Video: 'Vídeo',
+    Audio: 'Áudio'
   }
 }

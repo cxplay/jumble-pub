@@ -1119,6 +1119,9 @@ export default {
     'Copy link': '复制链接',
     'Link previews': '链接预览',
     'Show previews for links in notes': '显示笔记中的链接预览',
-    'Avatar image must be {{size}} MB or smaller': '头像图片不能超过 {{size}} MB'
+    'Avatar image must be {{size}} MB or smaller': '头像图片不能超过 {{size}} MB',
+    'Quoted message not loaded yet': '引用消息尚未加载',
+    Video: '视频',
+    Audio: '音频'
   }
 }

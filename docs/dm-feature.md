@@ -233,14 +233,17 @@ type TDmMessage = {
   decryptedRumor: Event // kind 14 / 15 / 7 rumor after unwrap
   replyTo?: {
     id: string
-    content: string // resolved lazily by resolveReplyTo()
-    senderPubkey: string
-    tags?: string[][] // present for file replies (to recover mime / thumb)
   }
 }
 ```
 
 **Why `participantsKey`, not `conversationKey`?** Messages are deduplicated by rumor `id`, which is symmetric — the same message has the same hash from both endpoints. If we keyed the index by `accountPubkey:otherPubkey`, two accounts on the same device DMing each other would overwrite each other's rows and lose messages after an account switch. Sorting both pubkeys makes the key observer-independent.
+
+Reply previews in both message bubbles and the composer query the original message by ID and
+refresh on DM data changes, including live messages, history sync, and imports. A missing original
+shows a placeholder until it arrives. Lookups are restricted to the same `participantsKey`. Legacy
+`replyTo` content/sender/tags snapshots are ignored and stripped on the next write; no migration is
+needed. Preview subscriptions are cleaned up on unmount and discard outdated asynchronous results.
 
 ### `TDmConversation`
 
@@ -330,7 +333,7 @@ getParticipantsKey(a, b): string         // sorted 'min:max' — symmetric, for 
 
 // Sync / multi-device
 importMessages(accountPubkey, rumors): Promise<number>  // bulk-import decrypted rumors (used by import tool)
-resolveReplyTo(message): Promise<TDmMessage>            // lazily fills message.replyTo content/sender
+watchReplyTo(id, participantsKey, listener): () => void // reads the original message and refreshes on data changes
 markSyncRequestProcessed(eventId): void
 
 // Active-conversation tracking (affects unread counting)

@@ -1,4 +1,4 @@
-import ContentPreviewContent from '@/components/ContentPreview/Content'
+import DmReplyPreview from '@/components/DmReplyPreview'
 import {
   EmbeddedHashtag,
   EmbeddedLNInvoice,
@@ -21,7 +21,6 @@ import {
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { Drawer, DrawerContent } from '@/components/ui/drawer'
-import { SimpleUsername } from '@/components/Username'
 import XEmbeddedPost from '@/components/XEmbeddedPost'
 import YoutubeEmbeddedPlayer from '@/components/YoutubeEmbeddedPlayer'
 import { EMOJI_REGEX, ExtendedKind } from '@/constants'
@@ -890,17 +889,7 @@ function MessageBubble({
               className="bg-secondary/50 hover:bg-secondary text-muted-foreground mb-0.5 inline-block max-w-full rounded-lg px-2 py-1 align-bottom text-[11px] transition-colors"
             >
               <div className="before:bg-primary relative line-clamp-2 ps-2 text-start before:absolute before:inset-y-0.5 before:start-0 before:w-0.5 before:rounded-full">
-                {message.replyTo.senderPubkey && (
-                  <SimpleUsername
-                    userId={message.replyTo.senderPubkey}
-                    className="me-1 inline font-bold after:content-[':']"
-                    withoutSkeleton
-                  />
-                )}
-                <ContentPreviewContent
-                  content={message.replyTo.content}
-                  emojiInfos={getEmojiInfosFromEmojiTags(message.replyTo.tags)}
-                />
+                <DmReplyPreview id={message.replyTo.id} participantsKey={message.participantsKey} />
               </div>
             </button>
           )}

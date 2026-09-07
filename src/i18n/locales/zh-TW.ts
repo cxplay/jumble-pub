@@ -1120,6 +1120,9 @@ export default {
     'Copy link': '複製連結',
     'Link previews': '連結預覽',
     'Show previews for links in notes': '顯示貼文中的連結預覽',
-    'Avatar image must be {{size}} MB or smaller': '頭像圖片不得超過 {{size}} MB'
+    'Avatar image must be {{size}} MB or smaller': '頭像圖片不得超過 {{size}} MB',
+    'Quoted message not loaded yet': '引用訊息尚未載入',
+    Video: '影片',
+    Audio: '音訊'
   }
 }
