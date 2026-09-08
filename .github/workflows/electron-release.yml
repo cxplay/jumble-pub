@@ -42,6 +42,18 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Configure community relays
+        env:
+          VITE_COMMUNITY_RELAY_SETS: ${{ vars.VITE_COMMUNITY_RELAY_SETS }}
+          VITE_COMMUNITY_RELAYS: ${{ vars.VITE_COMMUNITY_RELAYS }}
+        run: |
+          if [ -n "$VITE_COMMUNITY_RELAY_SETS" ]; then
+            printf 'VITE_COMMUNITY_RELAY_SETS=%s\n' "$VITE_COMMUNITY_RELAY_SETS" > .env
+          fi
+          if [ -n "$VITE_COMMUNITY_RELAYS" ]; then
+            printf 'VITE_COMMUNITY_RELAYS=%s\n' "$VITE_COMMUNITY_RELAYS" >> .env
+          fi
+
       - name: Build & package Electron app
         env:
           # macOS signing + notarization (only injected on macOS runner)
@@ -101,6 +113,18 @@ jobs:
           pipx install 'git+https://github.com/flatpak/flatpak-builder-tools.git#subdirectory=node'
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
           flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+      - name: Configure community relays
+        env:
+          VITE_COMMUNITY_RELAY_SETS: ${{ vars.VITE_COMMUNITY_RELAY_SETS }}
+          VITE_COMMUNITY_RELAYS: ${{ vars.VITE_COMMUNITY_RELAYS }}
+        run: |
+          if [ -n "$VITE_COMMUNITY_RELAY_SETS" ]; then
+            printf 'VITE_COMMUNITY_RELAY_SETS=%s\n' "$VITE_COMMUNITY_RELAY_SETS" > .env
+          fi
+          if [ -n "$VITE_COMMUNITY_RELAYS" ]; then
+            printf 'VITE_COMMUNITY_RELAYS=%s\n' "$VITE_COMMUNITY_RELAYS" >> .env
+          fi
 
       - name: Generate Flatpak npm sources
         run: npm run flatpak:generate-sources
