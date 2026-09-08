@@ -55,7 +55,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: jumble-${{ matrix.name }}
+          name: nostrmoe-${{ matrix.name }}
           path: |
             release/*/*.dmg
             release/*/*.dmg.blockmap
@@ -113,21 +113,21 @@ jobs:
             --install-deps-from=flathub \
             --repo=flatpak/repo \
             flatpak/build-dir \
-            flatpak/com.codytseng.jumble.yml
+            flatpak/moe.nostr.join.yml
 
       - name: Build Flatpak bundle
         run: |
           mkdir -p release/flatpak
           flatpak build-bundle \
             flatpak/repo \
-            release/flatpak/Jumble-linux-${{ matrix.name }}.flatpak \
-            com.codytseng.jumble \
+            release/flatpak/nostrmoe-linux-${{ matrix.name }}.flatpak \
+            moe.nostr.join \
             --runtime-repo=https://dl.flathub.org/repo/flathub.flatpakrepo
 
       - name: Upload Flatpak artifact
         uses: actions/upload-artifact@v4
         with:
-          name: jumble-flatpak-${{ matrix.name }}
+          name: nostrmoe-flatpak-${{ matrix.name }}
           path: release/flatpak/*.flatpak
           if-no-files-found: error
           retention-days: 7

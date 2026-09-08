@@ -1,7 +1,7 @@
 # Flatpak packaging
 
 Jumble can be built as a Flatpak with the same app id as the Electron package:
-`com.codytseng.jumble`.
+`moe.nostr.join`.
 
 Flatpak builds are architecture-specific. The same manifest can be built for
 `x86_64` and `aarch64`; a Flatpak repository such as Flathub publishes both
@@ -40,13 +40,13 @@ Create a single-file bundle:
 
 ```bash
 mkdir -p release/flatpak
-flatpak build-bundle flatpak/repo release/flatpak/Jumble-linux-$(flatpak --default-arch).flatpak com.codytseng.jumble --runtime-repo=https://dl.flathub.org/repo/flathub.flatpakrepo
+flatpak build-bundle flatpak/repo release/flatpak/nostrmoe-linux-$(flatpak --default-arch).flatpak moe.nostr.join --runtime-repo=https://dl.flathub.org/repo/flathub.flatpakrepo
 ```
 
 Run the app:
 
 ```bash
-flatpak run com.codytseng.jumble
+flatpak run moe.nostr.join
 ```
 
 ## Flathub

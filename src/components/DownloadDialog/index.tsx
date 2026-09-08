@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next'
 
 type LogoComponent = (props: { className?: string }) => JSX.Element
 
-const RELEASES_BASE = 'https://github.com/CodyTseng/jumble/releases/latest'
+const RELEASES_BASE = 'https://github.com/cxplay/jumble-pub/releases/latest'
 
 interface DownloadOption {
   label: string
@@ -26,37 +26,37 @@ const OPTIONS: DownloadOption[] = [
   {
     label: 'macOS',
     format: 'DMG · Apple Silicon',
-    filename: 'Jumble-mac-arm64.dmg',
+    filename: 'nostrmoe-mac-arm64.dmg',
     Icon: MacosLogo
   },
   {
     label: 'Windows',
     format: 'Installer (.exe) · x64',
-    filename: 'Jumble-windows-x64.exe',
+    filename: 'nostrmoe-windows-x64.exe',
     Icon: WindowsLogo
   },
   {
     label: 'Linux x64',
     format: 'AppImage · x86_64',
-    filename: 'Jumble-linux-x86_64.AppImage',
+    filename: 'nostrmoe-linux-x86_64.AppImage',
     Icon: LinuxLogo
   },
   {
     label: 'Linux arm64',
     format: 'AppImage · arm64',
-    filename: 'Jumble-linux-arm64.AppImage',
+    filename: 'nostrmoe-linux-arm64.AppImage',
     Icon: LinuxLogo
   },
   {
     label: 'Linux x64',
     format: 'Debian / Ubuntu (.deb) · amd64',
-    filename: 'Jumble-linux-amd64.deb',
+    filename: 'nostrmoe-linux-amd64.deb',
     Icon: LinuxLogo
   },
   {
     label: 'Linux arm64',
     format: 'Debian / Ubuntu (.deb) · arm64',
-    filename: 'Jumble-linux-arm64.deb',
+    filename: 'nostrmoe-linux-arm64.deb',
     Icon: LinuxLogo
   }
 ]

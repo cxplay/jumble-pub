@@ -1,6 +1,6 @@
 {
   "name": "nostrmoe",
-  "version": "26.9.2",
+  "version": "26.9.5",
   "description": "A Nostr client for nostr.moe powered by Jumble",
   "private": true,
   "type": "module",
@@ -34,7 +34,7 @@
     "electron:build:linux:arm64": "npm run electron:build -- --linux AppImage deb --arm64",
     "electron:preview": "cross-env ELECTRON=true vite build --config vite.electron.config.ts && electron .",
     "flatpak:generate-sources": "cd flatpak && flatpak-node-generator --node-sdk-extension org.freedesktop.Sdk.Extension.node24//25.08 npm ../package-lock.json",
-    "flatpak:build": "npm run flatpak:generate-sources && flatpak-builder --force-clean --user --install-deps-from=flathub --repo=flatpak/repo flatpak/build-dir flatpak/com.codytseng.jumble.yml"
+    "flatpak:build": "npm run flatpak:generate-sources && flatpak-builder --force-clean --user --install-deps-from=flathub --repo=flatpak/repo flatpak/build-dir flatpak/moe.nostr.join.yml"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
