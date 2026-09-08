@@ -1,20 +1,20 @@
 {
-  "name": "jumble",
+  "name": "nostrmoe",
   "version": "26.9.2",
-  "description": "A user-friendly Nostr client for exploring relay feeds",
+  "description": "A Nostr client for nostr.moe powered by Jumble",
   "private": true,
   "type": "module",
   "author": {
-    "name": "codytseng",
-    "email": "codytseng98@gmail.com"
+    "name": "nostrmoe",
+    "email": "april-icy-spotless@duck.com"
   },
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CodyTseng/jumble"
+    "url": "git+https://github.com/cxplay/jumble-pub"
   },
-  "homepage": "https://github.com/CodyTseng/jumble",
-  "desktopName": "com.codytseng.jumble.desktop",
+  "homepage": "https://join.nostr.moe",
+  "desktopName": "moe.nostr.join.desktop",
   "main": "dist-electron/main/index.js",
   "engines": {
     "node": ">=22.13.0"

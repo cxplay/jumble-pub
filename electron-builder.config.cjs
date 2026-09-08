@@ -4,8 +4,8 @@ const hasAppleNotarizeCreds = !!process.env.APPLE_ID
 const hasMacSigningCert = !!process.env.CSC_LINK || hasAppleNotarizeCreds
 
 module.exports = {
-  appId: 'com.codytseng.jumble',
-  productName: 'Jumble',
+  appId: 'moe.nostr.join',
+  productName: 'Nostr!moe',
   copyright: 'Copyright © ${author}',
   directories: {
     output: 'release/${version}',
@@ -13,8 +13,8 @@ module.exports = {
   },
   publish: {
     provider: 'github',
-    owner: 'CodyTseng',
-    repo: 'jumble',
+    owner: 'cxplay',
+    repo: 'jumble-pub',
     releaseType: 'draft'
   },
   files: [
@@ -37,12 +37,12 @@ module.exports = {
       { target: 'dmg', arch: ['arm64'] },
       { target: 'zip', arch: ['arm64'] }
     ],
-    artifactName: 'Jumble-mac-${arch}.${ext}',
+    artifactName: 'nostrmoe-mac-${arch}.${ext}',
     icon: 'public/pwa-512x512.png'
   },
   win: {
     target: [{ target: 'nsis', arch: ['x64'] }],
-    artifactName: 'Jumble-windows-${arch}.${ext}',
+    artifactName: 'nostrmoe-windows-${arch}.${ext}',
     icon: 'public/pwa-512x512.png'
   },
   nsis: {
@@ -52,7 +52,7 @@ module.exports = {
   linux: {
     target: ['AppImage', 'deb'],
     category: 'Network',
-    artifactName: 'Jumble-linux-${arch}.${ext}',
+    artifactName: 'nostrmoe-linux-${arch}.${ext}',
     icon: 'public/pwa-512x512.png'
   }
 }

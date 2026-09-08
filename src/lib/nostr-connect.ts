@@ -3,7 +3,8 @@ import { isElectron } from './platform'
 export function getNostrConnectClientMetadata(): { name: string; url?: string } {
   if (isElectron()) {
     return {
-      name: 'Jumble(Desktop)'
+      name: 'Nostr!moe Desktop',
+      url: 'https://nostr.moe'
     }
   }
 

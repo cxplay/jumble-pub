@@ -1,9 +1,9 @@
 [Desktop Entry]
 Type=Application
-Name=Jumble
+Name=Nostr!moe
 Comment=A user-friendly Nostr client for exploring relay feeds
-Exec=jumble %U
-Icon=com.codytseng.jumble
+Exec=nostrmoe %U
+Icon=moe.nostr.join
 Terminal=false
 Categories=Network;InstantMessaging;
-StartupWMClass=Jumble
+StartupWMClass=Nostr!moe

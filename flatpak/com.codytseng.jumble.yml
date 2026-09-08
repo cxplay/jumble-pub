@@ -1,4 +1,4 @@
-app-id: com.codytseng.jumble
+app-id: moe.nostr.join
 runtime: org.freedesktop.Platform
 runtime-version: '25.08'
 sdk: org.freedesktop.Sdk
@@ -6,7 +6,7 @@ base: org.electronjs.Electron2.BaseApp
 base-version: '25.08'
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.node24
-command: jumble
+command: nostrmoe
 separate-locales: false
 finish-args:
   - --share=ipc
@@ -23,12 +23,12 @@ finish-args:
 build-options:
   append-path: /usr/lib/sdk/node24/bin
 modules:
-  - name: jumble
+  - name: nostrmoe
     buildsystem: simple
     build-options:
       env:
-        XDG_CACHE_HOME: /run/build/jumble/flatpak-node/cache
-        npm_config_cache: /run/build/jumble/flatpak-node/npm-cache
+        XDG_CACHE_HOME: /run/build/nostrmoe/flatpak-node/cache
+        npm_config_cache: /run/build/nostrmoe/flatpak-node/npm-cache
         npm_config_nodedir: /usr/lib/sdk/node24
         npm_config_offline: 'true'
     sources:
@@ -51,9 +51,9 @@ modules:
       - type: file
         path: run.sh
       - type: file
-        path: com.codytseng.jumble.desktop
+        path: moe.nostr.join.desktop
       - type: file
-        path: com.codytseng.jumble.metainfo.xml
+        path: moe.nostr.join.metainfo.xml
       - type: file
         path: ../public/pwa-512x512.png
       - type: file
@@ -64,11 +64,11 @@ modules:
         . flatpak-node/electron-builder-arch-args.sh
         cd main
         npm run electron:build -- $ELECTRON_BUILDER_ARCH_ARGS --linux --dir --publish never
-      - install -d /app/jumble
-      - cp -a main/release/*/linux*unpacked/. /app/jumble/
-      - if [ -x /app/jumble/Jumble ] && [ ! -e /app/jumble/jumble ]; then ln -s Jumble /app/jumble/jumble; fi
-      - install -Dm755 run.sh /app/bin/jumble
-      - install -Dm644 com.codytseng.jumble.desktop /app/share/applications/com.codytseng.jumble.desktop
-      - install -Dm644 com.codytseng.jumble.metainfo.xml /app/share/metainfo/com.codytseng.jumble.metainfo.xml
-      - install -Dm644 pwa-512x512.png /app/share/icons/hicolor/512x512/apps/com.codytseng.jumble.png
-      - install -Dm644 pwa-192x192.png /app/share/icons/hicolor/192x192/apps/com.codytseng.jumble.png
+      - install -d /app/nostrmoe
+      - cp -a main/release/*/linux*unpacked/. /app/nostrmoe/
+      - if [ -x /app/nostrmoe/Nostr!moe ] && [ ! -e /app/nostrmoe/nostrmoe ]; then ln -s Nostr!moe /app/nostrmoe/nostrmoe; fi
+      - install -Dm755 run.sh /app/bin/nostrmoe
+      - install -Dm644 moe.nostr.join.desktop /app/share/applications/moe.nostr.join.desktop
+      - install -Dm644 moe.nostr.join.metainfo.xml /app/share/metainfo/moe.nostr.join.metainfo.xml
+      - install -Dm644 pwa-512x512.png /app/share/icons/hicolor/512x512/apps/moe.nostr.join.png
+      - install -Dm644 pwa-192x192.png /app/share/icons/hicolor/192x192/apps/moe.nostr.join.png
