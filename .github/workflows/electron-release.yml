@@ -47,12 +47,7 @@ jobs:
           VITE_COMMUNITY_RELAY_SETS: ${{ vars.VITE_COMMUNITY_RELAY_SETS }}
           VITE_COMMUNITY_RELAYS: ${{ vars.VITE_COMMUNITY_RELAYS }}
         run: |
-          if [ -n "$VITE_COMMUNITY_RELAY_SETS" ]; then
-            printf 'VITE_COMMUNITY_RELAY_SETS=%s\n' "$VITE_COMMUNITY_RELAY_SETS" > .env
-          fi
-          if [ -n "$VITE_COMMUNITY_RELAYS" ]; then
-            printf 'VITE_COMMUNITY_RELAYS=%s\n' "$VITE_COMMUNITY_RELAYS" >> .env
-          fi
+          node -e "const fs = require('fs'); const lines = []; if (process.env.VITE_COMMUNITY_RELAY_SETS) lines.push('VITE_COMMUNITY_RELAY_SETS=' + process.env.VITE_COMMUNITY_RELAY_SETS); if (process.env.VITE_COMMUNITY_RELAYS) lines.push('VITE_COMMUNITY_RELAYS=' + process.env.VITE_COMMUNITY_RELAYS); if (lines.length) fs.writeFileSync('.env', lines.join('\n') + '\n');"
 
       - name: Build & package Electron app
         env:
@@ -119,12 +114,7 @@ jobs:
           VITE_COMMUNITY_RELAY_SETS: ${{ vars.VITE_COMMUNITY_RELAY_SETS }}
           VITE_COMMUNITY_RELAYS: ${{ vars.VITE_COMMUNITY_RELAYS }}
         run: |
-          if [ -n "$VITE_COMMUNITY_RELAY_SETS" ]; then
-            printf 'VITE_COMMUNITY_RELAY_SETS=%s\n' "$VITE_COMMUNITY_RELAY_SETS" > .env
-          fi
-          if [ -n "$VITE_COMMUNITY_RELAYS" ]; then
-            printf 'VITE_COMMUNITY_RELAYS=%s\n' "$VITE_COMMUNITY_RELAYS" >> .env
-          fi
+          node -e "const fs = require('fs'); const lines = []; if (process.env.VITE_COMMUNITY_RELAY_SETS) lines.push('VITE_COMMUNITY_RELAY_SETS=' + process.env.VITE_COMMUNITY_RELAY_SETS); if (process.env.VITE_COMMUNITY_RELAYS) lines.push('VITE_COMMUNITY_RELAYS=' + process.env.VITE_COMMUNITY_RELAYS); if (lines.length) fs.writeFileSync('.env', lines.join('\n') + '\n');"
 
       - name: Generate Flatpak npm sources
         run: npm run flatpak:generate-sources
